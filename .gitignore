@@ -1,0 +1,36 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Packaging/build outputs
+build/
+dist/
+*.egg-info/
+*.whl
+
+# IDE / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local analysis outputs
+audit_out/
+out/
+*.tmp
+*.bak
+
+# User data should never be committed by accident
+*.csv
+*.dta
+!bench/small4.dta

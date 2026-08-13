@@ -1,0 +1,24 @@
+name: Feature request
+description: Propose a user-facing or methodological improvement
+title: "[Feature] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Research or user need
+      description: What problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the intended API and, for econometric changes, the methodological reference or derivation.
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility considerations
+      description: Would this change Stata reproduction, parameter ordering, or existing results?

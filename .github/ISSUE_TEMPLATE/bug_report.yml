@@ -1,0 +1,35 @@
+name: Bug report
+description: Report a reproducible problem or numerical discrepancy
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please do not upload confidential microdata. A synthetic or anonymized reproducer is preferred.
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem
+      description: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: specification
+    attributes:
+      label: Model specification
+      description: Include goods, sample size, method, algorithm, starts, compatibility switches, and relevant code.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Python, OS, numpy, scipy, and pandas versions.
+    validations:
+      required: true
+  - type: textarea
+    id: comparison
+    attributes:
+      label: Stata comparison, if applicable
+      description: Include the Stata command, final N, and a small relevant log excerpt.

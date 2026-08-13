@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use pyquaidsce, please cite the software release and the original quaidsce work."
+title: "pyquaidsce"
+type: software
+version: 1.0.1
+date-released: "2026-08-02"
+authors:
+  - given-names: "Sina"
+    family-names: "Amiri"
+    affiliation: "Department of Economics, Shiraz University, Shiraz, Iran"
+license: GPL-3.0-only
+keywords:
+  - QUAIDS
+  - demand systems
+  - econometrics
+  - censored demand
+  - Shonkwiler-Yen
+references:
+  - type: report
+    title: "Censored QUAIDS estimation with quaidsce"
+    authors:
+      - family-names: "Caro"
+        given-names: "Juan Carlos"
+      - family-names: "Melo"
+        given-names: "Grace"
+      - family-names: "Molina"
+        given-names: "José Alberto"
+      - family-names: "Salgado"
+        given-names: "Juan Carlos"
+    year: 2021
+    number: "1045"
+    institution:
+      name: "Boston College Department of Economics"

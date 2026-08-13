@@ -33,8 +33,11 @@ dependencies = [
     "scipy>=1.8",
     "pandas>=1.4",
 ]
-
 [project.urls]
+Homepage = "https://github.com/sinaamiri9000-collab/pyquaidsce"
+Repository = "https://github.com/sinaamiri9000-collab/pyquaidsce"
+Issues = "https://github.com/sinaamiri9000-collab/pyquaidsce/issues"
+Changelog = "https://github.com/sinaamiri9000-collab/pyquaidsce/blob/main/CHANGELOG.md"
 "Original Stata package" = "https://github.com/juancaros/quaidsce"
 "Original software record" = "https://ideas.repec.org/c/boc/bocode/s459029.html"
 "Method paper" = "https://ideas.repec.org/p/boc/bocoec/1045.html"

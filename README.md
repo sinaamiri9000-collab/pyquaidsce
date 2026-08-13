@@ -82,7 +82,7 @@ print(res.summary())
 print(res.elasticity_tables())
 ```
 
-For a detailed step-by-step tutorial and Stata-to-Python parameter translation, see [Getting Started](docs/getting-started.md).
+For a step-by-step tutorial, see [Getting Started](docs/getting-started.md). For a complete reference of all input arguments and output attributes, see the [User Guide & API Reference](docs/user-guide.md).
 
 ---
 
@@ -98,7 +98,7 @@ For a detailed step-by-step tutorial and Stata-to-Python parameter translation, 
    - `True` *(default)*: Keeps documented Stata conventions and index ordering for 1-to-1 replication against Stata `.log` files.
    - `False`: Uses corrected textbook formulas for documented edge-cases (such as models without demographics or with `noquadratic`).
 
-See [Stata Compatibility](docs/stata-compatibility.md) for full details.
+See [Stata Compatibility](docs/stata-compatibility.md) for methodology details, and the [User Guide & API Reference](docs/user-guide.md) for the complete list of all optimizer, convergence, and bootstrap options.
 
 ---
 

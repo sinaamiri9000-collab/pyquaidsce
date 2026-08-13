@@ -137,6 +137,7 @@ tools/            Diagnostic scripts and Stata log comparison utilities
 ## Documentation
 
 - [Getting Started Guide](docs/getting-started.md): Practical tutorial, data prep, and Stata-to-Python option map.
+- [User Guide & API Reference](docs/user-guide.md): Complete reference for all input parameters, the result object, and code examples.
 - [Methodology & Model Equations](docs/methodology.md): QUAIDS model specification, Shonkwiler-Yen censoring, and elasticity derivations.
 - [Stata Compatibility Guide](docs/stata-compatibility.md): Explanations of `first_stage_predict`, `strict_stata`, and replication tips.
 - [Validation Evidence](docs/validation.md): Numerical comparison across 113 parameters and elasticities against Stata.

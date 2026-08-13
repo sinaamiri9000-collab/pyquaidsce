@@ -11,6 +11,14 @@
 
 ---
 
+## Motivation
+
+This project originated from a very practical challenge in my own empirical research. While using the excellent Stata `quaidsce` command developed by Dr. Juan Carlos Caro and colleagues to estimate censored demand systems for my research, the long computation times—especially under Iterated FGNLS (IFGNLS)—became a serious bottleneck for model diagnostics, specification testing, and sensitivity analysis. 
+
+At the same time, Python offered a much more flexible and convenient environment for building automated data pipelines and scaling computational workloads on virtual servers. These two factors motivated me to develop `pyquaidsce`: a native Python implementation designed to preserve the rigorous econometric structure of the original Stata command while making censored QUAIDS estimation fast, practical, and easy to integrate into modern empirical workflows.
+
+---
+
 ## Why pyquaidsce?
 
 Estimating censored demand systems in empirical research often requires extensive model exploration, sensitivity checks, and bootstrap replications. In Stata, estimating large censored QUAIDS models under Iterated FGNLS (IFGNLS) can take significant computing time (often 20+ minutes for a single run on moderately sized datasets). 

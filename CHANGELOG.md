@@ -18,6 +18,8 @@ Validation and reliability release based on the original Python port.
 - added collectable regression/theory tests and stronger input validation;
 - documented compatibility switches, numerical conditioning, and full-precision
   Stata benchmark evidence.
+- consolidated public Stata/Python validation and performance evidence into one
+  reproducible controlled CQUAIDS/IFGNLS benchmark.
 
 ## 1.0.0
 

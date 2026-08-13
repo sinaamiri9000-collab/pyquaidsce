@@ -1,0 +1,32 @@
+{
+  "nobs": 20000,
+  "seed": 20260813,
+  "goods": 4,
+  "demographics": 3,
+  "share_variables": [
+    "w1",
+    "w2",
+    "w3",
+    "w4"
+  ],
+  "price_variables": [
+    "p1",
+    "p2",
+    "p3",
+    "p4"
+  ],
+  "expenditure_variable": "total",
+  "demographic_variables": [
+    "z1",
+    "z2",
+    "z3"
+  ],
+  "zero_counts": {
+    "w1": 1569,
+    "w2": 3206,
+    "w3": 4961,
+    "w4": 2178
+  },
+  "share_sum_max_abs_error": 2.220446049250313e-16,
+  "sha256": "24d4b3e2417226b51e6884036a8fab3b859fef65a14255675e7fbf9242ef80c0"
+}

@@ -35,10 +35,10 @@ from pyquaidsce import quaidsce  # noqa: E402
 
 
 def repo_data(repo: str, goods=(1, 2, 4, 9), nobs=2000) -> pd.DataFrame:
-    """A small conditional 4-good system built from the repo's own data.
+    """Build a small conditional 4-good example from an external Stata repo.
 
-    Identical to the sample built by ``bench/benchmark_small.do``, so the
-    two can be compared coefficient by coefficient.
+    This helper is intended for local experimentation when the upstream Stata
+    source tree is available; it is not part of the public benchmark.
     """
     f = os.path.join(repo, "data", "DS_STATA_3_2_0_pci2sls_.dta")
     cols = ([f"w{i}" for i in goods] + [f"p{i}" for i in goods]

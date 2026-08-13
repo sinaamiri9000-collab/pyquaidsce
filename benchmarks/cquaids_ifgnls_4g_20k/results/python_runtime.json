@@ -1,0 +1,17 @@
+{
+  "runtime_seconds": 26.03276198497042,
+  "log_likelihood": 217406.97172883782,
+  "converged": true,
+  "outer_iterations": 28,
+  "gauss_newton_steps": 147,
+  "nobs": 20000,
+  "zero_counts": {
+    "w1": 1569,
+    "w2": 3206,
+    "w3": 4961,
+    "w4": 2178
+  },
+  "python_version": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-2022Server-10.0.20348-SP0",
+  "processor": "Intel64 Family 6 Model 85 Stepping 6, GenuineIntel"
+}

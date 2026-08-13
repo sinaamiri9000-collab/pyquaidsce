@@ -1,0 +1,15 @@
+{
+  "values_compared": 113,
+  "max_abs_structural_parameter_difference": 1.676868459636084e-05,
+  "max_abs_first_stage_parameter_difference": 1.2148213757168236e-07,
+  "max_abs_elasticity_difference": 7.336702792012234e-07,
+  "max_abs_standard_error_difference_nonelasticity": 7.252548795195829e-06,
+  "python_log_likelihood": 217406.97172883782,
+  "stata_log_likelihood": 217406.98256980674,
+  "relative_log_likelihood_difference": 4.986486082105306e-08,
+  "python_runtime_seconds": 26.03276198497042,
+  "stata_runtime_seconds": 1161.171,
+  "runtime_ratio_stata_over_python": 44.60421835648414,
+  "runtime_ratio_is_same_machine": true,
+  "note": "The stored Stata and Python timings were recorded on the same machine. The ratio is therefore reported as a same-machine wall-clock speedup. The Python-side log for this recorded run does not contain an explicit BLAS/OpenMP thread-limit field, so the ratio should not be interpreted as a per-core efficiency comparison."
+}

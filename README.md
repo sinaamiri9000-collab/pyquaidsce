@@ -37,9 +37,8 @@ integrate into modern research workflows.
 - Stata-oriented parameter ordering, result tables, and compatibility options.
 - Bootstrap support with parallel replications.
 - Analytic Jacobians and regression tests against a full-precision Stata benchmark.
-- A measured 11-good, 37,000-observation, 3-demographic `ifgnls` run completed in
-  about 10 minutes in the recorded two-core benchmark. Runtime depends strongly
-  on hardware, scaling, convergence path, and the number of free parameters.
+- A public, reproducible Stata/Python benchmark using the same synthetic CQUAIDS
+  data and model specification, with raw logs and full-precision result comparison.
 
 ## Installation
 
@@ -106,27 +105,39 @@ These choices are methodological, not cosmetic. See
 [`docs/stata-compatibility.md`](docs/stata-compatibility.md) before using the
 package in new empirical work.
 
-## Validation
+## Validation and controlled benchmark
 
-The repository includes a 4-good, 2,000-observation benchmark with a Stata log
-printed at high precision. For the `ifgnls` specification, the recorded
-comparison gives approximately:
+The public end-to-end benchmark uses a deterministic synthetic dataset with
+**20,000 observations, 4 goods, 3 demographic variables, censoring in every
+good, and IFGNLS**. Stata and Python use the same `.dta` file, neither receives
+a user-supplied initial parameter vector, and bootstrap is disabled.
 
-- relative log-likelihood difference: `8.5e-09`;
-- maximum absolute coefficient difference: `8.4e-07`;
-- maximum absolute standard-error difference: `8.6e-08`.
+The Stata and Python results are **almost identical**:
 
-The test suite also checks the parameter-restriction map, analytic Jacobians,
-and the first-stage probit independently of Stata.
+| Quantity | Maximum/relative difference |
+|---|---:|
+| structural parameters (`alpha` through `rho`) | `1.68e-05` |
+| first-stage Probit parameters (`tau`) | `1.21e-07` |
+| expenditure/Marshallian/Hicksian elasticities | `7.34e-07` |
+| non-elasticity standard errors | `7.25e-06` |
+| log-likelihood, relative difference | `4.99e-08` |
 
-Run the tests with:
+In the recorded **same-machine** runtime comparison, Stata 19.5 took
+**1,161.171 seconds (19 min 21.171 s)** and `pyquaidsce` under Python 3.14.5
+took **26.033 seconds**. This corresponds to a **44.60x wall-clock speedup**
+for this benchmark.
 
-```bash
-python -m unittest discover -s tests -v
-```
+Both timings cover the point-estimation call rather than data loading. The
+Stata log reports two processors available to Stata. The recorded Python log
+does not contain an explicit BLAS/OpenMP thread-limit field, so the 44.60x
+figure is a same-machine wall-clock comparison, not a per-core efficiency
+claim.
 
-Full evidence and reproduction instructions are in
-[`docs/validation.md`](docs/validation.md).
+All data, scripts, raw logs, machine-readable outputs, and the row-by-row
+comparison are in
+[`benchmarks/cquaids_ifgnls_4g_20k/`](benchmarks/cquaids_ifgnls_4g_20k/). See
+[`docs/validation.md`](docs/validation.md) and
+[`docs/performance.md`](docs/performance.md) for details.
 
 ## Repository guide
 
@@ -134,9 +145,9 @@ Full evidence and reproduction instructions are in
 src/pyquaidsce/   Python package source
 tests/            automated mathematical and regression tests
 examples/         user-facing Python and Stata examples
-bench/            small reproducible benchmark data and Stata logs
-tools/            validation and diagnostic utilities
-docs/             methodology, compatibility, performance, and validation notes
+benchmarks/       controlled public performance benchmark and raw results
+tools/           validation and diagnostic utilities
+docs/            methodology, compatibility, performance, and validation notes
 .github/           CI and issue templates
 ```
 

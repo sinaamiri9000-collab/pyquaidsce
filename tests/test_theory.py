@@ -26,15 +26,17 @@ from pyquaidsce.elasticities import Means, elasticities
 from pyquaidsce.params import Spec, unpack
 
 
-def _small4(path=None):
+def _benchmark_data(path=None):
     if path is None:
-        path = Path(__file__).resolve().parents[1] / "bench" / "small4.dta"
+        path = (Path(__file__).resolve().parents[1] / "benchmarks" /
+                "cquaids_ifgnls_4g_20k" / "data" /
+                "benchmark_cquaids_4g_20k.dta")
     return pd.read_stata(path)
 
 
-SHARES = ["sw1", "sw2", "sw4", "sw9"]
-PRICES = ["p1", "p2", "p4", "p9"]
-DEMOS = ["x1", "x2"]
+SHARES = ["w1", "w2", "w3", "w4"]
+PRICES = ["p1", "p2", "p3", "p4"]
+DEMOS = ["z1", "z2", "z3"]
 
 
 def theory_at_model_shares(res, tol=1e-8):
@@ -78,7 +80,7 @@ def theory_at_model_shares(res, tol=1e-8):
 
 
 def main():
-    df = _small4()
+    df = _benchmark_data()
     print(f"data: {len(df)} obs, shares sum to "
           f"{df[SHARES].to_numpy().sum(axis=1).mean():.10f} on average")
 

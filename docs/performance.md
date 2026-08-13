@@ -1,58 +1,85 @@
-# Performance notes
+# Performance and benchmark protocol
 
-Performance is one of the practical motivations for `pyquaidsce`, but timing
-claims must be tied to a model, convergence path, hardware, BLAS backend, and
-sample size.
+Performance is one of the practical motivations for `pyquaidsce`, but a runtime
+claim is meaningful only when the data, model specification, initialization,
+timing boundary, and computing environment are documented.
 
-## Recorded version-1.0.1 timings
+## Public benchmark
 
-The validation workspace recorded the following `ifgnls` runs on two cores with
-`scipy-openblas`:
+Version 1.0.1 uses one public performance benchmark:
 
-| Problem | Wall time | Iteration information |
+[`benchmarks/cquaids_ifgnls_4g_20k/`](../benchmarks/cquaids_ifgnls_4g_20k/)
+
+The design exercises the full censored estimator while remaining practical to
+reproduce:
+
+- 20,000 observations;
+- 4 goods;
+- 3 demographic variables;
+- genuine zero shares in all four goods;
+- censored QUAIDS;
+- IFGNLS;
+- no user-supplied initial parameter vector;
+- no bootstrap;
+- the identical stored `.dta` file in Stata and Python.
+
+The data are synthetic and generated from a fixed seed.
+
+## Numerical agreement
+
+The stored Stata and Python outputs contain 113 returned values. The
+full-precision comparison gives:
+
+| Quantity | Difference |
+|---|---:|
+| max absolute structural-parameter difference | `1.67687e-05` |
+| max absolute first-stage Probit-parameter difference | `1.21482e-07` |
+| max absolute elasticity difference | `7.33670e-07` |
+| max absolute non-elasticity standard-error difference | `7.25255e-06` |
+| relative log-likelihood difference | `4.98649e-08` |
+
+The Stata and Python results are **almost identical**. In particular, the
+largest elasticity difference is below `1e-6`.
+
+## Timing boundary
+
+The Stata script uses Stata's built-in `timer` around the complete
+`quaidsce_c ... method(ifgnls)` point-estimation command. Data loading occurs
+before `timer on`.
+
+The Python script uses `time.perf_counter()` immediately around `quaidsce(...)`.
+Data loading and result-file writing are outside the timer.
+
+Thus both intervals cover the first-stage participation models and the full
+IFGNLS point estimator, but not disk I/O or bootstrap inference.
+
+## Recorded same-machine runtimes
+
+The stored final runs were produced on the same Windows machine:
+
+| Implementation | Runtime | Recorded environment |
 |---|---:|---|
-| 4 goods, 2,000 observations, 2 demographics | ~1.8 s | small benchmark |
-| 17 goods, 15,147 observations, 3 demographics | ~30 min | 42 outer, 417 GN steps |
-| 11 goods, 37,000 observations, 3 demographics | ~10.0 min | 35 outer, 200 GN steps |
+| Stata | `1161.171 s` | Stata 19.5, Windows, 2 processors reported available |
+| Python | `26.032762 s` | Python 3.14.5, Windows Server 2022, Intel64 Family 6 Model 85 |
 
-The raw log for the 11-good benchmark is in
-[`../bench/timing_11goods_37k.log`](../bench/timing_11goods_37k.log).
+The resulting same-machine wall-clock ratio is:
 
-These are **not** universal speed claims against Stata. A fair comparison should
-report the same data, same sample, same model, same start, convergence settings,
-hardware, Stata version, Python environment, and whether bootstrap inference is
-included.
+```text
+1161.171 / 26.03276198497042 = 44.6042
+```
 
-## Why model size matters
+or **44.60x** when reported to two decimal places.
 
-The dominant Gauss–Newton work grows with the number of observations, equations,
-and especially the number of free parameters. The package accumulates normal
-equations in chunks and uses BLAS operations rather than materializing the full
-stacked Jacobian, which is the main computational design behind the lower memory
-footprint and observed speed.
-
-## Conditioning matters
-
-A model can spend most of its time taking very small or repeatedly halved steps
-if variables are poorly scaled. In the 17-good validation exercise, converting
-a conditional subsystem to the economically intended normalized shares changed
-the numerical conditioning dramatically.
-
-This does **not** mean users should normalize shares mechanically. It means the
-estimated system and expenditure definition must be internally coherent. Check
-the economic construction first, then numerical conditioning.
+The Python log from this particular stored run does not record an explicit
+BLAS/OpenMP thread limit. For that reason, the 44.60x figure is a
+**same-machine wall-clock speedup**, not a claim about per-core computational
+efficiency. The current reproduction script records a thread limit explicitly
+to make future reruns even easier to document.
 
 ## Bootstrap timing
 
-A bootstrap replication re-estimates the first-stage probits and the nonlinear
-demand system. A large `reps` value can therefore dominate total runtime even
-when one point estimate is fast. Establish the time and convergence rate using a
-small diagnostic bootstrap before launching the final inference run.
-
-## Controlled Stata–Python comparison
-
-A same-data, same-machine benchmarking protocol is provided in
-[`../bench/runtime_comparison/`](../bench/runtime_comparison/). It intentionally
-separates historical timing evidence from the final controlled speed ratio. A
-public speedup claim should only be added after both programs have been timed on
-the exact same benchmark file and hardware.
+This benchmark deliberately excludes bootstrap inference. A bootstrap
+replication re-estimates the first-stage probits and nonlinear demand system, so
+its total runtime depends heavily on the requested number of replications and
+parallel-worker configuration. Point-estimation performance is therefore
+reported separately.

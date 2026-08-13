@@ -1,111 +1,108 @@
-# Methodology and estimator
+# Econometric Methodology & Model Specification
 
-## Model
+`pyquaidsce` estimates the **Quadratic Almost Ideal Demand System (QUAIDS)** introduced by Banks, Blundell, and Lewbel (1997), incorporating **Ray (1983) demographic scaling** (Poi 2012) and the **Shonkwiler and Yen (1999)** two-step correction for censored consumption.
 
-The core model is the quadratic almost-ideal demand system (QUAIDS) of Banks,
-Blundell and Lewbel (1997), with Ray (1983) demographic scaling in the form used
-by Poi (2012).
+---
 
-Let prices be `p`, total system expenditure be `m`, and demographic variables be
-`z`. The implementation uses
+## 1. Demand System Specification
 
-```text
-ln a(p)  = alpha_0 + sum_i alpha_i ln p_i
-           + 1/2 sum_i sum_j gamma_ij ln p_i ln p_j
-b(p)     = exp(sum_i beta_i ln p_i)
-mbar(z)  = 1 + sum_r rho_r z_r
-c(p,z)   = exp(sum_i (sum_r eta_ri z_r) ln p_i)
-D        = ln m - ln a(p) - ln mbar(z)
+Let $n$ denote the number of goods, $p = (p_1, \dots, p_n)'$ the price vector, $m$ total expenditure, and $z = (z_1, \dots, z_R)'$ a vector of household demographic characteristics.
 
-w*_i     = alpha_i + sum_j gamma_ij ln p_j
-           + (beta_i + sum_r eta_ri z_r) D
-           + lambda_i / (b(p)c(p,z)) D^2
-```
+### Price Indices and Scaling Functions
 
-For censored budget shares, the package applies the Shonkwiler–Yen (1999)
-two-step construction. A participation probit is estimated for each good and
-the observed-share equation is formed from a normal-CDF multiplier and a
-normal-PDF correction term.
+1. **Translog Price Index $\ln a(p)$**:
+   $$\ln a(p) = \alpha_0 + \sum_{i=1}^n \alpha_i \ln p_i + \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n \gamma_{ij} \ln p_i \ln p_j$$
+   where $\alpha_0$ is set by the user (`anot`).
 
-## Demand-theory restrictions
+2. **Cobb-Douglas Price Aggregator $b(p)$**:
+   $$b(p) = \prod_{i=1}^n p_i^{\beta_i} = \exp\left(\sum_{i=1}^n \beta_i \ln p_i\right)$$
 
-The implementation imposes symmetry and homogeneity on the `gamma` matrix. The
-Ray demographic coefficients are also completed using their restriction. In the
-uncensored model, adding-up restrictions determine the final `alpha`, `beta`,
-and `lambda` terms. In the censored branch, the transformed share equations do
-not retain the same adding-up identity, so all transformed equations remain in
-the estimated system, matching the architecture of `quaidsce`.
+3. **Ray (1983) Demographic Scaling Factors**:
+   $$\bar{m}(z) = 1 + \sum_{r=1}^R \rho_r z_r$$
+   $$c(p, z) = \exp\left(\sum_{i=1}^n \sum_{r=1}^R \eta_{ri} z_r \ln p_i\right)$$
 
-## Estimation sequence
+4. **Deflated Real Expenditure Term $D$**:
+   $$D = \ln m - \ln a(p) - \ln \bar{m}(z)$$
 
-### NLS
+### Latent (Uncensored) Budget Share Equations
 
-The nonlinear system is first fit using an identity working covariance. This
-provides residuals and an initial estimate of the cross-equation covariance
-matrix.
+The latent budget share for good $i$, denoted $w_i^*$, is given by:
+$$w_i^* = \alpha_i + \sum_{j=1}^n \gamma_{ij} \ln p_j + \left(\beta_i + \sum_{r=1}^R \eta_{ri} z_r\right) D + \frac{\lambda_i}{b(p) c(p, z)} D^2$$
 
-### FGNLS
+---
 
-The residual covariance is used to reweight the nonlinear SUR criterion and the
-parameters are re-estimated.
+## 2. Theoretical Restrictions
 
-### IFGNLS
+To be consistent with utility maximization, the following restrictions are imposed during estimation:
 
-With `method="ifgnls"`, the covariance matrix and nonlinear parameters are
-updated repeatedly until the outer fixed point satisfies the convergence rule.
-Consequently, NLS and FGNLS messages during an IFGNLS run represent required
-initial stages, not separate final models.
+1. **Homogeneity of Degree Zero in Prices**:
+   $$\sum_{j=1}^n \gamma_{ij} = 0 \quad \forall i$$
 
-## Numerical algorithm
+2. **Slutsky Symmetry**:
+   $$\gamma_{ij} = \gamma_{ji} \quad \forall i, j$$
 
-The primary optimizer is Gauss–Newton with Hartley step halving and an analytic
-Jacobian. A Levenberg–Marquardt alternative exists for difficult numerical
-problems. Normal equations are accumulated in observation blocks so the full
-stacked Jacobian does not need to be materialized in memory.
+3. **Demographic Adding-Up**:
+   $$\sum_{i=1}^n \eta_{ri} = 0 \quad \forall r$$
 
-`start="zero"` matches the Stata starting convention. `start="linear"` uses a
-linearized AIDS starting fit and can be faster, but nonlinear censored demand
-systems can have multiple local solutions, so starting values are part of the
-reported empirical specification.
+4. **Adding-up for Uncensored Models** (`censor=False`):
+   $$\sum_{i=1}^n \alpha_i = 1, \quad \sum_{i=1}^n \beta_i = 0, \quad \sum_{i=1}^n \lambda_i = 0$$
 
-## Covariance and likelihood
+*(In censored models, adding-up does not hold on observed shares because of the Shonkwiler–Yen transformation, so all $n$ equations are estimated).*
 
-The residual covariance uses divisor `N` in the compatibility path. The
-reported Gaussian-system log likelihood is
+---
 
-```text
--(N*m/2)(1 + ln(2*pi)) - (N/2) ln|Sigma_hat|.
-```
+## 3. Shonkwiler & Yen (1999) Censoring Correction
 
-The structural covariance is based on the inverse cross-product of the weighted
-analytic Jacobian and is then mapped from free to reported parameters by the
-restriction Jacobian. First-stage probit covariance blocks are appended in the
-Stata-oriented result representation.
+When households report zero consumption for some goods ($w_i = 0$), estimating $w_i^*$ directly leads to selection bias. The Shonkwiler–Yen two-step approach addresses this:
 
-## Elasticities
+### Step 1: Participation Probits
+For each good $i$, estimate a Probit model on the binary participation indicator $d_i = \mathbb{I}(w_i > 0)$:
+$$d_i = \mathbb{I}(X_i' \tau_i + v_i > 0)$$
+where $X_i = [\ln p_1, \dots, \ln p_n, \ln m, z_1, \dots, z_R, 1]'$.
 
-The result object contains expenditure, uncompensated (Marshallian), and
-compensated (Hicksian) elasticities. The natural Python matrices use
-`[good, price]` indexing. A Stata-order vector is available for direct
-comparison with the original command's storage convention.
+From this, compute the standard normal cumulative distribution $\Phi_i$ and probability density $\phi_i$.
 
-Because compatibility switches can alter first-stage correction terms or a
-published elasticity formula, record `first_stage_predict` and `strict_stata`
-with every reported empirical result.
+### Step 2: System Estimation on Transformed Shares
+The observed budget share equation becomes:
+$$w_i = \Phi_i \cdot w_i^* + \delta_i \cdot \phi_i + \varepsilon_i$$
+where $\delta_i$ is an additional structural parameter to be estimated for each equation.
+
+---
+
+## 4. Estimation Methods
+
+The system of $n$ equations is estimated using **Nonlinear Seemingly Unrelated Regression (NLSUR)**:
+
+- **NLS**: Minimizes $\sum_t u_t' u_t$ assuming an identity error covariance ($\Sigma = I$).
+- **FGNLS**: Calculates $\hat{\Sigma} = \frac{1}{N} \sum_t \hat{u}_t \hat{u}_t'$ from NLS residuals and minimizes $\sum_t u_t' \hat{\Sigma}^{-1} u_t$.
+- **IFGNLS**: Iterates the FGNLS estimation and updates $\hat{\Sigma}$ until both parameter estimates and covariance matrix converge.
+
+The optimization uses an **analytic Gauss-Newton algorithm** with step-halving (or Levenberg-Marquardt damping), evaluated efficiently via block-diagonal delta transformations.
+
+---
+
+## 5. Demand Elasticities
+
+Elasticities are evaluated at sample means ($\bar{w}, \bar{\ln p}, \bar{\ln m}, \bar{z}$):
+
+### 1. Expenditure (Income) Elasticity:
+$$e_i = \frac{\partial \ln q_i}{\partial \ln m} = 1 + \frac{1}{w_i} \frac{\partial w_i}{\partial \ln m}$$
+
+### 2. Uncompensated (Marshallian) Price Elasticity:
+$$e_{ij}^u = \frac{\partial \ln q_i}{\partial \ln p_j} = -\delta_{ij} + \frac{1}{w_i} \frac{\partial w_i}{\partial \ln p_j}$$
+where $\delta_{ij}$ is the Kronecker delta ($\delta_{ij}=1$ if $i=j$, else $0$).
+
+### 3. Compensated (Hicksian) Price Elasticity:
+Computed using the Slutsky equation:
+$$e_{ij}^c = e_{ij}^u + e_i \cdot w_j$$
+
+---
 
 ## References
 
-- Banks, J., Blundell, R. and Lewbel, A. (1997). “Quadratic Engel Curves and
-  Consumer Demand.” *Review of Economics and Statistics*, 79, 527–539.
-- Deaton, A. and Muellbauer, J. (1980). “An Almost Ideal Demand System.”
-  *American Economic Review*, 70, 312–326.
-- Poi, B. P. (2012). “Easy Demand-System Estimation with quaids.” *Stata
-  Journal*, 12, 433–446.
-- Ray, R. (1983). “Measuring the Costs of Children: An Alternative Approach.”
-  *Journal of Public Economics*, 22, 89–102.
-- Shonkwiler, J. S. and Yen, S. T. (1999). “Two-Step Estimation of a Censored
-  System of Equations.” *American Journal of Agricultural Economics*, 81,
-  972–982.
-- Caro, J. C., Melo, G., Molina, J. A. and Salgado, J. C. (2021). “Censored
-  QUAIDS estimation with quaidsce.” Boston College Working Papers in Economics
-  1045.
+1. **Banks, J., Blundell, R., & Lewbel, A. (1997)**. Quadratic Engel Curves and Consumer Demand. *The Review of Economics and Statistics*, 79(4), 527–539.
+2. **Caro, J. C., Melo, G., Molina, J. A., & Salgado, J. C. (2021)**. Censored QUAIDS estimation with quaidsce. *Boston College Working Papers in Economics*, 1045.
+3. **Deaton, A., & Muellbauer, J. (1980)**. An Almost Ideal Demand System. *The American Economic Review*, 70(3), 312–326.
+4. **Poi, B. P. (2012)**. Easy Demand-System Estimation with quaids. *The Stata Journal*, 12(3), 433–446.
+5. **Ray, R. (1983)**. Measuring the Costs of Children: An Alternative Approach. *Journal of Public Economics*, 22(1), 89–102.
+6. **Shonkwiler, J. S., & Yen, S. T. (1999)**. Two-Step Estimation of a Censored System of Equations. *American Journal of Agricultural Economics*, 81(4), 972–982.

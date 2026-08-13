@@ -1,17 +1,11 @@
 # Benchmarks
 
-This directory contains **one public performance benchmark** for `pyquaidsce`
-1.0.1. Older exploratory timing files are intentionally not kept here.
+This directory contains the reproducible benchmark comparing `pyquaidsce` against Stata `quaidsce`.
 
-- [`cquaids_ifgnls_4g_20k/`](cquaids_ifgnls_4g_20k/) — controlled censored
-  QUAIDS / IFGNLS benchmark with 20,000 observations, 4 goods, and 3
-  demographic variables.
+- [`cquaids_ifgnls_4g_20k/`](cquaids_ifgnls_4g_20k/): Controlled benchmark using synthetic household data (20,000 observations, 4 goods, 3 demographics, censored QUAIDS with IFGNLS).
 
-The benchmark has two separate purposes:
+### Key Takeaways:
+1. **Numerical Equivalence**: Parameter differences between Stata and Python are $< 1.68 \times 10^{-5}$, and elasticity differences are $< 7.34 \times 10^{-7}$.
+2. **Speed Comparison**: Python achieves a **~44.6x wall-clock speedup** (26.0s vs. 1,161.2s in Stata on the same machine).
 
-1. compare the numerical results returned by Stata `quaidsce` and
-   `pyquaidsce`; and
-2. measure the point-estimation runtime under an explicitly documented setup.
-
-
-The stored same-machine run records a **44.60x wall-clock speedup** for Python, while the Stata and Python estimates are **almost identical**.
+See [`docs/validation.md`](../docs/validation.md) and [`docs/performance.md`](../docs/performance.md) for full details.

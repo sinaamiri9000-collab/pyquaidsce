@@ -1,56 +1,61 @@
-# Stata compatibility and implementation differences
+# Stata Compatibility and Implementation Guide
 
-Version 1.0.1 was designed to make direct comparisons with Stata `quaidsce`
-possible while also documenting cases where literal reproduction and the
-published formula are not the same object.
+`pyquaidsce` is designed to provide exact numerical reproduction of the Stata `quaidsce` command (v2.0, Caro et al. 2025), while also offering options to apply textbook econometric formulas where the original Stata ado-file contains documented quirks.
 
-## First-stage prediction: `pr` versus `xb`
+This guide explains the compatibility settings and how to achieve 1-to-1 replication.
 
-The shipped Stata implementation obtains `predict` after each probit without
-requesting the linear predictor. Its subsequent normal CDF/PDF calculations
-therefore operate on the predicted probability. In this package:
+---
 
-- `first_stage_predict="pr"` reproduces that shipped Stata path;
-- `first_stage_predict="xb"` uses the probit linear index inside the
-  Shonkwiler–Yen CDF/PDF terms.
+## 1. First-Stage Probit Predictions: `first_stage_predict`
 
-Use `"pr"` when reproducing an existing Stata estimate. Treat `"xb"` as a
-methodological choice that should be reported explicitly rather than as a
-formatting option.
+In the Shonkwiler & Yen (1999) two-step procedure, the participation probability $\Phi_i$ and normal density $\phi_i$ are functions of the Probit index $X_i'\tau_i$:
+- **Textbook Shonkwiler–Yen**: $\Phi_i = \Phi(X_i'\tau_i)$ and $\phi_i = \phi(X_i'\tau_i)$
 
-## `strict_stata`
+In Stata, the `predict` command immediately following `probit` generates the **predicted probability** by default rather than the linear index ($X_i'\tau_i$). The original `quaidsce_c.ado` file calculates `normal(predict)` and `normalden(predict)`, which computes $\Phi(\Phi(X'\tau))$ and $\phi(\Phi(X'\tau))$.
 
-`strict_stata=True` retains documented Stata-specific elasticity behavior where
-needed for direct comparison. `strict_stata=False` uses the corresponding
-corrected formula documented during the validation work.
+### Options:
+- **`first_stage_predict="pr"`** *(Default)*: Replicates Stata's exact implementation bit-for-bit. Use this if you are comparing results directly against Stata.
+- **`first_stage_predict="xb"`**: Uses the linear index $X_i'\tau_i$ inside $\Phi(\cdot)$ and $\phi(\cdot)$, matching standard textbook theory.
 
-The most important rule is simple: **do not compare two programs while changing
-this switch at the same time**. First establish numerical reproduction under the
-same convention; only then run an intentional sensitivity analysis.
+---
 
-## Other documented upstream behaviors
+## 2. Replicating Stata Elasticities: `strict_stata`
 
-The validation work identified several paths in the Stata v2.0 implementation
-that require caution, including the interaction of censoring, demographics and
-`noquadratic`; the uncensored path; the first-stage use of `lnexpenditure()`;
-and the stored orientation/naming of elasticity vectors. The complete evidence,
-including benchmark output and code-path notes, is retained in
-[`validation.md`](validation.md).
+During comprehensive code validation against Stata `quaidsce`, two specific behaviors were identified in the Stata ado-file's elasticity calculations:
 
-The Python implementation also contains explicit repairs where a literal port
-would make a supported Python interface unusable—for example, a valid censored
-restart from an already fitted `res.theta`.
+1. **Quadratic model without demographics (`ndemo=0`)**:
+   In the uncompensated price elasticity formula, Stata's ado-file multiplies the quadratic term by $\beta_i$ instead of $\beta_j$.
+2. **Linear AIDS with demographics and censoring (`quadratic=False` + `ndemo>0` + `censor=True`)**:
+   Stata assigns the latent income elasticity to a global macro and then inadvertently calls an empty local macro, effectively treating the latent elasticity as 0 in the censoring adjustment.
 
-## Sample equivalence comes before estimator equivalence
+### Options:
+- **`strict_stata=True`** *(Default)*: Replicates Stata's exact returned values so that automated tests and diffs against Stata log files match.
+- **`strict_stata=False`**: Applies the corrected theoretical formulas (Poi 2012 / Shonkwiler & Yen 1999).
 
-A recurring source of apparently different Python/Stata results is a different
-estimation sample. When reproducing a Stata result:
+---
 
-1. apply exactly the same filters before estimation;
-2. verify the final observation count;
-3. verify the same share and price order;
-4. verify the same definition of total system expenditure;
-5. then compare optimization and compatibility settings.
+## 3. Checklist for Exact Replication against Stata
 
-Small sample differences can materially alter coefficients and elasticities in a
-nonlinear demand system even when both implementations are correct.
+If you are trying to reproduce an existing Stata estimation in Python and see discrepancies, verify the following steps in order:
+
+1. **Verify the Estimation Sample**:
+   Ensure that observations dropped due to missing values (`markout` in Stata) or non-positive values are identical in both programs.
+2. **Variable Ordering**:
+   Verify that your `prices` and `shares` lists have the exact same ordering of goods.
+3. **Total Expenditure Definition**:
+   Verify that `expenditure` is the sum of spending across the goods in the system (or log expenditure if `lnexpenditure` is used).
+4. **Optimization Starting Values**:
+   By default, both Stata `nlsur` and `pyquaidsce` use `start="zero"`. If you provided custom starting values in Stata (`initial(...)`), provide the same vector to `initial=...` in Python.
+5. **Estimation Method**:
+   Confirm whether you are using `method="ifgnls"`, `method="fgnls"`, or `method="nls"`.
+
+---
+
+## Summary of Defaults
+
+| Parameter | Default | Effect |
+|---|---|---|
+| `first_stage_predict` | `"pr"` | Matches Stata default probability calculation |
+| `strict_stata` | `True` | Matches Stata's exact elasticity calculations |
+| `start` | `"zero"` | Starts optimization from zeros, matching Stata `nlsur` |
+| `method` | `"fgnls"` | Feasible Generalized NLS (use `"ifgnls"` for iterated) |

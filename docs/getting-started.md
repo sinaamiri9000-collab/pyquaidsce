@@ -1,170 +1,132 @@
-# Getting started
+# Getting Started with pyquaidsce
 
-This guide assumes you are comfortable identifying variables in your dataset but
-does not assume advanced Python knowledge.
+This guide walks you through preparing your data, specifying your demand system, running your first estimation, and interpreting the output.
 
-## 1. Create an environment and install the package
+---
 
-From the repository root:
+## 1. Installation
 
-```bash
-python -m venv .venv
-```
-
-On Windows:
-
-```powershell
-.venv\Scripts\python.exe -m pip install --upgrade pip
-.venv\Scripts\python.exe -m pip install -e .
-```
-
-On macOS/Linux:
+Install `pyquaidsce` in your Python environment:
 
 ```bash
-.venv/bin/python -m pip install --upgrade pip
-.venv/bin/python -m pip install -e .
+pip install pyquaidsce
 ```
 
-## 2. Prepare the data
+Or install locally from source:
 
-A call to `quaidsce(...)` needs:
+```bash
+git clone https://github.com/sinaamiri9000-collab/pyquaidsce.git
+cd pyquaidsce
+pip install -e .
+```
 
-1. all budget-share variables;
-2. all price variables, in exactly the same order as the shares;
-3. total system expenditure (or its logarithm);
-4. Ray demographic-scaling variables when the censored specification is used;
-5. the translog price-index constant `anot`.
+---
 
-When comparing Python with an existing Stata run, reproduce the **same estimation
-sample** first. Any observations dropped in Stata before estimation must also be
-dropped in Python. A different sample can generate economically meaningful
-coefficient and elasticity differences even if the two estimators are identical.
+## 2. Preparing Your Data
 
-For a conditional subsystem, check whether the included budget shares are meant
-to sum to one. Rescaling shares without a corresponding economic justification
-changes the object being estimated; see `performance.md` for the numerical
-conditioning issue that motivated the benchmark normalization check.
+To estimate a demand system with `quaidsce(...)`, your DataFrame should contain:
 
-## 3. A complete estimation file
+1. **Budget shares** ($w_1, \dots, w_n$): The proportion of total expenditure allocated to each good (e.g., $w_i = p_i q_i / m$). For a censored model, these must contain zeros for households that did not consume good $i$.
+2. **Prices** ($p_1, \dots, p_n$) or **Log Prices** ($\ln p_1, \dots, \ln p_n$): Must be provided in the exact same order as the shares.
+3. **Total Expenditure** ($m$) or **Log Total Expenditure** ($\ln m$): Total spending across all $n$ goods in the system.
+4. **Demographic variables** ($z_1, \dots, z_R$): Household characteristics (such as household size, urban dummy, education level) used for Ray (1983) demographic scaling.
 
-Create `estimate.py`:
+> [!TIP]
+> **Comparing with Stata?**  
+> Make sure your estimation sample in Python matches your Stata sample exactly. Check that the number of observations, variable definitions, and any sample filters (such as dropping missing values or non-positive expenditures) are identical.
+
+---
+
+## 3. Basic Estimation Example
+
+Here is a complete script estimating a 4-good censored QUAIDS model:
 
 ```python
 import pandas as pd
 from pyquaidsce import quaidsce
 
+# 1. Load data
+df = pd.read_csv("household_consumption.csv")
 
-def main():
-    df = pd.read_csv("mydata.csv")
+# 2. Define variable lists
+shares = ["w_meat", "w_dairy", "w_cereal", "w_other"]
+prices = ["p_meat", "p_dairy", "p_cereal", "p_other"]
+demographics = ["hh_size", "urban"]
 
-    shares = ["w1", "w2", "w3", "w4"]
-    prices = ["p1", "p2", "p3", "p4"]
-    demographics = ["household_size", "age_head"]
+# 3. Estimate model
+res = quaidsce(
+    data=df,
+    shares=shares,
+    prices=prices,
+    expenditure="total_exp",
+    demographics=demographics,
+    anot=10.0,                  # Price index constant (alpha_0)
+    method="ifgnls",            # Iterated FGNLS
+    algorithm="gn",             # Gauss-Newton optimizer
+    first_stage_predict="pr",   # Matches Stata default
+    strict_stata=True,          # Matches Stata exact formulas
+    reps=0,                     # Set reps > 0 to run bootstrap
+    verbose=True,
+)
 
-    res = quaidsce(
-        df,
-        shares=shares,
-        prices=prices,
-        expenditure="total_expenditure",
-        demographics=demographics,
-        anot=10.0,
-        method="ifgnls",
-        algorithm="gn",
-        start="zero",
-        first_stage_predict="pr",
-        strict_stata=True,
-        reps=0,
-        verbose=True,
-    )
-
-    print("Converged:", res.converged)
-    print(res.summary())
-    print(res.elasticity_tables())
-
-
-if __name__ == "__main__":
-    main()
+# 4. Display results
+print(res.summary())
+print(res.elasticity_tables())
 ```
 
-Run it with:
+---
 
-```bash
-python estimate.py
-```
+## 4. Understanding the Estimation Methods
 
-The `if __name__ == "__main__":` guard is especially important when bootstrap
-replications are run in parallel on Windows.
+- **`method="nls"`**: Nonlinear Least Squares (assumes identity error covariance, $\Sigma = I$).
+- **`method="fgnls"`**: Feasible Generalized NLS (two-step estimation using the residual covariance from NLS).
+- **`method="ifgnls"`** *(Recommended)*: Iterated FGNLS. Continuously updates the residual covariance matrix $\Sigma$ and parameter estimates until convergence. This corresponds to Maximum Likelihood under joint normality.
 
-## 4. Stata-to-Python option map
+*Note:* When running `method="ifgnls"`, you will see messages for NLS and initial FGNLS iterations. These are standard starting steps of the IFGNLS algorithm.
 
-| Stata | Python |
+---
+
+## 5. Stata-to-Python Option Translation
+
+| Stata Command Option | Python Argument in `quaidsce(...)` |
 |---|---|
-| expenditure-share varlist | `shares=[...]` |
-| `prices(...)` | `prices=[...]` |
-| `lnprices(...)` | `lnprices=[...]` |
-| `expenditure(x)` | `expenditure="x"` |
-| `lnexpenditure(x)` | `lnexpenditure="x"` |
-| `demographics(...)` | `demographics=[...]` |
-| `anot(#)` | `anot=#` |
+| `w1 w2 w3 w4` (share varlist) | `shares=["w1", "w2", "w3", "w4"]` |
+| `prices(p1 p2 p3 p4)` | `prices=["p1", "p2", "p3", "p4"]` |
+| `lnprices(lp1 lp2 lp3 lp4)` | `lnprices=["lp1", "lp2", "lp3", "lp4"]` |
+| `expenditure(total)` | `expenditure="total"` |
+| `lnexpenditure(ltotal)` | `lnexpenditure="ltotal"` |
+| `demographics(z1 z2)` | `demographics=["z1", "z2"]` |
+| `anot(10)` | `anot=10.0` |
 | `method(ifgnls)` | `method="ifgnls"` |
 | `noquadratic` | `quadratic=False` |
 | `nocensor` | `censor=False` |
 | `initial(...)` | `initial=...` |
-| `reps(#)` | `reps=#` |
+| `reps(200)` | `reps=200` |
 
-Give only one of `prices`/`lnprices` and only one of
-`expenditure`/`lnexpenditure`.
+---
 
-## 5. NLS, FGNLS, and IFGNLS
+## 6. Computing Standard Errors via Bootstrap
 
-`method="ifgnls"` necessarily begins with an NLS estimate, uses its residuals to
-estimate the cross-equation covariance matrix, performs FGNLS, and then repeats
-that covariance/parameter update until the outer fixed point converges. Messages
-such as `Calculating NLS estimates` and `FGNLS iteration ...` are therefore
-stages of IFGNLS, not extra unrelated models.
-
-## 6. Starting values and bootstrap
-
-The default `start="zero"` mirrors the Stata starting convention. A successful
-result can be reused as an explicit restart:
+Because the Shonkwiler–Yen method is a two-step estimator, the conventional standard errors for the second stage do not account for the first-stage Probit estimation error. To obtain valid standard errors and confidence intervals for all parameters and elasticities, use the built-in bootstrap:
 
 ```python
-res2 = quaidsce(
-    df,
-    shares=shares,
-    prices=prices,
-    expenditure="total_expenditure",
-    demographics=demographics,
-    anot=10.0,
-    method="ifgnls",
-    initial=res.theta,
-    sigma_initial=res.sigma,
-    reps=0,
-)
+if __name__ == "__main__":
+    res = quaidsce(
+        df,
+        shares=shares,
+        prices=prices,
+        expenditure="total_exp",
+        demographics=demographics,
+        anot=10.0,
+        method="ifgnls",
+        reps=200,          # 200 bootstrap replications
+        n_jobs=4,          # Parallel execution across 4 CPU cores
+        seed=123456,       # Reproducible random seed
+    )
+
+    # Summary table will now include bootstrap standard errors
+    print(res.summary())
 ```
 
-For bootstrap inference, first establish that the main model converges with
-`reps=0`. Then try a small diagnostic number of replications before a final
-large run. `bootstrap_start="zero"` reproduces the zero-start logic; `"warm"`
-reuses the full-sample solution and is a performance/fidelity tradeoff.
-
-Example:
-
-```python
-res = quaidsce(
-    df,
-    shares=shares,
-    prices=prices,
-    expenditure="total_expenditure",
-    demographics=demographics,
-    anot=10.0,
-    method="ifgnls",
-    reps=200,
-    bootstrap_start="zero",
-    seed=123456,
-    n_jobs=4,
-)
-```
-
-Always inspect the number and nature of failed bootstrap replications rather than
-assuming every resample converged.
+> [!NOTE]
+> When using multiprocessing (`n_jobs > 1`) on Windows, always enclose your script within `if __name__ == "__main__":`.

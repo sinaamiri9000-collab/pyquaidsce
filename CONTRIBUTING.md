@@ -1,48 +1,39 @@
-# Contributing
+# Contributing to pyquaidsce
 
-Contributions are welcome, especially reproducible bug reports, numerical
-validation, documentation improvements, and tests that clarify econometric
-behavior.
+Contributions, feedback, and bug reports are warmly welcome! Whether you are an economist testing a new empirical specification, finding an edge case, or suggesting performance improvements, your input is appreciated.
 
-## Development setup
+---
+
+## 1. Development Setup
+
+Clone the repository and set up an editable environment with tests:
 
 ```bash
-python -m venv .venv
-python -m pip install -e .
+git clone https://github.com/sinaamiri9000-collab/pyquaidsce.git
+cd pyquaidsce
+pip install -e .
 python -m unittest discover -s tests -v
 ```
 
-Use a dedicated virtual environment. Do not commit local data, virtual
-environments, `dist/`, or generated audit output.
+---
 
-## Bug reports
+## 2. Reporting Issues
 
-For a numerical discrepancy, include as much of the following as possible:
+When submitting a bug report or numerical question, please include:
+- Your Python version and OS.
+- Installed versions of `numpy`, `scipy`, and `pandas`.
+- Model specification: number of goods, demographics, and options used (`method`, `first_stage_predict`, `strict_stata`).
+- A minimal reproducible example or anonymized sample data.
+- The corresponding Stata command and output if reporting a discrepancy with Stata.
 
-- Python version and operating system;
-- `numpy`, `scipy`, and `pandas` versions;
-- number of goods, observations, and demographics;
-- `method`, `algorithm`, `start`, `first_stage_predict`, `strict_stata`, and
-  convergence settings;
-- final estimation-sample size and the exact preprocessing filters;
-- a minimal synthetic or anonymized dataset if redistribution is permitted;
-- the corresponding Stata command and relevant log excerpt when reporting a
-  Stata/Python difference.
+> [!NOTE]
+> Please do not upload private or confidential microdata to public issues.
 
-Do not upload confidential microdata to a public issue.
+---
 
-## Pull requests
+## 3. Pull Requests
 
-A change to model equations, parameter restrictions, Jacobians, elasticities,
-first-stage correction, covariance construction, or convergence logic must come
-with a test that would fail under the previous incorrect behavior. Compatibility
-changes should also state whether they alter direct Stata reproduction.
-
-Run the full test suite before opening a pull request.
-
-## AI-assisted contributions
-
-AI-assisted coding is acceptable, but generated code is not evidence of
-correctness. The contributor remains responsible for understanding the change,
-checking licensing/provenance, and supplying tests or derivations appropriate to
-the scientific claim.
+If proposing modifications to the econometric formulas, Jacobians, or optimization logic:
+- Include corresponding unit tests to verify mathematical correctness.
+- Ensure all existing tests pass (`python -m unittest discover -s tests`).
+- Keep code clean and well-documented.

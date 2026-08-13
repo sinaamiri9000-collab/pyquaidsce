@@ -15,6 +15,20 @@ formulas.
 > Always document your sample construction, model specification, convergence,
 > and the compatibility switches used in a published analysis.
 
+## Motivation
+
+This project started from a very practical problem in my own research. While
+using the Stata `quaidsce` command developed by Dr. Caro and colleagues to
+estimate censored QUAIDS models, I found that the long computation times—
+especially under IFGNLS—could become a serious obstacle to model diagnostics
+and to exploring how results changed under alternative specifications. At the
+same time, Python offered a more convenient environment for building research
+pipelines and for running computational work on virtual servers. These two
+considerations motivated me to develop `pyquaidsce`: a Python implementation
+aimed at preserving the econometric logic of the original command while making
+censored QUAIDS estimation more computationally practical and easier to
+integrate into modern research workflows.
+
 ## Why pyquaidsce?
 
 - Native Python workflow using only `numpy`, `scipy`, and `pandas` at runtime.

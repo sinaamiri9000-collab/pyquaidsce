@@ -142,10 +142,10 @@ tools/            Diagnostic scripts and Stata log comparison utilities
 If you use `pyquaidsce` in your research, please cite both this package and the original Stata `quaidsce` command:
 
 ```bibtex
-@software{amiri2025pyquaidsce,
+@software{amiri2026pyquaidsce,
   author = {Amiri, Sina},
   title = {pyquaidsce: Fast Censored QUAIDS Demand System Estimation in Python},
-  year = {2025},
+  year = {2026},
   url = {https://github.com/sinaamiri9000-collab/pyquaidsce}
 }
 

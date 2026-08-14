@@ -29,6 +29,7 @@ audit_out/
 out/
 *.tmp
 *.bak
+*.log
 
 # User data should never be committed by accident
 *.csv

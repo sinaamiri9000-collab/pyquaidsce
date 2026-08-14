@@ -33,17 +33,17 @@ Estimating censored demand systems in empirical research often requires extensiv
 
 ## Installation
 
-Clone this repository and install it locally using `pip`:
+Install `pyquaidsce` directly from PyPI via `pip`:
+
+```bash
+pip install pyquaidsce
+```
+
+For local development or installing from source:
 
 ```bash
 git clone https://github.com/sinaamiri9000-collab/pyquaidsce.git
 cd pyquaidsce
-pip install .
-```
-
-For development or editable use:
-
-```bash
 pip install -e .
 ```
 

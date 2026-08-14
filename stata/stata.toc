@@ -1,0 +1,5 @@
+v 1.0.1
+d 'PYQUAIDSCE': Fast Censored QUAIDS demand system estimation in Stata via Python
+d Author: Sina Amiri
+d Department of Economics, Shiraz University
+p pyquaidsce

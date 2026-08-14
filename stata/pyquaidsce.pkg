@@ -1,0 +1,9 @@
+v 1.0.1
+d 'PYQUAIDSCE': Fast Censored QUAIDS demand system estimation in Stata via Python
+d
+d Distribution-Date: 20260814
+d License: MIT
+d Author: Sina Amiri (Department of Economics, Shiraz University)
+d
+f pyquaidsce.ado
+f pyquaidsce.sthlp

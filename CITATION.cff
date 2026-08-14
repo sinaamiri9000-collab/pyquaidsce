@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use pyquaidsce, please cite the software release and the original quaidsce work."
 title: "pyquaidsce"
 type: software
-version: 1.0.1
-date-released: "2026-08-13"
+version: 1.1.0
+date-released: "2026-08-14"
 authors:
   - given-names: "Sina"
     family-names: "Amiri"

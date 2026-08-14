@@ -2,6 +2,16 @@
 
 All notable user-visible changes to `pyquaidsce` are documented here.
 
+## 1.1.0 — 2026-08-14
+
+Stata integration release and comprehensive documentation expansion.
+
+- **Stata Integration**: Added official `pyquaidsce.ado` and `pyquaidsce.sthlp` commands allowing Stata users to estimate censored QUAIDS directly inside Stata via the Python computational engine (`stata_bridge.py`), supporting full `e()` matrices, scalars, and postestimation commands (`test`, `lincom`, `outreg2`, `esttab`).
+- **Stata Package Management**: Added `stata.toc` and `pyquaidsce.pkg` enabling direct 1-line installation in Stata via `net install`.
+- **User Guide & API Reference**: Created comprehensive [User Guide](docs/user-guide.md) documenting every input parameter, optimizer setting, and attribute of `QuaidsceResults` with practical extraction recipes.
+- **Documentation Refinement**: Simplified all documentation files to clear applied economics terminology.
+- **Motivation & Citation**: Documented the empirical motivation for the package and updated citation metadata to 2026.
+
 ## 1.0.1 — 2026-08-02
 
 Validation and reliability release based on the original Python port.

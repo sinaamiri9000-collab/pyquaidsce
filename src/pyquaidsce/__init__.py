@@ -29,7 +29,7 @@ from .params import Coefs, Spec, delta_matrix, full_vector, unpack
 from .probit import probit
 from .results import QuaidsceResults
 
-__version__ = "1.0.1"
+__version__ = "1.1.0"
 
 __all__ = [
     "quaidsce",

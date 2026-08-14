@@ -1,6 +1,6 @@
 # pyquaidsce
 
-`pyquaidsce` is a Python package for estimating **Censored Quadratic Almost Ideal Demand Systems (QUAIDS)**. It provides a fast, native Python alternative to Stata's official `quaidsce` command, incorporating:
+`pyquaidsce` is a Python package for estimating **Censored Quadratic Almost Ideal Demand Systems (QUAIDS)**. It provides a fast, native Python alternative to the original Stata `quaidsce` command developed by Dr. Juan Carlos Caro and colleagues, incorporating:
 
 - **Ray (1983) demographic scaling** for household characteristics.
 - **Shonkwiler & Yen (1999) two-step correction** for zero expenditure shares (censoring).
@@ -24,7 +24,7 @@ At the same time, Python offered a much more flexible and convenient environment
 Estimating censored demand systems in empirical research often requires extensive model exploration, sensitivity checks, and bootstrap replications. In Stata, estimating large censored QUAIDS models under Iterated FGNLS (IFGNLS) can take significant computing time (often 20+ minutes for a single run on moderately sized datasets). 
 
 `pyquaidsce` was developed to solve this practical bottleneck:
-- **Fast Execution**: Written with optimized analytic Jacobians and vectorized linear algebra (`numpy`/`scipy`), achieving a **~44x speedup** over Stata on standard benchmarks.
+- **Fast Execution**: Written with optimized analytic Jacobians and vectorized linear algebra (`numpy`/`scipy`), achieving a **44.6x wall-clock speedup** on the controlled benchmark reported below.
 - **Pure Python & Lightweight**: Only requires `numpy`, `scipy`, and `pandas`. No complex compilation or heavy external dependencies.
 - **Research Workflow Integration**: Easily run demand models in Jupyter notebooks, script automated sensitivity pipelines, and run on cloud servers/clusters.
 - **Verified Accuracy**: Delivers parameter estimates and elasticities that match Stata benchmarks up to high numerical precision (within `1e-5` to `1e-7`).

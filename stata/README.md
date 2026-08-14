@@ -2,14 +2,14 @@
 
 Fast Censored Quadratic Almost Ideal Demand System (QUAIDS) estimation in Stata via Python engine.
 
-This package provides the official Stata command `pyquaidsce`, allowing Stata users to estimate censored QUAIDS demand systems with the **up to 44x speedup** of the `pyquaidsce` Python core while staying completely within the native Stata workflow.
+This package provides the official Stata command `pyquaidsce`, allowing Stata users to estimate censored QUAIDS demand systems with the **up to 44.6x speedup** of the `pyquaidsce` Python core while staying completely within the native Stata workflow.
 
 ---
 
 ## Prerequisites
 
 1. **Stata 16.0 or newer** (Stata 16, 17, 18, 19 with Python integration).
-2. **Python 3.8+** with the `pyquaidsce` package installed.
+2. **Python 3.9+** with the `pyquaidsce` package installed.
 
 To verify your Stata Python setup, type in Stata:
 ```stata

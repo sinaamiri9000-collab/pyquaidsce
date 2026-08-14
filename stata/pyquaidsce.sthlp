@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1.0.1  14aug2026}{...}
+{* *! version 1.1.0  14aug2026}{...}
 {vieweralsosee "[R] quaids" "help quaids"}{...}
 {viewerjumpto "Syntax" "pyquaidsce##syntax"}{...}
 {viewerjumpto "Description" "pyquaidsce##description"}{...}
@@ -58,7 +58,7 @@
 {cmd:pyquaidsce} estimates the Quadratic Almost Ideal Demand System (QUAIDS) of Banks, Blundell, and Lewbel (1997) with Ray (1983) demographic scaling and the Shonkwiler & Yen (1999) two-step correction for zero budget shares.
 
 {pstd}
-It serves as a fast drop-in replacement for the Stata command {cmd:quaidsce}, powered by an optimized Python computation engine that provides up to a {bf:44x speedup} under IFGNLS on large datasets.
+It provides a fast Stata front end powered by the {cmd:pyquaidsce} Python computation engine, achieving up to a {bf:44.6x speedup} under IFGNLS in benchmark tests.
 
 
 {marker examples}{...}

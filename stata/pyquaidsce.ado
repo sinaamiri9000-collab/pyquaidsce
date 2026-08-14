@@ -1,4 +1,4 @@
-*! version 1.0.1  14aug2026
+*! version 1.1.0  14aug2026
 *! pyquaidsce: Censored QUAIDS demand system estimation in Stata using Python engine
 *! Author: Sina Amiri (Department of Economics, Shiraz University)
 

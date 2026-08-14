@@ -86,6 +86,26 @@ For a step-by-step tutorial, see [Getting Started](docs/getting-started.md). For
 
 ---
 
+## Using pyquaidsce in Stata
+
+Prefer working in Stata? `pyquaidsce` includes an official Stata package (`pyquaidsce.ado`) that lets you estimate censored QUAIDS models directly inside Stata while harnessing Python's **up to 44x speedup**:
+
+```stata
+// 1. Install the Stata package directly from GitHub
+net install pyquaidsce, from("https://raw.githubusercontent.com/sinaamiri9000-collab/pyquaidsce/main/stata") replace
+
+// 2. Estimate your model in Stata with familiar syntax
+pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) method(ifgnls)
+
+// 3. Postestimation commands work seamlessly
+test [beta]beta_1 = [beta]beta_2
+matrix list e(elas_u)
+```
+
+See the [Stata Package Guide](stata/README.md) for full details, options, and troubleshooting.
+
+---
+
 ## Key Options & Stata Compatibility
 
 `pyquaidsce` provides two switches to let you choose between literal Stata replication and textbook formulas:
@@ -124,7 +144,8 @@ All raw data, logs, scripts, and comparison tables are available in [`benchmarks
 ## Repository Structure
 
 ```text
-src/pyquaidsce/   Core package source code
+src/pyquaidsce/   Core Python package source code and Stata bridge
+stata/            Official Stata package (pyquaidsce.ado, pyquaidsce.sthlp, pkg files)
 tests/            Mathematical unit tests, theory checks, and Stata regression tests
 examples/         Ready-to-run Python and Stata sample scripts
 benchmarks/       Reproducible benchmark data, scripts, and logs
@@ -138,6 +159,7 @@ tools/            Diagnostic scripts and Stata log comparison utilities
 
 - [Getting Started Guide](docs/getting-started.md): Practical tutorial, data prep, and Stata-to-Python option map.
 - [User Guide & API Reference](docs/user-guide.md): Complete reference for all input parameters, the result object, and code examples.
+- [Stata Package Guide](stata/README.md): How to install and run `pyquaidsce` directly within Stata.
 - [Methodology & Model Equations](docs/methodology.md): QUAIDS model specification, Shonkwiler-Yen censoring, and elasticity derivations.
 - [Stata Compatibility Guide](docs/stata-compatibility.md): Explanations of `first_stage_predict`, `strict_stata`, and replication tips.
 - [Validation Evidence](docs/validation.md): Numerical comparison across 113 parameters and elasticities against Stata.

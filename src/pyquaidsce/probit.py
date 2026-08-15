@@ -18,10 +18,12 @@ No external dependency beyond numpy/scipy.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import List
+from typing import List, Optional
 
 import numpy as np
 from scipy.stats import norm
+
+from ._timing import check_deadline
 
 
 @dataclass
@@ -79,6 +81,7 @@ def probit(
     add_constant: bool = True,
     tol: float = 1e-12,
     max_iter: int = 200,
+    deadline: Optional[float] = None,
 ) -> ProbitResult:
     """Fit a probit model.
 
@@ -89,6 +92,7 @@ def probit(
     add_constant : append a column of ones (Stata always does unless -nocons-).
     """
     y = np.asarray(y, dtype=float).ravel()
+    check_deadline(deadline)
     X = np.asarray(X, dtype=float)
     if X.ndim == 1:
         X = X[:, None]
@@ -109,6 +113,7 @@ def probit(
     converged = False
     it = 0
     for it in range(1, max_iter + 1):
+        check_deadline(deadline)
         z = q * (Zk @ b)
         llf = float(np.sum(_log_std_normal_cdf(z)))
         lam = _lambda_ratio(z)
@@ -123,6 +128,7 @@ def probit(
         # first couple of steps when a regressor nearly separates the data).
         t = 1.0
         for _ in range(40):
+            check_deadline(deadline)
             bt = b + t * step
             zt = q * (Zk @ bt)
             llt = float(np.sum(_log_std_normal_cdf(zt)))

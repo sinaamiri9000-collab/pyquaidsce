@@ -67,6 +67,29 @@ The observed budget share equation becomes:
 $$w_i = \Phi_i \cdot w_i^* + \delta_i \cdot \phi_i + \varepsilon_i$$
 where $\delta_i$ is an additional structural parameter to be estimated for each equation.
 
+### Optional external control function
+
+With an externally estimated reduced-form residual $v_h$, version 1.2.0 can
+augment the latent demand share as
+
+$$
+\mu_{ih}=\Phi_{ih}\left(w^Q_{ih}+\kappa_i v_h\right)
++\delta_i\phi_{ih}.
+$$
+
+Each equation has its own unrestricted $\kappa_i$ (`cfcoef_i`). A residual may
+also enter the participation Probits through
+`selection_control_function`; those Probit coefficients are distinct from
+$\kappa_i$. For price or expenditure perturbations the residual is held fixed,
+so the package reports a structural derivative conditional on the supplied
+residual. If the reduced form itself changes under the perturbation, its
+additional $dv/dt$ term must be handled by the empirical design outside the
+generic package.
+
+Because the residual is generated, valid final inference must re-estimate its
+reduced form inside every bootstrap replication. The internal bootstrap is
+therefore disabled whenever this extension is active.
+
 ---
 
 ## 4. Estimation Methods

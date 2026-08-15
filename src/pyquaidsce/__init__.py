@@ -21,15 +21,18 @@ Quick start
 >>> print(res.elasticity_tables())
 """
 
-from .elasticities import Elasticities, elasticities, sample_means
+from .elasticities import (Elasticities, elasticities,
+                           fitted_share_derivatives, sample_means)
 from .estimator import first_stage, quaidsce
-from .model import DemandData, fitted_shares, jacobian_full, latent_shares
+from .model import (DemandData, augmented_latent_shares, fitted_shares,
+                    jacobian_full, latent_shares)
 from .nlsur import nlsur
 from .params import Coefs, Spec, delta_matrix, full_vector, unpack
 from .probit import probit
 from .results import QuaidsceResults
+from .selection import FirstStageLayout
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 __all__ = [
     "quaidsce",
@@ -39,15 +42,18 @@ __all__ = [
     "Spec",
     "Coefs",
     "DemandData",
+    "FirstStageLayout",
     "QuaidsceResults",
     "Elasticities",
     "elasticities",
+    "fitted_share_derivatives",
     "sample_means",
     "unpack",
     "full_vector",
     "delta_matrix",
     "fitted_shares",
     "latent_shares",
+    "augmented_latent_shares",
     "jacobian_full",
     "__version__",
 ]

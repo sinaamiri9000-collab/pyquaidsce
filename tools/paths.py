@@ -7,6 +7,8 @@ from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+BENCH = PROJECT_ROOT / "bench"
+
 
 def find_stata_repo() -> Path:
     """Locate the separately distributed ``quaidsce-master`` source tree.

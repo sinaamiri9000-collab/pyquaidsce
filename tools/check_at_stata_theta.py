@@ -17,7 +17,9 @@ import sys
 
 import numpy as np
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
+sys.path.insert(0, os.path.join(ROOT, "src"))
 from pyquaidsce.estimator import first_stage                          # noqa: E402
 from pyquaidsce.jacfree import make_cache                             # noqa: E402
 from pyquaidsce.model import DemandData, residuals                    # noqa: E402

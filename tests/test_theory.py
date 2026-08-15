@@ -17,26 +17,31 @@ satisfy the model. Both versions are reported.
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "src"
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(SRC))
+
 import numpy as np
 import pandas as pd
-from pathlib import Path
 
 from pyquaidsce import quaidsce
 from pyquaidsce.elasticities import Means, elasticities
 from pyquaidsce.params import Spec, unpack
 
 
-def _benchmark_data(path=None):
+def _small4(path=None):
     if path is None:
-        path = (Path(__file__).resolve().parents[1] / "benchmarks" /
-                "cquaids_ifgnls_4g_20k" / "data" /
-                "benchmark_cquaids_4g_20k.dta")
+        path = Path(__file__).resolve().parents[1] / "bench" / "small4.dta"
     return pd.read_stata(path)
 
 
-SHARES = ["w1", "w2", "w3", "w4"]
-PRICES = ["p1", "p2", "p3", "p4"]
-DEMOS = ["z1", "z2", "z3"]
+SHARES = ["sw1", "sw2", "sw4", "sw9"]
+PRICES = ["p1", "p2", "p4", "p9"]
+DEMOS = ["x1", "x2"]
 
 
 def theory_at_model_shares(res, tol=1e-8):
@@ -80,7 +85,7 @@ def theory_at_model_shares(res, tol=1e-8):
 
 
 def main():
-    df = _benchmark_data()
+    df = _small4()
     print(f"data: {len(df)} obs, shares sum to "
           f"{df[SHARES].to_numpy().sum(axis=1).mean():.10f} on average")
 
@@ -141,13 +146,13 @@ def main():
     k0 = len(rb.names) - (2 * len(SHARES) ** 2 + len(SHARES))
     lo, hi = rb.boot.percentile_ci(95)
     print("    expenditure elasticities: estimate, bootstrap se, "
-          "delta-method se, percentile CI")
+          "analytical se, percentile CI")
     for i, s in enumerate(SHARES):
         j = k0 + i
         print(f"      {s:<7}{rb.b[j]:>10.5f}{rb.boot.se[j]:>11.5f}"
-              f"{rb.se[j]:>11.5f}   [{lo[j]:>8.4f}, {hi[j]:>8.4f}]")
-    print("    (delta-method se is 0 for the elasticity block by construction "
-          "in quaidsce;\n     that is exactly why the package bootstraps.)")
+              f"{rb.analytic_se[j]:>11.5f}   [{lo[j]:>8.4f}, {hi[j]:>8.4f}]")
+    print("    (analytical elasticity S.E.s are NaN by contract; bootstrap "
+          "S.E.s cover the complete reported vector.)")
 
 
 if __name__ == "__main__":

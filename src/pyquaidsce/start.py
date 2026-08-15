@@ -54,12 +54,17 @@ def linear_start(d: DemandData, spec: Spec) -> np.ndarray:
     eta = np.zeros((R, n))
     lam = np.zeros(n)
     delta = np.zeros(n)
+    cfcoef = np.zeros(n)
 
     for i in range(n):
         if spec.censor:
             phi = np.clip(d.cdf[:, i], 1e-8, None)
             y = d.shares[:, i] / phi
-            X = np.column_stack([X0, d.pdf[:, i] / phi])
+            extra = []
+            if spec.control_function:
+                extra.append(d.control_function)
+            extra.append(d.pdf[:, i] / phi)
+            X = np.column_stack([X0, *extra])
         else:
             y = d.shares[:, i]
             X = X0
@@ -76,6 +81,8 @@ def linear_start(d: DemandData, spec: Spec) -> np.ndarray:
         if spec.quadratic:
             lam[i] = bb[p]; p += 1
         if spec.censor:
+            if spec.control_function:
+                cfcoef[i] = bb[p]; p += 1
             delta[i] = bb[p]; p += 1
 
     # symmetry + homogeneity on gamma
@@ -102,6 +109,8 @@ def linear_start(d: DemandData, spec: Spec) -> np.ndarray:
         th[sl["lambda"]] = lam[:w]
     if spec.censor:
         th[sl["delta"]] = delta
+    if spec.control_function:
+        th[sl["cfcoef"]] = cfcoef
     if R > 0:
         ev = []
         for r in range(R):

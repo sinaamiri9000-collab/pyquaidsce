@@ -45,11 +45,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Optional
+import warnings
 
 import numpy as np
+from scipy.stats import norm
 
-from .model import DemandData
-from .params import Coefs, Spec
+from .model import DemandData, _inner
+from .params import Coefs, Spec, unpack
+from .selection import FirstStageLayout
 
 
 @dataclass
@@ -61,6 +64,7 @@ class Means:
     cdf: np.ndarray  # (n,)
     pdf: np.ndarray  # (n,)
     du: np.ndarray  # (n,)
+    control_function: float = 0.0
 
 
 def sample_means(d: DemandData, du: Optional[np.ndarray], spec: Spec) -> Means:
@@ -73,6 +77,7 @@ def sample_means(d: DemandData, du: Optional[np.ndarray], spec: Spec) -> Means:
         cdf=d.cdf.mean(axis=0),
         pdf=d.pdf.mean(axis=0),
         du=(du.mean(axis=0) if du is not None else np.ones(n)),
+        control_function=float(d.control_function.mean()),
     )
 
 
@@ -96,6 +101,71 @@ class Elasticities:
         )
 
 
+def fitted_share_derivatives(
+    theta: np.ndarray,
+    d: DemandData,
+    spec: Spec,
+    *,
+    tau: np.ndarray,
+    layout: FirstStageLayout,
+    selection_index: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Observation-level derivatives of fitted shares.
+
+    Returns ``(dmu_dlnexp, dmu_dlnprices)`` with shapes ``(N, n)`` and
+    ``(N, n, n)``.  The external control residual is conditional and remains
+    fixed.  ``selection_index`` is the Probit linear predictor ``xb``; this
+    helper deliberately does not support the legacy double-CDF ``pr`` path.
+    """
+    if not spec.censor:
+        raise ValueError("fitted-share censoring derivatives require censor=True")
+    tau = np.asarray(tau, dtype=float).ravel()
+    k = np.asarray(selection_index, dtype=float)
+    n = spec.neqn
+    if k.shape != (d.nobs, n):
+        raise ValueError("selection_index must have shape (nobs, neqn)")
+    if tau.size != n * layout.width:
+        raise ValueError("tau length does not match the first-stage layout")
+    if (not np.allclose(d.cdf, norm.cdf(k), atol=1e-11, rtol=1e-11)
+            or not np.allclose(d.pdf, norm.pdf(k), atol=1e-11, rtol=1e-11)):
+        raise ValueError(
+            "DemandData cdf/pdf must be rebuilt from the supplied xb selection_index"
+        )
+
+    c = unpack(theta, spec)
+    inn = _inner(c, d, spec)
+    g = c.alpha[None, :] + d.lnp @ c.gamma.T
+    dw_price = (
+        c.gamma[None, :, :]
+        - inn.S[:, :, None] * g[:, None, :]
+        - inn.T[:, :, None] * inn.B[:, None, :]
+    )
+    augmented = inn.wstar + d.control_function[:, None] * c.cfcoef[None, :]
+    selection_term = augmented - c.delta[None, :] * k
+
+    tau_m = np.array([
+        layout.coefficient(tau, i, layout.expenditure_position)
+        for i in range(n)
+    ])
+    tau_p = np.zeros((n, n))
+    for i in range(n):
+        for j in range(n):
+            tau_p[i, j] = layout.coefficient(
+                tau, i, layout.price_position(j)
+            )
+
+    d_exp = (
+        d.cdf * inn.S
+        + d.pdf * tau_m[None, :] * selection_term
+    )
+    d_price = (
+        d.cdf[:, :, None] * dw_price
+        + d.pdf[:, :, None] * tau_p[None, :, :]
+        * selection_term[:, :, None]
+    )
+    return d_exp, d_price
+
+
 def elasticities(
     c: Coefs,
     spec: Spec,
@@ -104,6 +174,8 @@ def elasticities(
     tau: Optional[np.ndarray] = None,
     np_prob: Optional[int] = None,
     strict_stata: bool = True,
+    *,
+    layout: Optional[FirstStageLayout] = None,
 ) -> Elasticities:
     """Compute the three elasticity matrices at the sample means."""
     n, R = spec.neqn, spec.ndemo
@@ -128,8 +200,26 @@ def elasticities(
     q = np.exp(-lnb - lnc)  # 1 / (b(p) c(p, z))
 
     # ---- predicted shares (ado lines 458-466) ----------------------------- #
+    augmented_mean = wbar + c.cfcoef * means.control_function
     if spec.censor:
-        we = wbar * means.cdf + c.delta * means.pdf
+        we = augmented_mean * means.cdf + c.delta * means.pdf
+        cf_denominator = (
+            spec.control_function
+            or (layout is not None and layout.selection_cf_position is not None)
+        )
+        if (cf_denominator
+                and (not np.isfinite(we).all() or np.any(np.abs(we) <= 1e-12))):
+            raise ValueError(
+                "censoring-adjusted mean share is nonfinite or too close to zero; "
+                "elasticities are undefined"
+            )
+        if cf_denominator and np.any(we < 0):
+            warnings.warn(
+                "negative censoring-adjusted mean share(s); elasticities may be "
+                "economically difficult to interpret",
+                RuntimeWarning,
+                stacklevel=2,
+            )
     else:
         we = wbar.copy()
 
@@ -157,18 +247,34 @@ def elasticities(
     # bench/small4.log to 1e-15.
     # ------------------------------------------------------------------ #
     ie_used = ie_latent
-    if strict_stata and R > 0 and not spec.quadratic and spec.censor:
+    cf_extension = (
+        spec.control_function
+        or (layout is not None and layout.selection_cf_position is not None)
+    )
+    if (strict_stata and R > 0 and not spec.quadratic and spec.censor
+            and not cf_extension):
         ie_used = np.zeros(n)
 
     ie = ie_latent.copy()
     if spec.censor:
         if tau is None or np_prob is None:
             raise ValueError("censored elasticities need tau and np_prob")
+        if layout is not None and layout.width != np_prob:
+            raise ValueError("first-stage layout width does not match np_prob")
+        if tau.size != n * np_prob:
+            raise ValueError("tau length does not match the first-stage layout")
         for i in range(n):
-            loc = np_prob * i + n  # 0-based index of the ln(m) coefficient
+            if layout is None:
+                exp_pos = n if np_prob == n + R + 2 else None
+                tau_m = 0.0 if exp_pos is None else tau[np_prob * i + exp_pos]
+            else:
+                tau_m = layout.coefficient(
+                    tau, i, layout.expenditure_position
+                )
             ie[i] = 1.0 + (
                 means.cdf[i] * (ie_used[i] - 1.0) * wbar[i]
-                + tau[loc] * means.pdf[i] * (wbar[i] - c.delta[i] * means.du[i])
+                + tau_m * means.pdf[i]
+                * (augmented_mean[i] - c.delta[i] * means.du[i])
             ) / we[i]
     else:
         ie = ie_used.copy() if ie_used is not ie_latent else ie_latent.copy()
@@ -208,11 +314,16 @@ def elasticities(
         for i in range(n):
             for j in range(n):
                 kron = 1.0 if i == j else 0.0
-                loc = np_prob * i + j  # 0-based index of the ln p_j coefficient
+                if layout is None:
+                    tau_p = tau[np_prob * i + j]
+                else:
+                    tau_p = layout.coefficient(
+                        tau, i, layout.price_position(j)
+                    )
                 ue[i, j] = -kron + (
                     means.cdf[i] * (ue_latent[i, j] + kron) * wbar[i]
-                    + tau[loc] * means.pdf[i]
-                    * (wbar[i] - c.delta[i] * means.du[i])
+                    + tau_p * means.pdf[i]
+                    * (augmented_mean[i] - c.delta[i] * means.du[i])
                 ) / we[i]
 
     # ---- compensated (Hicksian), Slutsky --------------------------------- #

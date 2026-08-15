@@ -30,6 +30,23 @@ This document provides a comprehensive reference for all input parameters of `qu
 
 ---
 
+### Control Function and Selection Design
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `control_function` | `str` | `None` | Column containing an externally generated residual. It enters latent demand share `i` as `cfcoef_i * residual` inside the Shonkwiler–Yen CDF multiplier. |
+| `selection_prices` | `Sequence[str]` | `None` | Ordered subset of demand-price columns used in each first-stage Probit. `None` keeps all prices; `[]` removes them. |
+| `selection_expenditure` | `bool` or `None` | `True` | Include log expenditure in each Probit. `None` reproduces the legacy branch-dependent behavior. |
+| `selection_covariates` | `Sequence[str]` | `None` | Independent Probit covariates. `None` reuses Ray demographics; `[]` uses none. |
+| `selection_control_function` | `str` | `None` | Residual column used in each Probit with an equation-specific coefficient independent of `cfcoef`. |
+
+These extensions require `censor=True` and `first_stage_predict="xb"`.
+Internal `reps>0` is disabled when an external residual is active because a
+valid generated-regressor bootstrap must re-estimate the reduced form inside
+every replication.
+
+---
+
 ### Estimation Methods and Optimizer Settings
 
 | Parameter | Type | Default | Description |
@@ -76,6 +93,8 @@ This document provides a comprehensive reference for all input parameters of `qu
 | `n_jobs` | `int` | `1` | Number of parallel worker processes for bootstrap replications. |
 | `bootstrap_start` | `str` | `"zero"` | Starting values for each bootstrap draw: `"zero"` (starts each draw from zero) or `"warm"` (starts each draw from full-sample estimates). |
 | `boot_sigma_tol` | `float` | `1e-7` | Outer covariance tolerance used inside bootstrap replications. |
+| `mp_context` | `str` or `None` | `None` | Multiprocessing start method. `None` selects the BLAS-safe cross-platform `"spawn"` default; an available method such as `"forkserver"` can be requested explicitly. |
+| `rep_timeout` | `float` or `None` | `None` | Per-replication wall-clock limit. Cooperative Probit/optimizer checks are backed by a parent watchdog that terminates the disposable child process if necessary. Adds process-start overhead when enabled. |
 
 ---
 
@@ -97,7 +116,10 @@ The object returned by `quaidsce(...)` contains all estimated parameters, standa
 | Attribute / Property | Python Type | Stata Equivalent | Description |
 |---|---|---|---|
 | `res.b` | `np.ndarray` | `e(b)` | Full parameter vector: structural parameters, Probit parameters ($\tau$), and elasticity estimates. |
-| `res.V` | `np.ndarray` | `e(V)` | Covariance matrix of `res.b`. |
+| `res.V` | `np.ndarray` | `e(V)` | Active covariance matrix of `res.b`: bootstrap covariance when `reps>0`, otherwise the finite conditional analytical matrix. |
+| `res.se` | `np.ndarray` | standard errors | Bootstrap S.E.s when available; otherwise conditional analytical S.E.s with unsupported elasticity entries explicitly set to `NaN`. |
+| `res.V_analytic` | `np.ndarray` or `None` | — | Conditional analytical reference retained after bootstrap. |
+| `res.analytic_se` | `np.ndarray` | — | Conditional analytical standard errors. Elasticity entries are `NaN` because their analytical delta-method covariance is not implemented. |
 | `res.names` | `List[str]` | `colnames e(b)` | Parameter labels in `"equation:name"` format. |
 | `res.theta` (or `res.b_est`) | `np.ndarray` | `e(best)` | The vector of estimated free structural parameters. |
 | `res.V_est` | `np.ndarray` | `e(Vest)` | Covariance matrix of the free parameters. |
@@ -168,6 +190,10 @@ if res.boot is not None:
 
     # Full matrix of bootstrap replicates: shape (reps_ok, n_parameters)
     replicate_draws = res.boot.b_star
+
+    # These are synchronized after a successful bootstrap:
+    assert np.allclose(res.V, res.boot.V)
+    assert np.allclose(res.se, res.boot.se)
 ```
 
 ---

@@ -1,4 +1,4 @@
-*! version 1.1.0  14aug2026
+*! version 1.2.0  15aug2026
 *! pyquaidsce: Censored QUAIDS demand system estimation in Stata using Python engine
 *! Author: Sina Amiri (Department of Economics, Shiraz University)
 
@@ -9,9 +9,15 @@ program define pyquaidsce, eclass
         [ prices(varlist numeric) lnprices(varlist numeric) ///
           expenditure(varname numeric) lnexpenditure(varname numeric) ///
           demographics(varlist numeric) anot(real 10.0) ///
+          control_function(varname numeric) ///
+          selection_control_function(varname numeric) ///
+          selection_prices(varlist numeric) selection_noprices ///
+          selection_covariates(varlist numeric) selection_nocovariates ///
+          selection_noexpenditure ///
           method(string) algorithm(string) reps(integer 0) ///
           first_stage_predict(string) strict_stata(string) ///
-          seed(integer -1) n_jobs(integer 1) noquadratic nocensor nolog level(cilevel) ]
+          seed(integer -1) n_jobs(integer 1) mp_context(string) ///
+          rep_timeout(real 0) noquadratic nocensor nolog level(cilevel) ]
 
     // 1. Validate inputs
     if "`prices'" == "" & "`lnprices'" == "" {
@@ -42,10 +48,20 @@ program define pyquaidsce, eclass
         display as error "number of prices (`n_prices') must equal number of budget shares (`n_shares')"
         exit 198
     }
+    if "`selection_prices'" != "" & "`selection_noprices'" != "" {
+        display as error "cannot combine selection_prices() and selection_noprices"
+        exit 198
+    }
+    if "`selection_covariates'" != "" & "`selection_nocovariates'" != "" {
+        display as error "cannot combine selection_covariates() and selection_nocovariates"
+        exit 198
+    }
 
     // 2. Mark estimation sample
     marksample touse
-    markout `touse' `p_vars' `exp_var' `demographics'
+    markout `touse' `p_vars' `exp_var' `demographics' ///
+        `control_function' `selection_control_function' ///
+        `selection_prices' `selection_covariates'
 
     quietly count if `touse'
     if r(N) == 0 {
@@ -79,6 +95,32 @@ program define pyquaidsce, eclass
     local is_censor = ("`censor'" == "")
     local is_strict = ("`strict_stata'" != "false" & "`strict_stata'" != "0")
     local is_verbose = ("`log'" == "")
+    local selection_prices_specified = ///
+        ("`selection_prices'" != "" | "`selection_noprices'" != "")
+    local selection_covariates_specified = ///
+        ("`selection_covariates'" != "" | "`selection_nocovariates'" != "")
+    local selection_expenditure_on = ("`selection_noexpenditure'" == "")
+    local extension_active = ///
+        ("`control_function'" != "" | "`selection_control_function'" != "" | ///
+         `selection_prices_specified' | `selection_covariates_specified' | ///
+         !`selection_expenditure_on')
+    if `extension_active' & !`is_censor' {
+        display as error "control-function/selection extensions require censoring"
+        exit 198
+    }
+    if `extension_active' & "`first_stage_predict'" != "xb" {
+        display as error "control-function/selection extensions require first_stage_predict(xb)"
+        exit 198
+    }
+    if `extension_active' & `reps' > 0 {
+        display as error "bootstrap is disabled for precomputed control residuals or a custom selection design"
+        display as text  "Rebuild the reduced form and selection design inside each bootstrap replication."
+        exit 198
+    }
+    if `rep_timeout' < 0 {
+        display as error "rep_timeout must be nonnegative (0 disables it)"
+        exit 198
+    }
 
     // 4. Temporary matrices for ereturn
     tempname b V elas_i elas_u elas_c
@@ -96,7 +138,7 @@ program define pyquaidsce, eclass
         }
     }
 
-    python: from pyquaidsce.stata_bridge import run_from_stata; import sfi; run_from_stata(shares_str=sfi.Macro.getLocal("varlist"), prices_str=sfi.Macro.getLocal("p_vars"), expenditure_str=sfi.Macro.getLocal("exp_var"), demographics_str=sfi.Macro.getLocal("demographics"), anot=float(sfi.Macro.getLocal("anot")), method=sfi.Macro.getLocal("method"), algorithm=sfi.Macro.getLocal("algorithm"), reps=int(sfi.Macro.getLocal("reps")), seed=int(sfi.Macro.getLocal("seed")), n_jobs=int(sfi.Macro.getLocal("n_jobs")), first_stage_predict=sfi.Macro.getLocal("first_stage_predict"), strict_stata=bool(int(sfi.Macro.getLocal("is_strict"))), quadratic=bool(int(sfi.Macro.getLocal("is_quad"))), censor=bool(int(sfi.Macro.getLocal("is_censor"))), is_lnprices=bool(int(sfi.Macro.getLocal("is_lnp"))), is_lnexp=bool(int(sfi.Macro.getLocal("is_lnexp"))), verbose=bool(int(sfi.Macro.getLocal("is_verbose"))), b_mat_name=sfi.Macro.getLocal("b"), v_mat_name=sfi.Macro.getLocal("V"), elas_i_name=sfi.Macro.getLocal("elas_i"), elas_u_name=sfi.Macro.getLocal("elas_u"), elas_c_name=sfi.Macro.getLocal("elas_c"), touse_var=sfi.Macro.getLocal("touse"))
+    python: from pyquaidsce.stata_bridge import run_from_stata; import sfi; _rt=float(sfi.Macro.getLocal("rep_timeout")); run_from_stata(shares_str=sfi.Macro.getLocal("varlist"), prices_str=sfi.Macro.getLocal("p_vars"), expenditure_str=sfi.Macro.getLocal("exp_var"), demographics_str=sfi.Macro.getLocal("demographics"), anot=float(sfi.Macro.getLocal("anot")), method=sfi.Macro.getLocal("method"), algorithm=sfi.Macro.getLocal("algorithm"), reps=int(sfi.Macro.getLocal("reps")), seed=int(sfi.Macro.getLocal("seed")), n_jobs=int(sfi.Macro.getLocal("n_jobs")), mp_context=sfi.Macro.getLocal("mp_context") or None, rep_timeout=_rt if _rt > 0 else None, first_stage_predict=sfi.Macro.getLocal("first_stage_predict"), strict_stata=bool(int(sfi.Macro.getLocal("is_strict"))), quadratic=bool(int(sfi.Macro.getLocal("is_quad"))), censor=bool(int(sfi.Macro.getLocal("is_censor"))), is_lnprices=bool(int(sfi.Macro.getLocal("is_lnp"))), is_lnexp=bool(int(sfi.Macro.getLocal("is_lnexp"))), control_function=sfi.Macro.getLocal("control_function"), selection_control_function=sfi.Macro.getLocal("selection_control_function"), selection_prices_str=sfi.Macro.getLocal("selection_prices"), selection_prices_specified=bool(int(sfi.Macro.getLocal("selection_prices_specified"))), selection_covariates_str=sfi.Macro.getLocal("selection_covariates"), selection_covariates_specified=bool(int(sfi.Macro.getLocal("selection_covariates_specified"))), selection_expenditure=bool(int(sfi.Macro.getLocal("selection_expenditure_on"))), verbose=bool(int(sfi.Macro.getLocal("is_verbose"))), b_mat_name=sfi.Macro.getLocal("b"), v_mat_name=sfi.Macro.getLocal("V"), elas_i_name=sfi.Macro.getLocal("elas_i"), elas_u_name=sfi.Macro.getLocal("elas_u"), elas_c_name=sfi.Macro.getLocal("elas_c"), touse_var=sfi.Macro.getLocal("touse"))
 
     // 6. Post estimation results to e()
     ereturn post `b' `V', esample(`touse')
@@ -120,6 +162,10 @@ program define pyquaidsce, eclass
     ereturn local shares "`varlist'"
     ereturn local prices "`p_vars'"
     ereturn local demographics "`demographics'"
+    ereturn local control_function "`control_function'"
+    ereturn local selection_control_function "`selection_control_function'"
+    ereturn local selection_prices "`selection_prices'"
+    ereturn local selection_covariates "`selection_covariates'"
 
     // 7. Display Stata output
     display _n as text "`model_title'"

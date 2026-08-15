@@ -122,6 +122,8 @@ if __name__ == "__main__":
         reps=200,          # 200 bootstrap replications
         n_jobs=4,          # Parallel execution across 4 CPU cores
         seed=123456,       # Reproducible random seed
+        mp_context="spawn", # BLAS-safe cross-platform worker start
+        rep_timeout=900,   # Cooperative + hard 15-minute limit per replication
     )
 
     # Summary table will now include bootstrap standard errors
@@ -130,3 +132,14 @@ if __name__ == "__main__":
 
 > [!NOTE]
 > When using multiprocessing (`n_jobs > 1`) on Windows, always enclose your script within `if __name__ == "__main__":`.
+
+After a successful bootstrap, `res.V` and `res.se` are the bootstrap covariance
+and standard errors. The conditional analytical reference is retained in
+`res.V_analytic` and `res.analytic_se`. Without bootstrap, analytical elasticity
+S.E.s are deliberately `NaN`; the rest of `res.V` remains finite.
+
+`rep_timeout` is checked cooperatively at Probit, nonlinear-iteration, and
+chunk boundaries. A parent-side watchdog also terminates the disposable child
+process if a native call remains stuck. External control-function models require
+an outer bootstrap that rebuilds the reduced form and cannot use the internal
+`reps` option.

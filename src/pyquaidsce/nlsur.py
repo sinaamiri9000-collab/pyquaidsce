@@ -30,6 +30,7 @@ from typing import Callable, List, Optional, Tuple
 
 import numpy as np
 
+from ._timing import check_deadline
 from .jacfree import JacCache, jacobian_free, make_cache
 from .model import DemandData, jacobian_full, residuals
 from .params import Spec, delta_blocks
@@ -95,6 +96,7 @@ def _normal_equations(
     cache: JacCache,
     P: np.ndarray,
     chunk: int,
+    deadline: Optional[float] = None,
 ) -> Tuple[np.ndarray, np.ndarray, float]:
     """Accumulate ``G = sum J'Sinv J``, ``g = sum J'Sinv u`` and the objective."""
     N = d.nobs
@@ -105,6 +107,7 @@ def _normal_equations(
     obj = 0.0
     identity_P = bool(np.allclose(P, np.eye(m), atol=0.0, rtol=0.0))
     for s in range(0, N, chunk):
+        check_deadline(deadline)
         e = min(s + chunk, N)
         sl = slice(s, e)
         u = d.shares[sl, :m] - _fitted_chunk(theta, d, spec, sl)
@@ -133,6 +136,7 @@ def _fitted_chunk(theta, d: DemandData, spec: Spec, sl: slice) -> np.ndarray:
     sub = DemandData(
         lnp=d.lnp[sl], lnexp=d.lnexp[sl], shares=d.shares[sl],
         demo=d.demo[sl], cdf=d.cdf[sl], pdf=d.pdf[sl], a0=d.a0,
+        control_function=d.control_function[sl],
     )
     return fitted_shares(theta, sub, spec)
 
@@ -144,7 +148,14 @@ def _objective(theta, d: DemandData, spec: Spec, P: np.ndarray) -> float:
 
 
 # --------------------------------------------------------------------------- #
-def _safe_obj(theta, d: DemandData, spec: Spec, P: np.ndarray) -> float:
+def _safe_obj(
+    theta,
+    d: DemandData,
+    spec: Spec,
+    P: np.ndarray,
+    deadline: Optional[float] = None,
+) -> float:
+    check_deadline(deadline)
     try:
         with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
             v = _objective(theta, d, spec, P)
@@ -193,6 +204,7 @@ def gauss_newton(
     algorithm: str = "gn",
     nrtol_stop: float = 1e-12,
     stop_rule: str = "tight",
+    deadline: Optional[float] = None,
 ) -> Tuple[np.ndarray, float, int, bool]:
     """Minimise ``sum_t u_t' sigma^-1 u_t``.
 
@@ -214,15 +226,19 @@ def gauss_newton(
     nu = 2.0
 
     for it in range(1, max_iter + 1):
-        G, g, obj = _normal_equations(theta, d, spec, cache, P, chunk)
+        check_deadline(deadline)
+        G, g, obj = _normal_equations(
+            theta, d, spec, cache, P, chunk, deadline=deadline
+        )
 
         if algorithm == "gn":
             direction = _solve_scaled(G, g)
             nrtol = abs(float(direction @ g)) / max(abs(obj), 1e-300)
             best, t = None, 1.0
             for _ in range(40):
+                check_deadline(deadline)
                 cand = theta + t * direction
-                oc = _safe_obj(cand, d, spec, P)
+                oc = _safe_obj(cand, d, spec, P, deadline=deadline)
                 if oc < obj:
                     best = (cand, oc, t, 0.0)
                     break
@@ -230,8 +246,9 @@ def gauss_newton(
             if best is None:
                 m2 = 1e-8
                 for _ in range(30):
+                    check_deadline(deadline)
                     cand = theta + _solve_scaled(G, g, mu=m2)
-                    oc = _safe_obj(cand, d, spec, P)
+                    oc = _safe_obj(cand, d, spec, P, deadline=deadline)
                     if oc < obj:
                         best = (cand, oc, 1.0, m2)
                         break
@@ -246,9 +263,10 @@ def gauss_newton(
             nrtol = abs(float(gn @ g)) / max(abs(obj), 1e-300)
             accepted = False
             for _ in range(50):
+                check_deadline(deadline)
                 step = _solve_scaled(G, g, mu=mu)
                 cand = theta + step
-                oc = _safe_obj(cand, d, spec, P)
+                oc = _safe_obj(cand, d, spec, P, deadline=deadline)
                 pred = 2.0 * float(step @ g) - float(step @ (G @ step))
                 rho = (obj - oc) / pred if pred > 0 else -1.0
                 if oc < obj and rho > 0:
@@ -319,6 +337,7 @@ def nlsur(
     verbose: bool = False,
     log: Optional[Callable[[str], None]] = None,
     gn_log: Optional[Callable[[str], None]] = None,
+    deadline: Optional[float] = None,
 ) -> NlsurResult:
     """Fit the system.
 
@@ -345,6 +364,7 @@ def nlsur(
     if vce_sigma not in ("objective", "final"):
         raise ValueError(f"unknown vce_sigma {vce_sigma!r}")
     say = log or (print if verbose else (lambda *_: None))
+    check_deadline(deadline)
 
     N = d.nobs
     m = spec.n_eq_estimated
@@ -379,6 +399,7 @@ def nlsur(
         ok = False
         obj = history[-1]
         for outer in range(3, max_outer + 1):
+            check_deadline(deadline)
             say(f"FGNLS iteration {outer}...")
             sigma_new = sigma_from(theta)
             theta_prev = theta.copy()
@@ -388,6 +409,7 @@ def nlsur(
                 nrtol_stop=(nrtol_stop if tight
                             else max(nrtol_stop, inner_nrtol_early)),
                 stop_rule=stop_rule,
+                deadline=deadline,
             )
             total_gn += ngn
             history.append(obj)
@@ -404,7 +426,8 @@ def nlsur(
                 tight = False
         return _finish(theta, d, spec, sigma_obj, sigma_from, method,
                        vce_sigma, chunk, n_outer, total_gn,
-                       bool(ok and outer_converged), obj, history)
+                       bool(ok and outer_converged), obj, history,
+                       deadline=deadline)
 
     # ---- step 1: NLS ------------------------------------------------------ #
     say("Calculating NLS estimates...")
@@ -413,6 +436,7 @@ def nlsur(
         theta, d, spec, I_m, tol=tol, max_iter=max_iter, chunk=chunk,
         say=gn_log, algorithm=algorithm, nrtol_stop=nrtol_stop,
         stop_rule=stop_rule,
+        deadline=deadline,
     )
     total_gn += ngn
     history.append(obj)
@@ -428,6 +452,7 @@ def nlsur(
             theta, d, spec, sigma, tol=tol, max_iter=max_iter, chunk=chunk,
             say=gn_log, algorithm=algorithm, nrtol_stop=nrtol_stop,
             stop_rule=stop_rule,
+            deadline=deadline,
         )
         total_gn += ngn
         history.append(obj)
@@ -447,6 +472,7 @@ def nlsur(
             tight = False
             outer_converged = False
             for outer in range(3, max_outer + 1):
+                check_deadline(deadline)
                 say(f"FGNLS iteration {outer}...")
                 sigma_new = sigma_from(theta)
                 theta_prev = theta.copy()
@@ -456,6 +482,7 @@ def nlsur(
                     nrtol_stop=(nrtol_stop if tight else
                                 max(nrtol_stop, inner_nrtol_early)),
                     stop_rule=stop_rule,
+                    deadline=deadline,
                 )
                 total_gn += ngn
                 history.append(obj)
@@ -476,12 +503,15 @@ def nlsur(
     if method == "ifgnls":
         overall_converged = bool(ok and outer_converged)
     return _finish(theta, d, spec, sigma_obj, sigma_from, method, vce_sigma,
-                   chunk, n_outer, total_gn, overall_converged, obj, history)
+                   chunk, n_outer, total_gn, overall_converged, obj, history,
+                   deadline=deadline)
 
 
 def _finish(theta, d, spec, sigma_obj, sigma_from, method, vce_sigma, chunk,
-            n_outer, total_gn, ok, obj, history) -> NlsurResult:
+            n_outer, total_gn, ok, obj, history,
+            deadline: Optional[float] = None) -> NlsurResult:
     """Assemble e(V), e(ll) and the result object."""
+    check_deadline(deadline)
     N, m = d.nobs, spec.n_eq_estimated
     sigma_final = sigma_from(theta)
     sigma_V = sigma_final if vce_sigma == "final" else sigma_obj
@@ -490,7 +520,9 @@ def _finish(theta, d, spec, sigma_obj, sigma_from, method, vce_sigma, chunk,
 
     cache = make_cache(spec)
     P = _whitener(sigma_V)
-    G, _, _ = _normal_equations(theta, d, spec, cache, P, chunk)
+    G, _, _ = _normal_equations(
+        theta, d, spec, cache, P, chunk, deadline=deadline
+    )
     V = np.linalg.inv(G)
 
     _, logdet = np.linalg.slogdet(sigma_final)

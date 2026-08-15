@@ -19,7 +19,7 @@ Several computational strategies make `pyquaidsce` significantly faster than con
 4. **Efficient Inexact-Outer IFGNLS**:
    Early outer iterations of the covariance matrix $\Sigma$ do not require solving the inner Gauss-Newton steps to machine precision. Tight tolerances are only applied as the outer fixed-point stabilizes, cutting the total number of optimization steps.
 5. **Parallel Bootstrap Worker Management**:
-   Each worker process pins its internal BLAS threads to 1, preventing CPU thread oversubscription and ensuring maximum throughput across cores during bootstrap replications.
+   Each worker process pins its internal BLAS threads to 1, preventing CPU thread oversubscription and ensuring maximum throughput across cores during bootstrap replications. The default `spawn` context avoids inheriting OpenBLAS/MKL locks; completed replications stream back unordered for immediate progress, then are sorted by replication number before storage.
 
 ---
 
@@ -45,3 +45,10 @@ When running large bootstrap routines (`reps=500+`):
   res = quaidsce(..., reps=500, n_jobs=8)
   ```
 - **Warm-start Option**: Setting `bootstrap_start="warm"` reuses the full-sample parameter estimates as starting values for each bootstrap draw, further accelerating bootstrap convergence.
+- **Per-replication deadline**: `rep_timeout=900` drops a replication that passes
+  the 15-minute deadline. Cooperative checks normally stop the optimizer first;
+  a parent-side watchdog terminates the disposable child process if native code
+  remains stuck. Enabling this hard backstop adds process-start overhead.
+- **Start method**: leave `mp_context=None` for the safe `spawn` default. An
+  explicit context should be used only after testing it on the target operating
+  system and BLAS build.

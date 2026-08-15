@@ -23,12 +23,21 @@ def run_from_stata(
     reps: int = 0,
     seed: int = -1,
     n_jobs: int = 1,
+    mp_context: Optional[str] = None,
+    rep_timeout: Optional[float] = None,
     first_stage_predict: str = "pr",
     strict_stata: bool = True,
     quadratic: bool = True,
     censor: bool = True,
     is_lnprices: bool = False,
     is_lnexp: bool = False,
+    control_function: str = "",
+    selection_control_function: str = "",
+    selection_prices_str: str = "",
+    selection_prices_specified: bool = False,
+    selection_covariates_str: str = "",
+    selection_covariates_specified: bool = False,
+    selection_expenditure: bool = True,
     verbose: bool = True,
     b_mat_name: str = "__pyq_b",
     v_mat_name: str = "__pyq_V",
@@ -52,6 +61,16 @@ def run_from_stata(
     prices = prices_str.split()
     demos = demographics_str.split() if demographics_str.strip() else []
     exp_var = expenditure_str.strip()
+    cf_var = control_function.strip() or None
+    selection_cf_var = selection_control_function.strip() or None
+    selection_prices = (
+        selection_prices_str.split()
+        if selection_prices_specified else None
+    )
+    selection_covariates = (
+        selection_covariates_str.split()
+        if selection_covariates_specified else None
+    )
 
     # 2. Get estimation sample mask from Stata
     touse_raw = sfi.Data.get(var=touse_var)
@@ -62,7 +81,13 @@ def run_from_stata(
         raise ValueError("No observations selected in estimation sample (all touse == 0).")
 
     # 3. Read data columns from Stata memory
-    all_vars = shares + prices + demos + [exp_var]
+    all_vars = list(dict.fromkeys(
+        shares + prices + demos + [exp_var]
+        + ([cf_var] if cf_var is not None else [])
+        + ([selection_cf_var] if selection_cf_var is not None else [])
+        + ([] if selection_prices is None else selection_prices)
+        + ([] if selection_covariates is None else selection_covariates)
+    ))
     data_dict = {}
     for v in all_vars:
         col_vals = sfi.Data.get(var=v)
@@ -81,6 +106,11 @@ def run_from_stata(
         expenditure=None if is_lnexp else exp_var,
         lnexpenditure=exp_var if is_lnexp else None,
         demographics=demos if demos else None,
+        control_function=cf_var,
+        selection_control_function=selection_cf_var,
+        selection_prices=selection_prices,
+        selection_covariates=selection_covariates,
+        selection_expenditure=bool(selection_expenditure),
         anot=float(anot),
         quadratic=quadratic,
         censor=censor,
@@ -89,6 +119,8 @@ def run_from_stata(
         reps=int(reps),
         seed=seed_arg,
         n_jobs=int(n_jobs),
+        mp_context=mp_context or None,
+        rep_timeout=rep_timeout,
         first_stage_predict=first_stage_predict,
         strict_stata=strict_stata,
         verbose=verbose,

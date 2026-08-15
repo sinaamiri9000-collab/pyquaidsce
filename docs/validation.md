@@ -42,6 +42,17 @@ In addition to the Stata benchmark, `pyquaidsce` includes automated unit tests t
 - **Economic Theory Restrictions**: Confirming that Slutsky symmetry, price homogeneity, and adding-up restrictions hold at model-consistent shares.
 - **Probit Estimator**: Validated against SciPy BFGS optimization and analytic information matrices.
 - **Input Validation**: Ensuring appropriate error messages for invalid dimensions or non-positive prices/expenditures.
+- **Control Function Extension**: Parameter maps, independent selection layouts,
+  analytic/full/fast Jacobians, 220 conditional finite-difference derivatives,
+  API gates, and end-to-end recovery checks.
+- **Release Integration**: Presence of 1.0.2/1.1/1.2 APIs, finite analytical
+  covariance handling, real cooperative timeout behavior, and Stata bridge
+  argument/matrix forwarding.
+
+Release 1.2.0 collects **25 tests**; all pass both from the repository and from
+the built source distribution. A separate five-replication `pr`/`xb` bootstrap
+smoke test and its JSON results are stored under
+`benchmarks/release_120/results/`.
 
 ### Running the Test Suite:
 

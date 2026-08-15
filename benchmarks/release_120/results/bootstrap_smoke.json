@@ -1,0 +1,36 @@
+{
+  "package_version": "1.2.0",
+  "dataset": "benchmarks/cquaids_ifgnls_4g_20k/data/benchmark_cquaids_4g_20k.dta",
+  "observations": 3000,
+  "runs": [
+    {
+      "predict": "pr",
+      "elapsed_seconds": 150.17022866000002,
+      "reps_requested": 5,
+      "reps_ok": 5,
+      "failures": [],
+      "converged": true,
+      "bootstrap_se_min": 0.00011819150562040978,
+      "bootstrap_se_max": 0.581724433616619,
+      "elasticity_se_min": 0.0033771951028275307,
+      "elasticity_se_max": 0.025879858840891817,
+      "v_se_synchronized": true,
+      "analytic_elasticity_se_are_nan": true
+    },
+    {
+      "predict": "xb",
+      "elapsed_seconds": 12.817652649000138,
+      "reps_requested": 5,
+      "reps_ok": 5,
+      "failures": [],
+      "converged": true,
+      "bootstrap_se_min": 0.00040563946066486266,
+      "bootstrap_se_max": 0.9906250394741005,
+      "elasticity_se_min": 0.012006273191145082,
+      "elasticity_se_max": 0.09769977651051803,
+      "v_se_synchronized": true,
+      "analytic_elasticity_se_are_nan": true
+    }
+  ],
+  "timeout_check": "every bootstrap replication failed; first error: TimeoutError: bootstrap replication exceeded its time limit"
+}

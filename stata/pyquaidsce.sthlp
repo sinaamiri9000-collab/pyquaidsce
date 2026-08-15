@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1.1.0  14aug2026}{...}
+{* *! version 1.2.0  15aug2026}{...}
 {vieweralsosee "[R] quaids" "help quaids"}{...}
 {viewerjumpto "Syntax" "pyquaidsce##syntax"}{...}
 {viewerjumpto "Description" "pyquaidsce##description"}{...}
@@ -36,6 +36,15 @@
 {synopt :{opt noquadratic}}estimate linear AIDS instead of QUAIDS{p_end}
 {synopt :{opt nocensor}}estimate uncensored demand system without Shonkwiler-Yen correction{p_end}
 
+{syntab:Control function and selection design}
+{synopt :{opt control_function(varname)}}externally generated reduced-form residual entering latent demand shares{p_end}
+{synopt :{opt selection_control_function(varname)}}residual entering each first-stage Probit with equation-specific coefficients{p_end}
+{synopt :{opt selection_prices(varlist)}}ordered subset of demand prices used by the first-stage Probits{p_end}
+{synopt :{opt selection_noprices}}omit all price variables from the first-stage Probits{p_end}
+{synopt :{opt selection_covariates(varlist)}}ordered first-stage covariates, independent of Ray demographics{p_end}
+{synopt :{opt selection_nocovariates}}omit all covariates from the first-stage Probits{p_end}
+{synopt :{opt selection_noexpenditure}}omit log expenditure from the first-stage Probits{p_end}
+
 {syntab:Estimation & Optimizer}
 {synopt :{opt method(method)}}estimation method: {cmd:ifgnls} (default), {cmd:fgnls}, or {cmd:nls}{p_end}
 {synopt :{opt algorithm(alg)}}optimizer algorithm: {cmd:gn} (Gauss-Newton, default) or {cmd:lm} (Levenberg-Marquardt){p_end}
@@ -46,6 +55,8 @@
 {synopt :{opt reps(#)}}number of bootstrap replications; default is {cmd:reps(0)} (disabled){p_end}
 {synopt :{opt seed(#)}}random number seed for bootstrap{p_end}
 {synopt :{opt n_jobs(#)}}number of parallel CPU cores for bootstrap; default is {cmd:n_jobs(1)}{p_end}
+{synopt :{opt mp_context(method)}}Python multiprocessing start method; safe default is {cmd:spawn}{p_end}
+{synopt :{opt rep_timeout(#)}}cooperative plus parent-watchdog time limit in seconds for each bootstrap replication; 0 disables it{p_end}
 {synopt :{opt nolog}}suppress estimation iteration log{p_end}
 {synopt :{opt level(#)}}set confidence level; default is {cmd:level(95)}{p_end}
 {synoptline}
@@ -60,6 +71,13 @@
 {pstd}
 It provides a fast Stata front end powered by the {cmd:pyquaidsce} Python computation engine, achieving up to a {bf:44.6x speedup} under IFGNLS in benchmark tests.
 
+{pstd}
+Control-function and custom-selection options require
+{cmd:first_stage_predict(xb)} and are currently restricted to
+{cmd:reps(0)}. A valid bootstrap for a generated residual must re-estimate its
+reduced form inside every replication; passing a precomputed residual unchanged
+would understate uncertainty.
+
 
 {marker examples}{...}
 {title:Examples}
@@ -71,7 +89,11 @@ It provides a fast Stata front end powered by the {cmd:pyquaidsce} Python comput
 
 {pstd}Run estimation with 200 parallel bootstrap replications across 4 CPU cores:{p_end}
 
-{phang2}{cmd:. pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) reps(200) n_jobs(4) seed(123456)}{p_end}
+{phang2}{cmd:. pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) reps(200) n_jobs(4) mp_context(spawn) rep_timeout(900) seed(123456)}{p_end}
+
+{pstd}Use an externally generated demand residual and a distinct selection design:{p_end}
+
+{phang2}{cmd:. pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) control_function(vhat) selection_control_function(vhat_sel) selection_prices(p3 p1) selection_covariates(urban) selection_noexpenditure first_stage_predict(xb) reps(0)}{p_end}
 
 
 {marker results}{...}
@@ -93,6 +115,8 @@ It provides a fast Stata front end powered by the {cmd:pyquaidsce} Python comput
 {synopt:{cmd:e(cmd)}}{cmd:pyquaidsce}{p_end}
 {synopt:{cmd:e(title)}}model title{p_end}
 {synopt:{cmd:e(method)}}estimation method ({cmd:ifgnls}, {cmd:fgnls}, {cmd:nls}){p_end}
+{synopt:{cmd:e(control_function)}}demand control-function variable, if supplied{p_end}
+{synopt:{cmd:e(selection_control_function)}}selection control-function variable, if supplied{p_end}
 
 {synoptset 18 tabbed}{...}
 {p2col 5 18 22 2: Matrices}{p_end}

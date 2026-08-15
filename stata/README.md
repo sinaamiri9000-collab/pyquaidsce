@@ -73,7 +73,24 @@ use mydata.dta, clear
 pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) method(ifgnls)
 
 // 3. Estimate with parallel bootstrap standard errors (e.g. 200 replications across 4 CPU cores)
-pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) reps(200) n_jobs(4) seed(12345)
+pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) reps(200) n_jobs(4) mp_context(spawn) rep_timeout(900) seed(12345)
+```
+
+`rep_timeout()` combines cooperative checks between numerical work units with a
+parent-side process watchdog. When a timeout is set, each replication runs in a
+disposable child process so a stuck native call can be terminated without
+killing unrelated replications.
+
+Advanced control-function and custom-selection options are available from
+Stata. They require `first_stage_predict(xb)` and `reps(0)` because a valid
+bootstrap must rebuild any generated residual inside every replication:
+
+```stata
+pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
+    demographics(hh_size urban) control_function(vhat) ///
+    selection_control_function(vhat_sel) selection_prices(p3 p1) ///
+    selection_covariates(urban) selection_noexpenditure ///
+    first_stage_predict(xb) reps(0)
 ```
 
 ---

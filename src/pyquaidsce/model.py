@@ -66,6 +66,7 @@ class DemandData:
     cdf: np.ndarray  # (N, n) Phi_i   (ones when nocensor)
     pdf: np.ndarray  # (N, n) phi_i   (zeros when nocensor)
     a0: float = 0.0
+    control_function: Optional[np.ndarray] = None  # (N,) external residual
 
     def __post_init__(self) -> None:
         self.lnp = np.ascontiguousarray(self.lnp, dtype=float)
@@ -76,6 +77,16 @@ class DemandData:
             self.demo = self.demo[:, None]
         self.cdf = np.ascontiguousarray(self.cdf, dtype=float)
         self.pdf = np.ascontiguousarray(self.pdf, dtype=float)
+        if self.control_function is None:
+            self.control_function = np.zeros(self.lnp.shape[0], dtype=float)
+        else:
+            self.control_function = np.ascontiguousarray(
+                self.control_function, dtype=float
+            ).ravel()
+        if self.control_function.size != self.lnp.shape[0]:
+            raise ValueError("control_function must have one value per observation")
+        if not np.isfinite(self.control_function).all():
+            raise ValueError("control_function must contain only finite values")
 
     @property
     def nobs(self) -> int:
@@ -90,6 +101,7 @@ class DemandData:
             cdf=self.cdf[idx],
             pdf=self.pdf[idx],
             a0=self.a0,
+            control_function=self.control_function[idx],
         )
 
 
@@ -159,13 +171,22 @@ def fitted_shares(theta: np.ndarray, d: DemandData, spec: Spec) -> np.ndarray:
     c = unpack(theta, spec)
     inn = _inner(c, d, spec)
     if spec.censor:
-        return inn.wstar * d.cdf + c.delta[None, :] * d.pdf
+        augmented = inn.wstar + d.control_function[:, None] * c.cfcoef[None, :]
+        return augmented * d.cdf + c.delta[None, :] * d.pdf
     return inn.wstar[:, : spec.neqn - 1]
 
 
 def latent_shares(theta: np.ndarray, d: DemandData, spec: Spec) -> np.ndarray:
     """The uncensored (latent) shares w*, all n of them."""
     return _inner(unpack(theta, spec), d, spec).wstar
+
+
+def augmented_latent_shares(
+    theta: np.ndarray, d: DemandData, spec: Spec
+) -> np.ndarray:
+    """Latent QUAIDS shares augmented by the external control residual."""
+    c = unpack(theta, spec)
+    return _inner(c, d, spec).wstar + d.control_function[:, None] * c.cfcoef
 
 
 def residuals(theta: np.ndarray, d: DemandData, spec: Spec) -> np.ndarray:
@@ -194,6 +215,7 @@ def jacobian_full(
         d = DemandData(
             lnp=d.lnp[rows], lnexp=d.lnexp[rows], shares=d.shares[rows],
             demo=d.demo[rows], cdf=d.cdf[rows], pdf=d.pdf[rows], a0=d.a0,
+            control_function=d.control_function[rows],
         )
     c = unpack(theta, spec)
     inn = _inner(c, d, spec)
@@ -269,5 +291,9 @@ def jacobian_full(
         d0 = sl["delta"].start
         for i in range(m):
             J[:, i, d0 + i] = d.pdf[:, i]
+        if spec.control_function:
+            c0 = sl["cfcoef"].start
+            for i in range(m):
+                J[:, i, c0 + i] = d.cdf[:, i] * d.control_function
 
     return J

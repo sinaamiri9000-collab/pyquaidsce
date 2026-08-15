@@ -9,7 +9,9 @@ import sys
 import numpy as np
 import pandas as pd
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
+sys.path.insert(0, os.path.join(ROOT, "src"))
 from pyquaidsce.estimator import first_stage           # noqa: E402
 from tools.statalog import parse_coef_table            # noqa: E402
 from tools.paths import find_stata_repo                 # noqa: E402

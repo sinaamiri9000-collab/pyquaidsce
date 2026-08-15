@@ -82,6 +82,7 @@ def jacobian_free(
         d = DemandData(
             lnp=d.lnp[rows], lnexp=d.lnexp[rows], shares=d.shares[rows],
             demo=d.demo[rows], cdf=d.cdf[rows], pdf=d.pdf[rows], a0=d.a0,
+            control_function=d.control_function[rows],
         )
     c = unpack(theta, spec)
     inn = _inner(c, d, spec)
@@ -96,7 +97,7 @@ def jacobian_free(
     T = inn.T[:, :m]
     D = inn.D
 
-    J = np.empty((N, m, K))
+    J = np.zeros((N, m, K))
 
     # ---- alpha ------------------------------------------------------------- #
     A_full = -S[:, :, None] * L[:, None, :]
@@ -152,5 +153,9 @@ def jacobian_free(
         J[:, :, d0: d0 + n] = 0.0
         for i in range(m):
             J[:, i, d0 + i] = d.pdf[:, i]
+        if spec.control_function:
+            c0 = xs["cfcoef"].start
+            for i in range(m):
+                J[:, i, c0 + i] = d.cdf[:, i] * d.control_function
 
     return J

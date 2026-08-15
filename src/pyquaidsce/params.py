@@ -27,7 +27,7 @@ censor  True  -> Shonkwiler-Yen two-step censoring (Mata: censor == "")
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 import numpy as np
 
@@ -43,6 +43,7 @@ class Spec:
     ndemo: int = 0
     quadratic: bool = True
     censor: bool = True
+    control_function: bool = False
 
     def __post_init__(self) -> None:
         if self.neqn < 3:
@@ -53,6 +54,8 @@ class Spec:
                 "at least one demographic variable is needed for censoring "
                 "correction"
             )
+        if self.control_function and not self.censor:
+            raise ValueError("control function is supported only with censor=True")
 
     # ---- counts ---------------------------------------------------------- #
     @property
@@ -72,6 +75,8 @@ class Spec:
                 k += n - 1
         if R > 0:
             k += R * (n - 1) + R
+        if self.control_function:
+            k += n
         return k
 
     @property
@@ -87,6 +92,8 @@ class Spec:
         if self.quadratic:
             k += n
         if self.censor:
+            k += n
+        if self.control_function:
             k += n
         if R > 0:
             k += R * n + R
@@ -106,6 +113,8 @@ class Spec:
             out += [f"lambda:lambda_{i + 1}" for i in range(n)]
         if self.censor:
             out += [f"delta:delta_{i + 1}" for i in range(n)]
+        if self.control_function:
+            out += [f"cfcoef:cfcoef_{i + 1}" for i in range(n)]
         if R > 0:
             for v in demo_names:
                 out += [f"eta:eta_{v}_{i + 1}" for i in range(n)]
@@ -148,6 +157,13 @@ class Coefs:
     delta: np.ndarray  # (n,)   ones  when nocensor
     eta: np.ndarray  # (R, n)  empty when R == 0
     rho: np.ndarray  # (R,)    empty when R == 0
+    # Keep a default so the public seven-argument constructor from version
+    # 1.0.1 remains valid. Internal code always passes this block explicitly.
+    cfcoef: Optional[np.ndarray] = None
+
+    def __post_init__(self) -> None:
+        if self.cfcoef is None:
+            self.cfcoef = np.zeros_like(self.alpha, dtype=float)
 
 
 # --------------------------------------------------------------------------- #
@@ -224,6 +240,11 @@ def unpack(theta: np.ndarray, spec: Spec) -> Coefs:
             delta[i] = theta[col]
             col += 1
 
+    cfcoef = np.zeros(n)
+    if spec.control_function:
+        cfcoef[:] = theta[col:col + n]
+        col += n
+
     eta = np.zeros((R, n))
     rho = np.zeros(R)
     if R > 0:
@@ -237,7 +258,7 @@ def unpack(theta: np.ndarray, spec: Spec) -> Coefs:
             col += 1
 
     assert col == theta.size, (col, theta.size)
-    return Coefs(alpha, beta, gamma, lam, delta, eta, rho)
+    return Coefs(alpha, beta, gamma, lam, delta, eta, rho, cfcoef)
 
 
 # --------------------------------------------------------------------------- #
@@ -260,6 +281,8 @@ def full_vector(theta: np.ndarray, spec: Spec) -> np.ndarray:
         parts.append(c.lam)
     if spec.censor:
         parts.append(c.delta)
+    if spec.control_function:
+        parts.append(c.cfcoef)
     if spec.ndemo > 0:
         parts.append(c.eta.reshape(-1))  # vec(eta')' == row-major eta
         parts.append(c.rho)
@@ -321,6 +344,8 @@ def delta_matrix(spec: Spec) -> np.ndarray:
         Delta = _blockdiag(Delta, block)
     if spec.censor:
         Delta = _blockdiag(Delta, block)
+    if spec.control_function:
+        Delta = _blockdiag(Delta, np.eye(ng))
     if R > 0:
         for _ in range(R):
             Delta = _blockdiag(Delta, blockd)
@@ -343,6 +368,8 @@ def full_slices(spec: Spec) -> dict:
         out["lambda"] = slice(p, p + n); p += n
     if spec.censor:
         out["delta"] = slice(p, p + n); p += n
+    if spec.control_function:
+        out["cfcoef"] = slice(p, p + n); p += n
     if R > 0:
         out["eta"] = slice(p, p + R * n); p += R * n
         out["rho"] = slice(p, p + R); p += R
@@ -368,6 +395,8 @@ def free_slices(spec: Spec) -> dict:
         out["lambda"] = slice(p, p + w); p += w
     if spec.censor:
         out["delta"] = slice(p, p + n); p += n
+    if spec.control_function:
+        out["cfcoef"] = slice(p, p + n); p += n
     if R > 0:
         out["eta"] = slice(p, p + R * (n - 1)); p += R * (n - 1)
         out["rho"] = slice(p, p + R); p += R
@@ -404,6 +433,8 @@ def delta_blocks(spec: Spec):
         out.append((fs["lambda"], xs["lambda"], block))
     if spec.censor:
         out.append((fs["delta"], xs["delta"], np.eye(n)))
+    if spec.control_function:
+        out.append((fs["cfcoef"], xs["cfcoef"], np.eye(n)))
     if R > 0:
         e_full, e_free = fs["eta"].start, xs["eta"].start
         for r in range(R):

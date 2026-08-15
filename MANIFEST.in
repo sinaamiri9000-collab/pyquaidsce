@@ -1,0 +1,8 @@
+include CHANGELOG.md CITATION.cff CONTRIBUTING.md LICENSE README.md MERGE_AUDIT_FA.md
+recursive-include bench *.dta *.log
+recursive-include benchmarks *.csv *.do *.dta *.json *.log *.md *.py
+recursive-include docs *.md
+recursive-include examples *.do *.py
+recursive-include stata *.ado *.pkg *.sthlp *.toc *.md
+recursive-include tests *.py
+recursive-include tools *.py

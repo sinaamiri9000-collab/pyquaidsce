@@ -9,6 +9,7 @@ import numpy as np
 
 from .elasticities import Elasticities, Means
 from .params import Coefs, Spec
+from .selection import FirstStageLayout
 from .statafmt import coef_table, g
 
 
@@ -48,13 +49,47 @@ class QuaidsceResults:
     converged: bool = True
     boot: Optional["BootResult"] = None  # noqa: F821
     notes: List[str] = field(default_factory=list)
+    # Appended after every version-1.0.1 field to preserve the public
+    # dataclass's positional construction order for legacy callers.
+    selection_layout: Optional[FirstStageLayout] = None
+    control_function_name: Optional[str] = None
+    selection_control_function_name: Optional[str] = None
+    V_analytic: Optional[np.ndarray] = None
 
     # ------------------------------------------------------------------ #
     @property
     def se(self) -> np.ndarray:
-        d = np.diag(self.V).copy()
+        """Public standard errors for the active inference method.
+
+        Bootstrap S.E.s cover the complete reported vector.  Without a
+        bootstrap, the analytical covariance is only implemented for the
+        structural and first-stage coefficients, so unsupported elasticity
+        entries deliberately remain ``NaN`` rather than looking like exact
+        zero-uncertainty estimates.
+        """
+        if self.boot is not None:
+            return np.asarray(self.boot.se, dtype=float).copy()
+        return self.analytic_se
+
+    @property
+    def analytic_se(self) -> np.ndarray:
+        """Conditional analytical S.E.s, with elasticity entries undefined.
+
+        Elasticities are appended to the Stata-compatible coefficient vector,
+        but their analytical delta-method covariance is not implemented.  The
+        corresponding entries are therefore explicitly ``NaN`` without
+        contaminating the otherwise usable covariance matrix.
+        """
+        source = self.V if self.V_analytic is None else self.V_analytic
+        d = np.diag(source).copy()
         d[d < 0] = np.nan
-        return np.sqrt(d)
+        out = np.sqrt(d)
+        if self.spec.censor:
+            n = self.spec.neqn
+            n_elasticities = n + 2 * n * n
+            if out.size >= n_elasticities:
+                out[-n_elasticities:] = np.nan
+        return out
 
     def named(self) -> Dict[str, float]:
         return dict(zip(self.names, self.b))
@@ -89,8 +124,14 @@ class QuaidsceResults:
             f"Number of demographics = {g(self.spec.ndemo, 10):>10}",
             f"Alpha_0                = {g(self.anot, 10):>10}",
             f"Log-likelihood         = {g(self.llf, 10):>10}",
-            "",
         ]
+        if self.boot is not None:
+            head.append(
+                "Bootstrap replications = "
+                f"{g(self.boot.reps_ok, 10):>10} / "
+                f"{g(self.boot.reps_requested, 10)}"
+            )
+        head.append("")
         if self.boot is not None:
             body = coef_table(self.names, self.b, self.boot.se, level=level,
                               bootstrap=True)
@@ -100,10 +141,13 @@ class QuaidsceResults:
                       else len(self.names) - 2 * self.spec.neqn ** 2
                       - self.spec.neqn)
             body = coef_table(
-                self.names[:n_keep], self.b[:n_keep], self.se[:n_keep],
+                self.names[:n_keep], self.b[:n_keep], self.analytic_se[:n_keep],
                 level=level, hide_zero_se=True,
             )
-        return "\n".join(head) + "\n" + body
+        out = "\n".join(head) + "\n" + body
+        if self.notes:
+            out += "\n\nNotes:\n" + "\n".join(f"- {note}" for note in self.notes)
+        return out
 
     def elasticity_tables(self) -> str:
         n = self.spec.neqn

@@ -6,8 +6,8 @@
 - **Shonkwiler & Yen (1999) two-step correction** for zero expenditure shares (censoring).
 - **Nonlinear SUR estimation** supporting NLS, FGNLS, and Iterated FGNLS (IFGNLS).
 - **Elasticities**: Expenditure (income), Marshallian (uncompensated), and Hicksian (compensated) price elasticities.
-- **External control functions** in the latent demand shares, with independently configurable selection equations.
-- **Cross-platform parallel bootstrap** with BLAS-safe workers, progress reporting, and optional per-replication deadlines.
+- **Control functions**: Supports expenditure endogeneity correction via generated residuals.
+- **Parallel bootstrap**: Multi-core bootstrap with progress tracking and runtime safeguards for valid standard errors.
 - **Direct Stata compatibility**: matched coefficient ordering, output tables, and exact numerical reproduction switches.
 
 ---
@@ -83,37 +83,13 @@ print(res.summary())
 print(res.elasticity_tables())
 ```
 
-For an externally estimated expenditure residual, the 1.0.2 control-function
-extension remains available in 1.2.0:
-
-```python
-res_cf = quaidsce(
-    df,
-    shares=["w1", "w2", "w3", "w4"],
-    prices=["p1", "p2", "p3", "p4"],
-    expenditure="total_expenditure",
-    demographics=["hh_size", "urban"],
-    control_function="cfunc",
-    selection_control_function="cfunc",
-    first_stage_predict="xb",
-    anot=10.0,
-    method="ifgnls",
-    reps=0,
-)
-```
-
-The residual is held fixed when conditional price/expenditure derivatives are
-calculated. Internal bootstrap is intentionally disabled with an external
-control function because a valid replication must rebuild the reduced form and
-its residual; perform that design-aware bootstrap outside the package.
-
-For a step-by-step tutorial, see [Getting Started](docs/getting-started.md). For a complete reference of all input arguments and output attributes, see the [User Guide & API Reference](docs/user-guide.md).
+For a step-by-step tutorial, see [Getting Started](docs/getting-started.md). For a complete reference of all input arguments, control functions, and output attributes, see the [User Guide & API Reference](docs/user-guide.md).
 
 ---
 
 ## Using pyquaidsce in Stata
 
-Prefer working in Stata? `pyquaidsce` includes an official Stata package (`pyquaidsce.ado`) that lets you estimate censored QUAIDS models directly inside Stata while harnessing Python's **up to 44x speedup**:
+Prefer working in Stata? `pyquaidsce` includes an official Stata package (`pyquaidsce.ado`) that lets you estimate censored QUAIDS models directly inside Stata while harnessing Python's **up to 44.6x speedup**:
 
 ```stata
 // 1. Install the Stata package directly from GitHub
@@ -128,11 +104,6 @@ matrix list e(elas_u)
 ```
 
 See the [Stata Package Guide](stata/README.md) for full details, options, and troubleshooting.
-
-The Stata 1.2.0 front end also exposes the external control-function and custom
-selection design. These options require `first_stage_predict(xb)` and `reps(0)`;
-a generated residual must be rebuilt by an outer, design-appropriate bootstrap
-rather than reused unchanged in internal replications.
 
 ---
 
@@ -149,19 +120,6 @@ rather than reused unchanged in internal replications.
    - `False`: Uses corrected textbook formulas for documented edge-cases (such as models without demographics or with `noquadratic`).
 
 See [Stata Compatibility](docs/stata-compatibility.md) for methodology details, and the [User Guide & API Reference](docs/user-guide.md) for the complete list of all optimizer, convergence, and bootstrap options.
-
-## Standard-error behavior in 1.2.0
-
-- With `reps=0`, `res.V` stays finite and compatible with existing covariance
-  contrasts. Both `res.se` and `res.analytic_se` mark unsupported elasticity
-  entries as `NaN`; structural/Probit entries are conditional analytical
-  approximations.
-- With `reps>0`, `res.V` and `res.se` are the bootstrap covariance and standard
-  errors. The conditional reference remains in `res.V_analytic` and
-  `res.analytic_se`.
-- Parallel bootstrap defaults to `mp_context="spawn"`. `rep_timeout=#` combines
-  cooperative numerical checks with a parent-side process watchdog; timed-out
-  replications are terminated and excluded.
 
 ---
 

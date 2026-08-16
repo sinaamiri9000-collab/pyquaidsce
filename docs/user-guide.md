@@ -69,7 +69,7 @@ every replication.
 
 ---
 
-### Convergence and Numerical Tolerances
+### Convergence and Numerical Tolerance
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|

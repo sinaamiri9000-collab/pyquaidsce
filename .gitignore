@@ -29,11 +29,12 @@ audit_out/
 out/
 *.tmp
 *.bak
-*.log
-
 # User data should never be committed by accident
 *.csv
 *.dta
+*.log
+!bench/
+!bench/**
 !benchmarks/cquaids_ifgnls_4g_20k/data/benchmark_cquaids_4g_20k.dta
 !benchmarks/cquaids_ifgnls_4g_20k/results/python_results.csv
 !benchmarks/cquaids_ifgnls_4g_20k/results/stata_python_comparison.csv

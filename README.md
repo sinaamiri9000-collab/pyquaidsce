@@ -112,8 +112,11 @@ See the [Stata Package Guide](stata/README.md) for full details, options, and tr
 Prefer working in R? `rquaidsce` provides a native R interface with standard S3 methods (`summary`, `coef`, `vcov`, `print`):
 
 ```r
-# 1. Install directly from GitHub
-devtools::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "rquaidsce")
+# 1. Install remotes (if not already installed) & install rquaidsce from GitHub
+if (!requireNamespace("remotes", quietly = TRUE)) {
+  install.packages("remotes")
+}
+remotes::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "rquaidsce")
 
 # 2. Estimate Censored QUAIDS in R
 library(rquaidsce)

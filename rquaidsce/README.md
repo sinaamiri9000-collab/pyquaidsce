@@ -21,11 +21,13 @@ pip install pyquaidsce
 
 ### 2. Install in R
 ```r
-# Install devtools if needed
-install.packages("devtools")
+# Install remotes if not already installed
+if (!requireNamespace("remotes", quietly = TRUE)) {
+  install.packages("remotes")
+}
 
-# Install directly from GitHub
-devtools::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "rquaidsce")
+# Install rquaidsce directly from GitHub
+remotes::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "rquaidsce")
 ```
 
 ---

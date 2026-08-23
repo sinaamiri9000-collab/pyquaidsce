@@ -1,4 +1,4 @@
-"""Assemble a clean, checksumed 1.2.0 release-review bundle."""
+"""Assemble a clean, checksumed 1.3.0 release-review bundle."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT_PARENT = ROOT.parent
-RELEASE_NAME = "PYQUAIDSCE_1.2.0_FINAL_RELEASE"
+RELEASE_NAME = "PYQUAIDSCE_1.3.0_FINAL_RELEASE"
 RELEASE_DIR = OUT_PARENT / RELEASE_NAME
 BUNDLE_ZIP = OUT_PARENT / f"{RELEASE_NAME}_BUNDLE.zip"
 
@@ -35,13 +35,13 @@ def main() -> None:
             "release output already exists; move it aside before rebuilding"
         )
     dist = ROOT / "dist"
-    wheel = dist / "pyquaidsce-1.2.0-py3-none-any.whl"
-    sdist = dist / "pyquaidsce-1.2.0.tar.gz"
+    wheel = dist / "pyquaidsce-1.3.0-py3-none-any.whl"
+    sdist = dist / "pyquaidsce-1.3.0.tar.gz"
     for artifact in (wheel, sdist):
         if not artifact.is_file():
             raise FileNotFoundError(f"missing built artifact: {artifact}")
 
-    clean_source = RELEASE_DIR / "source/pyquaidsce-1.2.0"
+    clean_source = RELEASE_DIR / "source/pyquaidsce-1.3.0"
     ignore = shutil.ignore_patterns(
         ".git",
         "__pycache__",
@@ -61,9 +61,9 @@ def main() -> None:
     shutil.copy2(wheel, out_dist / wheel.name)
     shutil.copy2(sdist, out_dist / sdist.name)
 
-    source_zip = out_dist / "pyquaidsce-1.2.0-source.zip"
+    source_zip = out_dist / "pyquaidsce-1.3.0-source.zip"
     with zipfile.ZipFile(source_zip, "w", zipfile.ZIP_DEFLATED) as archive:
-        add_tree(archive, clean_source, "pyquaidsce-1.2.0")
+        add_tree(archive, clean_source, "pyquaidsce-1.3.0")
 
     shutil.copy2(ROOT / "MERGE_AUDIT_FA.md", RELEASE_DIR / "MERGE_AUDIT_FA.md")
     qa_dir = RELEASE_DIR / "QA_RESULTS"

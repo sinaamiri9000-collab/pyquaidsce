@@ -2,6 +2,23 @@
 
 All notable user-visible changes to `pyquaidsce` are documented here.
 
+## 1.3.0 — 2026-08-22
+
+- Renamed the `stop_rule` value `"stata"` to `"standard"` and made `"standard"`
+  the default in both the Python API and the Stata command (previously
+  `"tight"` in Python). The disjunctive Stata-matching behavior itself is
+  unchanged; only the label and default moved.
+- Changed `strict_stata` to default to `False` (corrected textbook formulas)
+  in the Python API, the Stata bridge, and `pyquaidsce.ado`. Pass
+  `strict_stata=True` (or `strict_stata(true)` in Stata) for exact replication
+  of the original ado's elasticity calculations.
+- Ported all remaining Python-only options into `pyquaidsce.ado`:
+  `start()`, `initial()`, `sigma_initial()` (Stata matrix names),
+  `vce_sigma()`, `tol()`, `nrtol_stop()`, `sigma_tol()`,
+  `inner_nrtol_early()`, `max_iter()`, `max_outer()`, `chunk()`,
+  `boot_sigma_tol()`, and a new `gnlog` switch mirroring `gn_verbose`.
+- Updated `pyquaidsce.sthlp` with the new options and revised defaults.
+
 ## 1.2.0 — 2026-08-15
 
 Consolidated release based on the feature-complete 1.0.2 estimator, with the

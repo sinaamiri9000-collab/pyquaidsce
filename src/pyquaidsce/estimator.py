@@ -180,8 +180,8 @@ def quaidsce(
     reps: int = 0,
     seed: Optional[int] = None,
     bootstrap_start: str = "zero",
-    first_stage_predict: str = "pr",
-    strict_stata: bool = True,
+    first_stage_predict: str = "xb",
+    strict_stata: bool = False,
     vce_sigma: str = "objective",
     algorithm: str = "gn",
     tol: float = 1e-13,
@@ -191,7 +191,7 @@ def quaidsce(
     nrtol_stop: float = 1e-12,
     inner_nrtol_early: float = 1e-8,
     sigma_tol: float = 1e-11,
-    stop_rule: str = "tight",
+    stop_rule: str = "standard",
     n_jobs: int = 1,
     verbose: bool = True,
     gn_verbose: bool = False,
@@ -250,8 +250,8 @@ def quaidsce(
         raise ValueError("first_stage_predict must be 'pr' or 'xb'")
     if vce_sigma not in {"objective", "final"}:
         raise ValueError("vce_sigma must be 'objective' or 'final'")
-    if stop_rule not in {"tight", "stata"}:
-        raise ValueError("stop_rule must be 'tight' or 'stata'")
+    if stop_rule not in {"tight", "standard"}:
+        raise ValueError("stop_rule must be 'tight' or 'standard'")
     if bootstrap_start not in {"zero", "warm"}:
         raise ValueError("bootstrap_start must be 'zero' or 'warm'")
     if not np.isfinite(anot):

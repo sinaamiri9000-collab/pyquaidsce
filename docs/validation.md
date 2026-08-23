@@ -49,7 +49,7 @@ In addition to the Stata benchmark, `pyquaidsce` includes automated unit tests t
   covariance handling, real cooperative timeout behavior, and Stata bridge
   argument/matrix forwarding.
 
-Release 1.2.0 collects **25 tests**; all pass both from the repository and from
+Release 1.3.0 collects **25 tests**; all pass both from the repository and from
 the built source distribution. A separate five-replication `pr`/`xb` bootstrap
 smoke test and its JSON results are stored under
 `benchmarks/release_120/results/`.

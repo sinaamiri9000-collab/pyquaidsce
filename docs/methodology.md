@@ -69,7 +69,7 @@ where $\delta_i$ is an additional structural parameter to be estimated for each 
 
 ### Optional external control function
 
-With an externally estimated reduced-form residual $v_h$, version 1.2.0 can
+With an externally estimated reduced-form residual $v_h$, version 1.3.0 can
 augment the latent demand share as
 
 $$

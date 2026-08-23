@@ -115,7 +115,7 @@ def main():
     ap.add_argument("--algorithm", default="gn", choices=["gn", "lm"])
     ap.add_argument("--start", default="zero", choices=["zero", "linear"])
     ap.add_argument("--vce", default="objective", choices=["objective", "final"])
-    ap.add_argument("--stop-rule", default="tight", choices=["tight", "stata"])
+    ap.add_argument("--stop-rule", default="standard", choices=["standard", "tight"])
     ap.add_argument("--out", default="out")
     a = ap.parse_args()
 

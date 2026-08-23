@@ -14,7 +14,7 @@ In the Shonkwiler & Yen (1999) two-step procedure, the participation probability
 In Stata, the `predict` command immediately following `probit` generates the **predicted probability** by default rather than the linear index ($X_i'\tau_i$). The original `quaidsce_c.ado` file calculates `normal(predict)` and `normalden(predict)`, which computes $\Phi(\Phi(X'\tau))$ and $\phi(\Phi(X'\tau))$.
 
 ### Options:
-- **`first_stage_predict="pr"`** *(Default)*: Replicates Stata's exact implementation bit-for-bit. Use this if you are comparing results directly against Stata.
+- **`first_stage_predict="xb"`** *(Default)*: Replicates Stata's exact implementation bit-for-bit. Use this if you are comparing results directly against Stata.
 - **`first_stage_predict="xb"`**: Uses the linear index $X_i'\tau_i$ inside $\Phi(\cdot)$ and $\phi(\cdot)$, matching standard textbook theory.
 
 ---
@@ -29,8 +29,8 @@ During comprehensive code validation against Stata `quaidsce`, two specific beha
    Stata assigns the latent income elasticity to a global macro and then inadvertently calls an empty local macro, effectively treating the latent elasticity as 0 in the censoring adjustment.
 
 ### Options:
-- **`strict_stata=True`** *(Default)*: Replicates Stata's exact returned values so that automated tests and diffs against Stata log files match.
-- **`strict_stata=False`**: Applies the corrected theoretical formulas (Poi 2012 / Shonkwiler & Yen 1999).
+- **`strict_stata=False`** *(Default)*: Applies the corrected theoretical formulas (Poi 2012 / Shonkwiler & Yen 1999).
+- **`strict_stata=True`**: Replicates Stata's exact returned values so that automated tests and diffs against Stata log files match.
 
 ---
 
@@ -56,6 +56,6 @@ If you are trying to reproduce an existing Stata estimation in Python and see di
 | Parameter | Default | Effect |
 |---|---|---|
 | `first_stage_predict` | `"pr"` | Matches Stata default probability calculation |
-| `strict_stata` | `True` | Matches Stata's exact elasticity calculations |
+| `strict_stata` | `False` | Corrected textbook elasticity calculations (use `True` to match the ado exactly) |
 | `start` | `"zero"` | Starts optimization from zeros, matching Stata `nlsur` |
 | `method` | `"fgnls"` | Feasible Generalized NLS (use `"ifgnls"` for iterated) |

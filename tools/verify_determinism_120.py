@@ -1,4 +1,4 @@
-"""Verify deterministic parallel bootstrap ordering for release 1.2.0."""
+"""Verify deterministic parallel bootstrap ordering for release 1.3.0."""
 
 from __future__ import annotations
 

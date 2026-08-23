@@ -64,7 +64,7 @@ every replication.
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `first_stage_predict` | `str` | `"pr"` | First-stage Probit prediction: `"pr"` reproduces Stata's default $\Phi(\Phi(X'\tau))$ and $\phi(\Phi(X'\tau))$; `"xb"` uses the linear index $X'\tau$ (textbook Shonkwiler–Yen). |
-| `strict_stata` | `bool` | `True` | If `True`, reproduces Stata's exact documented elasticity calculations. If `False`, applies published corrected formulas. |
+| `strict_stata` | `bool` | `False` | If `True`, reproduces Stata's exact documented elasticity calculations (including its quirks). If `False` *(default)*, applies published corrected formulas. |
 | `vce_sigma` | `str` | `"objective"` | Residual covariance used in the second-stage standard error formula: `"objective"` (used in the final minimization, matching Stata) or `"final"` (recomputed from final residuals). |
 
 ---
@@ -77,7 +77,7 @@ every replication.
 | `nrtol_stop` | `float` | `1e-12` | Scaled relative gradient stopping tolerance (Gauss-Newton stationarity). |
 | `sigma_tol` | `float` | `1e-11` | Outer fixed-point parameter tolerance for IFGNLS iterations. |
 | `inner_nrtol_early` | `float` | `1e-8` | Early-stage inner Gauss-Newton tolerance used during inexact-outer IFGNLS. |
-| `stop_rule` | `str` | `"tight"` | Stopping criterion: `"tight"` (stops on scaled gradient) or `"stata"` (disjunctive rule matching Stata's `tolerance` / `ltolerance` / `nrtolerance`). |
+| `stop_rule` | `str` | `"standard"` | Stopping criterion: `"standard"` (disjunctive rule matching Stata's `tolerance` / `ltolerance` / `nrtolerance`) or `"tight"` (stops only on the scaled gradient). |
 | `max_iter` | `int` | `300` | Maximum number of inner Gauss-Newton iterations per stage. |
 | `max_outer` | `int` | `200` | Maximum number of outer covariance updates for IFGNLS. |
 | `chunk` | `int` | `2000` | Observation block size for accumulating normal equations ($J'\Sigma^{-1}J$) without materializing the full Jacobian in RAM. |

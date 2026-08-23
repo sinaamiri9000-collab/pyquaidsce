@@ -1,4 +1,4 @@
-"""Reproducible five-replication PR/XB bootstrap smoke test for release 1.2.0."""
+"""Reproducible five-replication PR/XB bootstrap smoke test for release 1.3.0."""
 
 from __future__ import annotations
 
@@ -96,7 +96,7 @@ def verify_timeout(frame: pd.DataFrame) -> str:
 def main() -> None:
     frame = pd.read_stata(DATA).iloc[:3000].reset_index(drop=True)
     report = {
-        "package_version": "1.2.0",
+        "package_version": "1.3.0",
         "dataset": str(DATA.relative_to(ROOT)),
         "observations": len(frame),
         "runs": [fit_mode(frame, "pr"), fit_mode(frame, "xb")],

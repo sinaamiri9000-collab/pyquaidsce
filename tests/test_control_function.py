@@ -532,7 +532,7 @@ class SyntheticAndGateTests(unittest.TestCase):
                       prices=["p1", "p2", "p3"], expenditure="m",
                       demographics=["z"], anot=1.6, verbose=False)
         with self.assertRaisesRegex(ValueError, "first_stage_predict='xb'"):
-            quaidsce(**common, control_function="cf")
+            quaidsce(**common, control_function="cf", first_stage_predict="pr")
         with self.assertRaisesRegex(ValueError, "reduced form residual"):
             quaidsce(**common, selection_control_function="cf",
                       first_stage_predict="xb", reps=2)

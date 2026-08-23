@@ -1,9 +1,12 @@
-"""Release-integration checks specific to the merged 1.2.0 tree."""
+"""Release-integration checks specific to the merged 1.3.0 tree."""
 
 from __future__ import annotations
 
 import inspect
+import os
+import pickle
 import sys
+import tempfile
 import time
 import types
 import unittest
@@ -30,7 +33,7 @@ from pyquaidsce.stata_bridge import run_from_stata
 
 class MergeIntegrityTests(unittest.TestCase):
     def test_release_exposes_features_from_all_three_branches(self):
-        self.assertEqual(pyquaidsce.__version__, "1.2.0")
+        self.assertEqual(pyquaidsce.__version__, "1.3.0")
         self.assertTrue(inspect.isclass(FirstStageLayout))
         self.assertTrue(callable(fitted_share_derivatives))
         self.assertTrue(callable(run_from_stata))
@@ -49,6 +52,8 @@ class MergeIntegrityTests(unittest.TestCase):
         for name in (
             "mp_context",
             "rep_timeout",
+            "stop_rule",
+            "bootstrap_start",
             "control_function",
             "selection_control_function",
             "selection_prices_specified",
@@ -113,7 +118,12 @@ class MergeIntegrityTests(unittest.TestCase):
                 rep_timeout=1e-6,
                 verbose=False,
             )
-        self.assertLess(time.perf_counter() - started, 10.0)
+        # The watchdog must terminate stuck replications promptly, but the
+        # absolute wall-clock bound has to scale with the runner: spawning two
+        # worker processes on a single-core box contends for the one core and
+        # can take ~45 s before either makes progress.
+        elapsed_budget = 10.0 if (os.cpu_count() or 1) > 1 else 90.0
+        self.assertLess(time.perf_counter() - started, elapsed_budget)
 
     def test_stata_bridge_forwards_bootstrap_controls(self):
         stored = {}
@@ -198,11 +208,15 @@ class MergeIntegrityTests(unittest.TestCase):
                 expenditure_str="m",
                 demographics_str="z",
                 anot=10.0,
+                stop_rule="standard",
+                bootstrap_start="warm",
                 n_jobs=2,
                 mp_context="spawn",
                 rep_timeout=15.0,
                 verbose=False,
             )
+        self.assertEqual(captured["stop_rule"], "standard")
+        self.assertEqual(captured["bootstrap_start"], "warm")
         self.assertEqual(captured["mp_context"], "spawn")
         self.assertEqual(captured["rep_timeout"], 15.0)
         self.assertTrue(np.array_equal(stored["__pyq_V"], np.eye(2)))
@@ -310,6 +324,142 @@ class MergeIntegrityTests(unittest.TestCase):
             "selection_noexpenditure",
         ):
             self.assertIn(option, help_text)
+
+    def test_ado_runs_the_complete_estimation_out_of_process(self):
+        ado = (ROOT / "stata" / "pyquaidsce.ado").read_text(encoding="utf-8")
+        self.assertIn("launch_from_stata", ado)
+        self.assertIn("poll_bootstrap", ado)
+        self.assertIn("load_stata_results", ado)
+        self.assertNotIn("run_from_stata(", ado)
+        self.assertNotIn("reps=0,", ado)
+        self.assertEqual(ado.count("launch_from_stata("), 1)
+        self.assertIn('local method "ifgnls"', ado)
+
+    def test_bootstrap_runner_module_importable(self):
+        """bootstrap_runner.py must be importable and expose main()."""
+        from pyquaidsce import bootstrap_runner
+        self.assertTrue(callable(bootstrap_runner.main))
+
+    def test_bridge_exposes_async_bootstrap_functions(self):
+        """stata_bridge must expose launch/poll/load/kill bootstrap functions."""
+        from pyquaidsce.stata_bridge import (
+            launch_bootstrap,
+            launch_from_stata,
+            poll_bootstrap,
+            load_bootstrap_results,
+            load_stata_results,
+            kill_bootstrap,
+        )
+        for fn in (launch_bootstrap, launch_from_stata, poll_bootstrap,
+                   load_bootstrap_results, load_stata_results, kill_bootstrap):
+            self.assertTrue(callable(fn))
+
+    def test_launch_from_stata_exports_one_complete_job(self):
+        from pyquaidsce.stata_bridge import launch_from_stata
+
+        values = {
+            "_touse": [1, 0, 1],
+            "w1": [0.2, 0.1, 0.3], "w2": [0.3, 0.3, 0.2],
+            "w3": [0.5, 0.6, 0.5],
+            "p1": [1.0, 1.2, 1.1], "p2": [1.2, 0.9, 1.0],
+            "p3": [0.9, 1.1, 1.0], "m": [10.0, 12.0, 11.0],
+        }
+
+        class Data:
+            @staticmethod
+            def get(var):
+                return values[var]
+
+        fake_sfi = types.SimpleNamespace(Data=Data)
+        with patch.dict(sys.modules, {"sfi": fake_sfi}), patch(
+            "pyquaidsce.stata_bridge._launch_job"
+        ) as launch:
+            launch_from_stata(
+                shares_str="w1 w2 w3", prices_str="p1 p2 p3",
+                expenditure_str="m", demographics_str="", anot=10.0,
+                reps=7, seed=42, n_jobs=2, stop_rule="standard",
+                bootstrap_start="warm", verbose=False,
+            )
+
+        launch.assert_called_once()
+        frame, kwargs = launch.call_args.args
+        self.assertEqual(len(frame), 2)
+        self.assertEqual(kwargs["reps"], 7)
+        self.assertEqual(kwargs["seed"], 42)
+        self.assertEqual(kwargs["stop_rule"], "standard")
+        self.assertEqual(kwargs["bootstrap_start"], "warm")
+
+    def test_load_stata_results_restores_all_outputs(self):
+        from pyquaidsce.stata_bridge import _BOOT_STATE, load_stata_results
+
+        stored = {}
+
+        class Scalar:
+            @staticmethod
+            def setValue(name, value):
+                stored[name] = value
+
+        class Matrix:
+            @staticmethod
+            def create(name, rows, cols, value):
+                stored[name] = np.full((rows, cols), value, dtype=float)
+
+            @staticmethod
+            def storeAt(name, row, col, value):
+                stored[name][row, col] = value
+
+            @staticmethod
+            def setColNames(name, names):
+                stored[name + "_cols"] = list(names)
+
+            @staticmethod
+            def setRowNames(name, names):
+                stored[name + "_rows"] = list(names)
+
+        class Macro:
+            @staticmethod
+            def setLocal(name, value):
+                stored[name] = value
+
+        result = {
+            "b": np.array([1.0, 2.0]), "V": np.eye(2),
+            "names": ["eq1:a", "eq2:b"], "shares": ["w1", "w2"],
+            "elas_i": np.array([1.1, 0.9]), "elas_u": np.eye(2),
+            "elas_c": np.eye(2) * 2, "nobs": 10, "llf": -3.0,
+            "anot": 10.0, "ndemo": 0, "converged": 1,
+            "n_outer": 2, "n_gn": 3, "title": "Censored QUAIDS",
+            "boot_reps_ok": 6, "boot_reps_requested": 7,
+        }
+        handle, path = tempfile.mkstemp(suffix=".pkl")
+        os.close(handle)
+        try:
+            with open(path, "wb") as file_handle:
+                pickle.dump(result, file_handle)
+            _BOOT_STATE["result_path"] = path
+            fake_sfi = types.SimpleNamespace(
+                Scalar=Scalar, Matrix=Matrix, Macro=Macro
+            )
+            with patch.dict(sys.modules, {"sfi": fake_sfi}):
+                load_stata_results("b", "V", "ei", "eu", "ec")
+            self.assertTrue(np.array_equal(stored["b"], [[1.0, 2.0]]))
+            self.assertTrue(np.array_equal(stored["V"], np.eye(2)))
+            self.assertEqual(stored["r_boot_reps_ok"], 6)
+            self.assertEqual(stored["model_title"], "Censored QUAIDS")
+        finally:
+            if os.path.exists(path):
+                os.unlink(path)
+            _BOOT_STATE.clear()
+
+    def test_launch_bootstrap_requires_prior_run(self):
+        """launch_bootstrap must raise if no point estimate has been run."""
+        from pyquaidsce.stata_bridge import _BOOT_STATE, launch_bootstrap
+        saved = dict(_BOOT_STATE)
+        _BOOT_STATE.clear()
+        try:
+            with self.assertRaises(RuntimeError):
+                launch_bootstrap(reps=10)
+        finally:
+            _BOOT_STATE.update(saved)
 
 
 if __name__ == "__main__":

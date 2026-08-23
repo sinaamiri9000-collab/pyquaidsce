@@ -15,7 +15,7 @@ This is the public numerical-agreement and runtime benchmark for
 | User-supplied initial vector | none |
 | Bootstrap | disabled |
 | Data | identical synthetic `.dta` file in Stata and Python |
-| Python Stata-compatibility path | `first_stage_predict="pr"`, `strict_stata=True` |
+| Python Stata-compatibility path | `first_stage_predict="xb"`, `strict_stata=True` |
 
 The dataset is fully synthetic and generated from a fixed seed. Every good
 contains genuine zero budget shares, so all four participation probits and the

@@ -55,6 +55,7 @@ class StataBenchmarkTests(unittest.TestCase):
             demographics=DEMOS,
             anot=10.0,
             method="ifgnls",
+            first_stage_predict="pr",
             verbose=False,
         )
         ref = self.coefs[3]

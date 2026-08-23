@@ -98,7 +98,7 @@ def main() -> None:
                 method="ifgnls",
                 algorithm="gn",
                 start="zero",
-                first_stage_predict="pr",
+                first_stage_predict="xb",
                 strict_stata=True,
                 reps=0,
                 verbose=True,

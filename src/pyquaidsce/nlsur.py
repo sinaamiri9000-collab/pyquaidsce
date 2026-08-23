@@ -203,7 +203,7 @@ def gauss_newton(
     say=None,
     algorithm: str = "gn",
     nrtol_stop: float = 1e-12,
-    stop_rule: str = "tight",
+    stop_rule: str = "standard",
     deadline: Optional[float] = None,
 ) -> Tuple[np.ndarray, float, int, bool]:
     """Minimise ``sum_t u_t' sigma^-1 u_t``.
@@ -254,7 +254,7 @@ def gauss_newton(
                         break
                     m2 *= 10.0
             if best is None:
-                cutoff = 1e-5 if stop_rule == "stata" else nrtol_stop
+                cutoff = 1e-5 if stop_rule == "standard" else nrtol_stop
                 converged = bool(nrtol < cutoff)
                 break
             cand, oc, t, m2 = best
@@ -280,7 +280,7 @@ def gauss_newton(
                 mu = min(mu * nu, 1e14)
                 nu *= 2.0
             if not accepted:
-                cutoff = 1e-5 if stop_rule == "stata" else nrtol_stop
+                cutoff = 1e-5 if stop_rule == "standard" else nrtol_stop
                 converged = bool(nrtol < cutoff)
                 break
             t, m2 = 1.0, mu
@@ -299,7 +299,7 @@ def gauss_newton(
         # test alone never fires on a censored system: the criterion has nearly
         # flat directions, so theta keeps drifting long after the objective has
         # stopped moving.
-        if stop_rule == "stata":
+        if stop_rule == "standard":
             # Stata's nl/nlsur declare convergence when ANY of three criteria is
             # met: tolerance() on the coefficient vector, ltolerance() on the
             # objective, or nrtolerance() on the scaled gradient.  Because the
@@ -331,7 +331,7 @@ def nlsur(
     chunk: int = 2000,
     nrtol_stop: float = 1e-12,
     inner_nrtol_early: float = 1e-8,
-    stop_rule: str = "tight",
+    stop_rule: str = "standard",
     vce_sigma: str = "objective",
     algorithm: str = "gn",
     verbose: bool = False,
@@ -359,7 +359,7 @@ def nlsur(
         raise ValueError(f"unknown algorithm {algorithm!r}")
     if start not in ("zero", "linear"):
         raise ValueError(f"unknown start {start!r}")
-    if stop_rule not in ("tight", "stata"):
+    if stop_rule not in ("tight", "standard"):
         raise ValueError(f"unknown stop_rule {stop_rule!r}")
     if vce_sigma not in ("objective", "final"):
         raise ValueError(f"unknown vce_sigma {vce_sigma!r}")

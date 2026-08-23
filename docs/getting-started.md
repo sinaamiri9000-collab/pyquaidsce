@@ -63,8 +63,8 @@ res = quaidsce(
     anot=10.0,                  # Price index constant (alpha_0)
     method="ifgnls",            # Iterated FGNLS
     algorithm="gn",             # Gauss-Newton optimizer
-    first_stage_predict="pr",   # Matches Stata default
-    strict_stata=True,          # Matches Stata exact formulas
+    first_stage_predict="xb",   # Matches Stata default
+    strict_stata=False,         # Corrected textbook formulas (True replicates Stata exactly)
     reps=0,                     # Set reps > 0 to run bootstrap
     verbose=True,
 )

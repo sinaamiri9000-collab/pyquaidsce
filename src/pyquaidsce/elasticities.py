@@ -173,7 +173,7 @@ def elasticities(
     a0: float,
     tau: Optional[np.ndarray] = None,
     np_prob: Optional[int] = None,
-    strict_stata: bool = True,
+    strict_stata: bool = False,
     *,
     layout: Optional[FirstStageLayout] = None,
 ) -> Elasticities:

@@ -72,8 +72,8 @@ res = quaidsce(
     demographics=["hh_size", "urban"],         # Demographic scaling variables (Ray 1983)
     anot=10.0,                                 # Price index constant (alpha_0)
     method="ifgnls",                           # 'nls', 'fgnls', or 'ifgnls'
-    first_stage_predict="pr",                  # 'pr' matches Stata; 'xb' uses linear index
-    strict_stata=True,                         # Replicates Stata's exact formulas
+    first_stage_predict="xb",                  # 'pr' matches Stata; 'xb' uses linear index
+    strict_stata=False,                        # Corrected textbook formulas; True replicates Stata exactly
     reps=0,                                    # Set reps=200+ for bootstrap standard errors
     verbose=True,
 )
@@ -112,12 +112,12 @@ See the [Stata Package Guide](stata/README.md) for full details, options, and tr
 `pyquaidsce` provides two switches to let you choose between literal Stata replication and textbook formulas:
 
 1. **`first_stage_predict`**:
-   - `"pr"` *(default)*: Replicates Stata `quaidsce`'s default behavior, which uses the predicted probability $\Phi(X'\tau)$ inside the normal density/distribution terms.
+   - `"xb"` *(default)*: Replicates Stata `quaidsce`'s default behavior, which uses the predicted probability $\Phi(X'\tau)$ inside the normal density/distribution terms.
    - `"xb"`: Uses the linear index $X'\tau$, following the standard textbook Shonkwiler–Yen formulation.
 
 2. **`strict_stata`**:
-   - `True` *(default)*: Keeps documented Stata conventions and index ordering for 1-to-1 replication against Stata `.log` files.
-   - `False`: Uses corrected textbook formulas for documented edge-cases (such as models without demographics or with `noquadratic`).
+   - `False` *(default)*: Uses corrected textbook formulas for documented edge-cases (such as models without demographics or with `noquadratic`).
+   - `True`: Keeps documented Stata conventions and index ordering for 1-to-1 replication against Stata `.log` files.
 
 See [Stata Compatibility](docs/stata-compatibility.md) for methodology details, and the [User Guide & API Reference](docs/user-guide.md) for the complete list of all optimizer, convergence, and bootstrap options.
 

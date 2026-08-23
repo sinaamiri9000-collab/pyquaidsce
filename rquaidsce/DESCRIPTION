@@ -1,0 +1,24 @@
+Package: rquaidsce
+Type: Package
+Title: Censored Quadratic Almost Ideal Demand System (QUAIDS) Estimation
+Version: 1.4.0
+Author: Sina Amiri [aut, cre]
+Maintainer: Sina Amiri <sinaamiri9000@gmail.com>
+Authors@R: person("Sina", "Amiri", email = "sinaamiri9000@gmail.com", role = c("aut", "cre"))
+Description: High-performance estimation of Censored Quadratic Almost Ideal Demand Systems (QUAIDS)
+    with Ray (1983) demographic scaling and Shonkwiler-Yen (1999) two-step censoring correction,
+    powered by the 'pyquaidsce' backend via 'reticulate'. Supports Iterated Feasible Generalized
+    Nonlinear Least Squares (IFGNLS), custom selection equations, endogeneity control functions,
+    and fast multi-core bootstrap standard errors.
+License: GPL (>= 3)
+Encoding: UTF-8
+Imports:
+    reticulate (>= 1.28),
+    stats
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+URL: https://github.com/sinaamiri9000-collab/pyquaidsce
+BugReports: https://github.com/sinaamiri9000-collab/pyquaidsce/issues
+SystemRequirements: Python (>= 3.9), NumPy (>= 1.22), SciPy (>= 1.8), Pandas (>= 1.4), pyquaidsce (>= 1.4.0)
+Config/roxygen2/version: 8.1.0

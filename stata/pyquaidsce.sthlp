@@ -50,8 +50,8 @@
 {synopt :{opt stop_rule(rule)}}stopping rule: {cmd:standard} (default, disjunctive rule matching Stata's {opt tolerance}/{opt ltolerance}/{opt nrtolerance}) or {cmd:tight} (strict scaled-gradient rule){p_end}
 {synopt :{opt algorithm(alg)}}optimizer algorithm: {cmd:gn} (Gauss-Newton, default) or {cmd:lm} (Levenberg-Marquardt){p_end}
 {synopt :{opt start(type)}}starting values: {cmd:zero} (default, matches Stata) or {cmd:linear} (linearized AIDS start){p_end}
-{synopt :{opt initial(matname)}}row vector (matrix name) of initial free parameters for warm-starting{p_end}
-{synopt :{opt sigma_initial(matname)}}initial residual covariance matrix (matrix name), used with {opt initial()} for warm-starting IFGNLS{p_end}
+{synopt :{opt initial(matname)}}row vector (matrix name) of initial free parameters for warm-starting; e.g. {cmd:e(b_est)} from a prior run{p_end}
+{synopt :{opt sigma_initial(matname)}}initial residual covariance matrix (matrix name), used with {opt initial()} for warm-starting; e.g. {cmd:e(Sigma)} from a prior run{p_end}
 {synopt :{opt vce_sigma(type)}}covariance used in the S.E. formula: {cmd:objective} (default, matches Stata) or {cmd:final}{p_end}
 {synopt :{opt tol(#)}}objective relative-change tolerance; default is {cmd:tol(1e-13)}{p_end}
 {synopt :{opt nrtol_stop(#)}}scaled relative gradient stopping tolerance; default is {cmd:nrtol_stop(1e-12)}{p_end}
@@ -135,8 +135,10 @@ would understate uncertainty.
 
 {synoptset 18 tabbed}{...}
 {p2col 5 18 22 2: Matrices}{p_end}
-{synopt:{cmd:e(b)}}coefficient vector{p_end}
+{synopt:{cmd:e(b)}}full coefficient vector{p_end}
+{synopt:{cmd:e(b_est)}}vector of free estimated structural parameters (can be passed to {cmd:initial()} for warm-starting in subsequent runs){p_end}
 {synopt:{cmd:e(V)}}variance-covariance matrix of the estimators{p_end}
+{synopt:{cmd:e(Sigma)}}residual covariance matrix (can be passed to {cmd:sigma_initial()} for warm-starting in subsequent runs){p_end}
 {synopt:{cmd:e(elas_i)}}expenditure (income) elasticities{p_end}
 {synopt:{cmd:e(elas_u)}}uncompensated (Marshallian) price elasticities matrix{p_end}
 {synopt:{cmd:e(elas_c)}}compensated (Hicksian) price elasticities matrix{p_end}
@@ -148,4 +150,5 @@ would understate uncertainty.
 {pstd}
 {bf:Sina Amiri}{break}
 Department of Economics, Shiraz University, Shiraz, Iran{break}
+Email: {browse "mailto:sinaamiri9000@gmail.com":sinaamiri9000@gmail.com}{break}
 GitHub: {browse "https://github.com/sinaamiri9000-collab/pyquaidsce"}

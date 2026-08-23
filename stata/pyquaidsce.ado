@@ -1,4 +1,4 @@
-*! version 1.3.0  22aug2026
+*! version 1.4.0  24aug2026
 *! pyquaidsce: Censored QUAIDS demand system estimation in Stata using Python engine
 *! Author: Sina Amiri (Department of Economics, Shiraz University)
 
@@ -129,14 +129,14 @@ program define pyquaidsce, eclass
     // initial()/sigma_initial() accept a Stata matrix name (e.g. from a prior
     // run's e(b)/e(V) or any k x 1 vector / m x m matrix in memory).
     if "`initial'" != "" {
-        capture matrix confirm matrix `initial'
+        capture confirm matrix `initial'
         if _rc {
             display as error "initial() must be the name of an existing Stata matrix"
             exit 198
         }
     }
     if "`sigma_initial'" != "" {
-        capture matrix confirm matrix `sigma_initial'
+        capture confirm matrix `sigma_initial'
         if _rc {
             display as error "sigma_initial() must be the name of an existing Stata matrix"
             exit 198
@@ -197,7 +197,7 @@ program define pyquaidsce, eclass
     }
 
     // 4. Temporary matrices for ereturn
-    tempname b V elas_i elas_u elas_c
+    tempname b V elas_i elas_u elas_c b_est Sigma
 
     // 5. Check Python package
     capture python: import pyquaidsce
@@ -236,7 +236,7 @@ program define pyquaidsce, eclass
         exit 498
     }
 
-    python: load_stata_results(sfi.Macro.getLocal("b"), sfi.Macro.getLocal("V"), sfi.Macro.getLocal("elas_i"), sfi.Macro.getLocal("elas_u"), sfi.Macro.getLocal("elas_c"))
+    python: load_stata_results(sfi.Macro.getLocal("b"), sfi.Macro.getLocal("V"), sfi.Macro.getLocal("elas_i"), sfi.Macro.getLocal("elas_u"), sfi.Macro.getLocal("elas_c"), sfi.Macro.getLocal("b_est"), sfi.Macro.getLocal("Sigma"))
 
     // 7. Post completed point-estimate and optional bootstrap results
     ereturn post `b' `V', esample(`touse')
@@ -254,6 +254,8 @@ program define pyquaidsce, eclass
     ereturn matrix elas_i = `elas_i'
     ereturn matrix elas_u = `elas_u'
     ereturn matrix elas_c = `elas_c'
+    ereturn matrix b_est = `b_est'
+    ereturn matrix Sigma = `Sigma'
 
     ereturn local cmd "pyquaidsce"
     ereturn local cmdline "pyquaidsce `0'"

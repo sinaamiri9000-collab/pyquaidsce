@@ -2,7 +2,15 @@
 
 All notable user-visible changes to `pyquaidsce` are documented here.
 
-## 1.3.0 — 2026-08-22
+## 1.4.0 — 2026-08-24
+
+- **Official R Package (`rquaidsce`)**: Introduced the complete R interface package with native S3 methods (`summary`, `coef`, `vcov`, `print`), full `roxygen2` documentation, CRAN compliance, and `reticulate` backend integration.
+- **Enhanced Warm-Starting Matrix Exchange**:
+  - In Stata (`pyquaidsce.ado`), exported `e(b_est)` ($1 \times K$ vector of free estimated structural parameters $\theta$) and `e(Sigma)` (residual covariance matrix) to `ereturn matrix`.
+  - Stata `initial()` and `sigma_initial()` now seamlessly accept `e(b_est)` and `e(Sigma)` from prior runs.
+  - In R (`rquaidsce`), exposed `fit$theta` and `fit$sigma` and added `initial` and `sigma_initial` arguments to `quaidsce()`.
+- **Default Predictor Documentation Alignment**: Verified and aligned all documentation and tutorials to reflect `first_stage_predict="xb"` (theoretical textbook Shonkwiler & Yen linear index) as the primary default, while preserving `first_stage_predict="pr"` for legacy Stata compatibility.
+- **Author Metadata & Contact**: Updated official author contact to `sinaamiri9000@gmail.com` across all packages, documentation, and metadata files.
 
 - Renamed the `stop_rule` value `"stata"` to `"standard"` and made `"standard"`
   the default in both the Python API and the Stata command (previously
@@ -19,7 +27,7 @@ All notable user-visible changes to `pyquaidsce` are documented here.
   `boot_sigma_tol()`, and a new `gnlog` switch mirroring `gn_verbose`.
 - Updated `pyquaidsce.sthlp` with the new options and revised defaults.
 
-## 1.2.0 — 2026-08-15
+## 1.3.0 — 2026-08-15
 
 Consolidated release based on the feature-complete 1.0.2 estimator, with the
 Stata integration from 1.1.0 and corrected bootstrap/standard-error work.

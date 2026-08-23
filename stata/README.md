@@ -110,7 +110,9 @@ pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
 
 ### Matrices
 - `e(b)`: Parameter vector with equation stripes (`alpha`, `beta`, `gamma`, `lambda`, `delta`, `eta`, `rho`, `tau`, `ELAS_INC`, `ELAS_UNCOMP`, `ELAS_COMP`)
+- `e(b_est)`: Free estimated structural parameter vector $\theta$ (can be passed to `initial()`)
 - `e(V)`: Variance-covariance matrix of estimators (or bootstrap covariance when `reps > 0`)
+- `e(Sigma)`: Residual covariance matrix $\Sigma$ (can be passed to `sigma_initial()`)
 - `e(elas_i)`: Expenditure (income) elasticities ($1 \times n$)
 - `e(elas_u)`: Uncompensated (Marshallian) price elasticities ($n \times n$)
 - `e(elas_c)`: Compensated (Hicksian) price elasticities ($n \times n$)

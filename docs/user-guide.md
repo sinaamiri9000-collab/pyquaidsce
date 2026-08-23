@@ -51,7 +51,7 @@ every replication.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `method` | `str` | `"fgnls"` | Second-stage estimation method: `"nls"` (Nonlinear Least Squares), `"fgnls"` (Feasible Generalized NLS), or `"ifgnls"` (Iterated FGNLS). |
+| `method` | `str` | `"ifgnls"` | Second-stage estimation method: `"ifgnls"` (Iterated FGNLS, default), `"fgnls"` (Feasible Generalized NLS), or `"nls"` (Nonlinear Least Squares). |
 | `algorithm` | `str` | `"gn"` | Numerical optimization algorithm: `"gn"` (Gauss-Newton with Hartley step halving, matching Stata) or `"lm"` (Levenberg-Marquardt trust-region damping). |
 | `start` | `str` | `"zero"` | Starting value scheme: `"zero"` (starts all parameters at 0, matching Stata default) or `"linear"` (fits a fast linearized AIDS starting point). |
 | `initial` | `ArrayLike` | `None` | Optional 1D vector of initial free parameters of length `res.spec.n_free` (useful for restarting or warm-starting). |
@@ -63,7 +63,7 @@ every replication.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `first_stage_predict` | `str` | `"pr"` | First-stage Probit prediction: `"pr"` reproduces Stata's default $\Phi(\Phi(X'\tau))$ and $\phi(\Phi(X'\tau))$; `"xb"` uses the linear index $X'\tau$ (textbook Shonkwiler–Yen). |
+| `first_stage_predict` | `str` | `"xb"` | First-stage Probit prediction: `"xb"` *(default)* uses the linear index $X'\tau$ (theoretical textbook Shonkwiler–Yen); `"pr"` reproduces legacy Stata-compatible prediction $\Phi(\Phi(X'\tau))$ and $\phi(\Phi(X'\tau))$. |
 | `strict_stata` | `bool` | `False` | If `True`, reproduces Stata's exact documented elasticity calculations (including its quirks). If `False` *(default)*, applies published corrected formulas. |
 | `vce_sigma` | `str` | `"objective"` | Residual covariance used in the second-stage standard error formula: `"objective"` (used in the final minimization, matching Stata) or `"final"` (recomputed from final residuals). |
 
@@ -240,3 +240,60 @@ df_results = pd.DataFrame({
 # Save to CSV
 df_results.to_csv("quaidsce_estimates.csv", index=False)
 ```
+
+---
+
+## 4. R Package Reference (`rquaidsce`)
+
+The R package `rquaidsce` provides a native R interface that calls `pyquaidsce` seamlessly via `reticulate`.
+
+```r
+library(rquaidsce)
+
+# Estimate Censored QUAIDS in R
+fit <- quaidsce(
+  data = df,
+  shares = c("w1", "w2", "w3", "w4"),
+  prices = c("p1", "p2", "p3", "p4"),
+  expenditure = "total_exp",
+  demographics = c("hh_size", "urban"),
+  anot = 10.0,
+  method = "ifgnls",
+  first_stage_predict = "xb"
+)
+
+# Standard S3 methods
+summary(fit)
+coef(fit)
+vcov(fit)
+
+# Custom starting values
+fit_warm <- quaidsce(
+  data = df,
+  shares = c("w1", "w2", "w3", "w4"),
+  prices = c("p1", "p2", "p3", "p4"),
+  expenditure = "total_exp",
+  demographics = c("hh_size", "urban"),
+  anot = 10.0,
+  initial = fit$theta,
+  sigma_initial = fit$sigma
+)
+```
+
+---
+
+## 5. Stata Interface (`pyquaidsce.ado`)
+
+```stata
+* Estimate in Stata
+pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
+    demographics(hh_size urban) anot(10.0) method(ifgnls) first_stage_predict(xb)
+
+* Warm-start using stored matrices
+matrix b_init = e(b_est)
+matrix sigma_init = e(Sigma)
+
+pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
+    demographics(hh_size urban) anot(10.0) initial(b_init) sigma_initial(sigma_init)
+```
+

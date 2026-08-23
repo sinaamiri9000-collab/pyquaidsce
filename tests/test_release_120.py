@@ -33,7 +33,7 @@ from pyquaidsce.stata_bridge import run_from_stata
 
 class MergeIntegrityTests(unittest.TestCase):
     def test_release_exposes_features_from_all_three_branches(self):
-        self.assertEqual(pyquaidsce.__version__, "1.3.0")
+        self.assertEqual(pyquaidsce.__version__, "1.4.0")
         self.assertTrue(inspect.isclass(FirstStageLayout))
         self.assertTrue(callable(fitted_share_derivatives))
         self.assertTrue(callable(run_from_stata))

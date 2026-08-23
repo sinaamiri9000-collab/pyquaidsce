@@ -63,7 +63,7 @@ res = quaidsce(
     anot=10.0,                  # Price index constant (alpha_0)
     method="ifgnls",            # Iterated FGNLS
     algorithm="gn",             # Gauss-Newton optimizer
-    first_stage_predict="xb",   # Matches Stata default
+    first_stage_predict="xb",   # Textbook Shonkwiler-Yen linear index (default)
     strict_stata=False,         # Corrected textbook formulas (True replicates Stata exactly)
     reps=0,                     # Set reps > 0 to run bootstrap
     verbose=True,
@@ -98,9 +98,12 @@ print(res.elasticity_tables())
 | `demographics(z1 z2)` | `demographics=["z1", "z2"]` |
 | `anot(10)` | `anot=10.0` |
 | `method(ifgnls)` | `method="ifgnls"` |
+| `first_stage_predict(xb)` | `first_stage_predict="xb"` |
+| `first_stage_predict(pr)` | `first_stage_predict="pr"` |
 | `noquadratic` | `quadratic=False` |
 | `nocensor` | `censor=False` |
-| `initial(...)` | `initial=...` |
+| `initial(b_init)` | `initial=b_init` |
+| `sigma_initial(sigma_init)` | `sigma_initial=sigma_init` |
 | `reps(200)` | `reps=200` |
 
 ---

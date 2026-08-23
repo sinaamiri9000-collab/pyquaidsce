@@ -82,6 +82,8 @@ def main() -> None:
         result = {
             "b": res.b,
             "V": res.V,
+            "theta": res.theta,
+            "sigma": res.sigma,
             "names": list(res.names),
             "shares": list(res.share_names),
             "elas_i": res.elas.income,

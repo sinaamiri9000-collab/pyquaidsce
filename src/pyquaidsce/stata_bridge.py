@@ -18,27 +18,60 @@ _BOOT_STATE: dict[str, Any] = {}
 
 def _stata_matrix_to_vector(sfi, name: str) -> Any:
     """Read a Stata matrix by name and return it flattened to a 1-D list."""
-    rows = sfi.Matrix.getRowTotal(name)
-    cols = sfi.Matrix.getColTotal(name)
-    values = []
-    for i in range(rows):
-        for j in range(cols):
-            values.append(float(sfi.Matrix.getAt(name, i, j)))
-    if not values:
-        raise ValueError(f"Stata matrix {name!r} is empty")
-    return values
+    import numpy as np
+
+    # 1. Try native sfi.Matrix.get()
+    try:
+        mat = sfi.Matrix.get(name)
+        if mat is not None:
+            arr = np.array(mat, dtype=float).ravel()
+            if arr.size > 0:
+                return arr.tolist()
+    except Exception:
+        pass
+
+    # 2. Fallback to getDimension & getAt
+    try:
+        dim = sfi.Matrix.getDimension(name)
+        rows, cols = dim[0], dim[1]
+        values = []
+        for i in range(rows):
+            for j in range(cols):
+                values.append(float(sfi.Matrix.getAt(name, i, j)))
+        if values:
+            return values
+    except Exception as exc:
+        raise ValueError(f"Failed to read Stata matrix {name!r}: {exc}")
+
+    raise ValueError(f"Stata matrix {name!r} is empty")
 
 
 def _stata_matrix_to_array(sfi, name: str) -> Any:
     """Read a Stata matrix by name and return a nested-list 2-D array."""
-    rows = sfi.Matrix.getRowTotal(name)
-    cols = sfi.Matrix.getColTotal(name)
-    if rows == 0 or cols == 0:
-        raise ValueError(f"Stata matrix {name!r} is empty")
-    return [
-        [float(sfi.Matrix.getAt(name, i, j)) for j in range(cols)]
-        for i in range(rows)
-    ]
+    import numpy as np
+
+    # 1. Try native sfi.Matrix.get()
+    try:
+        mat = sfi.Matrix.get(name)
+        if mat is not None:
+            arr = np.array(mat, dtype=float)
+            if arr.ndim == 1:
+                arr = arr.reshape(1, -1)
+            if arr.size > 0:
+                return arr.tolist()
+    except Exception:
+        pass
+
+    # 2. Fallback to getDimension & getAt
+    try:
+        dim = sfi.Matrix.getDimension(name)
+        rows, cols = dim[0], dim[1]
+        return [
+            [float(sfi.Matrix.getAt(name, i, j)) for j in range(cols)]
+            for i in range(rows)
+        ]
+    except Exception as exc:
+        raise ValueError(f"Failed to read Stata matrix {name!r}: {exc}")
 
 
 def run_from_stata(
@@ -172,6 +205,8 @@ def run_from_stata(
         first_stage_predict=first_stage_predict,
         strict_stata=strict_stata,
         vce_sigma=vce_sigma,
+        initial=initial_vec,
+        sigma_initial=sigma_init_mat,
         tol=float(tol),
         max_outer=int(max_outer),
         max_iter=int(max_iter),
@@ -578,6 +613,8 @@ def load_stata_results(
     elas_i_name: str,
     elas_u_name: str,
     elas_c_name: str,
+    b_est_mat_name: str = "",
+    sigma_mat_name: str = "",
 ) -> None:
     """Load all completed background-estimation results into Stata."""
     import pickle
@@ -608,6 +645,21 @@ def load_stata_results(
             sfi.Matrix.storeAt(v_mat_name, row, column, float(V[row, column]))
     sfi.Matrix.setColNames(v_mat_name, names)
     sfi.Matrix.setRowNames(v_mat_name, names)
+
+    # Store free structural parameters (theta) for e(b_est)
+    if b_est_mat_name.strip() and "theta" in result:
+        theta = np.asarray(result["theta"], dtype=float)
+        sfi.Matrix.create(b_est_mat_name, 1, theta.size, 0.0)
+        for col, val in enumerate(theta):
+            sfi.Matrix.storeAt(b_est_mat_name, 0, col, float(val))
+
+    # Store residual covariance matrix for e(Sigma)
+    if sigma_mat_name.strip() and "sigma" in result:
+        sigma = np.asarray(result["sigma"], dtype=float)
+        sfi.Matrix.create(sigma_mat_name, sigma.shape[0], sigma.shape[1], 0.0)
+        for r in range(sigma.shape[0]):
+            for c in range(sigma.shape[1]):
+                sfi.Matrix.storeAt(sigma_mat_name, r, c, float(sigma[r, c]))
 
     elasticity_specs = (
         (elas_i_name, np.atleast_2d(result["elas_i"])),

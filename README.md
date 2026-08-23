@@ -107,13 +107,43 @@ See the [Stata Package Guide](stata/README.md) for full details, options, and tr
 
 ---
 
+## Using rquaidsce in R
+
+Prefer working in R? `rquaidsce` provides a native R interface with standard S3 methods (`summary`, `coef`, `vcov`, `print`):
+
+```r
+# 1. Install directly from GitHub
+devtools::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "rquaidsce")
+
+# 2. Estimate Censored QUAIDS in R
+library(rquaidsce)
+fit <- quaidsce(
+  data = df,
+  shares = c("w1", "w2", "w3", "w4"),
+  prices = c("p1", "p2", "p3", "p4"),
+  expenditure = "total_exp",
+  demographics = c("hh_size", "urban"),
+  anot = 10.0,
+  method = "ifgnls",
+  first_stage_predict = "xb"
+)
+
+summary(fit)
+fit$elasticities$income
+fit$elasticities$uncompensated
+```
+
+See the [R Package Documentation](rquaidsce/README.md) for full details.
+
+---
+
 ## Key Options & Stata Compatibility
 
 `pyquaidsce` provides two switches to let you choose between literal Stata replication and textbook formulas:
 
 1. **`first_stage_predict`**:
-   - `"xb"` *(default)*: Replicates Stata `quaidsce`'s default behavior, which uses the predicted probability $\Phi(X'\tau)$ inside the normal density/distribution terms.
-   - `"xb"`: Uses the linear index $X'\tau$, following the standard textbook Shonkwiler–Yen formulation.
+   - `"xb"` *(default)*: Uses the linear index $X'\tau$, following the standard theoretical textbook Shonkwiler–Yen (1999) formulation.
+   - `"pr"`: Uses the predicted probability $\Phi(X'\tau)$, reproducing legacy Stata `quaidsce` v2.0 behavior.
 
 2. **`strict_stata`**:
    - `False` *(default)*: Uses corrected textbook formulas for documented edge-cases (such as models without demographics or with `noquadratic`).

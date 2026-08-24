@@ -77,7 +77,8 @@ pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
 display as result "       --> [PASS] Linear AIDS LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[04/24] RUNNING: Uncensored QUAIDS (nocensor, Poi 2012)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+pyquaidsce w1_sub w2_sub w3_sub if w1_red > 0 & w2_red > 0 & w3_red > 0, ///
+    prices(`p_prefix'1 `p_prefix'2 `p_prefix'3) expenditure(sub_exp) ///
     demographics(`demo_list') anot(`anot_val') nocensor method(ifgnls) nolog
 display as result "       --> [PASS] Uncensored LL = " %10.4f e(ll) ", Converged = " e(converged)
 

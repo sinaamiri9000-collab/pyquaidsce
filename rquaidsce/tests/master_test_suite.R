@@ -104,30 +104,35 @@ record_test(3, "Linear AIDS Model (quadratic=FALSE)", function() {
            demographics = demographics, anot = anot_val, quadratic = FALSE, method = "ifgnls")
 })
 
-record_test(4, "Uncensored QUAIDS (censor=FALSE, Poi 2012 specification)", function() {
-  quaidsce(data = df, shares = shares_14, prices = prices_14, expenditure = "gasto_total",
-           demographics = demographics, anot = anot_val, censor = FALSE, method = "ifgnls")
-})
+  # 3-good subsystem
+  df_3g <- df
+  sub_shares <- c("w1_red", "w2_red", "w3_red")
+  tot_sub <- rowSums(df_3g[, sub_shares])
+  for (s in sub_shares) {
+    df_3g[[paste0(s, "_sub")]] <- df_3g[[s]] / tot_sub
+  }
+  df_3g$sub_exp <- pmax(df_3g$gasto1 + df_3g$gasto2 + df_3g$gasto3, 1.0)
 
-record_test(5, "Translog Constant Variation (anot = 10.0)", function() {
-  quaidsce(data = df, shares = shares_14, prices = prices_14, expenditure = "gasto_total",
-           demographics = demographics, anot = 10.0, method = "ifgnls")
-})
+  # Positive consumption subset (N = 3,297) for uncensored QUAIDS
+  pos_mask <- apply(df_3g[, sub_shares] > 0, 1, all)
+  df_3g_pos <- df_3g[pos_mask, ]
 
-# 3-good subsystem
-df_3g <- df
-sub_shares <- c("w1_red", "w2_red", "w3_red")
-tot_sub <- rowSums(df_3g[, sub_shares])
-for (s in sub_shares) {
-  df_3g[[paste0(s, "_sub")]] <- df_3g[[s]] / tot_sub
-}
-df_3g$sub_exp <- pmax(df_3g$gasto1 + df_3g$gasto2 + df_3g$gasto3, 1.0)
+  record_test(4, "Uncensored QUAIDS (censor=FALSE, Poi 2012 specification)", function() {
+    quaidsce(data = df_3g_pos, shares = paste0(sub_shares, "_sub"),
+             prices = c("P_med1", "P_med2", "P_med3"), expenditure = "sub_exp",
+             demographics = demographics, anot = anot_val, censor = FALSE, method = "ifgnls")
+  })
 
-record_test(6, "3-Good Subsystem Estimation", function() {
-  quaidsce(data = df_3g, shares = paste0(sub_shares, "_sub"),
-           prices = c("P_med1", "P_med2", "P_med3"), expenditure = "sub_exp",
-           demographics = demographics, anot = anot_val, method = "ifgnls")
-})
+  record_test(5, "Translog Constant Variation (anot = 10.0)", function() {
+    quaidsce(data = df, shares = shares_14, prices = prices_14, expenditure = "gasto_total",
+             demographics = demographics, anot = 10.0, method = "ifgnls")
+  })
+
+  record_test(6, "3-Good Subsystem Estimation", function() {
+    quaidsce(data = df_3g, shares = paste0(sub_shares, "_sub"),
+             prices = c("P_med1", "P_med2", "P_med3"), expenditure = "sub_exp",
+             demographics = demographics, anot = anot_val, method = "ifgnls")
+  })
 
 # ------------------------------------------------------------------------------
 # Tier 2: Solvers, Algorithms & Numerical Tolerances

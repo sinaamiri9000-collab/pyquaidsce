@@ -124,10 +124,22 @@ def run_tests():
         )
     )
 
+    # 3-good subsystem (with positive consumption subset for uncensored model test)
+    df_3g = df.copy()
+    sub_shares = ["w1_red", "w2_red", "w3_red"]
+    tot_sub = df_3g[sub_shares].sum(axis=1)
+    for s in sub_shares:
+        df_3g[s + "_sub"] = df_3g[s] / tot_sub
+    df_3g["sub_exp"] = (df_3g["gasto1"] + df_3g["gasto2"] + df_3g["gasto3"]).clip(lower=1.0)
+
+    # Positive consumption subset (N = 3,297) for uncensored QUAIDS
+    df_3g_pos = df_3g[(df_3g[sub_shares] > 0).all(axis=1)].copy()
+
     record_test(
         4, "Uncensored QUAIDS (censor=False, Poi 2012 specification)",
         lambda: quaidsce(
-            data=df, shares=shares_14, prices=prices_14, expenditure="gasto_total",
+            data=df_3g_pos, shares=[s + "_sub" for s in sub_shares],
+            prices=["P_med1", "P_med2", "P_med3"], expenditure="sub_exp",
             demographics=demographics, anot=anot_val, censor=False, method="ifgnls"
         )
     )
@@ -139,15 +151,6 @@ def run_tests():
             demographics=demographics, anot=10.0, method="ifgnls"
         )
     )
-
-    # 3-good subsystem
-    df_3g = df.copy()
-    sub_shares = ["w1_red", "w2_red", "w3_red"]
-    total_sub = df_3g[sub_shares].sum(axis=1)
-    for s in sub_shares:
-        df_3g[s + "_sub"] = df_3g[s] / total_sub
-    sub_exp = (df_3g["gasto1"] + df_3g["gasto2"] + df_3g["gasto3"]).clip(lower=1.0)
-    df_3g["sub_exp"] = sub_exp
 
     record_test(
         6, "3-Good Subsystem Estimation",

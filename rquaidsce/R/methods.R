@@ -122,6 +122,14 @@ print.quaidsce <- function(x, ...) {
   if (!is.null(x$bootstrap)) {
     cat(sprintf("Bootstrap replications : %d / %d successful\n", x$bootstrap$reps_ok, x$bootstrap$reps_requested))
   }
+  if (!is.null(x$reduced_form)) {
+    cat(sprintf("ivexp instruments      : %s\n", paste(x$ivexp, collapse = ", ")))
+    cat(sprintf(
+      "Reduced-form F        : %.4f (p = %.4g)\n",
+      x$reduced_form$excluded.f,
+      x$reduced_form$excluded.p.value
+    ))
+  }
   cat("\nCoefficients (first 8 displayed):\n")
   disp_k <- min(8, length(x$coefficients))
   print(round(x$coefficients[seq_len(disp_k)], 5))
@@ -166,7 +174,8 @@ summary.quaidsce <- function(object, ...) {
     quadratic = object$quadratic,
     censor = object$censor,
     first_stage_predict = object$first_stage_predict,
-    bootstrap = object$bootstrap
+    bootstrap = object$bootstrap,
+    reduced_form = object$reduced_form
   )
   class(res) <- "summary.quaidsce"
   return(res)
@@ -195,6 +204,15 @@ print.summary.quaidsce <- function(x, digits = 4, ...) {
     cat(sprintf("Bootstrap Replications = %d / %d (standard errors from bootstrap)\n", x$bootstrap$reps_ok, x$bootstrap$reps_requested))
   } else {
     cat("Standard Errors        = Analytical conditional VCE\n")
+  }
+  if (!is.null(x$reduced_form)) {
+    cat(sprintf(
+      "Excluded-instrument F = %.4f, F(%d, %d), p = %.4g\n",
+      x$reduced_form$excluded.f,
+      x$reduced_form$excluded.df[1],
+      x$reduced_form$excluded.df[2],
+      x$reduced_form$excluded.p.value
+    ))
   }
 
   cat("\n--------------------------------------------------------------------------------\n")

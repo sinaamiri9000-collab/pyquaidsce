@@ -45,12 +45,18 @@ In addition to the Stata benchmark, `pyquaidsce` includes automated unit tests t
 - **Control Function Extension**: Parameter maps, independent selection layouts,
   analytic/full/fast Jacobians, 220 conditional finite-difference derivatives,
   API gates, and end-to-end recovery checks.
+- **Integrated `ivexp` Path**: Reduced-form OLS orthogonality and rank checks,
+  excluded-instrument F diagnostics, exact equivalence to the same manually
+  generated residual, validation gates, and verification that every bootstrap
+  replication re-estimates the reduced form.
 - **Release Integration**: Presence of 1.0.2/1.1/1.2 APIs, finite analytical
   covariance handling, real cooperative timeout behavior, and Stata bridge
   argument/matrix forwarding.
 
-Release 1.3.0 collects **25 tests**; all pass both from the repository and from
-the built source distribution. A separate five-replication `pr`/`xb` bootstrap
+Release 1.5.0 collects **38 Python tests**; all pass from the repository, and
+all 38 also pass from the built source distribution. The wheel passes an
+isolated import/API smoke test. A separate
+five-replication `pr`/`xb` bootstrap
 smoke test and its JSON results are stored under
 `benchmarks/release_120/results/`.
 

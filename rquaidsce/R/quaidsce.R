@@ -11,6 +11,10 @@
 #' @param expenditure Character name of total expenditure variable.
 #' @param lnexpenditure Character name of log-expenditure variable.
 #' @param demographics Optional character vector of demographic variable names.
+#' @param ivexp Optional character vector of excluded instruments for endogenous
+#'   expenditure. The Python backend regresses log expenditure on log prices,
+#'   demographics, these instruments, and a constant; the generated residual
+#'   enters both the participation Probits and latent demand equations.
 #' @param anot Numeric scalar normalization for alpha_0 (default = 10.0).
 #' @param quadratic Logical, whether to include quadratic expenditure term (default = TRUE).
 #' @param censor Logical, whether to apply Shonkwiler-Yen censoring correction (default = TRUE).
@@ -62,6 +66,7 @@ quaidsce <- function(data,
                      expenditure = NULL,
                      lnexpenditure = NULL,
                      demographics = NULL,
+                     ivexp = NULL,
                      anot = 10.0,
                      quadratic = TRUE,
                      censor = TRUE,
@@ -120,7 +125,7 @@ quaidsce <- function(data,
   }
   exp_var <- if (!is.null(expenditure)) expenditure else lnexpenditure
 
-  all_vars <- unique(c(shares, p_vars, exp_var, demographics, control_function, selection_control_function, selection_prices, selection_covariates))
+  all_vars <- unique(c(shares, p_vars, exp_var, demographics, ivexp, control_function, selection_control_function, selection_prices, selection_covariates))
   missing_cols <- setdiff(all_vars, names(data))
   if (length(missing_cols) > 0) {
     stop(sprintf("The following specified variables were not found in data: %s", paste(missing_cols, collapse = ", ")), call. = FALSE)
@@ -164,6 +169,7 @@ quaidsce <- function(data,
     expenditure = expenditure,
     lnexpenditure = lnexpenditure,
     demographics = if (!is.null(demographics)) as.list(demographics) else NULL,
+    ivexp = if (!is.null(ivexp)) as.list(ivexp) else NULL,
     anot = as.numeric(anot),
     quadratic = as.logical(quadratic),
     censor = as.logical(censor),
@@ -266,6 +272,31 @@ quaidsce <- function(data,
     shares = share_names,
     prices = as.character(res_py$price_names),
     demographics = as.character(res_py$demo_names),
+    ivexp = as.character(res_py$ivexp_names),
+    reduced_form = if (!is.null(res_py$reduced_form)) list(
+      outcome = as.character(res_py$reduced_form$outcome_name),
+      coefficients = stats::setNames(
+        as.numeric(res_py$reduced_form$b),
+        as.character(res_py$reduced_form$regressor_names)
+      ),
+      vcov = {
+        rf_v <- as.matrix(res_py$reduced_form$V)
+        rf_names <- as.character(res_py$reduced_form$regressor_names)
+        rownames(rf_v) <- rf_names
+        colnames(rf_v) <- rf_names
+        rf_v
+      },
+      residuals = as.numeric(res_py$reduced_form$residuals),
+      fitted.values = as.numeric(res_py$reduced_form$fitted),
+      r.squared = as.numeric(res_py$reduced_form$r_squared),
+      adj.r.squared = as.numeric(res_py$reduced_form$adjusted_r_squared),
+      excluded.f = as.numeric(res_py$reduced_form$excluded_f),
+      excluded.p.value = as.numeric(res_py$reduced_form$excluded_pvalue),
+      excluded.df = c(
+        as.integer(res_py$reduced_form$excluded_df_num),
+        as.integer(res_py$reduced_form$excluded_df_den)
+      )
+    ) else NULL,
     method = as.character(method),
     quadratic = as.logical(quadratic),
     censor = as.logical(censor),

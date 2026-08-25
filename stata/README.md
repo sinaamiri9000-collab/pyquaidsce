@@ -82,8 +82,7 @@ disposable child process so a stuck native call can be terminated without
 killing unrelated replications.
 
 Advanced control-function and custom-selection options are available from
-Stata. They require `first_stage_predict(xb)` and `reps(0)` because a valid
-bootstrap must rebuild any generated residual inside every replication:
+Stata. Precomputed residuals require `first_stage_predict(xb)` and `reps(0)`:
 
 ```stata
 pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
@@ -91,6 +90,18 @@ pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
     selection_control_function(vhat_sel) selection_prices(p3 p1) ///
     selection_covariates(urban) selection_noexpenditure ///
     first_stage_predict(xb) reps(0)
+```
+
+For endogenous total expenditure, `ivexp()` is the preferred integrated path.
+It estimates log expenditure on log prices, Ray demographics, the excluded
+instruments, and a constant; the residual enters both participation Probits and
+latent demand equations. Its bootstrap rebuilds the reduced form in every
+replication:
+
+```stata
+pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
+    demographics(hh_size urban) ivexp(log_income employment) ///
+    first_stage_predict(xb) reps(200) seed(12345)
 ```
 
 ---
@@ -107,6 +118,8 @@ pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
 - `e(converged)`: 1 if converged, 0 otherwise
 - `e(n_outer)`: Number of outer IFGNLS iterations
 - `e(n_gn)`: Number of inner Gauss-Newton steps
+- `e(reduced_form_r2)`: R-squared from the internal log-expenditure reduced form
+- `e(excluded_iv_F)`, `e(excluded_iv_p)`: Joint excluded-instrument F test and p-value
 
 ### Matrices
 - `e(b)`: Parameter vector with equation stripes (`alpha`, `beta`, `gamma`, `lambda`, `delta`, `eta`, `rho`, `tau`, `ELAS_INC`, `ELAS_UNCOMP`, `ELAS_COMP`)
@@ -116,6 +129,7 @@ pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
 - `e(elas_i)`: Expenditure (income) elasticities ($1 \times n$)
 - `e(elas_u)`: Uncompensated (Marshallian) price elasticities ($n \times n$)
 - `e(elas_c)`: Compensated (Hicksian) price elasticities ($n \times n$)
+- `e(reduced_form_b)`, `e(reduced_form_V)`: Internal reduced-form coefficients and covariance
 
 ### Example: Testing Parameter Restrictions
 ```stata

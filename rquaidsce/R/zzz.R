@@ -97,8 +97,8 @@
 
   # Check minimum version requirement
   ver <- tryCatch(as.character(py$`__version__`), error = function(e) "0.0.0")
-  if (utils::compareVersion(ver, "1.3.0") < 0) {
-    warning(sprintf("Detected pyquaidsce version %s. Version >= 1.3.0 is recommended.", ver), call. = FALSE)
+  if (utils::compareVersion(ver, "1.5.0") < 0) {
+    warning(sprintf("Detected pyquaidsce version %s. Version >= 1.5.0 is required for the complete R interface.", ver), call. = FALSE)
   }
 
   assign("module", py, envir = .pyquaidsce_env)

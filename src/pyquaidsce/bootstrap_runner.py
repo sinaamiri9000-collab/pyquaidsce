@@ -100,6 +100,21 @@ def main() -> None:
             "boot_reps_ok": res.boot.reps_ok if res.boot else 0,
             "boot_reps_requested": res.boot.reps_requested if res.boot else 0,
             "failures": list(res.boot.failures) if res.boot else [],
+            "reduced_form": (
+                None if res.reduced_form is None else {
+                    "outcome_name": res.reduced_form.outcome_name,
+                    "regressor_names": list(res.reduced_form.regressor_names),
+                    "instrument_names": list(res.reduced_form.instrument_names),
+                    "b": res.reduced_form.b,
+                    "V": res.reduced_form.V,
+                    "r_squared": res.reduced_form.r_squared,
+                    "adjusted_r_squared": res.reduced_form.adjusted_r_squared,
+                    "excluded_f": res.reduced_form.excluded_f,
+                    "excluded_pvalue": res.reduced_form.excluded_pvalue,
+                    "excluded_df_num": res.reduced_form.excluded_df_num,
+                    "excluded_df_den": res.reduced_form.excluded_df_den,
+                }
+            ),
             # Compatibility keys used by load_bootstrap_results().
             "reps_ok": res.boot.reps_ok if res.boot else 0,
             "reps_requested": res.boot.reps_requested if res.boot else 0,

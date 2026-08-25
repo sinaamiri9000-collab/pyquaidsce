@@ -1,4 +1,4 @@
-*! version 1.4.0  24aug2026
+*! version 1.5.0  25aug2026
 *! pyquaidsce: Censored QUAIDS demand system estimation in Stata using Python engine
 *! Author: Sina Amiri (Department of Economics, Shiraz University)
 
@@ -8,7 +8,7 @@ program define pyquaidsce, eclass
     syntax varlist(min=3 numeric) [if] [in], ///
         [ prices(varlist numeric) lnprices(varlist numeric) ///
           expenditure(varname numeric) lnexpenditure(varname numeric) ///
-          demographics(varlist numeric) anot(real 10.0) ///
+          demographics(varlist numeric) ivexp(varlist numeric) anot(real 10.0) ///
           control_function(varname numeric) ///
           selection_control_function(varname numeric) ///
           selection_prices(varlist numeric) selection_noprices ///
@@ -43,6 +43,11 @@ program define pyquaidsce, eclass
         display as error "cannot specify both expenditure() and lnexpenditure()"
         exit 198
     }
+    if "`ivexp'" != "" & ///
+       ("`control_function'" != "" | "`selection_control_function'" != "") {
+        display as error "ivexp() cannot be combined with control_function() or selection_control_function()"
+        exit 198
+    }
 
     local p_vars = cond("`prices'" != "", "`prices'", "`lnprices'")
     local exp_var = cond("`expenditure'" != "", "`expenditure'", "`lnexpenditure'")
@@ -66,7 +71,7 @@ program define pyquaidsce, eclass
 
     // 2. Mark estimation sample
     marksample touse
-    markout `touse' `p_vars' `exp_var' `demographics' ///
+    markout `touse' `p_vars' `exp_var' `demographics' `ivexp' ///
         `control_function' `selection_control_function' ///
         `selection_prices' `selection_covariates'
 
@@ -174,8 +179,10 @@ program define pyquaidsce, eclass
     local selection_covariates_specified = ///
         ("`selection_covariates'" != "" | "`selection_nocovariates'" != "")
     local selection_expenditure_on = ("`selection_noexpenditure'" == "")
+    local external_cf_active = ///
+        ("`control_function'" != "" | "`selection_control_function'" != "")
     local extension_active = ///
-        ("`control_function'" != "" | "`selection_control_function'" != "" | ///
+        (`external_cf_active' | "`ivexp'" != "" | ///
          `selection_prices_specified' | `selection_covariates_specified' | ///
          !`selection_expenditure_on')
     if `extension_active' & !`is_censor' {
@@ -186,9 +193,9 @@ program define pyquaidsce, eclass
         display as error "control-function/selection extensions require first_stage_predict(xb)"
         exit 198
     }
-    if `extension_active' & `reps' > 0 {
-        display as error "bootstrap is disabled for precomputed control residuals or a custom selection design"
-        display as text  "Rebuild the reduced form and selection design inside each bootstrap replication."
+    if `external_cf_active' & `reps' > 0 {
+        display as error "bootstrap is disabled for precomputed control residuals"
+        display as text  "Use ivexp() so the reduced form is rebuilt inside each bootstrap replication."
         exit 198
     }
     if `rep_timeout' < 0 {
@@ -197,7 +204,7 @@ program define pyquaidsce, eclass
     }
 
     // 4. Temporary matrices for ereturn
-    tempname b V elas_i elas_u elas_c b_est Sigma
+    tempname b V elas_i elas_u elas_c b_est Sigma rf_b rf_V
 
     // 5. Check Python package
     capture python: import pyquaidsce
@@ -213,7 +220,7 @@ program define pyquaidsce, eclass
     }
 
     // 6. Launch the complete estimation outside Stata's GUI process
-    python: from pyquaidsce.stata_bridge import launch_from_stata, poll_bootstrap, load_stata_results, kill_bootstrap; import sfi; _rt=float(sfi.Macro.getLocal("rep_timeout")); launch_from_stata(shares_str=sfi.Macro.getLocal("varlist"), prices_str=sfi.Macro.getLocal("p_vars"), expenditure_str=sfi.Macro.getLocal("exp_var"), demographics_str=sfi.Macro.getLocal("demographics"), anot=float(sfi.Macro.getLocal("anot")), method=sfi.Macro.getLocal("method"), algorithm=sfi.Macro.getLocal("algorithm"), start=sfi.Macro.getLocal("start"), reps=int(sfi.Macro.getLocal("reps")), stop_rule=sfi.Macro.getLocal("stop_rule"), bootstrap_start=sfi.Macro.getLocal("bootstrap_start"), seed=int(sfi.Macro.getLocal("seed")), n_jobs=int(sfi.Macro.getLocal("n_jobs")), mp_context=sfi.Macro.getLocal("mp_context") or None, rep_timeout=_rt if _rt > 0 else None, first_stage_predict=sfi.Macro.getLocal("first_stage_predict"), strict_stata=bool(int(sfi.Macro.getLocal("is_strict"))), quadratic=bool(int(sfi.Macro.getLocal("is_quad"))), censor=bool(int(sfi.Macro.getLocal("is_censor"))), is_lnprices=bool(int(sfi.Macro.getLocal("is_lnp"))), is_lnexp=bool(int(sfi.Macro.getLocal("is_lnexp"))), control_function=sfi.Macro.getLocal("control_function"), selection_control_function=sfi.Macro.getLocal("selection_control_function"), selection_prices_str=sfi.Macro.getLocal("selection_prices"), selection_prices_specified=bool(int(sfi.Macro.getLocal("selection_prices_specified"))), selection_covariates_str=sfi.Macro.getLocal("selection_covariates"), selection_covariates_specified=bool(int(sfi.Macro.getLocal("selection_covariates_specified"))), selection_expenditure=bool(int(sfi.Macro.getLocal("selection_expenditure_on"))), verbose=bool(int(sfi.Macro.getLocal("is_verbose"))), vce_sigma=sfi.Macro.getLocal("vce_sigma"), initial_mat_name=sfi.Macro.getLocal("initial"), sigma_initial_mat_name=sfi.Macro.getLocal("sigma_initial"), tol=float(sfi.Macro.getLocal("tol")), max_outer=int(float(sfi.Macro.getLocal("max_outer"))), max_iter=int(float(sfi.Macro.getLocal("max_iter"))), chunk=int(float(sfi.Macro.getLocal("chunk"))), nrtol_stop=float(sfi.Macro.getLocal("nrtol_stop")), inner_nrtol_early=float(sfi.Macro.getLocal("inner_nrtol_early")), sigma_tol=float(sfi.Macro.getLocal("sigma_tol")), boot_sigma_tol=float(sfi.Macro.getLocal("boot_sigma_tol")), gn_verbose=bool(int(sfi.Macro.getLocal("is_gn_verbose"))), touse_var=sfi.Macro.getLocal("touse"))
+    python: from pyquaidsce.stata_bridge import launch_from_stata, poll_bootstrap, load_stata_results, kill_bootstrap; import sfi; _rt=float(sfi.Macro.getLocal("rep_timeout")); launch_from_stata(shares_str=sfi.Macro.getLocal("varlist"), prices_str=sfi.Macro.getLocal("p_vars"), expenditure_str=sfi.Macro.getLocal("exp_var"), demographics_str=sfi.Macro.getLocal("demographics"), anot=float(sfi.Macro.getLocal("anot")), method=sfi.Macro.getLocal("method"), algorithm=sfi.Macro.getLocal("algorithm"), start=sfi.Macro.getLocal("start"), reps=int(sfi.Macro.getLocal("reps")), stop_rule=sfi.Macro.getLocal("stop_rule"), bootstrap_start=sfi.Macro.getLocal("bootstrap_start"), seed=int(sfi.Macro.getLocal("seed")), n_jobs=int(sfi.Macro.getLocal("n_jobs")), mp_context=sfi.Macro.getLocal("mp_context") or None, rep_timeout=_rt if _rt > 0 else None, first_stage_predict=sfi.Macro.getLocal("first_stage_predict"), strict_stata=bool(int(sfi.Macro.getLocal("is_strict"))), quadratic=bool(int(sfi.Macro.getLocal("is_quad"))), censor=bool(int(sfi.Macro.getLocal("is_censor"))), is_lnprices=bool(int(sfi.Macro.getLocal("is_lnp"))), is_lnexp=bool(int(sfi.Macro.getLocal("is_lnexp"))), ivexp_str=sfi.Macro.getLocal("ivexp"), control_function=sfi.Macro.getLocal("control_function"), selection_control_function=sfi.Macro.getLocal("selection_control_function"), selection_prices_str=sfi.Macro.getLocal("selection_prices"), selection_prices_specified=bool(int(sfi.Macro.getLocal("selection_prices_specified"))), selection_covariates_str=sfi.Macro.getLocal("selection_covariates"), selection_covariates_specified=bool(int(sfi.Macro.getLocal("selection_covariates_specified"))), selection_expenditure=bool(int(sfi.Macro.getLocal("selection_expenditure_on"))), verbose=bool(int(sfi.Macro.getLocal("is_verbose"))), vce_sigma=sfi.Macro.getLocal("vce_sigma"), initial_mat_name=sfi.Macro.getLocal("initial"), sigma_initial_mat_name=sfi.Macro.getLocal("sigma_initial"), tol=float(sfi.Macro.getLocal("tol")), max_outer=int(float(sfi.Macro.getLocal("max_outer"))), max_iter=int(float(sfi.Macro.getLocal("max_iter"))), chunk=int(float(sfi.Macro.getLocal("chunk"))), nrtol_stop=float(sfi.Macro.getLocal("nrtol_stop")), inner_nrtol_early=float(sfi.Macro.getLocal("inner_nrtol_early")), sigma_tol=float(sfi.Macro.getLocal("sigma_tol")), boot_sigma_tol=float(sfi.Macro.getLocal("boot_sigma_tol")), gn_verbose=bool(int(sfi.Macro.getLocal("is_gn_verbose"))), touse_var=sfi.Macro.getLocal("touse"))
 
     local _pyq_boot_done = 0
     local _pyq_boot_err = 0
@@ -236,7 +243,7 @@ program define pyquaidsce, eclass
         exit 498
     }
 
-    python: load_stata_results(sfi.Macro.getLocal("b"), sfi.Macro.getLocal("V"), sfi.Macro.getLocal("elas_i"), sfi.Macro.getLocal("elas_u"), sfi.Macro.getLocal("elas_c"), sfi.Macro.getLocal("b_est"), sfi.Macro.getLocal("Sigma"))
+    python: load_stata_results(sfi.Macro.getLocal("b"), sfi.Macro.getLocal("V"), sfi.Macro.getLocal("elas_i"), sfi.Macro.getLocal("elas_u"), sfi.Macro.getLocal("elas_c"), sfi.Macro.getLocal("b_est"), sfi.Macro.getLocal("Sigma"), sfi.Macro.getLocal("rf_b"), sfi.Macro.getLocal("rf_V"))
 
     // 7. Post completed point-estimate and optional bootstrap results
     ereturn post `b' `V', esample(`touse')
@@ -256,6 +263,15 @@ program define pyquaidsce, eclass
     ereturn matrix elas_c = `elas_c'
     ereturn matrix b_est = `b_est'
     ereturn matrix Sigma = `Sigma'
+    if "`ivexp'" != "" {
+        ereturn matrix reduced_form_b = `rf_b'
+        ereturn matrix reduced_form_V = `rf_V'
+        ereturn scalar reduced_form_r2 = scalar(r_rf_r2)
+        ereturn scalar excluded_iv_F = scalar(r_rf_F)
+        ereturn scalar excluded_iv_p = scalar(r_rf_p)
+        ereturn scalar excluded_iv_df1 = scalar(r_rf_df1)
+        ereturn scalar excluded_iv_df2 = scalar(r_rf_df2)
+    }
 
     ereturn local cmd "pyquaidsce"
     ereturn local cmdline "pyquaidsce `0'"
@@ -265,6 +281,7 @@ program define pyquaidsce, eclass
     ereturn local shares "`varlist'"
     ereturn local prices "`p_vars'"
     ereturn local demographics "`demographics'"
+    ereturn local ivexp "`ivexp'"
     ereturn local control_function "`control_function'"
     ereturn local selection_control_function "`selection_control_function'"
     ereturn local selection_prices "`selection_prices'"
@@ -279,6 +296,13 @@ program define pyquaidsce, eclass
     display as text "Log-likelihood         =" as result %10.4f e(ll)
     if `reps' > 0 {
         display as text "Bootstrap replications =" as result %10.0f e(boot_reps) as text "/" as result %5.0f `reps'
+    }
+    if "`ivexp'" != "" {
+        display as text "Reduced-form R-squared =" as result %10.4f e(reduced_form_r2)
+        display as text "Excluded-instrument F =" as result %10.4f e(excluded_iv_F) ///
+            as text "  F(" as result %3.0f e(excluded_iv_df1) as text "," ///
+            as result %6.0f e(excluded_iv_df2) as text "), p=" ///
+            as result %9.5f e(excluded_iv_p)
     }
 
     ereturn display, level(`level')

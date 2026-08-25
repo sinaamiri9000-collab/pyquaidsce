@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, TYPE_CHECKING
 
 import numpy as np
 
@@ -11,6 +11,9 @@ from .elasticities import Elasticities, Means
 from .params import Coefs, Spec
 from .selection import FirstStageLayout
 from .statafmt import coef_table, g
+
+if TYPE_CHECKING:  # pragma: no cover
+    from .reduced_form import ExpenditureReducedForm
 
 
 @dataclass
@@ -55,6 +58,8 @@ class QuaidsceResults:
     control_function_name: Optional[str] = None
     selection_control_function_name: Optional[str] = None
     V_analytic: Optional[np.ndarray] = None
+    ivexp_names: List[str] = field(default_factory=list)
+    reduced_form: Optional["ExpenditureReducedForm"] = None
 
     # ------------------------------------------------------------------ #
     @property
@@ -131,6 +136,15 @@ class QuaidsceResults:
                 f"{g(self.boot.reps_ok, 10):>10} / "
                 f"{g(self.boot.reps_requested, 10)}"
             )
+        if self.reduced_form is not None:
+            rf = self.reduced_form
+            head.extend([
+                f"Reduced-form R-sq.     = {g(rf.r_squared, 10):>10}",
+                "Excluded-IV F          = "
+                f"{g(rf.excluded_f, 10):>10}  "
+                f"F({rf.excluded_df_num}, {rf.excluded_df_den})",
+                f"Excluded-IV p-value   = {g(rf.excluded_pvalue, 10):>10}",
+            ])
         head.append("")
         if self.boot is not None:
             body = coef_table(self.names, self.b, self.boot.se, level=level,
@@ -148,6 +162,28 @@ class QuaidsceResults:
         if self.notes:
             out += "\n\nNotes:\n" + "\n".join(f"- {note}" for note in self.notes)
         return out
+
+    def reduced_form_table(self, level: float = 95.0) -> str:
+        """Formatted OLS table for the internally estimated ivexp equation."""
+        if self.reduced_form is None:
+            raise ValueError("no internal ivexp reduced form was estimated")
+        rf = self.reduced_form
+        header = [
+            "",
+            f"Reduced form for {rf.outcome_name}",
+            "-" * max(28, len(rf.outcome_name) + 17),
+            f"Number of obs          = {g(rf.nobs, 10):>10}",
+            f"R-squared              = {g(rf.r_squared, 10):>10}",
+            f"Adjusted R-squared     = {g(rf.adjusted_r_squared, 10):>10}",
+            "Excluded instruments F = "
+            f"{g(rf.excluded_f, 10):>10}  "
+            f"F({rf.excluded_df_num}, {rf.excluded_df_den}), "
+            f"p={g(rf.excluded_pvalue, 10)}",
+            "",
+        ]
+        return "\n".join(header) + coef_table(
+            list(rf.regressor_names), rf.b, rf.se, level=level
+        )
 
     def elasticity_tables(self) -> str:
         n = self.spec.neqn

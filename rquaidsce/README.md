@@ -6,7 +6,8 @@ An R interface to the high-performance `pyquaidsce` econometric engine, implemen
 - **Shonkwiler and Yen (1999) Two-Step Censoring Correction**
 - **Iterated Feasible Generalized Nonlinear Least Squares (IFGNLS)**
 - **Fast Multiprocessing Nonparametric Bootstrap Standard Errors**
-- **Control Functions for Endogeneity & Custom Selection Equations**
+- **Integrated `ivexp` Control Functions for Endogenous Expenditure**
+- **External Control Functions & Custom Selection Equations**
 
 ---
 
@@ -63,6 +64,24 @@ vcov(fit)
 fit$elasticities$income          # Expenditure (income) elasticities
 fit$elasticities$uncompensated   # Marshallian (uncompensated) price elasticities
 fit$elasticities$compensated     # Hicksian (compensated) price elasticities
+```
+
+For endogenous total expenditure, pass excluded instruments through `ivexp`:
+
+```r
+fit_iv <- quaidsce(
+  data = df,
+  shares = c("w1", "w2", "w3", "w4"),
+  prices = c("p1", "p2", "p3", "p4"),
+  expenditure = "total_exp",
+  demographics = c("hh_size", "urban"),
+  ivexp = c("log_income", "employment_status"),
+  anot = 10,
+  reps = 200
+)
+
+fit_iv$reduced_form$coefficients
+fit_iv$reduced_form$excluded.f
 ```
 
 ---

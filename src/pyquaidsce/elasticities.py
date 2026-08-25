@@ -113,7 +113,7 @@ def fitted_share_derivatives(
     """Observation-level derivatives of fitted shares.
 
     Returns ``(dmu_dlnexp, dmu_dlnprices)`` with shapes ``(N, n)`` and
-    ``(N, n, n)``.  The external control residual is conditional and remains
+    ``(N, n, n)``.  The control residual is conditional and remains
     fixed.  ``selection_index`` is the Probit linear predictor ``xb``; this
     helper deliberately does not support the legacy double-CDF ``pr`` path.
     """

@@ -6,7 +6,7 @@
 - **Shonkwiler & Yen (1999) two-step correction** for zero expenditure shares (censoring).
 - **Nonlinear SUR estimation** supporting NLS, FGNLS, and Iterated FGNLS (IFGNLS).
 - **Elasticities**: Expenditure (income), Marshallian (uncompensated), and Hicksian (compensated) price elasticities.
-- **Control functions**: Supports expenditure endogeneity correction via generated residuals.
+- **Control functions**: Supports integrated expenditure endogeneity correction via `ivexp`, plus externally generated residuals.
 - **Parallel bootstrap**: Multi-core bootstrap with progress tracking and runtime safeguards for valid standard errors.
 - **Direct Stata compatibility**: matched coefficient ordering, output tables, and exact numerical reproduction switches.
 
@@ -83,6 +83,26 @@ print(res.summary())
 print(res.elasticity_tables())
 ```
 
+To treat total expenditure as endogenous, supply one or more excluded
+instruments. The package regresses log expenditure on log prices,
+demographics, the excluded instruments, and a constant; its residual enters
+both participation and demand equations:
+
+```python
+res_iv = quaidsce(
+    df,
+    shares=["w1", "w2", "w3", "w4"],
+    prices=["p1", "p2", "p3", "p4"],
+    expenditure="total_expenditure",
+    demographics=["hh_size", "urban"],
+    ivexp=["log_income", "employment_status"],
+    anot=10.0,
+    first_stage_predict="xb",
+    reps=200,  # rebuilds the reduced form in every bootstrap draw
+)
+print(res_iv.reduced_form_table())
+```
+
 For a step-by-step tutorial, see [Getting Started](docs/getting-started.md). For a complete reference of all input arguments, control functions, and output attributes, see the [User Guide & API Reference](docs/user-guide.md).
 
 ---
@@ -96,7 +116,7 @@ Prefer working in Stata? `pyquaidsce` includes an official Stata package (`pyqua
 net install pyquaidsce, from("https://raw.githubusercontent.com/sinaamiri9000-collab/pyquaidsce/main/stata") replace
 
 // 2. Estimate your model in Stata with familiar syntax
-pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) method(ifgnls)
+pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) ivexp(log_income employment_status) anot(10) method(ifgnls)
 
 // 3. Postestimation commands work seamlessly
 test [beta]beta_1 = [beta]beta_2
@@ -126,6 +146,7 @@ fit <- quaidsce(
   prices = c("p1", "p2", "p3", "p4"),
   expenditure = "total_exp",
   demographics = c("hh_size", "urban"),
+  ivexp = c("log_income", "employment_status"),
   anot = 10.0,
   method = "ifgnls",
   first_stage_predict = "xb"

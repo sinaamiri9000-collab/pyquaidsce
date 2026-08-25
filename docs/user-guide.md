@@ -17,6 +17,7 @@ This document provides a comprehensive reference for all input parameters of `qu
 | `expenditure` | `str` | `None` | Column name for total system expenditure ($m$). Exactly one of `expenditure` or `lnexpenditure` must be specified. |
 | `lnexpenditure` | `str` | `None` | Column name for log total expenditure ($\ln m$). |
 | `demographics` | `Sequence[str]` | `None` | List of column names for demographic variables ($z_1, \dots, z_R$) used in Ray (1983) demographic scaling. Required when `censor=True`. |
+| `ivexp` | `Sequence[str]` | `None` | Excluded instruments for endogenous expenditure. Internally regresses log expenditure on log prices, Ray demographics, these instruments, and a constant; the residual enters both participation Probits and latent demand equations. |
 | `anot` | `float` | *Required* | Constant $\alpha_0$ in the translog price index $\ln a(p)$ (equivalent to Stata's `anot(#)`). |
 
 ---
@@ -41,9 +42,12 @@ This document provides a comprehensive reference for all input parameters of `qu
 | `selection_control_function` | `str` | `None` | Residual column used in each Probit with an equation-specific coefficient independent of `cfcoef`. |
 
 These extensions require `censor=True` and `first_stage_predict="xb"`.
-Internal `reps>0` is disabled when an external residual is active because a
-valid generated-regressor bootstrap must re-estimate the reduced form inside
-every replication.
+`ivexp` cannot be combined with either external control-function argument, and
+its variables must be excluded from shares, prices, demographics, expenditure,
+and `selection_covariates`. Internal `reps>0` is supported for `ivexp` and
+re-estimates the reduced form inside every replication. Bootstrap remains
+disabled when an external residual is active because its generating equation
+is unknown to the package.
 
 ---
 
@@ -134,6 +138,8 @@ The object returned by `quaidsce(...)` contains all estimated parameters, standa
 | `res.converged` | `bool` | `e(converged)` | `True` if optimization converged successfully. |
 | `res.boot` | `BootResult` or `None` | `r(table)` after `bs` | Bootstrap replicates, standard errors, and percentile confidence intervals (when `reps > 0`). |
 | `res.notes` | `List[str]` | — | Informational notes regarding Stata compatibility switches. |
+| `res.ivexp_names` | `List[str]` | `e(ivexp)` | Excluded expenditure instruments used by the internal reduced form. |
+| `res.reduced_form` | `ExpenditureReducedForm` or `None` | `e(reduced_form_b)`, `e(reduced_form_V)` | Internal log-expenditure OLS result, including residuals, fitted values, R-squared, and the joint excluded-instrument F test. |
 
 ---
 
@@ -202,6 +208,7 @@ if res.boot is not None:
 
 - **`res.summary(level=95.0)`**: Returns a formatted string with model header statistics and a 78-column coefficient table matching Stata's `_coef_table` format.
 - **`res.elasticity_tables()`**: Returns formatted summary tables for expenditure, Marshallian, and Hicksian elasticities.
+- **`res.reduced_form_table()`**: Returns the internal log-expenditure OLS table and excluded-instrument diagnostic when `ivexp` is active.
 - **`res.named()`**: Returns a Python dictionary mapping parameter names (`"equation:name"`) to their estimated values.
 - **`res.get("beta_1")`**: Look up a specific coefficient by its bare name or equation name.
 
@@ -296,4 +303,3 @@ matrix sigma_init = e(Sigma)
 pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
     demographics(hh_size urban) anot(10.0) initial(b_init) sigma_initial(sigma_init)
 ```
-

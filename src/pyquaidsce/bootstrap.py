@@ -267,6 +267,12 @@ def bootstrap(
     expenditure,
     lnexpenditure,
     demographics,
+    ivexp,
+    control_function,
+    selection_control_function,
+    selection_prices,
+    selection_covariates,
+    selection_expenditure,
     anot,
     quadratic,
     censor,
@@ -302,6 +308,16 @@ def bootstrap(
         expenditure=expenditure,
         lnexpenditure=lnexpenditure,
         demographics=None if demographics is None else list(demographics),
+        ivexp=None if ivexp is None else list(ivexp),
+        control_function=control_function,
+        selection_control_function=selection_control_function,
+        selection_prices=(
+            None if selection_prices is None else list(selection_prices)
+        ),
+        selection_covariates=(
+            None if selection_covariates is None else list(selection_covariates)
+        ),
+        selection_expenditure=selection_expenditure,
         anot=anot,
         quadratic=quadratic,
         censor=censor,

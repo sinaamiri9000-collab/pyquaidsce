@@ -184,7 +184,7 @@ def latent_shares(theta: np.ndarray, d: DemandData, spec: Spec) -> np.ndarray:
 def augmented_latent_shares(
     theta: np.ndarray, d: DemandData, spec: Spec
 ) -> np.ndarray:
-    """Latent QUAIDS shares augmented by the external control residual."""
+    """Latent QUAIDS shares augmented by the supplied/generated control residual."""
     c = unpack(theta, spec)
     return _inner(c, d, spec).wstar + d.control_function[:, None] * c.cfcoef
 

@@ -1,4 +1,4 @@
-"""Release-integration checks specific to the merged 1.3.0 tree."""
+"""Release-integration checks for the consolidated package tree."""
 
 from __future__ import annotations
 
@@ -33,7 +33,7 @@ from pyquaidsce.stata_bridge import run_from_stata
 
 class MergeIntegrityTests(unittest.TestCase):
     def test_release_exposes_features_from_all_three_branches(self):
-        self.assertEqual(pyquaidsce.__version__, "1.4.0")
+        self.assertEqual(pyquaidsce.__version__, "1.5.0")
         self.assertTrue(inspect.isclass(FirstStageLayout))
         self.assertTrue(callable(fitted_share_derivatives))
         self.assertTrue(callable(run_from_stata))
@@ -44,6 +44,7 @@ class MergeIntegrityTests(unittest.TestCase):
             "selection_expenditure",
             "selection_covariates",
             "selection_control_function",
+            "ivexp",
             "mp_context",
             "rep_timeout",
         ):
@@ -59,6 +60,7 @@ class MergeIntegrityTests(unittest.TestCase):
             "selection_prices_specified",
             "selection_covariates_specified",
             "selection_expenditure",
+            "ivexp_str",
         ):
             self.assertIn(name, bridge_params)
 
@@ -139,6 +141,7 @@ class MergeIntegrityTests(unittest.TestCase):
                 "p3": [0.9, 1.0],
                 "m": [10.0, 11.0],
                 "z": [0.0, 1.0],
+                "iv": [2.0, 2.5],
             }
 
             @classmethod
@@ -213,12 +216,14 @@ class MergeIntegrityTests(unittest.TestCase):
                 n_jobs=2,
                 mp_context="spawn",
                 rep_timeout=15.0,
+                ivexp_str="iv",
                 verbose=False,
             )
         self.assertEqual(captured["stop_rule"], "standard")
         self.assertEqual(captured["bootstrap_start"], "warm")
         self.assertEqual(captured["mp_context"], "spawn")
         self.assertEqual(captured["rep_timeout"], 15.0)
+        self.assertEqual(captured["ivexp"], ["iv"])
         self.assertTrue(np.array_equal(stored["__pyq_V"], np.eye(2)))
 
     def test_stata_bridge_forwards_control_function_design(self):
@@ -319,7 +324,7 @@ class MergeIntegrityTests(unittest.TestCase):
             encoding="utf-8"
         )
         for option in (
-            "control_function", "selection_control_function",
+            "ivexp", "control_function", "selection_control_function",
             "selection_noprices", "selection_nocovariates",
             "selection_noexpenditure",
         ):
@@ -429,6 +434,16 @@ class MergeIntegrityTests(unittest.TestCase):
             "anot": 10.0, "ndemo": 0, "converged": 1,
             "n_outer": 2, "n_gn": 3, "title": "Censored QUAIDS",
             "boot_reps_ok": 6, "boot_reps_requested": 7,
+            "reduced_form": {
+                "regressor_names": ["ln(p1)", "income", "_cons"],
+                "b": np.array([0.1, 0.7, 1.2]),
+                "V": np.eye(3) * 0.04,
+                "r_squared": 0.6,
+                "excluded_f": 25.0,
+                "excluded_pvalue": 1e-6,
+                "excluded_df_num": 1,
+                "excluded_df_den": 7,
+            },
         }
         handle, path = tempfile.mkstemp(suffix=".pkl")
         os.close(handle)
@@ -440,11 +455,17 @@ class MergeIntegrityTests(unittest.TestCase):
                 Scalar=Scalar, Matrix=Matrix, Macro=Macro
             )
             with patch.dict(sys.modules, {"sfi": fake_sfi}):
-                load_stata_results("b", "V", "ei", "eu", "ec")
+                load_stata_results(
+                    "b", "V", "ei", "eu", "ec", rf_b_mat_name="rfb",
+                    rf_v_mat_name="rfV"
+                )
             self.assertTrue(np.array_equal(stored["b"], [[1.0, 2.0]]))
             self.assertTrue(np.array_equal(stored["V"], np.eye(2)))
             self.assertEqual(stored["r_boot_reps_ok"], 6)
             self.assertEqual(stored["model_title"], "Censored QUAIDS")
+            self.assertTrue(np.array_equal(stored["rfb"], [[0.1, 0.7, 1.2]]))
+            self.assertEqual(stored["rfb_cols"], ["ln_p1", "income", "_cons"])
+            self.assertEqual(stored["r_rf_F"], 25.0)
         finally:
             if os.path.exists(path):
                 os.unlink(path)

@@ -2,6 +2,26 @@
 
 All notable user-visible changes to `pyquaidsce` are documented here.
 
+## 1.5.0 — 2026-08-25
+
+- Added `ivexp` consistently to the Python, R, and Stata interfaces. It fits
+  the internal OLS reduced form for log expenditure on log prices, Ray
+  demographics, excluded instruments, and a constant.
+- The generated residual automatically enters both the participation Probits
+  and latent demand equations, using separate equation-specific coefficients.
+- Added a typed reduced-form result with coefficients, covariance, fitted
+  values, residuals, R-squared, adjusted R-squared, and the classical joint F
+  test for excluded instruments. R exposes this as `fit$reduced_form`; Stata
+  stores corresponding `e(reduced_form_*)` matrices/scalars.
+- Enabled generated-regressor-aware bootstrap inference for `ivexp`: the
+  reduced form is re-estimated inside every resample. Precomputed external
+  residuals remain bootstrap-disabled because the package cannot rebuild their
+  unknown generating equation.
+- Preserved the external `control_function` and
+  `selection_control_function` APIs and all existing elasticity formulas.
+- Added focused numerical, equivalence, validation, bootstrap, R-interface,
+  and Stata-bridge regression tests.
+
 ## 1.4.0 — 2026-08-24
 
 - **Official R Package (`rquaidsce`)**: Introduced the complete R interface package with native S3 methods (`summary`, `coef`, `vcov`, `print`), full `roxygen2` documentation, CRAN compliance, and `reticulate` backend integration.

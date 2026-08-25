@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyquaidsce"
-version = "1.4.0"
-description = "Censored QUAIDS estimation with control functions, robust bootstrap, and Stata integration"
+version = "1.5.0"
+description = "Censored QUAIDS estimation with internal IV control functions, robust bootstrap, and Stata integration"
 authors = [{name = "Sina Amiri", email = "sinaamiri9000@gmail.com"}]
 maintainers = [{name = "Sina Amiri", email = "sinaamiri9000@gmail.com"}]
 readme = "README.md"

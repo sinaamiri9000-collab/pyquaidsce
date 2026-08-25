@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1.3.0  22aug2026}{...}
+{* *! version 1.5.0  25aug2026}{...}
 {vieweralsosee "[R] quaids" "help quaids"}{...}
 {viewerjumpto "Syntax" "pyquaidsce##syntax"}{...}
 {viewerjumpto "Description" "pyquaidsce##description"}{...}
@@ -37,6 +37,7 @@
 {synopt :{opt nocensor}}estimate uncensored demand system without Shonkwiler-Yen correction{p_end}
 
 {syntab:Control function and selection design}
+{synopt :{opt ivexp(varlist)}}excluded instruments for endogenous expenditure; internally builds the residual used in both model stages{p_end}
 {synopt :{opt control_function(varname)}}externally generated reduced-form residual entering latent demand shares{p_end}
 {synopt :{opt selection_control_function(varname)}}residual entering each first-stage Probit with equation-specific coefficients{p_end}
 {synopt :{opt selection_prices(varlist)}}ordered subset of demand prices used by the first-stage Probits{p_end}
@@ -88,10 +89,14 @@ It provides a fast Stata front end powered by the {cmd:pyquaidsce} Python comput
 
 {pstd}
 Control-function and custom-selection options require
-{cmd:first_stage_predict(xb)} and are currently restricted to
-{cmd:reps(0)}. A valid bootstrap for a generated residual must re-estimate its
-reduced form inside every replication; passing a precomputed residual unchanged
-would understate uncertainty.
+{cmd:first_stage_predict(xb)}. With {cmd:ivexp()}, log expenditure is regressed
+on log prices, Ray demographics, the excluded instruments, and a constant. The
+generated residual enters both the participation Probits and latent demand
+equations, with equation-specific coefficients. The internal bootstrap
+re-estimates this reduced form in every replication. Bootstrap remains disabled
+for residuals supplied through {cmd:control_function()} or
+{cmd:selection_control_function()}, because those residuals cannot be rebuilt
+from the information supplied to the command.
 
 
 {marker examples}{...}
@@ -110,6 +115,10 @@ would understate uncertainty.
 
 {phang2}{cmd:. pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) control_function(vhat) selection_control_function(vhat_sel) selection_prices(p3 p1) selection_covariates(urban) selection_noexpenditure first_stage_predict(xb) reps(0)}{p_end}
 
+{pstd}Instrument endogenous expenditure internally and use a full bootstrap:{p_end}
+
+{phang2}{cmd:. pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) ivexp(log_income employment) first_stage_predict(xb) reps(200) seed(12345)}{p_end}
+
 
 {marker results}{...}
 {title:Stored results}
@@ -124,6 +133,9 @@ would understate uncertainty.
 {synopt:{cmd:e(anot)}}price index constant{p_end}
 {synopt:{cmd:e(ndemo)}}number of demographic variables{p_end}
 {synopt:{cmd:e(converged)}}{cmd:1} if converged, {cmd:0} otherwise{p_end}
+{synopt:{cmd:e(reduced_form_r2)}}R-squared from the internal log-expenditure reduced form{p_end}
+{synopt:{cmd:e(excluded_iv_F)}}classical joint F statistic for the excluded instruments{p_end}
+{synopt:{cmd:e(excluded_iv_p)}}p-value for the excluded-instrument F test{p_end}
 
 {synoptset 18 tabbed}{...}
 {p2col 5 18 22 2: Macros}{p_end}
@@ -132,6 +144,7 @@ would understate uncertainty.
 {synopt:{cmd:e(method)}}estimation method ({cmd:ifgnls}, {cmd:fgnls}, {cmd:nls}){p_end}
 {synopt:{cmd:e(control_function)}}demand control-function variable, if supplied{p_end}
 {synopt:{cmd:e(selection_control_function)}}selection control-function variable, if supplied{p_end}
+{synopt:{cmd:e(ivexp)}}excluded expenditure instruments, if supplied{p_end}
 
 {synoptset 18 tabbed}{...}
 {p2col 5 18 22 2: Matrices}{p_end}
@@ -142,6 +155,8 @@ would understate uncertainty.
 {synopt:{cmd:e(elas_i)}}expenditure (income) elasticities{p_end}
 {synopt:{cmd:e(elas_u)}}uncompensated (Marshallian) price elasticities matrix{p_end}
 {synopt:{cmd:e(elas_c)}}compensated (Hicksian) price elasticities matrix{p_end}
+{synopt:{cmd:e(reduced_form_b)}}internal log-expenditure reduced-form coefficients{p_end}
+{synopt:{cmd:e(reduced_form_V)}}classical reduced-form coefficient covariance matrix{p_end}
 
 
 {marker author}{...}

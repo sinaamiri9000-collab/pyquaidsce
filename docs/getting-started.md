@@ -145,4 +145,5 @@ S.E.s are deliberately `NaN`; the rest of `res.V` remains finite.
 chunk boundaries. A parent-side watchdog also terminates the disposable child
 process if a native call remains stuck. External control-function models require
 an outer bootstrap that rebuilds the reduced form and cannot use the internal
-`reps` option.
+`reps` option. Models using `ivexp` can use internal `reps`, because the package
+knows and re-estimates that reduced form in every replication.

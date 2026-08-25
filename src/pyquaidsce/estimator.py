@@ -32,6 +32,7 @@ from .model import DemandData, fitted_shares
 from .nlsur import nlsur
 from .params import Spec, delta_matrix, full_vector, unpack
 from .probit import ProbitResult, probit
+from .reduced_form import fit_expenditure_reduced_form
 from .results import QuaidsceResults
 from .selection import FirstStageLayout, legacy_layout
 
@@ -164,6 +165,7 @@ def quaidsce(
     expenditure: Optional[str] = None,
     lnexpenditure: Optional[str] = None,
     demographics: Optional[Sequence[str]] = None,
+    ivexp: Optional[Sequence[str]] = None,
     control_function: Optional[str] = None,
     selection_prices: Optional[Sequence[str]] = None,
     selection_expenditure: Optional[bool] = True,
@@ -221,6 +223,11 @@ def quaidsce(
     strict_stata : keep the (documented) quirks of the original elasticity code.
     control_function : column containing an externally generated reduced-form
         residual. It enters the latent share as ``cfcoef_i * residual``.
+    ivexp : excluded instrument column(s) for endogenous log expenditure. The
+        package estimates ``ln(m)`` on log prices, Ray demographics, these
+        instruments, and a constant. Its residual automatically enters both
+        the participation Probits and latent demand equations. It cannot be
+        combined with either external control-function argument.
     selection_* : configure the first-stage Probit independently of the Ray
         demographics. ``None`` for prices/covariates preserves their legacy
         sets; ``[]`` selects none. The default includes log expenditure.
@@ -271,7 +278,25 @@ def quaidsce(
     if selection_expenditure not in {None, True, False}:
         raise ValueError("selection_expenditure must be True, False, or None")
 
-    cf_active = control_function is not None or selection_control_function is not None
+    if isinstance(ivexp, str):
+        raise ValueError("ivexp must be a sequence of column names, not one string")
+    ivexp_names = [] if ivexp is None else list(ivexp)
+    if ivexp is not None and not ivexp_names:
+        raise ValueError("ivexp must contain at least one excluded instrument")
+    if len(ivexp_names) != len(set(ivexp_names)):
+        raise ValueError("ivexp must not contain duplicate column names")
+    ivexp_active = bool(ivexp_names)
+    if ivexp_active and (
+        control_function is not None or selection_control_function is not None
+    ):
+        raise ValueError(
+            "ivexp cannot be combined with control_function or "
+            "selection_control_function"
+        )
+    external_cf_active = (
+        control_function is not None or selection_control_function is not None
+    )
+    cf_active = external_cf_active or ivexp_active
     selection_custom = (
         selection_prices is not None
         or selection_covariates is not None
@@ -285,17 +310,11 @@ def quaidsce(
             "control-function/selection extensions require "
             "first_stage_predict='xb'"
         )
-    if extension_active and reps and int(reps) > 0:
-        if cf_active:
-            raise ValueError(
-                "bootstrap with a control function is disabled: the reduced "
-                "form residual must be rebuilt inside every replication"
-            )
-        raise ValueError("bootstrap is not implemented for a custom selection design")
-    if selection_expenditure is None and reps and int(reps) > 0:
+    if external_cf_active and reps and int(reps) > 0:
         raise ValueError(
-            "bootstrap is not implemented for selection_expenditure=None; "
-            "choose True/False explicitly and use reps=0 for the custom design"
+            "bootstrap with a precomputed control function is disabled: the "
+            "reduced form residual must be rebuilt inside every replication; "
+            "use ivexp for the internally rebuilt expenditure control function"
         )
 
     shares = list(shares)
@@ -304,8 +323,13 @@ def quaidsce(
     for label, values in (("shares", shares), ("demographics", demo_names)):
         if len(values) != len(set(values)):
             raise ValueError(f"{label} must not contain duplicate column names")
-    spec = Spec(neqn=neqn, ndemo=len(demo_names), quadratic=quadratic,
-                censor=censor, control_function=control_function is not None)
+    spec = Spec(
+        neqn=neqn,
+        ndemo=len(demo_names),
+        quadratic=quadratic,
+        censor=censor,
+        control_function=(control_function is not None or ivexp_active),
+    )
 
     price_names = list(prices or lnprices)
     if len(price_names) != len(set(price_names)):
@@ -313,6 +337,16 @@ def quaidsce(
     if len(price_names) != neqn:
         raise ValueError(
             f"number of price variables must equal number of equations ({neqn})"
+        )
+    instrument_overlap = sorted(
+        set(ivexp_names)
+        & set(shares + price_names + demo_names + [expenditure or lnexpenditure])
+    )
+    if instrument_overlap:
+        raise ValueError(
+            "ivexp variables must be excluded instruments, not shares, prices, "
+            "demographics, or expenditure; overlap: "
+            + ", ".join(instrument_overlap)
         )
 
     selected_prices = price_names if selection_prices is None else list(selection_prices)
@@ -329,6 +363,12 @@ def quaidsce(
     )
     if len(selected_covariates) != len(set(selected_covariates)):
         raise ValueError("selection_covariates must not contain duplicates")
+    invalid_iv_selection = sorted(set(ivexp_names) & set(selected_covariates))
+    if invalid_iv_selection:
+        raise ValueError(
+            "ivexp variables are excluded instruments and must not enter "
+            "selection_covariates; overlap: " + ", ".join(invalid_iv_selection)
+        )
     for label, name in (
         ("control_function", control_function),
         ("selection_control_function", selection_control_function),
@@ -362,6 +402,7 @@ def quaidsce(
     # ---- 1. estimation sample (marksample / markout) ---------------------- #
     need = (
         shares + price_names + demo_names + [expenditure or lnexpenditure]
+        + ivexp_names
         + selected_covariates
         + ([control_function] if control_function is not None else [])
         + ([selection_control_function]
@@ -407,14 +448,34 @@ def quaidsce(
     Z = _as_matrix(data, demo_names)[touse] if demo_names else np.zeros(
         (int(touse.sum()), 0)
     )
-    demand_cf = (
-        np.asarray(data[control_function], dtype=float)[touse]
-        if control_function is not None else np.zeros(int(touse.sum()))
-    )
-    selection_cf = (
-        np.asarray(data[selection_control_function], dtype=float)[touse]
-        if selection_control_function is not None else None
-    )
+    reduced_form = None
+    if ivexp_active:
+        instruments = _as_matrix(data, ivexp_names)[touse]
+        reduced_form = fit_expenditure_reduced_form(
+            lnexp,
+            lnp,
+            Z,
+            instruments,
+            outcome_name=(
+                f"ln({expenditure})" if expenditure is not None
+                else str(lnexpenditure)
+            ),
+            price_names=price_names,
+            price_inputs_are_logs=lnprices is not None,
+            demographic_names=demo_names,
+            instrument_names=ivexp_names,
+        )
+        demand_cf = reduced_form.residuals.copy()
+        selection_cf = reduced_form.residuals.copy()
+    else:
+        demand_cf = (
+            np.asarray(data[control_function], dtype=float)[touse]
+            if control_function is not None else np.zeros(int(touse.sum()))
+        )
+        selection_cf = (
+            np.asarray(data[selection_control_function], dtype=float)[touse]
+            if selection_control_function is not None else None
+        )
     for label, values in (
         ("control_function", demand_cf if control_function is not None else None),
         ("selection_control_function", selection_cf),
@@ -465,9 +526,16 @@ def quaidsce(
         selection_cf_position = None
         if selection_cf is not None:
             selection_cf_position = len(ordered_names)
-            report_name = str(selection_control_function)
-            if report_name in ordered_names or report_name == "cons":
-                report_name = f"cf[{selection_control_function}]"
+            if ivexp_active:
+                report_name = "cf_ivexp"
+                suffix = 2
+                while report_name in ordered_names or report_name == "cons":
+                    report_name = f"cf_ivexp_{suffix}"
+                    suffix += 1
+            else:
+                report_name = str(selection_control_function)
+                if report_name in ordered_names or report_name == "cons":
+                    report_name = f"cf[{selection_control_function}]"
             ordered_names.append(report_name)
             design_parts.append(selection_cf)
         layout = FirstStageLayout(
@@ -609,7 +677,21 @@ def quaidsce(
             "criteria. Inspect n_outer/n_gn and refit with larger iteration limits "
             "or different starting values before using the estimates."
         )
-    if cf_active:
+    if ivexp_active:
+        notes.append(
+            "ivexp internally estimates the log-expenditure reduced form on "
+            "log prices, Ray demographics, excluded instruments, and a "
+            "constant. Its residual enters both the participation Probits and "
+            "latent demand equations. Structural elasticities hold that "
+            "residual fixed."
+        )
+        if not (reps and int(reps) > 0):
+            notes.append(
+                "Analytical covariance is conditional on the generated ivexp "
+                "residual. Use the internal bootstrap for generated-regressor "
+                "inference; it re-estimates the reduced form in every replication."
+            )
+    elif external_cf_active:
         notes.append(
             "Control-function covariance and p-values are conditional on the "
             "externally generated residual; final inference must rebuild the "
@@ -640,8 +722,12 @@ def quaidsce(
         setau=fs.setau if censor else None,
         np_prob=fs.np_prob, probits=list(fs.results),
         selection_layout=fs.layout if censor else None,
-        control_function_name=control_function,
-        selection_control_function_name=selection_control_function,
+        control_function_name=("ivexp" if ivexp_active else control_function),
+        selection_control_function_name=(
+            "ivexp" if ivexp_active else selection_control_function
+        ),
+        ivexp_names=ivexp_names,
+        reduced_form=reduced_form,
         n_outer=nl.n_outer, n_gn=nl.n_gn, converged=nl.converged,
         notes=notes,
     )
@@ -653,7 +739,13 @@ def quaidsce(
         res.boot = bootstrap(
             data=data, shares=shares, prices=prices, lnprices=lnprices,
             expenditure=expenditure, lnexpenditure=lnexpenditure,
-            demographics=demographics, anot=anot, quadratic=quadratic,
+            demographics=demographics, ivexp=ivexp_names if ivexp_active else None,
+            control_function=control_function,
+            selection_control_function=selection_control_function,
+            selection_prices=selection_prices,
+            selection_covariates=selection_covariates,
+            selection_expenditure=selection_expenditure,
+            anot=anot, quadratic=quadratic,
             censor=censor, method=method, initial=nl.theta,
             sigma_initial=nl.sigma,
             first_stage_predict=first_stage_predict, strict_stata=strict_stata,

@@ -29,10 +29,11 @@ from .model import (DemandData, augmented_latent_shares, fitted_shares,
 from .nlsur import nlsur
 from .params import Coefs, Spec, delta_matrix, full_vector, unpack
 from .probit import probit
+from .reduced_form import ExpenditureReducedForm, fit_expenditure_reduced_form
 from .results import QuaidsceResults
 from .selection import FirstStageLayout
 
-__version__ = "1.4.0"
+__version__ = "1.5.0"
 
 __all__ = [
     "quaidsce",
@@ -43,6 +44,8 @@ __all__ = [
     "Coefs",
     "DemandData",
     "FirstStageLayout",
+    "ExpenditureReducedForm",
+    "fit_expenditure_reduced_form",
     "QuaidsceResults",
     "Elasticities",
     "elasticities",

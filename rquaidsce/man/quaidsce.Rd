@@ -12,6 +12,7 @@ quaidsce(
   expenditure = NULL,
   lnexpenditure = NULL,
   demographics = NULL,
+  ivexp = NULL,
   anot = 10,
   quadratic = TRUE,
   censor = TRUE,
@@ -56,6 +57,11 @@ quaidsce(
 \item{lnexpenditure}{Character name of log-expenditure variable.}
 
 \item{demographics}{Optional character vector of demographic variable names.}
+
+\item{ivexp}{Optional character vector of excluded instruments for endogenous
+expenditure. The backend regresses log expenditure on log prices,
+demographics, these instruments, and a constant; the generated residual enters
+both the participation Probits and latent demand equations.}
 
 \item{anot}{Numeric scalar normalization for alpha_0 (default = 10.0).}
 

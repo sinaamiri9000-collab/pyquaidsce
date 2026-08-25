@@ -74,3 +74,47 @@ test_that("input validation catches invalid specifications", {
   expect_error(quaidsce(df, shares = c("w1", "w2", "w3"), prices = c("p1", "p2", "p3"), expenditure = "nonexistent"),
                "were not found in data")
 })
+
+test_that("ivexp is forwarded and reduced-form diagnostics are returned", {
+  set.seed(2026)
+  N <- 350
+  z <- rnorm(N)
+  instrument <- rnorm(N)
+  p1 <- exp(rnorm(N, 0, 0.15))
+  p2 <- exp(rnorm(N, 0, 0.15))
+  p3 <- exp(rnorm(N, 0, 0.15))
+  exp_tot <- exp(4 + 0.7 * instrument + 0.1 * z + rnorm(N, 0, 0.25))
+  raw <- cbind(
+    pmax(0, 0.45 + rnorm(N, 0, 0.08)),
+    pmax(0, 0.35 + rnorm(N, 0, 0.08)),
+    pmax(0, 0.20 + rnorm(N, 0, 0.08))
+  )
+  raw[sample(N, 25), 1] <- 0
+  raw[sample(N, 25), 2] <- 0
+  raw[sample(N, 25), 3] <- 0
+  shares <- raw / rowSums(raw)
+  df <- data.frame(
+    w1 = shares[, 1], w2 = shares[, 2], w3 = shares[, 3],
+    p1 = p1, p2 = p2, p3 = p3, exp_tot = exp_tot,
+    z = z, instrument = instrument
+  )
+
+  fit <- quaidsce(
+    df,
+    shares = c("w1", "w2", "w3"),
+    prices = c("p1", "p2", "p3"),
+    expenditure = "exp_tot",
+    demographics = "z",
+    ivexp = "instrument",
+    anot = 4,
+    method = "nls",
+    first_stage_predict = "xb",
+    verbose = FALSE
+  )
+  expect_equal(fit$ivexp, "instrument")
+  expect_true(is.list(fit$reduced_form))
+  expect_true(is.numeric(fit$reduced_form$coefficients))
+  expect_true(is.matrix(fit$reduced_form$vcov))
+  expect_gt(fit$reduced_form$excluded.f, 10)
+  expect_equal(length(fit$reduced_form$residuals), N)
+})

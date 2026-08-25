@@ -67,9 +67,44 @@ The observed budget share equation becomes:
 $$w_i = \Phi_i \cdot w_i^* + \delta_i \cdot \phi_i + \varepsilon_i$$
 where $\delta_i$ is an additional structural parameter to be estimated for each equation.
 
+### Endogenous expenditure: integrated `ivexp` control function
+
+When total expenditure is endogenous and excluded instruments $q_h$ are
+available, the package estimates the auxiliary OLS equation
+
+$$
+\ln m_h = \pi_0 + \pi_p'\ln p_h + \pi_z'z_h + \pi_q'q_h + v_h.
+$$
+
+This follows the augmented-regression construction for almost-ideal demand
+systems: all exogenous variables in the demand system enter the reduced form,
+along with the identifying instruments. For each good, the same generated
+residual enters the participation equation with coefficient $\psi_i$,
+
+$$
+d_{ih}=\mathbb{I}(X_{ih}'\tau_i + \psi_i v_h + u_{ih}>0),
+$$
+
+and the latent demand share with a distinct coefficient $\kappa_i$,
+
+$$
+\mu_{ih}=\Phi_{ih}\left(w^Q_{ih}+\kappa_i v_h\right)
++\delta_i\phi_{ih}.
+$$
+
+The package reports the reduced-form coefficients and covariance, $R^2$, and
+the classical joint F statistic for the excluded instruments. The F statistic
+is a relevance diagnostic, not a test of the instruments' exclusion validity.
+The instruments must be substantively defensible and excluded from both
+structural stages. As with other residual-inclusion estimators, consistency
+also depends on a correctly specified triangular reduced form and the
+distributional conditions used to justify residual inclusion in the Probit
+(Rivers and Vuong 1988). Bootstrapping accounts for the generated regressor;
+it cannot repair weak or invalid instruments.
+
 ### Optional external control function
 
-With an externally estimated reduced-form residual $v_h$, version 1.3.0 can
+With an externally estimated reduced-form residual $v_h$, the package can
 augment the latent demand share as
 
 $$
@@ -87,8 +122,9 @@ additional $dv/dt$ term must be handled by the empirical design outside the
 generic package.
 
 Because the residual is generated, valid final inference must re-estimate its
-reduced form inside every bootstrap replication. The internal bootstrap is
-therefore disabled whenever this extension is active.
+reduced form inside every bootstrap replication. The internal bootstrap does
+this automatically for `ivexp`. It remains disabled for an externally supplied
+residual because the package does not know that residual's generating equation.
 
 ---
 
@@ -129,3 +165,5 @@ $$e_{ij}^c = e_{ij}^u + e_i \cdot w_j$$
 4. **Poi, B. P. (2012)**. Easy Demand-System Estimation with quaids. *The Stata Journal*, 12(3), 433–446.
 5. **Ray, R. (1983)**. Measuring the Costs of Children: An Alternative Approach. *Journal of Public Economics*, 22(1), 89–102.
 6. **Shonkwiler, J. S., & Yen, S. T. (1999)**. Two-Step Estimation of a Censored System of Equations. *American Journal of Agricultural Economics*, 81(4), 972–982.
+7. **Lecocq, S., & Robin, J.-M. (2015)**. Estimating Almost-Ideal Demand Systems with Endogenous Regressors. *The Stata Journal*, 15(2), 554–573.
+8. **Rivers, D., & Vuong, Q. H. (1988)**. Limited Information Estimators and Exogeneity Tests for Simultaneous Probit Models. *Journal of Econometrics*, 39(3), 347–366.

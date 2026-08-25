@@ -9,11 +9,33 @@ and populates Stata matrices, scalars, and macros for `ereturn post`.
 from __future__ import annotations
 
 import os
+import re
 import sys
 from typing import Any, Optional
 
 # Module-level state for the out-of-process Stata job.
 _BOOT_STATE: dict[str, Any] = {}
+
+
+def _stata_safe_names(names: Any) -> list[str]:
+    """Map display labels to unique Stata-compatible matrix stripe names."""
+    out: list[str] = []
+    used: set[str] = set()
+    for index, raw in enumerate(names, 1):
+        label = re.sub(r"^ln\((.*)\)$", r"ln_\1", str(raw))
+        label = re.sub(r"[^A-Za-z0-9_]", "_", label)
+        if not label or not (label[0].isalpha() or label[0] == "_"):
+            label = "v_" + label
+        base = label[:32]
+        label = base
+        suffix = 1
+        while label in used:
+            tag = f"_{suffix}"
+            label = base[: 32 - len(tag)] + tag
+            suffix += 1
+        used.add(label)
+        out.append(label or f"v{index}")
+    return out
 
 
 def _stata_matrix_to_vector(sfi, name: str) -> Any:
@@ -96,6 +118,7 @@ def run_from_stata(
     censor: bool = True,
     is_lnprices: bool = False,
     is_lnexp: bool = False,
+    ivexp_str: str = "",
     control_function: str = "",
     selection_control_function: str = "",
     selection_prices_str: str = "",
@@ -121,6 +144,8 @@ def run_from_stata(
     elas_i_name: str = "__pyq_elas_i",
     elas_u_name: str = "__pyq_elas_u",
     elas_c_name: str = "__pyq_elas_c",
+    rf_b_name: str = "__pyq_rf_b",
+    rf_v_name: str = "__pyq_rf_V",
     touse_var: str = "_touse",
 ) -> None:
     try:
@@ -137,6 +162,7 @@ def run_from_stata(
     prices = prices_str.split()
     demos = demographics_str.split() if demographics_str.strip() else []
     exp_var = expenditure_str.strip()
+    ivexp = ivexp_str.split() if ivexp_str.strip() else None
     cf_var = control_function.strip() or None
     selection_cf_var = selection_control_function.strip() or None
     selection_prices = (
@@ -159,6 +185,7 @@ def run_from_stata(
     # 3. Read data columns from Stata memory
     all_vars = list(dict.fromkeys(
         shares + prices + demos + [exp_var]
+        + ([] if ivexp is None else ivexp)
         + ([cf_var] if cf_var is not None else [])
         + ([selection_cf_var] if selection_cf_var is not None else [])
         + ([] if selection_prices is None else selection_prices)
@@ -189,6 +216,7 @@ def run_from_stata(
         expenditure=None if is_lnexp else exp_var,
         lnexpenditure=exp_var if is_lnexp else None,
         demographics=demos if demos else None,
+        ivexp=ivexp,
         control_function=cf_var,
         selection_control_function=selection_cf_var,
         selection_prices=selection_prices,
@@ -229,6 +257,7 @@ def run_from_stata(
         expenditure=None if is_lnexp else exp_var,
         lnexpenditure=exp_var if is_lnexp else None,
         demographics=demos if demos else None,
+        ivexp=ivexp,
         control_function=cf_var,
         selection_control_function=selection_cf_var,
         selection_prices=selection_prices,
@@ -272,6 +301,24 @@ def run_from_stata(
     sfi.Scalar.setValue("r_converged", 1 if res.converged else 0)
     sfi.Scalar.setValue("r_n_outer", int(res.n_outer))
     sfi.Scalar.setValue("r_n_gn", int(res.n_gn))
+    if getattr(res, "reduced_form", None) is not None:
+        rf = res.reduced_form
+        sfi.Scalar.setValue("r_rf_r2", float(rf.r_squared))
+        sfi.Scalar.setValue("r_rf_F", float(rf.excluded_f))
+        sfi.Scalar.setValue("r_rf_p", float(rf.excluded_pvalue))
+        sfi.Scalar.setValue("r_rf_df1", int(rf.excluded_df_num))
+        sfi.Scalar.setValue("r_rf_df2", int(rf.excluded_df_den))
+        sfi.Matrix.create(rf_b_name, 1, len(rf.b), 0.0)
+        for column, value in enumerate(rf.b):
+            sfi.Matrix.storeAt(rf_b_name, 0, column, float(value))
+        rf_names = _stata_safe_names(rf.regressor_names)
+        sfi.Matrix.setColNames(rf_b_name, rf_names)
+        sfi.Matrix.create(rf_v_name, len(rf.b), len(rf.b), 0.0)
+        for row in range(len(rf.b)):
+            for column in range(len(rf.b)):
+                sfi.Matrix.storeAt(rf_v_name, row, column, float(rf.V[row, column]))
+        sfi.Matrix.setColNames(rf_v_name, rf_names)
+        sfi.Matrix.setRowNames(rf_v_name, rf_names)
 
     # 6. Store coefficient vector b and covariance matrix V
     # If bootstrap was run, use bootstrap covariance matrix
@@ -345,6 +392,7 @@ def launch_from_stata(
     censor: bool = True,
     is_lnprices: bool = False,
     is_lnexp: bool = False,
+    ivexp_str: str = "",
     control_function: str = "",
     selection_control_function: str = "",
     selection_prices_str: str = "",
@@ -381,6 +429,7 @@ def launch_from_stata(
     prices = prices_str.split()
     demos = demographics_str.split() if demographics_str.strip() else []
     exp_var = expenditure_str.strip()
+    ivexp = ivexp_str.split() if ivexp_str.strip() else None
     cf_var = control_function.strip() or None
     selection_cf_var = selection_control_function.strip() or None
     selection_prices = (
@@ -397,6 +446,7 @@ def launch_from_stata(
 
     all_vars = list(dict.fromkeys(
         shares + prices + demos + [exp_var]
+        + ([] if ivexp is None else ivexp)
         + ([cf_var] if cf_var is not None else [])
         + ([selection_cf_var] if selection_cf_var is not None else [])
         + ([] if selection_prices is None else selection_prices)
@@ -424,6 +474,7 @@ def launch_from_stata(
         expenditure=None if is_lnexp else exp_var,
         lnexpenditure=exp_var if is_lnexp else None,
         demographics=demos if demos else None,
+        ivexp=ivexp,
         control_function=cf_var,
         selection_control_function=selection_cf_var,
         selection_prices=selection_prices,
@@ -615,6 +666,8 @@ def load_stata_results(
     elas_c_name: str,
     b_est_mat_name: str = "",
     sigma_mat_name: str = "",
+    rf_b_mat_name: str = "",
+    rf_v_mat_name: str = "",
 ) -> None:
     """Load all completed background-estimation results into Stata."""
     import pickle
@@ -660,6 +713,33 @@ def load_stata_results(
         for r in range(sigma.shape[0]):
             for c in range(sigma.shape[1]):
                 sfi.Matrix.storeAt(sigma_mat_name, r, c, float(sigma[r, c]))
+
+    rf = result.get("reduced_form")
+    if rf is not None:
+        rf_names = _stata_safe_names(rf["regressor_names"])
+        rf_b = np.asarray(rf["b"], dtype=float)
+        rf_V = np.asarray(rf["V"], dtype=float)
+        if rf_b_mat_name.strip():
+            sfi.Matrix.create(rf_b_mat_name, 1, rf_b.size, 0.0)
+            for column, value in enumerate(rf_b):
+                sfi.Matrix.storeAt(rf_b_mat_name, 0, column, float(value))
+            sfi.Matrix.setColNames(rf_b_mat_name, rf_names)
+        if rf_v_mat_name.strip():
+            sfi.Matrix.create(
+                rf_v_mat_name, rf_V.shape[0], rf_V.shape[1], 0.0
+            )
+            for row in range(rf_V.shape[0]):
+                for column in range(rf_V.shape[1]):
+                    sfi.Matrix.storeAt(
+                        rf_v_mat_name, row, column, float(rf_V[row, column])
+                    )
+            sfi.Matrix.setColNames(rf_v_mat_name, rf_names)
+            sfi.Matrix.setRowNames(rf_v_mat_name, rf_names)
+        sfi.Scalar.setValue("r_rf_r2", float(rf["r_squared"]))
+        sfi.Scalar.setValue("r_rf_F", float(rf["excluded_f"]))
+        sfi.Scalar.setValue("r_rf_p", float(rf["excluded_pvalue"]))
+        sfi.Scalar.setValue("r_rf_df1", int(rf["excluded_df_num"]))
+        sfi.Scalar.setValue("r_rf_df2", int(rf["excluded_df_den"]))
 
     elasticity_specs = (
         (elas_i_name, np.atleast_2d(result["elas_i"])),

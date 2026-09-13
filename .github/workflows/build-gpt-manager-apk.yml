@@ -1,0 +1,38 @@
+name: Build GPT Manager APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [gpt-manager-apk-build-20260913]
+    paths:
+      - 'gpt-manager-android/**'
+      - '.github/workflows/build-gpt-manager-apk.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Build debug APK
+        working-directory: gpt-manager-android
+        run: gradle --no-daemon clean assembleDebug
+      - name: Verify APK
+        run: |
+          test -s gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk
+          unzip -t gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk >/dev/null
+          sha256sum gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk | tee APK_SHA256.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GPT-Manager-Android-debug
+          path: |
+            gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk
+            APK_SHA256.txt
+          if-no-files-found: error

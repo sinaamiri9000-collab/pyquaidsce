@@ -29,15 +29,26 @@ jobs:
         run: gradle --no-daemon clean assembleDebug
       - name: Verify APK
         run: |
-          test -s gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk
-          unzip -t gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk >/dev/null
-          unzip -l gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk | grep -q 'assets/index.html'
-          unzip -l gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk | grep -q 'classes.dex'
-          sha256sum gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk | tee APK_SHA256.txt
+          APK=gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk
+          test -s "$APK"
+          unzip -t "$APK" >/dev/null
+          unzip -l "$APK" | grep -q 'assets/index.html'
+          unzip -l "$APK" | grep -q 'classes.dex'
+          APKSIGNER=$(find "$ANDROID_HOME/build-tools" -type f -name apksigner | sort -V | tail -1)
+          AAPT=$(find "$ANDROID_HOME/build-tools" -type f -name aapt | sort -V | tail -1)
+          test -x "$APKSIGNER"
+          test -x "$AAPT"
+          "$APKSIGNER" verify --verbose --print-certs "$APK" | tee APK_SIGNATURE.txt
+          "$AAPT" dump badging "$APK" | tee APK_BADGING.txt
+          grep -q "package: name='com.gptyar.manager'" APK_BADGING.txt
+          grep -q "application-label:'GPT Manager'" APK_BADGING.txt
+          sha256sum "$APK" | tee APK_SHA256.txt
       - uses: actions/upload-artifact@v4
         with:
           name: GPT-Manager-Android-debug
           path: |
             gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk
             APK_SHA256.txt
+            APK_SIGNATURE.txt
+            APK_BADGING.txt
           if-no-files-found: error

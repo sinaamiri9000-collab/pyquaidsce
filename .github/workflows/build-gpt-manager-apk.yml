@@ -21,6 +21,9 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
+      - name: Apply WebView security patch
+        working-directory: gpt-manager-android
+        run: python3 secure_patch.py
       - name: Build debug APK
         working-directory: gpt-manager-android
         run: gradle --no-daemon clean assembleDebug
@@ -28,6 +31,8 @@ jobs:
         run: |
           test -s gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk
           unzip -t gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk >/dev/null
+          unzip -l gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk | grep -q 'assets/index.html'
+          unzip -l gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk | grep -q 'classes.dex'
           sha256sum gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk | tee APK_SHA256.txt
       - uses: actions/upload-artifact@v4
         with:

@@ -516,9 +516,11 @@ public class MainActivity extends Activity {
                 JSONObject s=subs.optJSONObject(j);if(s==null)continue;long id=s.optLong("id",s.optLong("subscriptionId",-1));
                 if(id<=0)continue;
                 JSONObject account=s.optJSONObject("account");
-                out.put(new JSONObject().put("subscriptionId",id).put("agentType",type)
-                        .put("accountName",account==null?"":account.optString("name"))
-                        .put("expiresAt",s.optString("expiresAt",s.optString("expirationDate",""))));
+                try {
+                    out.put(new JSONObject().put("subscriptionId",id).put("agentType",type)
+                            .put("accountName",account==null?"":account.optString("name"))
+                            .put("expiresAt",s.optString("expiresAt",s.optString("expirationDate",""))));
+                } catch (JSONException ignored) {}
             }
         }
         return out;
@@ -552,11 +554,17 @@ public class MainActivity extends Activity {
 
     private String firstString(JSONObject o,String...keys){for(String k:keys){String v=o.optString(k,"");if(!v.isEmpty())return v;}return "";}
     private String messageOf(ApiResponse r){return r.data.optString("message",r.data.optString("error","HTTP "+r.status));}
-    private JSONObject upstreamError(ApiResponse r,String fallback){return error(r.data.optString("message",r.data.optString("error",fallback))).put("status",r.status).put("upstream",r.data);}
+    private JSONObject upstreamError(ApiResponse r,String fallback){
+        JSONObject o = error(r.data.optString("message",r.data.optString("error",fallback)));
+        try { o.put("status",r.status).put("upstream",r.data); } catch (JSONException ignored) {}
+        return o;
+    }
     private JSONObject ok(){try{return new JSONObject().put("ok",true);}catch(Exception e){return new JSONObject();}}
     private JSONObject error(String m){try{return new JSONObject().put("ok",false).put("error",m==null?"خطای ناشناخته":m);}catch(Exception e){return new JSONObject();}}
     private JSONObject activationError(JSONObject diag,String m){try{diag.put("error",m);return error(m).put("diagnostic",diag);}catch(Exception e){return error(m);}}
-    private void step(JSONArray a,String stage,boolean ok,String detail){a.put(new JSONObject().put("stage",stage).put("ok",ok).put("detail",detail));}
+    private void step(JSONArray a,String stage,boolean ok,String detail){
+        try { a.put(new JSONObject().put("stage",stage).put("ok",ok).put("detail",detail)); } catch (JSONException ignored) {}
+    }
     private String capitalize(String s){if(s==null||s.isEmpty())return s;return Character.toUpperCase(s.charAt(0))+s.substring(1).toLowerCase(Locale.ROOT);}
 
     private static final class ApiResponse { final boolean ok; final int status; final JSONObject data; ApiResponse(boolean o,int s,JSONObject d){ok=o;status=s;data=d;} }

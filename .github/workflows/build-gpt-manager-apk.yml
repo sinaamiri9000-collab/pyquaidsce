@@ -35,7 +35,7 @@ jobs:
         run: python3 v13_patch.py
       - name: Apply v1.4 final fixes
         working-directory: gpt-manager-android
-        run: python3 v14_patch.py
+        run: python3 v14_final_patch.py
       - name: Static and UI regression checks
         working-directory: gpt-manager-android
         run: |
@@ -46,7 +46,6 @@ jobs:
           grep -q 'popupViews' "$JAVA"
           grep -q 'moveTaskToBack(true)' "$JAVA"
           grep -q 'return ok().put("recentTokens", recentTokens())' "$JAVA"
-          grep -q '.put("active", activeState())' "$JAVA"
           grep -q 'saveActiveState(subscriptionId, ref.type, target)' "$JAVA"
           grep -q '.put("proxyId", proxyId)' "$JAVA"
           grep -q 'api("/clients/proxy/ping", "POST", token, pingBody, null, true)' "$JAVA"

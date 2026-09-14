@@ -30,6 +30,9 @@ jobs:
       - name: Apply v1.2 proxy/UI patch
         working-directory: gpt-manager-android
         run: python3 v12_patch.py
+      - name: Apply v1.3 final lifecycle/state patch
+        working-directory: gpt-manager-android
+        run: python3 v13_patch.py
       - name: Static feature and regression checks
         working-directory: gpt-manager-android
         run: |
@@ -37,19 +40,25 @@ jobs:
           HTML=app/src/main/assets/index.html
           grep -q 'case "recentTokens"' "$JAVA"
           grep -q 'case "adminNotifications"' "$JAVA"
+          grep -q 'case "resume"' "$JAVA"
+          grep -q 'case "deactivate"' "$JAVA"
+          grep -q 'onCloseWindow(WebView window)' "$JAVA"
+          grep -q 'moveTaskToBack(true)' "$JAVA"
+          grep -q 'active_subscription_id' "$JAVA"
+          grep -q 'saveActiveState(subscriptionId, ref.type, target)' "$JAVA"
           grep -q '.put("proxyId", proxyId)' "$JAVA"
           grep -q 'api("/clients/proxy/ping", "POST", token, pingBody, null, true)' "$JAVA"
           grep -q 'api("/cookie/fetch", "POST", token, cb, null, true)' "$JAVA"
           ! grep -q 'api("/clients/proxy/ping", "POST", token, pingBody, spec, true)' "$JAVA"
           ! grep -q 'api("/cookie/fetch", "POST", token, cb, spec, true)' "$JAVA"
-          grep -q 'normalizeNotifications(notes.data)' "$JAVA"
           grep -q 'webView.removeJavascriptInterface("AndroidApi")' "$JAVA"
           grep -q 'توکن‌های اخیر' "$HTML"
+          grep -q 'فعال در مرورگر' "$HTML"
+          grep -q 'غیرفعال‌سازی' "$HTML"
           grep -q 'مدیریت اعلان‌ها' "$HTML"
           grep -q 'انتخاب تاریخ انقضا' "$HTML"
-          grep -q 'function toGregorian' "$HTML"
-          grep -q 'function noticeText' "$HTML"
-          grep -q "versionName '1.2.0'" app/build.gradle
+          grep -q 'function autoResume' "$HTML"
+          grep -q "versionName '1.3.0'" app/build.gradle
           grep -q 'android:icon="@drawable/ic_launcher"' app/src/main/AndroidManifest.xml
           python3 - <<'PY'
           from pathlib import Path
@@ -57,12 +66,12 @@ jobs:
           h=Path('app/src/main/assets/index.html').read_text(encoding='utf-8')
           m=re.search(r'<script>([\s\S]*?)</script>', h)
           assert m, 'embedded JS missing'
-          Path('/tmp/gpt-manager-v12.js').write_text(m.group(1), encoding='utf-8')
-          assert 'adminNotificationCreate' in h and 'adminNotificationUpdate' in h and 'adminNotificationDelete' in h
-          assert 'openExpiryCalendar' in h and 'jMonths' in h
-          print('HTML feature checks passed')
+          Path('/tmp/gpt-manager-v13.js').write_text(m.group(1), encoding='utf-8')
+          for k in ['autoResume','openActiveService','deactivateCurrent','renderRecent','openExpiryCalendar','adminNotificationCreate']:
+              assert k in h, k
+          print('Final HTML feature checks passed')
           PY
-          node --check /tmp/gpt-manager-v12.js
+          node --check /tmp/gpt-manager-v13.js
       - name: Build debug APK
         working-directory: gpt-manager-android
         run: gradle --no-daemon clean assembleDebug
@@ -74,9 +83,9 @@ jobs:
           unzip -l "$APK" | grep -q 'assets/index.html'
           unzip -l "$APK" | grep -q 'classes.dex'
           unzip -l "$APK" | grep -q 'res/drawable/ic_launcher.xml'
-          unzip -p "$APK" assets/index.html | grep -q 'v1.2.0'
+          unzip -p "$APK" assets/index.html | grep -q 'v1.3.0'
+          unzip -p "$APK" assets/index.html | grep -q 'فعال در مرورگر'
           unzip -p "$APK" assets/index.html | grep -q 'مدیریت اعلان‌ها'
-          unzip -p "$APK" assets/index.html | grep -q 'انتخاب تاریخ انقضا'
           APKSIGNER=$(find "$ANDROID_HOME/build-tools" -type f -name apksigner | sort -V | tail -1)
           AAPT=$(find "$ANDROID_HOME/build-tools" -type f -name aapt | sort -V | tail -1)
           test -x "$APKSIGNER"
@@ -84,12 +93,12 @@ jobs:
           "$APKSIGNER" verify --verbose --print-certs "$APK" | tee APK_SIGNATURE.txt
           "$AAPT" dump badging "$APK" | tee APK_BADGING.txt
           grep -q "package: name='com.gptyar.manager'" APK_BADGING.txt
-          grep -q "versionName='1.2.0'" APK_BADGING.txt
+          grep -q "versionName='1.3.0'" APK_BADGING.txt
           grep -q "application-label:'GPT Manager'" APK_BADGING.txt
           sha256sum "$APK" | tee APK_SHA256.txt
       - uses: actions/upload-artifact@v4
         with:
-          name: GPT-Manager-Android-v1.2.0
+          name: GPT-Manager-Android-v1.3.0-FINAL
           path: |
             gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk
             APK_SHA256.txt

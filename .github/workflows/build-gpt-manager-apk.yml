@@ -35,12 +35,15 @@ jobs:
         run: python3 v13_patch.py
       - name: Apply v1.4 final fixes
         working-directory: gpt-manager-android
-        run: python3 v14_final_patch.py
+        run: |
+          python3 v14_final_patch.py
+          python3 v14_compilefix.py
       - name: Static and UI regression checks
         working-directory: gpt-manager-android
         run: |
           JAVA=app/src/main/java/com/gptyar/manager/MainActivity.java
           HTML=app/src/main/assets/index.html
+          test "$(grep -c 'protected void onDestroy()' "$JAVA")" -eq 1
           grep -q 'createPopupWebView(Message resultMsg)' "$JAVA"
           grep -q 'closePopupWebView(WebView child)' "$JAVA"
           grep -q 'popupViews' "$JAVA"

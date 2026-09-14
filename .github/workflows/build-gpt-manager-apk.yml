@@ -24,6 +24,20 @@ jobs:
       - name: Apply WebView security patch
         working-directory: gpt-manager-android
         run: python3 secure_patch.py
+      - name: Apply v1.1 stability/UI patch
+        working-directory: gpt-manager-android
+        run: python3 v11_patch.py
+      - name: Static feature checks
+        working-directory: gpt-manager-android
+        run: |
+          grep -q 'case "recentTokens"' app/src/main/java/com/gptyar/manager/MainActivity.java
+          grep -q 'recent_tokens_v1' app/src/main/java/com/gptyar/manager/MainActivity.java
+          grep -q 'trimmed.startsWith("\[")' app/src/main/java/com/gptyar/manager/MainActivity.java
+          grep -q 'subscriptionLoadOk' app/src/main/java/com/gptyar/manager/MainActivity.java
+          grep -q 'webView.removeJavascriptInterface("AndroidApi")' app/src/main/java/com/gptyar/manager/MainActivity.java
+          grep -q 'توکن‌های اخیر' app/src/main/assets/index.html
+          grep -q "versionName '1.1.0'" app/build.gradle
+          grep -q 'android:icon="@drawable/ic_launcher"' app/src/main/AndroidManifest.xml
       - name: Build debug APK
         working-directory: gpt-manager-android
         run: gradle --no-daemon clean assembleDebug
@@ -41,11 +55,12 @@ jobs:
           "$APKSIGNER" verify --verbose --print-certs "$APK" | tee APK_SIGNATURE.txt
           "$AAPT" dump badging "$APK" | tee APK_BADGING.txt
           grep -q "package: name='com.gptyar.manager'" APK_BADGING.txt
+          grep -q "versionName='1.1.0'" APK_BADGING.txt
           grep -q "application-label:'GPT Manager'" APK_BADGING.txt
           sha256sum "$APK" | tee APK_SHA256.txt
       - uses: actions/upload-artifact@v4
         with:
-          name: GPT-Manager-Android-debug
+          name: GPT-Manager-Android-v1.1.0
           path: |
             gpt-manager-android/app/build/outputs/apk/debug/app-debug.apk
             APK_SHA256.txt

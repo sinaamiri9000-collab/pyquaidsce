@@ -1,14 +1,22 @@
 cff-version: 1.3.0
-message: "If you use pyquaidsce, please cite the software release and the original quaidsce work."
-title: "pyquaidsce"
+message: "If you use pyquaidsce, please cite this software release and the original quaidsce work."
+title: "pyquaidsce: Censored QUAIDS Estimation in Python"
 type: software
 version: 1.5.0
 date-released: "2026-08-25"
+doi: "10.5281/zenodo.22990016"
+repository-code: "https://github.com/sinaamiri9000-collab/pyquaidsce"
+url: "https://doi.org/10.5281/zenodo.22990016"
 authors:
   - given-names: "Sina"
     family-names: "Amiri"
     email: "sinaamiri9000@gmail.com"
     affiliation: "Department of Economics, Shiraz University, Shiraz, Iran"
+    orcid: "https://orcid.org/0009-0003-9340-2497"
+  - given-names: "Juan Carlos"
+    family-names: "Salgado"
+  - given-names: "Juan Carlos"
+    family-names: "Caro"
 license: GPL-3.0-only
 keywords:
   - QUAIDS
@@ -16,6 +24,7 @@ keywords:
   - econometrics
   - censored demand
   - Shonkwiler-Yen
+  - Python
 references:
   - type: report
     title: "Censored QUAIDS estimation with quaidsce"

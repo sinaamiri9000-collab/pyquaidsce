@@ -1,5 +1,5 @@
 * ==============================================================================
-* STATA MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE FOR PYQUAIDSCE 1.4.0
+* STATA MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE FOR PYQUAIDSCE 1.6.0
 * ==============================================================================
 * Dataset: bd_uruguay.csv (14 food groups, 6,848 observations)
 * ==============================================================================
@@ -9,7 +9,7 @@ set more off
 discard
 
 display as text _n "=============================================================================="
-display as text "PYQUAIDSCE 1.4.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE"
+display as text "PYQUAIDSCE 1.6.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE"
 display as text "=============================================================================="
 
 * ---- STEP 0: Load dataset & feature prep -------------------------------------
@@ -61,9 +61,9 @@ display as result "Data prepared: N = " _N " observations."
 * ==============================================================================
 * Tier 1: Model Specification & Variable Formats
 * ==============================================================================
-display as text _n "[01/24] RUNNING: Baseline 14-Good IFGNLS (first_stage_predict=xb)..."
+display as text _n "[01/24] RUNNING: Baseline 14-Good IFGNLS..."
 pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
-    demographics(`demo_list') anot(`anot_val') method(ifgnls) first_stage_predict(xb) nolog
+    demographics(`demo_list') anot(`anot_val') method(ifgnls) nolog
 display as result "       --> [PASS] Baseline LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[02/24] RUNNING: Direct Log-Prices & Log-Expenditure..."
@@ -137,10 +137,10 @@ display as result "       --> [PASS] Chunk 500 LL = " %10.4f e(ll) ", Converged 
 * ==============================================================================
 * Tier 3: Censoring, Probit Specifications & Control Functions
 * ==============================================================================
-display as text _n "[14/24] RUNNING: Legacy Stata Probit CDF Predictor (first_stage_predict=pr)..."
+display as text _n "[14/24] RUNNING: Implicit Default Method (IFGNLS)..."
 pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
-    demographics(`demo_list') anot(`anot_val') first_stage_predict(pr) method(ifgnls) nolog
-display as result "       --> [PASS] Legacy PR LL = " %10.4f e(ll) ", Converged = " e(converged)
+    demographics(`demo_list') anot(`anot_val') nolog
+display as result "       --> [PASS] Default method = " e(method) ", LL = " %10.4f e(ll)
 
 display as text _n "[15/24] RUNNING: Selection Price Subset (selection_prices=P_med1..3)..."
 pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
@@ -159,7 +159,7 @@ display as result "       --> [PASS] Selection no-exp LL = " %10.4f e(ll) ", Con
 
 display as text _n "[18/24] RUNNING: Endogeneity Control Function (control_function=vhat)..."
 pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
-    demographics(`demo_list') anot(`anot_val') control_function(vhat) first_stage_predict(xb) method(ifgnls) nolog
+    demographics(`demo_list') anot(`anot_val') control_function(vhat) method(ifgnls) nolog
 display as result "       --> [PASS] Control Function LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 * ==============================================================================

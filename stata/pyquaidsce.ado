@@ -1,4 +1,4 @@
-*! version 1.5.0  25aug2026
+*! version 1.6.0  26aug2026
 *! pyquaidsce: Censored QUAIDS demand system estimation in Stata using Python engine
 *! Author: Sina Amiri (Department of Economics, Shiraz University)
 
@@ -16,14 +16,13 @@ program define pyquaidsce, eclass
           selection_noexpenditure ///
           method(string) algorithm(string) start(string) reps(integer 0) ///
           stop_rule(string) bootstrap_start(string) ///
-          first_stage_predict(string) strict_stata(string) ///
           vce_sigma(string) ///
           initial(string) sigma_initial(string) ///
           tol(real 1e-13) max_outer(integer 200) max_iter(integer 300) ///
           chunk(integer 2000) nrtol_stop(real 1e-12) ///
-          inner_nrtol_early(real 1e-8) sigma_tol(real 1e-11) ///
-          boot_sigma_tol(real 1e-7) ///
-          seed(integer -1) n_jobs(integer 1) mp_context(string) ///
+          inner_nrtol_early(real 1e-8) sigma_tol(real 1e-5) ///
+          boot_sigma_tol(real 1e-5) ///
+          seed(integer -1) n_jobs(integer 1) blas_threads(integer 1) mp_context(string) ///
           rep_timeout(real 0) noquadratic nocensor nolog gnlog level(cilevel) ]
 
     // 1. Validate inputs
@@ -117,13 +116,6 @@ program define pyquaidsce, eclass
         exit 198
     }
 
-    if "`first_stage_predict'" == "" local first_stage_predict "xb"
-    local first_stage_predict = lower("`first_stage_predict'")
-    if !inlist("`first_stage_predict'", "pr", "xb") {
-        display as error "first_stage_predict must be 'pr' or 'xb'"
-        exit 198
-    }
-
     if "`vce_sigma'" == "" local vce_sigma "objective"
     local vce_sigma = lower("`vce_sigma'")
     if !inlist("`vce_sigma'", "objective", "final") {
@@ -148,8 +140,8 @@ program define pyquaidsce, eclass
         }
     }
     if `tol' <= 0 | `nrtol_stop' <= 0 | `sigma_tol' <= 0 ///
-        | `boot_sigma_tol' <= 0 {
-        display as error "convergence tolerances must be positive"
+        | `boot_sigma_tol' <= 0 | `blas_threads' <= 0 {
+        display as error "convergence tolerances and blas_threads() must be positive"
         exit 198
     }
     if `max_outer' < 2 | `max_iter' < 1 | `chunk' < 1 {
@@ -163,15 +155,6 @@ program define pyquaidsce, eclass
 
     local is_quad = ("`quadratic'" == "")
     local is_censor = ("`censor'" == "")
-    // Default is now strict_stata(false): corrected/textbook formulas.
-    if "`strict_stata'" != "" {
-        local strict_stata = lower("`strict_stata'")
-        if !inlist("`strict_stata'", "true", "false", "1", "0") {
-            display as error "strict_stata must be 'true' or 'false'"
-            exit 198
-        }
-    }
-    local is_strict = ("`strict_stata'" == "true" | "`strict_stata'" == "1")
     local is_verbose = ("`log'" == "")
     local is_gn_verbose = ("`gnlog'" != "")
     local selection_prices_specified = ///
@@ -187,10 +170,6 @@ program define pyquaidsce, eclass
          !`selection_expenditure_on')
     if `extension_active' & !`is_censor' {
         display as error "control-function/selection extensions require censoring"
-        exit 198
-    }
-    if `extension_active' & "`first_stage_predict'" != "xb" {
-        display as error "control-function/selection extensions require first_stage_predict(xb)"
         exit 198
     }
     if `external_cf_active' & `reps' > 0 {
@@ -220,7 +199,7 @@ program define pyquaidsce, eclass
     }
 
     // 6. Launch the complete estimation outside Stata's GUI process
-    python: from pyquaidsce.stata_bridge import launch_from_stata, poll_bootstrap, load_stata_results, kill_bootstrap; import sfi; _rt=float(sfi.Macro.getLocal("rep_timeout")); launch_from_stata(shares_str=sfi.Macro.getLocal("varlist"), prices_str=sfi.Macro.getLocal("p_vars"), expenditure_str=sfi.Macro.getLocal("exp_var"), demographics_str=sfi.Macro.getLocal("demographics"), anot=float(sfi.Macro.getLocal("anot")), method=sfi.Macro.getLocal("method"), algorithm=sfi.Macro.getLocal("algorithm"), start=sfi.Macro.getLocal("start"), reps=int(sfi.Macro.getLocal("reps")), stop_rule=sfi.Macro.getLocal("stop_rule"), bootstrap_start=sfi.Macro.getLocal("bootstrap_start"), seed=int(sfi.Macro.getLocal("seed")), n_jobs=int(sfi.Macro.getLocal("n_jobs")), mp_context=sfi.Macro.getLocal("mp_context") or None, rep_timeout=_rt if _rt > 0 else None, first_stage_predict=sfi.Macro.getLocal("first_stage_predict"), strict_stata=bool(int(sfi.Macro.getLocal("is_strict"))), quadratic=bool(int(sfi.Macro.getLocal("is_quad"))), censor=bool(int(sfi.Macro.getLocal("is_censor"))), is_lnprices=bool(int(sfi.Macro.getLocal("is_lnp"))), is_lnexp=bool(int(sfi.Macro.getLocal("is_lnexp"))), ivexp_str=sfi.Macro.getLocal("ivexp"), control_function=sfi.Macro.getLocal("control_function"), selection_control_function=sfi.Macro.getLocal("selection_control_function"), selection_prices_str=sfi.Macro.getLocal("selection_prices"), selection_prices_specified=bool(int(sfi.Macro.getLocal("selection_prices_specified"))), selection_covariates_str=sfi.Macro.getLocal("selection_covariates"), selection_covariates_specified=bool(int(sfi.Macro.getLocal("selection_covariates_specified"))), selection_expenditure=bool(int(sfi.Macro.getLocal("selection_expenditure_on"))), verbose=bool(int(sfi.Macro.getLocal("is_verbose"))), vce_sigma=sfi.Macro.getLocal("vce_sigma"), initial_mat_name=sfi.Macro.getLocal("initial"), sigma_initial_mat_name=sfi.Macro.getLocal("sigma_initial"), tol=float(sfi.Macro.getLocal("tol")), max_outer=int(float(sfi.Macro.getLocal("max_outer"))), max_iter=int(float(sfi.Macro.getLocal("max_iter"))), chunk=int(float(sfi.Macro.getLocal("chunk"))), nrtol_stop=float(sfi.Macro.getLocal("nrtol_stop")), inner_nrtol_early=float(sfi.Macro.getLocal("inner_nrtol_early")), sigma_tol=float(sfi.Macro.getLocal("sigma_tol")), boot_sigma_tol=float(sfi.Macro.getLocal("boot_sigma_tol")), gn_verbose=bool(int(sfi.Macro.getLocal("is_gn_verbose"))), touse_var=sfi.Macro.getLocal("touse"))
+    python: from pyquaidsce.stata_bridge import launch_from_stata, poll_bootstrap, load_stata_results, kill_bootstrap; import sfi; _rt=float(sfi.Macro.getLocal("rep_timeout")); launch_from_stata(shares_str=sfi.Macro.getLocal("varlist"), prices_str=sfi.Macro.getLocal("p_vars"), expenditure_str=sfi.Macro.getLocal("exp_var"), demographics_str=sfi.Macro.getLocal("demographics"), anot=float(sfi.Macro.getLocal("anot")), method=sfi.Macro.getLocal("method"), algorithm=sfi.Macro.getLocal("algorithm"), start=sfi.Macro.getLocal("start"), reps=int(sfi.Macro.getLocal("reps")), stop_rule=sfi.Macro.getLocal("stop_rule"), bootstrap_start=sfi.Macro.getLocal("bootstrap_start"), seed=int(sfi.Macro.getLocal("seed")), n_jobs=int(sfi.Macro.getLocal("n_jobs")), blas_threads=int(sfi.Macro.getLocal("blas_threads")), mp_context=sfi.Macro.getLocal("mp_context") or None, rep_timeout=_rt if _rt > 0 else None, quadratic=bool(int(sfi.Macro.getLocal("is_quad"))), censor=bool(int(sfi.Macro.getLocal("is_censor"))), is_lnprices=bool(int(sfi.Macro.getLocal("is_lnp"))), is_lnexp=bool(int(sfi.Macro.getLocal("is_lnexp"))), ivexp_str=sfi.Macro.getLocal("ivexp"), control_function=sfi.Macro.getLocal("control_function"), selection_control_function=sfi.Macro.getLocal("selection_control_function"), selection_prices_str=sfi.Macro.getLocal("selection_prices"), selection_prices_specified=bool(int(sfi.Macro.getLocal("selection_prices_specified"))), selection_covariates_str=sfi.Macro.getLocal("selection_covariates"), selection_covariates_specified=bool(int(sfi.Macro.getLocal("selection_covariates_specified"))), selection_expenditure=bool(int(sfi.Macro.getLocal("selection_expenditure_on"))), verbose=bool(int(sfi.Macro.getLocal("is_verbose"))), vce_sigma=sfi.Macro.getLocal("vce_sigma"), initial_mat_name=sfi.Macro.getLocal("initial"), sigma_initial_mat_name=sfi.Macro.getLocal("sigma_initial"), tol=float(sfi.Macro.getLocal("tol")), max_outer=int(float(sfi.Macro.getLocal("max_outer"))), max_iter=int(float(sfi.Macro.getLocal("max_iter"))), chunk=int(float(sfi.Macro.getLocal("chunk"))), nrtol_stop=float(sfi.Macro.getLocal("nrtol_stop")), inner_nrtol_early=float(sfi.Macro.getLocal("inner_nrtol_early")), sigma_tol=float(sfi.Macro.getLocal("sigma_tol")), boot_sigma_tol=float(sfi.Macro.getLocal("boot_sigma_tol")), gn_verbose=bool(int(sfi.Macro.getLocal("is_gn_verbose"))), touse_var=sfi.Macro.getLocal("touse"))
 
     local _pyq_boot_done = 0
     local _pyq_boot_err = 0
@@ -277,7 +256,6 @@ program define pyquaidsce, eclass
     ereturn local cmdline "pyquaidsce `0'"
     ereturn local title "`model_title'"
     ereturn local method "`method'"
-    ereturn local predict "`first_stage_predict'"
     ereturn local shares "`varlist'"
     ereturn local prices "`p_vars'"
     ereturn local demographics "`demographics'"

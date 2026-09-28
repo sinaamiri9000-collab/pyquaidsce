@@ -22,21 +22,9 @@ where ``Phi_i``/``phi_i`` come from the first-stage probit.
 
 IMPORTANT — the ``pdf``/``cdf`` inputs
 -------------------------------------
-``quaidsce_c.ado`` builds them as::
-
-    quietly predict du`i'                 // after -probit-
-    qui replace pdf`i' = normalden(du`i')
-    qui replace cdf`i' = normal(du`i')
-
-Stata's ``predict`` after ``probit`` defaults to the **probability**, not the
-linear predictor.  So the shipped command actually uses
-``Phi_i = Phi(Phi(x'tau))`` and ``phi_i = phi(Phi(x'tau))``.  The
-Shonkwiler-Yen estimator calls for ``Phi(x'tau)`` and ``phi(x'tau)``.
-
-Both behaviours are implemented and selected by ``first_stage_predict``:
-
-    "pr"  (default) reproduces the shipped Stata command bit for bit;
-    "xb"             is the textbook Shonkwiler-Yen estimator.
+pyquaidsce uses the textbook Shonkwiler-Yen construction from the Probit
+linear index: ``Phi_i = Phi(x'tau)`` and ``phi_i = phi(x'tau)``. Since
+version 1.6.0 this behavior is fixed and is not user-selectable.
 
 The Jacobian below is analytic and exact; it is checked against a
 finite-difference Jacobian in the test suite.

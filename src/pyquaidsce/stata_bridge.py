@@ -110,10 +110,9 @@ def run_from_stata(
     bootstrap_start: str = "zero",
     seed: int = -1,
     n_jobs: int = 1,
+    blas_threads: Optional[int] = 1,
     mp_context: Optional[str] = None,
     rep_timeout: Optional[float] = None,
-    first_stage_predict: str = "xb",
-    strict_stata: bool = False,
     quadratic: bool = True,
     censor: bool = True,
     is_lnprices: bool = False,
@@ -136,8 +135,8 @@ def run_from_stata(
     chunk: int = 2000,
     nrtol_stop: float = 1e-12,
     inner_nrtol_early: float = 1e-8,
-    sigma_tol: float = 1e-11,
-    boot_sigma_tol: float = 1e-7,
+    sigma_tol: float = 1e-5,
+    boot_sigma_tol: float = 1e-5,
     gn_verbose: bool = False,
     b_mat_name: str = "__pyq_b",
     v_mat_name: str = "__pyq_V",
@@ -230,8 +229,6 @@ def run_from_stata(
         start=start,
         stop_rule=stop_rule,
         bootstrap_start=bootstrap_start,
-        first_stage_predict=first_stage_predict,
-        strict_stata=strict_stata,
         vce_sigma=vce_sigma,
         initial=initial_vec,
         sigma_initial=sigma_init_mat,
@@ -243,6 +240,7 @@ def run_from_stata(
         inner_nrtol_early=float(inner_nrtol_early),
         sigma_tol=float(sigma_tol),
         boot_sigma_tol=float(boot_sigma_tol),
+        blas_threads=blas_threads,
         verbose=verbose,
         gn_verbose=bool(gn_verbose),
     )
@@ -274,10 +272,9 @@ def run_from_stata(
         stop_rule=stop_rule,
         bootstrap_start=bootstrap_start,
         n_jobs=int(n_jobs),
+        blas_threads=blas_threads,
         mp_context=mp_context or None,
         rep_timeout=rep_timeout,
-        first_stage_predict=first_stage_predict,
-        strict_stata=strict_stata,
         vce_sigma=vce_sigma,
         initial=initial_vec,
         sigma_initial=sigma_init_mat,
@@ -384,10 +381,9 @@ def launch_from_stata(
     bootstrap_start: str = "zero",
     seed: int = -1,
     n_jobs: int = 1,
+    blas_threads: Optional[int] = 1,
     mp_context: Optional[str] = None,
     rep_timeout: Optional[float] = None,
-    first_stage_predict: str = "xb",
-    strict_stata: bool = False,
     quadratic: bool = True,
     censor: bool = True,
     is_lnprices: bool = False,
@@ -410,8 +406,8 @@ def launch_from_stata(
     chunk: int = 2000,
     nrtol_stop: float = 1e-12,
     inner_nrtol_early: float = 1e-8,
-    sigma_tol: float = 1e-11,
-    boot_sigma_tol: float = 1e-7,
+    sigma_tol: float = 1e-5,
+    boot_sigma_tol: float = 1e-5,
     gn_verbose: bool = False,
     touse_var: str = "_touse",
 ) -> None:
@@ -491,10 +487,9 @@ def launch_from_stata(
         stop_rule=stop_rule,
         bootstrap_start=bootstrap_start,
         n_jobs=int(n_jobs),
+        blas_threads=blas_threads,
         mp_context=mp_context or None,
         rep_timeout=rep_timeout,
-        first_stage_predict=first_stage_predict,
-        strict_stata=strict_stata,
         vce_sigma=vce_sigma,
         initial=initial_vec,
         sigma_initial=sigma_init_mat,
@@ -574,6 +569,7 @@ def launch_bootstrap(
     reps: int,
     seed: int = -1,
     n_jobs: int = 1,
+    blas_threads: Optional[int] = 1,
     mp_context: Optional[str] = None,
     rep_timeout: Optional[float] = None,
 ) -> None:
@@ -594,6 +590,7 @@ def launch_bootstrap(
     kwargs["reps"] = int(reps)
     kwargs["seed"] = int(seed) if int(seed) >= 0 else None
     kwargs["n_jobs"] = int(n_jobs)
+    kwargs["blas_threads"] = blas_threads
     kwargs["mp_context"] = mp_context or None
     kwargs["rep_timeout"] = rep_timeout
 

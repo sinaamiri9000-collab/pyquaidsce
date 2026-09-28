@@ -31,6 +31,7 @@ from typing import Callable, List, Optional, Tuple
 import numpy as np
 
 from ._timing import check_deadline
+from ._threads import with_blas_threads
 from .jacfree import JacCache, jacobian_free, make_cache
 from .model import DemandData, jacobian_full, residuals
 from .params import Spec, delta_blocks
@@ -317,15 +318,16 @@ def gauss_newton(
 
 
 # --------------------------------------------------------------------------- #
+@with_blas_threads
 def nlsur(
     d: DemandData,
     spec: Spec,
     theta0: Optional[np.ndarray] = None,
     sigma0: Optional[np.ndarray] = None,
     start: str = "zero",
-    method: str = "fgnls",
+    method: str = "ifgnls",
     tol: float = 1e-13,
-    sigma_tol: float = 1e-11,
+    sigma_tol: float = 1e-5,
     max_outer: int = 200,
     max_iter: int = 200,
     chunk: int = 2000,
@@ -334,6 +336,7 @@ def nlsur(
     stop_rule: str = "standard",
     vce_sigma: str = "objective",
     algorithm: str = "gn",
+    blas_threads: Optional[int] = 1,
     verbose: bool = False,
     log: Optional[Callable[[str], None]] = None,
     gn_log: Optional[Callable[[str], None]] = None,
@@ -344,8 +347,10 @@ def nlsur(
     Parameters
     ----------
     method : {"nls", "fgnls", "ifgnls"}
-        ``quaidsce`` v2.0 uses ``fgnls`` unless ``method()`` is given; the
-        2021 runs archived in ``log/`` were produced with ``ifgnls``.
+        Estimation method. ``"ifgnls"`` is the pyquaidsce default.
+    blas_threads : positive integer or None
+        Temporarily limits BLAS threads during this fit. ``None`` leaves the
+        caller's BLAS runtime unchanged.
     vce_sigma : {"objective", "final"}
         Which ``Sigma_hat`` enters ``e(V)``.  ``"objective"`` is the one used in
         the last minimisation (textbook FGNLS, and what Stata reports);

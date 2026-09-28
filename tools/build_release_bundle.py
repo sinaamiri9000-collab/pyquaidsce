@@ -1,16 +1,18 @@
-"""Assemble a clean, checksumed 1.3.0 release-review bundle."""
+"""Build wheel/sdist and assemble a clean pyquaidsce 1.6.0 release bundle."""
 
 from __future__ import annotations
 
 import hashlib
 import shutil
+import subprocess
+import sys
 import zipfile
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
+VERSION = "1.6.0"
 OUT_PARENT = ROOT.parent
-RELEASE_NAME = "PYQUAIDSCE_1.3.0_FINAL_RELEASE"
+RELEASE_NAME = f"PYQUAIDSCE_{VERSION}_FINAL_RELEASE"
 RELEASE_DIR = OUT_PARENT / RELEASE_NAME
 BUNDLE_ZIP = OUT_PARENT / f"{RELEASE_NAME}_BUNDLE.zip"
 
@@ -31,28 +33,21 @@ def add_tree(archive: zipfile.ZipFile, tree: Path, prefix: str) -> None:
 
 def main() -> None:
     if RELEASE_DIR.exists() or BUNDLE_ZIP.exists():
-        raise FileExistsError(
-            "release output already exists; move it aside before rebuilding"
-        )
+        raise FileExistsError("release output already exists; move it aside before rebuilding")
+
+    subprocess.check_call([sys.executable, "-m", "build", "--wheel", "--sdist"], cwd=ROOT)
     dist = ROOT / "dist"
-    wheel = dist / "pyquaidsce-1.3.0-py3-none-any.whl"
-    sdist = dist / "pyquaidsce-1.3.0.tar.gz"
+    wheel = dist / f"pyquaidsce-{VERSION}-py3-none-any.whl"
+    sdist = dist / f"pyquaidsce-{VERSION}.tar.gz"
     for artifact in (wheel, sdist):
         if not artifact.is_file():
             raise FileNotFoundError(f"missing built artifact: {artifact}")
 
-    clean_source = RELEASE_DIR / "source/pyquaidsce-1.3.0"
+    clean_source = RELEASE_DIR / "source" / f"pyquaidsce-{VERSION}"
     ignore = shutil.ignore_patterns(
-        ".git",
-        "__pycache__",
-        "*.pyc",
-        "*.pyo",
-        "build",
-        "dist",
-        "dist_*",
-        "wheel_check",
-        "work_validation",
-        "*.egg-info",
+        ".git", "__pycache__", "*.pyc", "*.pyo", "build", "dist",
+        "dist_*", "wheel_check", "work_validation", "*.egg-info",
+        ".pytest_cache", ".Rcheck",
     )
     shutil.copytree(ROOT, clean_source, ignore=ignore)
 
@@ -61,26 +56,14 @@ def main() -> None:
     shutil.copy2(wheel, out_dist / wheel.name)
     shutil.copy2(sdist, out_dist / sdist.name)
 
-    source_zip = out_dist / "pyquaidsce-1.3.0-source.zip"
+    source_zip = out_dist / f"pyquaidsce-{VERSION}-source.zip"
     with zipfile.ZipFile(source_zip, "w", zipfile.ZIP_DEFLATED) as archive:
-        add_tree(archive, clean_source, "pyquaidsce-1.3.0")
-
-    shutil.copy2(ROOT / "MERGE_AUDIT_FA.md", RELEASE_DIR / "MERGE_AUDIT_FA.md")
-    qa_dir = RELEASE_DIR / "QA_RESULTS"
-    qa_dir.mkdir()
-    shutil.copy2(
-        ROOT / "benchmarks/release_120/results/bootstrap_smoke.json",
-        qa_dir / "bootstrap_smoke.json",
-    )
-    shutil.copy2(
-        ROOT / "benchmarks/release_120/results/bootstrap_determinism.json",
-        qa_dir / "bootstrap_determinism.json",
-    )
+        add_tree(archive, clean_source, f"pyquaidsce-{VERSION}")
 
     artifacts = sorted(out_dist.iterdir())
-    lines = [f"{sha256(path)}  dist/{path.name}" for path in artifacts]
     (RELEASE_DIR / "SHA256SUMS.txt").write_text(
-        "\n".join(lines) + "\n", encoding="utf-8"
+        "\n".join(f"{sha256(path)}  dist/{path.name}" for path in artifacts) + "\n",
+        encoding="utf-8",
     )
 
     with zipfile.ZipFile(BUNDLE_ZIP, "w", zipfile.ZIP_DEFLATED) as archive:

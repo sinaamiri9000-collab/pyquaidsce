@@ -55,7 +55,7 @@ def main() -> None:
     lnp = np.log(df[PRICES].to_numpy(float))
     lnexp = np.log(df["total"].to_numpy(float))
     demo = df[DEMOS].to_numpy(float)
-    fs = first_stage(W, lnp, lnexp, demo, predict="pr")
+    fs = first_stage(W, lnp, lnexp, demo)
     d = DemandData(lnp, lnexp, W, demo, fs.cdf, fs.pdf, 10.0)
 
     arrays = {

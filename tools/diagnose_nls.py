@@ -61,7 +61,7 @@ def main():
     lnp = np.log(df[PRICES].to_numpy(float))
     lnexp = np.log(df["total"].to_numpy(float))
     Z = df[DEMOS].to_numpy(float)
-    fs = first_stage(W, lnp, lnexp, Z, predict="pr")
+    fs = first_stage(W, lnp, lnexp, Z)
     d = DemandData(lnp=lnp, lnexp=lnexp, shares=W, demo=Z,
                    cdf=fs.cdf, pdf=fs.pdf, a0=10.0)
     spec = Spec(N_G, N_R, True, True)

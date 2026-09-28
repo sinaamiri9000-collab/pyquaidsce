@@ -31,13 +31,13 @@ def load(which: str, expvar: str):
     return d
 
 
-def run(which: str, expvar: str, predict: str):
+def run(which: str, expvar: str):
     d = load(which, expvar)
     W = d[SHARES].to_numpy(float)
     lnp = np.log(d[PRICES].to_numpy(float))
     lnexp = np.log(d[expvar].to_numpy(float))
     Z = d[DEMOS].to_numpy(float)
-    fs = first_stage(W, lnp, lnexp, Z, predict=predict)
+    fs = first_stage(W, lnp, lnexp, Z)
     return d, fs
 
 
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     for which in ("A", "B"):
         for expvar in ("total_exp_DS", "total_exp"):
             try:
-                d, fs = run(which, expvar, "pr")
+                d, fs = run(which, expvar)
             except Exception as exc:  # noqa: BLE001
                 print(f"{which:>2} {expvar:<14} FAILED: {exc}")
                 continue

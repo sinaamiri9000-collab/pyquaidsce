@@ -79,38 +79,36 @@ def main():
     Dl = delta_matrix(spec)
     se_stata = np.array([ref[nm][1] for nm in spec.full_names(DEMOS)])
 
-    for predict in ("pr", "xb"):
-        fs = first_stage(W, lnp, lnexp, Z, predict=predict)
-        d = DemandData(lnp=lnp, lnexp=lnexp, shares=W, demo=Z,
-                       cdf=fs.cdf, pdf=fs.pdf, a0=10.0)
-        u = residuals(th, d, spec)
-        sigma = (u.T @ u) / d.nobs
-        _, logdet = np.linalg.slogdet(sigma)
-        ll = -(d.nobs * N_G / 2.0) * (1.0 + LOG2PI) - (d.nobs / 2.0) * logdet
-        P = _whitener(sigma)
-        obj = _objective(th, d, spec, P)
-        cache = make_cache(spec)
-        G, g, _ = _normal_equations(th, d, spec, cache, P, 3000)
-        step = _solve_scaled(G, g)
-        nrtol = abs(float(step @ g)) / max(abs(obj), 1e-300)
-        V = np.linalg.inv(G)
-        se = np.sqrt(np.diag(Dl @ V @ Dl.T))
-        rel = np.abs(se - se_stata) / np.maximum(se_stata, 1e-12)
+    fs = first_stage(W, lnp, lnexp, Z)
+    d = DemandData(lnp=lnp, lnexp=lnexp, shares=W, demo=Z,
+                   cdf=fs.cdf, pdf=fs.pdf, a0=10.0)
+    u = residuals(th, d, spec)
+    sigma = (u.T @ u) / d.nobs
+    _, logdet = np.linalg.slogdet(sigma)
+    ll = -(d.nobs * N_G / 2.0) * (1.0 + LOG2PI) - (d.nobs / 2.0) * logdet
+    P = _whitener(sigma)
+    obj = _objective(th, d, spec, P)
+    cache = make_cache(spec)
+    G, g, _ = _normal_equations(th, d, spec, cache, P, 3000)
+    step = _solve_scaled(G, g)
+    nrtol = abs(float(step @ g)) / max(abs(obj), 1e-300)
+    V = np.linalg.inv(G)
+    se = np.sqrt(np.diag(Dl @ V @ Dl.T))
+    rel = np.abs(se - se_stata) / np.maximum(se_stata, 1e-12)
 
-        print(f"\n--- first_stage_predict = {predict!r}")
-        print(f"  log-likelihood at Stata's theta : {ll:.4f}")
-        print(f"  Stata's reported e(ll)          : {sc['Log-likelihood']}")
-        print(f"  |difference|                    : "
-              f"{abs(ll - sc['Log-likelihood']):.4f}  (relative "
-              f"{abs(ll - sc['Log-likelihood']) / abs(sc['Log-likelihood']):.2e})")
-        print(f"  IFGNLS objective                : {obj:.10f}   "
-              f"(N*m = {d.nobs * N_G})")
-        print(f"  relative gradient               : {nrtol:.3e}"
-              "   <- small => Stata's point is stationary for us too")
-        print(f"  delta-method SEs                : max abs dev "
-              f"{np.abs(se - se_stata).max():.3e}, median relative dev "
-              f"{np.median(rel):.3e}")
-
+    print("\n--- canonical Shonkwiler-Yen linear-index first stage ---")
+    print(f"  log-likelihood at Stata's theta : {ll:.4f}")
+    print(f"  Stata's reported e(ll)          : {sc['Log-likelihood']}")
+    print(f"  |difference|                    : "
+          f"{abs(ll - sc['Log-likelihood']):.4f}  (relative "
+          f"{abs(ll - sc['Log-likelihood']) / abs(sc['Log-likelihood']):.2e})")
+    print(f"  IFGNLS objective                : {obj:.10f}   "
+          f"(N*m = {d.nobs * N_G})")
+    print(f"  relative gradient               : {nrtol:.3e}"
+          "   <- small => Stata's point is stationary for us too")
+    print(f"  delta-method SEs                : max abs dev "
+          f"{np.abs(se - se_stata).max():.3e}, median relative dev "
+          f"{np.median(rel):.3e}")
 
 if __name__ == "__main__":
     main()

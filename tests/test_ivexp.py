@@ -30,7 +30,6 @@ def _common(frame: pd.DataFrame) -> dict:
         expenditure="total",
         demographics=["x1", "x2"],
         anot=10.0,
-        first_stage_predict="xb",
         method="nls",
         start="linear",
         max_iter=160,
@@ -168,10 +167,6 @@ class IntegratedIvexpTests(unittest.TestCase):
             quaidsce(**common, ivexp="iv_income")
         with self.assertRaisesRegex(ValueError, "duplicate"):
             quaidsce(**common, ivexp=["iv_income", "iv_income"])
-        with self.assertRaisesRegex(ValueError, "first_stage_predict='xb'"):
-            bad = dict(common)
-            bad["first_stage_predict"] = "pr"
-            quaidsce(**bad, ivexp=["iv_income"])
 
     def test_bootstrap_reestimates_reduced_form_in_every_replication(self):
         frame = _small4_with_instrument()

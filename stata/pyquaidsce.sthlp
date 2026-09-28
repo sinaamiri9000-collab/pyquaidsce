@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1.5.0  25aug2026}{...}
+{* *! version 1.6.0  26aug2026}{...}
 {vieweralsosee "[R] quaids" "help quaids"}{...}
 {viewerjumpto "Syntax" "pyquaidsce##syntax"}{...}
 {viewerjumpto "Description" "pyquaidsce##description"}{...}
@@ -56,20 +56,19 @@
 {synopt :{opt vce_sigma(type)}}covariance used in the S.E. formula: {cmd:objective} (default, matches Stata) or {cmd:final}{p_end}
 {synopt :{opt tol(#)}}objective relative-change tolerance; default is {cmd:tol(1e-13)}{p_end}
 {synopt :{opt nrtol_stop(#)}}scaled relative gradient stopping tolerance; default is {cmd:nrtol_stop(1e-12)}{p_end}
-{synopt :{opt sigma_tol(#)}}outer fixed-point parameter tolerance for IFGNLS; default is {cmd:sigma_tol(1e-11)}{p_end}
+{synopt :{opt sigma_tol(#)}}outer fixed-point parameter tolerance for IFGNLS; default is {cmd:sigma_tol(1e-5)}{p_end}
 {synopt :{opt inner_nrtol_early(#)}}early-stage inner Gauss-Newton tolerance during inexact-outer IFGNLS; default is {cmd:inner_nrtol_early(1e-8)}{p_end}
 {synopt :{opt max_iter(#)}}maximum inner Gauss-Newton iterations per stage; default is {cmd:max_iter(300)}{p_end}
 {synopt :{opt max_outer(#)}}maximum outer covariance updates for IFGNLS; default is {cmd:max_outer(200)}{p_end}
 {synopt :{opt chunk(#)}}observation block size for accumulating normal equations; default is {cmd:chunk(2000)}{p_end}
-{synopt :{opt first_stage_predict(type)}}{cmd:xb} (default, textbook linear index) or {cmd:pr} (legacy Stata-style prediction){p_end}
-{synopt :{opt strict_stata(bool)}}{cmd:false} (default, corrected textbook formulas) or {cmd:true} (reproduces the original ado's elasticity formulas){p_end}
 
 {syntab:Bootstrap & Performance}
 {synopt :{opt reps(#)}}number of bootstrap replications; default is {cmd:reps(0)} (disabled){p_end}
 {synopt :{opt bootstrap_start(type)}}bootstrap starting values: {cmd:zero} (default) or {cmd:warm} (fast warm-start){p_end}
-{synopt :{opt boot_sigma_tol(#)}}outer covariance tolerance inside each bootstrap replication; default is {cmd:boot_sigma_tol(1e-7)}{p_end}
+{synopt :{opt boot_sigma_tol(#)}}outer covariance tolerance inside each bootstrap replication; default is {cmd:boot_sigma_tol(1e-5)}{p_end}
 {synopt :{opt seed(#)}}random number seed for bootstrap{p_end}
 {synopt :{opt n_jobs(#)}}number of parallel CPU cores for bootstrap; default is {cmd:n_jobs(1)}{p_end}
+{synopt :{opt blas_threads(#)}}BLAS threads used by each estimation process; default is {cmd:blas_threads(1)}{p_end}
 {synopt :{opt mp_context(method)}}Python multiprocessing start method; safe default is {cmd:spawn}{p_end}
 {synopt :{opt rep_timeout(#)}}cooperative plus parent-watchdog time limit in seconds for each bootstrap replication; 0 disables it{p_end}
 {synopt :{opt nolog}}suppress estimation iteration log{p_end}
@@ -88,8 +87,8 @@
 It provides a fast Stata front end powered by the {cmd:pyquaidsce} Python computation engine, achieving up to a {bf:44.6x speedup} under IFGNLS in benchmark tests. Point estimation and optional bootstrap replications run in a background Python process while Stata polls for progress, so the Stata GUI remains responsive.
 
 {pstd}
-Control-function and custom-selection options require
-{cmd:first_stage_predict(xb)}. With {cmd:ivexp()}, log expenditure is regressed
+The Shonkwiler-Yen correction always uses the Probit linear index. With
+{cmd:ivexp()}, log expenditure is regressed
 on log prices, Ray demographics, the excluded instruments, and a constant. The
 generated residual enters both the participation Probits and latent demand
 equations, with equation-specific coefficients. The internal bootstrap
@@ -113,11 +112,11 @@ from the information supplied to the command.
 
 {pstd}Use an externally generated demand residual and a distinct selection design:{p_end}
 
-{phang2}{cmd:. pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) control_function(vhat) selection_control_function(vhat_sel) selection_prices(p3 p1) selection_covariates(urban) selection_noexpenditure first_stage_predict(xb) reps(0)}{p_end}
+{phang2}{cmd:. pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) control_function(vhat) selection_control_function(vhat_sel) selection_prices(p3 p1) selection_covariates(urban) selection_noexpenditure reps(0)}{p_end}
 
 {pstd}Instrument endogenous expenditure internally and use a full bootstrap:{p_end}
 
-{phang2}{cmd:. pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) ivexp(log_income employment) first_stage_predict(xb) reps(200) seed(12345)}{p_end}
+{phang2}{cmd:. pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) ivexp(log_income employment) reps(200) seed(12345)}{p_end}
 
 
 {marker results}{...}

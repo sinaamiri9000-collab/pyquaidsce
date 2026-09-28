@@ -1,5 +1,5 @@
 """
-Master Comprehensive Test Suite for pyquaidsce 1.4.0
+Master Comprehensive Test Suite for pyquaidsce 1.6.0
 =====================================================
 Executes 24 real-world empirical test scenarios on Uruguayan household
 demand data (bd_uruguay.csv, 14 food groups, 6,848 observations).
@@ -94,17 +94,17 @@ def run_tests():
             return None
 
     print("=" * 80)
-    print("PYQUAIDSCE 1.4.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE")
+    print("PYQUAIDSCE 1.6.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE")
     print("=" * 80)
 
     # -------------------------------------------------------------------------
     # Tier 1: Model Specification & Variable Formats
     # -------------------------------------------------------------------------
     t1_fit = record_test(
-        1, "Baseline 14-Good IFGNLS (first_stage_predict='xb')",
+        1, "Baseline 14-Good IFGNLS",
         lambda: quaidsce(
             data=df, shares=shares_14, prices=prices_14, expenditure="gasto_total",
-            demographics=demographics, anot=anot_val, method="ifgnls", first_stage_predict="xb"
+            demographics=demographics, anot=anot_val, method="ifgnls"
         )
     )
 
@@ -224,10 +224,10 @@ def run_tests():
     # Tier 3: Censoring, Probit Specifications & Control Functions
     # -------------------------------------------------------------------------
     record_test(
-        14, "Legacy Stata Probit CDF Predictor (first_stage_predict='pr')",
+        14, "Implicit Default Method (IFGNLS)",
         lambda: quaidsce(
             data=df, shares=shares_14, prices=prices_14, expenditure="gasto_total",
-            demographics=demographics, anot=anot_val, first_stage_predict="pr", method="ifgnls"
+            demographics=demographics, anot=anot_val
         )
     )
 
@@ -263,7 +263,7 @@ def run_tests():
         lambda: quaidsce(
             data=df, shares=shares_14, prices=prices_14, expenditure="gasto_total",
             demographics=demographics, anot=anot_val,
-            control_function="vhat", first_stage_predict="xb", method="ifgnls"
+            control_function="vhat", method="ifgnls"
         )
     )
 
@@ -347,7 +347,7 @@ def run_tests():
     # Final Scorecard
     # -------------------------------------------------------------------------
     print("\n" + "=" * 80)
-    print("PYQUAIDSCE 1.4.0 MASTER TEST SUITE SCORECARD")
+    print("PYQUAIDSCE 1.6.0 MASTER TEST SUITE SCORECARD")
     print("=" * 80)
     print(f"{'#':<3} {'Test Scenario Title':<52} {'Status':<8} {'Time (s)':<10} {'Details'}")
     print("-" * 80)

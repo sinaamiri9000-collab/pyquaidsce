@@ -71,7 +71,7 @@ def theory_at_model_shares(res, tol=1e-8):
     mm = Means(w=w_model, lnp=L, lnexp=m.lnexp, demo=zbar,
                cdf=np.ones(n), pdf=np.zeros(n), du=np.ones(n))
     spec_unc = Spec(n, spec.ndemo, spec.quadratic, censor=False)
-    el = elasticities(c, spec_unc, mm, a0=res.anot, strict_stata=False)
+    el = elasticities(c, spec_unc, mm, a0=res.anot)
 
     out = {
         "sum w_i": float(w_model.sum()),
@@ -93,7 +93,7 @@ def main():
     print("\n[1] nocensor path (Stata v2.0 raises 'unknown function *()')")
     res = quaidsce(df, shares=SHARES, prices=PRICES, expenditure="total",
                    demographics=DEMOS, anot=10.0, censor=False,
-                   method="ifgnls", strict_stata=False, verbose=False)
+                   method="ifgnls", verbose=False)
     c = res.coefs
     print(f"    ran fine: ll = {res.llf:.6f}, {res.n_gn} Gauss-Newton steps")
     print(f"    adding up   sum alpha - 1 = {c.alpha.sum() - 1:+.3e},"
@@ -119,22 +119,13 @@ def main():
           f"{np.max(np.abs(res.elas.compensated.sum(axis=1))):+.3e}")
 
     # ---- 2. noquadratic + demographics + censoring ------------------------- #
-    print("\n[2] noquadratic + demographics + censoring: the expenditure "
-          "elasticity bug")
-    r_bug = quaidsce(df, shares=SHARES, prices=PRICES, expenditure="total",
-                     demographics=DEMOS, anot=10.0, quadratic=False,
-                     strict_stata=True, verbose=False)
+    print("\n[2] noquadratic + demographics + censoring: canonical corrected branch")
     r_fix = quaidsce(df, shares=SHARES, prices=PRICES, expenditure="total",
                      demographics=DEMOS, anot=10.0, quadratic=False,
-                     strict_stata=True, verbose=False)
-    r_fix2 = quaidsce(df, shares=SHARES, prices=PRICES, expenditure="total",
-                      demographics=DEMOS, anot=10.0, quadratic=False,
-                      strict_stata=False, verbose=False)
-    print("    good   Stata (strict_stata=True)   corrected "
-          "(strict_stata=False)")
-    for i, s in enumerate(SHARES):
-        print(f"    {s:<7}{r_bug.elas.income[i]:>22.6f}"
-              f"{r_fix2.elas.income[i]:>22.6f}")
+                     verbose=False)
+    print("    corrected expenditure elasticities")
+    for i, share_name in enumerate(SHARES):
+        print(f"    {share_name:<7}{r_fix.elas.income[i]:>22.6f}")
 
     # ---- 3. bootstrap ------------------------------------------------------ #
     print("\n[3] bootstrap (Stata: parallel bs, reps())")

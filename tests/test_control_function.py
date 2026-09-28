@@ -119,7 +119,7 @@ def _synthetic_cf_dgp(N, seed):
 
 
 class ParameterMapAndJacobianTests(unittest.TestCase):
-    def test_public_v101_positional_apis_remain_valid(self):
+    def test_public_core_positional_apis_remain_valid(self):
         n = 3
         old_style = Coefs(
             np.full(n, 0.2), np.zeros(n), np.zeros((n, n)),
@@ -136,10 +136,9 @@ class ParameterMapAndJacobianTests(unittest.TestCase):
         )
         np_prob = n + 1 + 1 + 1
         tau = np.zeros(n * np_prob)
-        positional = elasticities(c, spec, means, 1.6, tau, np_prob, False)
+        positional = elasticities(c, spec, means, 1.6, tau, np_prob)
         keyword = elasticities(
             c, spec, means, 1.6, tau=tau, np_prob=np_prob,
-            strict_stata=False,
         )
         np.testing.assert_array_equal(
             positional.as_stata_vector(), keyword.as_stata_vector()
@@ -230,11 +229,9 @@ class ParameterMapAndJacobianTests(unittest.TestCase):
         tau = rng.normal(0.0, 0.1, n * layout.width)
         means = sample_means(d, k, old)
         e_old = elasticities(unpack(theta_old, old), old, means, 1.6,
-                             tau=tau, np_prob=layout.width, layout=layout,
-                             strict_stata=False)
+                             tau=tau, np_prob=layout.width, layout=layout)
         e_new = elasticities(unpack(theta_new, new), new, means, 1.6,
-                             tau=tau, np_prob=layout.width, layout=layout,
-                             strict_stata=False)
+                             tau=tau, np_prob=layout.width, layout=layout)
         np.testing.assert_allclose(e_old.as_stata_vector(), e_new.as_stata_vector(),
                                    atol=0.0, rtol=0.0)
 
@@ -274,7 +271,7 @@ class SelectionLayoutTests(unittest.TestCase):
         intercept = FirstStageLayout((), ("a", "b", "c"), {}, None, {}, None, 0)
         fs = first_stage(
             shares, np.zeros((80, 3)), np.ones(80), np.zeros((80, 0)),
-            predict="xb", design=np.zeros((80, 0)), layout=intercept,
+            design=np.zeros((80, 0)), layout=intercept,
         )
         self.assertEqual(fs.np_prob, 1)
         self.assertEqual(fs.tau.size, 3)
@@ -370,7 +367,7 @@ class PriceExpenditureDerivativeTests(unittest.TestCase):
         )
         e = elasticities(
             unpack(theta, spec), spec, sample_means(d, k, spec), d.a0,
-            tau=tau, np_prob=layout.width, strict_stata=True, layout=layout,
+            tau=tau, np_prob=layout.width, layout=layout,
         )
         np.testing.assert_allclose(
             e.income, 1.0 + derivative[0] / e.we,
@@ -448,11 +445,9 @@ class SyntheticAndGateTests(unittest.TestCase):
                     control_function="v",
                     selection_control_function="v",
                     anot=1.6,
-                    first_stage_predict="xb",
                     reps=0,
                     method="ifgnls",
                     start=start,
-                    strict_stata=False,
                     max_outer=80,
                     max_iter=160,
                     verbose=False,
@@ -531,27 +526,21 @@ class SyntheticAndGateTests(unittest.TestCase):
         common = dict(data=frame, shares=["w1", "w2", "w3"],
                       prices=["p1", "p2", "p3"], expenditure="m",
                       demographics=["z"], anot=1.6, verbose=False)
-        with self.assertRaisesRegex(ValueError, "first_stage_predict='xb'"):
-            quaidsce(**common, control_function="cf", first_stage_predict="pr")
+        with self.assertRaises(TypeError):
+            quaidsce(**common, control_function="cf", first_stage_predict="xb")
         with self.assertRaisesRegex(ValueError, "reduced form residual"):
-            quaidsce(**common, selection_control_function="cf",
-                      first_stage_predict="xb", reps=2)
+            quaidsce(**common, selection_control_function="cf", reps=2)
         with self.assertRaisesRegex(ValueError, "censor=True"):
-            quaidsce(**common, control_function="cf", censor=False,
-                      first_stage_predict="xb")
+            quaidsce(**common, control_function="cf", censor=False,)
         with self.assertRaisesRegex(ValueError, "subset of demand prices"):
-            quaidsce(**common, selection_prices=["not_a_price"],
-                      first_stage_predict="xb")
+            quaidsce(**common, selection_prices=["not_a_price"],)
         with self.assertRaisesRegex(ValueError, "nonzero variation"):
-            quaidsce(**common, control_function="constant_cf",
-                      first_stage_predict="xb")
+            quaidsce(**common, control_function="constant_cf",)
         with self.assertRaisesRegex(ValueError, "collinear.*dropped"):
-            quaidsce(**common, selection_control_function="cf_collinear",
-                      first_stage_predict="xb")
+            quaidsce(**common, selection_control_function="cf_collinear",)
         frame.loc[0, "cf"] = np.nan
         with self.assertRaisesRegex(ValueError, "only finite values"):
-            quaidsce(**common, control_function="cf",
-                      first_stage_predict="xb")
+            quaidsce(**common, control_function="cf",)
 
     def test_active_estimator_runs_end_to_end(self):
         import pandas as pd
@@ -583,7 +572,6 @@ class SyntheticAndGateTests(unittest.TestCase):
             selection_control_function="selection_cfunc",
             selection_expenditure=True,
             anot=10.0,
-            first_stage_predict="xb",
             method="ifgnls",
             start="linear",
             verbose=False,
@@ -609,7 +597,6 @@ class SyntheticAndGateTests(unittest.TestCase):
             selection_control_function="selection_cfunc",
             selection_expenditure=True,
             anot=10.0,
-            first_stage_predict="xb",
             method="ifgnls",
             start="linear",
             verbose=False,
@@ -637,7 +624,7 @@ class SyntheticAndGateTests(unittest.TestCase):
             elasticities(
                 coefs, spec, means, 1.6,
                 tau=np.zeros(3 * layout.width), np_prob=layout.width,
-                layout=layout, strict_stata=False,
+                layout=layout,
             )
 
 

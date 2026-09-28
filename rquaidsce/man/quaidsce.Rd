@@ -23,8 +23,6 @@ quaidsce(
   sigma_initial = NULL,
   stop_rule = "standard",
   bootstrap_start = "zero",
-  first_stage_predict = "xb",
-  strict_stata = FALSE,
   vce_sigma = "objective",
   control_function = NULL,
   selection_control_function = NULL,
@@ -34,6 +32,7 @@ quaidsce(
   reps = 0L,
   seed = NULL,
   n_jobs = 1L,
+  blas_threads = 1L,
   mp_context = "spawn",
   rep_timeout = NULL,
   tol = NULL,
@@ -83,10 +82,6 @@ both the participation Probits and latent demand equations.}
 
 \item{bootstrap_start}{Bootstrap starting scheme: 'zero' (default) or 'warm'.}
 
-\item{first_stage_predict}{First-stage probit predictor: 'xb' (default, theoretical linear index) or 'pr' (legacy Stata-compatible prediction).}
-
-\item{strict_stata}{Logical, whether to match Stata numerical quirks (default = FALSE).}
-
 \item{vce_sigma}{Residual covariance for analytical VCE: 'objective' (default) or 'final'.}
 
 \item{control_function}{Optional character name of endogeneity control function residual.}
@@ -104,6 +99,8 @@ both the participation Probits and latent demand equations.}
 \item{seed}{Optional integer, random number seed for bootstrap.}
 
 \item{n_jobs}{Integer, number of parallel bootstrap workers (default = 1).}
+
+\item{blas_threads}{Integer number of BLAS threads used by each estimation process (default = 1).}
 
 \item{mp_context}{Multiprocessing context method (default = "spawn").}
 

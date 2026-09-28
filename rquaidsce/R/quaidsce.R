@@ -25,8 +25,6 @@
 #' @param sigma_initial Optional numeric matrix of custom starting residual covariance Sigma (dimension (n_goods - 1) x (n_goods - 1)).
 #' @param stop_rule Convergence rule: 'standard' (default) or 'tight'.
 #' @param bootstrap_start Bootstrap starting scheme: 'zero' (default) or 'warm'.
-#' @param first_stage_predict First-stage probit predictor: 'xb' (default, theoretical linear index) or 'pr' (legacy Stata-compatible prediction).
-#' @param strict_stata Logical, whether to match Stata numerical quirks (default = FALSE).
 #' @param vce_sigma Residual covariance for analytical VCE: 'objective' (default) or 'final'.
 #' @param control_function Optional character name of endogeneity control function residual.
 #' @param selection_control_function Optional character name of selection-stage control function.
@@ -36,6 +34,7 @@
 #' @param reps Integer, number of bootstrap replications (default = 0).
 #' @param seed Optional integer, random number seed for bootstrap.
 #' @param n_jobs Integer, number of parallel bootstrap workers (default = 1).
+#' @param blas_threads Integer number of BLAS threads used by each estimation process (default = 1).
 #' @param mp_context Multiprocessing context method (default = "spawn").
 #' @param rep_timeout Optional numeric timeout per bootstrap replication in seconds.
 #' @param tol Optional outer convergence tolerance (default = 1e-13). If NULL, default tolerance is used.
@@ -77,8 +76,6 @@ quaidsce <- function(data,
                      sigma_initial = NULL,
                      stop_rule = "standard",
                      bootstrap_start = "zero",
-                     first_stage_predict = "xb",
-                     strict_stata = FALSE,
                      vce_sigma = "objective",
                      control_function = NULL,
                      selection_control_function = NULL,
@@ -88,6 +85,7 @@ quaidsce <- function(data,
                      reps = 0L,
                      seed = NULL,
                      n_jobs = 1L,
+                     blas_threads = 1L,
                      mp_context = "spawn",
                      rep_timeout = NULL,
                      tol = NULL,
@@ -180,8 +178,6 @@ quaidsce <- function(data,
     sigma_initial = if (!is.null(sigma_initial)) as.matrix(sigma_initial) else NULL,
     stop_rule = as.character(stop_rule),
     bootstrap_start = as.character(bootstrap_start),
-    first_stage_predict = as.character(first_stage_predict),
-    strict_stata = as.logical(strict_stata),
     vce_sigma = as.character(vce_sigma),
     control_function = control_function,
     selection_control_function = selection_control_function,
@@ -191,6 +187,7 @@ quaidsce <- function(data,
     reps = as.integer(reps),
     seed = if (!is.null(seed)) as.integer(seed) else NULL,
     n_jobs = as.integer(n_jobs),
+    blas_threads = as.integer(blas_threads),
     mp_context = if (!is.null(mp_context)) as.character(mp_context) else NULL,
     rep_timeout = if (!is.null(rep_timeout)) as.numeric(rep_timeout) else NULL,
     tol = if (!is.null(tol)) as.numeric(tol) else 1e-13,
@@ -300,7 +297,6 @@ quaidsce <- function(data,
     method = as.character(method),
     quadratic = as.logical(quadratic),
     censor = as.logical(censor),
-    first_stage_predict = as.character(first_stage_predict),
     bootstrap = boot_info,
     call = match.call(),
     py_object = res_py

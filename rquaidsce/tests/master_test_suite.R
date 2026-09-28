@@ -1,5 +1,5 @@
 # ==============================================================================
-# RQUAIDSCE 1.4.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE
+# RQUAIDSCE 1.6.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE
 # ==============================================================================
 # Dataset: bd_uruguay.csv (14 food groups, 6,848 observations)
 # ==============================================================================
@@ -12,7 +12,7 @@ suppressPackageStartupMessages({
 })
 
 cat("\n================================================================================\n")
-cat("RQUAIDSCE 1.4.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE\n")
+cat("RQUAIDSCE 1.6.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE\n")
 cat("================================================================================\n\n")
 
 # ---- STEP 0: Load dataset ----------------------------------------------------
@@ -89,9 +89,9 @@ record_test <- function(test_id, title, expr_func) {
 # ------------------------------------------------------------------------------
 # Tier 1: Model Specification & Variable Formats
 # ------------------------------------------------------------------------------
-t1_fit <- record_test(1, "Baseline 14-Good IFGNLS (first_stage_predict='xb')", function() {
+t1_fit <- record_test(1, "Baseline 14-Good IFGNLS", function() {
   quaidsce(data = df, shares = shares_14, prices = prices_14, expenditure = "gasto_total",
-           demographics = demographics, anot = anot_val, method = "ifgnls", first_stage_predict = "xb")
+           demographics = demographics, anot = anot_val, method = "ifgnls")
 })
 
 record_test(2, "Direct Log-Prices & Log-Expenditure (lnprices & lnexpenditure)", function() {
@@ -175,9 +175,9 @@ record_test(13, "Chunk Size Variation (chunk=500)", function() {
 # ------------------------------------------------------------------------------
 # Tier 3: Censoring, Probit Specifications & Control Functions
 # ------------------------------------------------------------------------------
-record_test(14, "Legacy Stata Probit CDF Predictor (first_stage_predict='pr')", function() {
+record_test(14, "Implicit Default Method (IFGNLS)", function() {
   quaidsce(data = df, shares = shares_14, prices = prices_14, expenditure = "gasto_total",
-           demographics = demographics, anot = anot_val, first_stage_predict = "pr", method = "ifgnls")
+           demographics = demographics, anot = anot_val)
 })
 
 record_test(15, "Selection Price Subset (selection_prices=P_med1..3)", function() {
@@ -201,7 +201,7 @@ record_test(17, "Selection Omit Log Expenditure (selection_expenditure=FALSE)", 
 record_test(18, "Endogeneity Control Function (control_function='vhat')", function() {
   quaidsce(data = df, shares = shares_14, prices = prices_14, expenditure = "gasto_total",
            demographics = demographics, anot = anot_val,
-           control_function = "vhat", first_stage_predict = "xb", method = "ifgnls")
+           control_function = "vhat", method = "ifgnls")
 })
 
 # ------------------------------------------------------------------------------
@@ -262,7 +262,7 @@ record_test(24, "Complete S3 Methods (summary, coef, vcov, residuals, fitted, el
 # Final Scorecard
 # ------------------------------------------------------------------------------
 cat("\n================================================================================\n")
-cat("RQUAIDSCE 1.4.0 MASTER TEST SUITE SCORECARD\n")
+cat("RQUAIDSCE 1.6.0 MASTER TEST SUITE SCORECARD\n")
 cat("================================================================================\n")
 cat(sprintf("%-3s %-52s %-8s %-10s %s\n", "#", "Test Scenario Title", "Status", "Time (s)", "Details"))
 cat(paste(rep("-", 80), collapse = ""), "\n")

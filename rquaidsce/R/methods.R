@@ -114,7 +114,7 @@ print.quaidsce <- function(x, ...) {
   cat(sprintf("Demographics included  : %d (%s)\n", x$ndemo, ifelse(x$ndemo > 0, paste(x$demographics, collapse = ", "), "none")))
   cat(sprintf("Estimation method      : %s\n", toupper(x$method)))
   cat(sprintf("Specification          : %s\n", ifelse(x$quadratic, "QUAIDS (Quadratic)", "AIDS (Linear)")))
-  cat(sprintf("Censoring correction   : %s\n", ifelse(x$censor, sprintf("Shonkwiler-Yen (first_stage_predict = '%s')", x$first_stage_predict), "None (Uncensored)")))
+  cat(sprintf("Censoring correction   : %s\n", ifelse(x$censor, "Shonkwiler-Yen (linear-index Probit)", "None (Uncensored)")))
   cat(sprintf("Log-likelihood         : %.4f\n", x$llf))
   cat(sprintf("Alpha_0 (anot)         : %.4f\n", x$anot))
   cat(sprintf("Convergence status     : %s (outer: %d, inner: %d)\n", ifelse(x$converged, "Converged", "NOT converged"), x$n_outer, x$n_gn))
@@ -173,7 +173,6 @@ summary.quaidsce <- function(object, ...) {
     method = object$method,
     quadratic = object$quadratic,
     censor = object$censor,
-    first_stage_predict = object$first_stage_predict,
     bootstrap = object$bootstrap,
     reduced_form = object$reduced_form
   )
@@ -195,7 +194,7 @@ print.summary.quaidsce <- function(x, digits = 4, ...) {
   cat(sprintf("Demographics       = %10d      Alpha_0            = %12.4f\n", x$ndemo, x$anot))
   cat(sprintf("Model Type         = %10s      Censoring          = %12s\n",
               ifelse(x$quadratic, "QUAIDS", "AIDS"),
-              ifelse(x$censor, sprintf("SY (%s)", x$first_stage_predict), "None")))
+              ifelse(x$censor, "SY (linear index)", "None")))
   cat(sprintf("Estimation Method  = %10s      Convergence        = %12s\n",
               toupper(x$method),
               ifelse(x$converged, "Converged", "FAILED")))

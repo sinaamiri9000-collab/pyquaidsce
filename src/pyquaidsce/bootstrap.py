@@ -61,15 +61,13 @@ _WORK = {}
 def set_blas_threads(n: int) -> bool:
     """Set the BLAS thread count at run time across platforms.
 
-    Bootstrap workers are CPU-bound in BLAS.  If each of ``n_jobs`` processes
-    also starts its own pool of BLAS threads the machine is oversubscribed by a
-    factor of ``n_jobs`` and everything slows to a crawl -- in testing, 2
-    workers x 2 BLAS threads on 2 cores was **4.5x slower** than 2 workers x 1
-    thread.  So each worker pins BLAS to a single thread and parallelism is
-    taken across replications instead, which is the efficient way round.
+    Bootstrap workers are CPU-bound in BLAS. If each worker also starts a
+    large BLAS thread pool, nested parallelism can oversubscribe the machine.
+    Workers therefore apply the requested ``blas_threads`` limit before
+    estimation; the package default is one BLAS thread per process.
 
-    Returns ``True`` if a runtime knob was found and set.  Environment
-    variables are also pinned in every worker before estimation starts.
+    Returns ``True`` if a runtime knob was found and set. Environment variables
+    are also set inside worker processes before estimation starts.
     """
     try:
         from threadpoolctl import threadpool_limits
@@ -116,9 +114,10 @@ def set_blas_threads(n: int) -> bool:
     return found
 
 
-def _init_worker(payload, pin_blas: bool = True):
+def _init_worker(payload, blas_threads: Optional[int] = 1):
     _WORK.update(payload)
-    if pin_blas:
+    if blas_threads is not None:
+        n = int(blas_threads)
         for var in (
             "OMP_NUM_THREADS",
             "OPENBLAS_NUM_THREADS",
@@ -126,8 +125,8 @@ def _init_worker(payload, pin_blas: bool = True):
             "VECLIB_MAXIMUM_THREADS",
             "NUMEXPR_NUM_THREADS",
         ):
-            os.environ[var] = "1"
-        set_blas_threads(1)
+            os.environ[var] = str(n)
+        set_blas_threads(n)
 
 
 def _one_rep(task):
@@ -164,10 +163,10 @@ def _one_rep(task):
         return rep_index, None, f"{type(exc).__name__}: {exc}"
 
 
-def _one_rep_process(conn, task, payload, pin_blas: bool):
+def _one_rep_process(conn, task, payload, blas_threads: Optional[int]):
     """Run one replication in a disposable process for hard time limits."""
     try:
-        _init_worker(payload, pin_blas=pin_blas)
+        _init_worker(payload, blas_threads=blas_threads)
         conn.send(_one_rep(task))
     except BaseException as exc:  # noqa: BLE001
         try:
@@ -178,7 +177,10 @@ def _one_rep_process(conn, task, payload, pin_blas: bool):
         conn.close()
 
 
-def _watchdog_results(ctx, tasks, payload, n_jobs: int, timeout: float):
+def _watchdog_results(
+    ctx, tasks, payload, n_jobs: int, timeout: float,
+    blas_threads: Optional[int],
+):
     """Yield replications while enforcing a parent-side wall-clock timeout.
 
     Each active replication owns a disposable child process.  This costs more
@@ -196,7 +198,7 @@ def _watchdog_results(ctx, tasks, payload, n_jobs: int, timeout: float):
         parent_conn, child_conn = ctx.Pipe(duplex=False)
         proc = ctx.Process(
             target=_one_rep_process,
-            args=(child_conn, task, payload, n_jobs > 1),
+            args=(child_conn, task, payload, blas_threads),
         )
         proc.start()
         child_conn.close()
@@ -279,8 +281,6 @@ def bootstrap(
     method,
     initial,
     sigma_initial,
-    first_stage_predict,
-    strict_stata,
     vce_sigma,
     algorithm,
     stop_rule,
@@ -295,6 +295,7 @@ def bootstrap(
     reps: int,
     seed: Optional[int],
     n_jobs: int,
+    blas_threads: Optional[int],
     touse: np.ndarray,
     verbose: bool = True,
     mp_context: Optional[str] = None,
@@ -326,8 +327,6 @@ def bootstrap(
                  if bootstrap_start == "warm" else None),
         sigma_initial=(np.asarray(sigma_initial, float)
                        if bootstrap_start == "warm" else None),
-        first_stage_predict=first_stage_predict,
-        strict_stata=strict_stata,
         vce_sigma=vce_sigma,
         algorithm=algorithm,
         stop_rule=stop_rule,
@@ -338,6 +337,7 @@ def bootstrap(
         nrtol_stop=nrtol_stop,
         inner_nrtol_early=inner_nrtol_early,
         sigma_tol=sigma_tol,
+        blas_threads=blas_threads,
     )
     payload = {"df": df, "kw": kw, "rep_timeout": rep_timeout}
 
@@ -384,14 +384,15 @@ def bootstrap(
         ctx = mp.get_context(context_name)
         for completed, (rep_index, b, err) in enumerate(
             _watchdog_results(
-                ctx, tasks, payload, n_jobs, float(rep_timeout)
+                ctx, tasks, payload, n_jobs, float(rep_timeout), blas_threads
             ),
             1,
         ):
             record(rep_index, b, err, completed)
     elif n_jobs == 1:
-        # one worker: leave BLAS multi-threaded, it has the machine to itself
-        _init_worker(payload, pin_blas=False)
+        # The parent quaidsce() call already applies the requested temporary
+        # BLAS limit. Avoid mutating process-wide environment variables here.
+        _WORK.update(payload)
         for completed, task in enumerate(tasks, 1):
             rep_index, b, err = _one_rep(task)
             record(rep_index, b, err, completed)
@@ -412,7 +413,7 @@ def bootstrap(
                 )
         ctx = mp.get_context(context_name)
         with ctx.Pool(n_jobs, initializer=_init_worker,
-                      initargs=(payload, True)) as pool:
+                      initargs=(payload, blas_threads)) as pool:
             for completed, (rep_index, b, err) in enumerate(
                 pool.imap_unordered(_one_rep, tasks), 1
             ):

@@ -1,8 +1,9 @@
 """
-``quaidsce`` — censored QUAIDS estimation, a Python port of Juan C. Caro's
-Stata package (Caro, Melo, Molina & Salgado; version 2.0, June 2025).
+``quaidsce`` — censored QUAIDS estimation in Python, based on the model and
+interface of Juan C. Caro's Stata package (Caro, Melo, Molina & Salgado;
+version 2.0, June 2025).
 
-Pipeline, mirroring ``quaidsce_c.ado`` step by step
+Core estimation pipeline
 ---------------------------------------------------
 1.  build the estimation sample (Stata's ``marksample`` / ``markout``);
 2.  validate: >= 3 shares, prices > 0, expenditure > 0, shares summing to one
@@ -27,6 +28,7 @@ import numpy as np
 from scipy.stats import norm
 
 from ._timing import check_deadline
+from ._threads import with_blas_threads
 from .elasticities import Means, elasticities, sample_means
 from .model import DemandData, fitted_shares
 from .nlsur import nlsur
@@ -52,7 +54,7 @@ class FirstStage:
     setau: np.ndarray  # (n*np_prob, n*np_prob) block diagonal
     cdf: np.ndarray  # (N, n)
     pdf: np.ndarray  # (N, n)
-    du: np.ndarray  # (N, n) whatever `predict` produced
+    du: np.ndarray  # (N, n) first-stage linear index X'tau
     np_prob: int
     results: List[ProbitResult]
     layout: FirstStageLayout
@@ -63,7 +65,6 @@ def first_stage(
     lnp: np.ndarray,
     lnexp: np.ndarray,
     demo: np.ndarray,
-    predict: str = "pr",
     include_lnexp: bool = True,
     *,
     design: Optional[np.ndarray] = None,
@@ -72,21 +73,16 @@ def first_stage(
 ) -> FirstStage:
     """Shonkwiler-Yen step 1: a probit per share.
 
-    ``predict`` selects what goes into ``normal()``/``normalden()``:
-
-    * ``"pr"`` — what the shipped ado does, because Stata's ``predict`` after
-      ``probit`` defaults to the predicted probability;
-    * ``"xb"`` — the linear predictor, i.e. textbook Shonkwiler-Yen.
+    The censoring correction always uses the Probit linear index ``X' tau``:
+    ``cdf = Phi(X' tau)`` and ``pdf = phi(X' tau)``. This is the textbook
+    Shonkwiler-Yen transformation used throughout pyquaidsce >= 1.6.0.
 
     ``include_lnexp=False`` reproduces the behaviour of the ado when the user
     supplies ``lnexpenditure()`` instead of ``expenditure()``: the local macro
     holding the log-expenditure temp variable is empty in that branch, so log
     expenditure silently drops out of the first-stage probits.
     """
-    predict = str(predict).lower()
     check_deadline(deadline)
-    if predict not in {"pr", "xb"}:
-        raise ValueError("predict must be 'pr' or 'xb'")
     N, n = shares.shape
     if design is None:
         Z = [lnp]
@@ -148,14 +144,15 @@ def first_stage(
         tau[sl] = pr.b
         setau[sl, sl] = pr.V
         xb = pr.xb(X)
-        du[:, i] = norm.cdf(xb) if predict == "pr" else xb
-        pdf[:, i] = norm.pdf(du[:, i])
-        cdf[:, i] = norm.cdf(du[:, i])
+        du[:, i] = xb
+        pdf[:, i] = norm.pdf(xb)
+        cdf[:, i] = norm.cdf(xb)
 
     return FirstStage(tau, setau, cdf, pdf, du, np_prob, res, layout)
 
 
 # --------------------------------------------------------------------------- #
+@with_blas_threads
 def quaidsce(
     data,
     shares: Sequence[str],
@@ -174,16 +171,14 @@ def quaidsce(
     anot: float,
     quadratic: bool = True,
     censor: bool = True,
-    method: str = "fgnls",
+    method: str = "ifgnls",
     initial: Optional[ArrayLike] = None,
     sigma_initial: Optional[np.ndarray] = None,
-    boot_sigma_tol: float = 1e-7,
+    boot_sigma_tol: float = 1e-5,
     start: str = "zero",
     reps: int = 0,
     seed: Optional[int] = None,
     bootstrap_start: str = "zero",
-    first_stage_predict: str = "xb",
-    strict_stata: bool = False,
     vce_sigma: str = "objective",
     algorithm: str = "gn",
     tol: float = 1e-13,
@@ -192,9 +187,10 @@ def quaidsce(
     chunk: int = 2000,
     nrtol_stop: float = 1e-12,
     inner_nrtol_early: float = 1e-8,
-    sigma_tol: float = 1e-11,
+    sigma_tol: float = 1e-5,
     stop_rule: str = "standard",
     n_jobs: int = 1,
+    blas_threads: Optional[int] = 1,
     verbose: bool = True,
     gn_verbose: bool = False,
     mp_context: Optional[str] = None,
@@ -216,11 +212,8 @@ def quaidsce(
     anot : the ``alpha_0`` of the translog price index (Stata's ``anot()``).
     quadratic : ``False`` reproduces ``noquadratic`` (i.e. plain AIDS).
     censor : ``False`` reproduces ``nocensor`` (i.e. Poi's ``quaids``).
-    method : ``"nls"``, ``"fgnls"`` (the package default) or ``"ifgnls"``.
+    method : ``"nls"``, ``"fgnls"`` or ``"ifgnls"`` (the package default).
     reps : bootstrap replications; 0 disables the bootstrap.
-    first_stage_predict : ``"pr"`` reproduces the shipped Stata code, ``"xb"``
-        the textbook Shonkwiler-Yen estimator. See :func:`first_stage`.
-    strict_stata : keep the (documented) quirks of the original elasticity code.
     control_function : column containing an externally generated reduced-form
         residual. It enters the latent share as ``cfcoef_i * residual``.
     ivexp : excluded instrument column(s) for endogenous log expenditure. The
@@ -236,6 +229,9 @@ def quaidsce(
     rep_timeout : optional per-replication wall-clock limit in seconds.
         Cooperative Probit/optimizer checks are backed by a parent-side process
         watchdog that can terminate a stuck native call.
+    blas_threads : positive integer or None, default 1. Temporarily limits the
+        BLAS thread pool during estimation. ``None`` leaves the caller's BLAS
+        runtime unchanged. Bootstrap workers use the same requested limit.
     """
     say = log or (print if verbose else (lambda *_: None))
     check_deadline(_deadline)
@@ -243,7 +239,6 @@ def quaidsce(
     method = str(method).lower()
     algorithm = str(algorithm).lower()
     start = str(start).lower()
-    first_stage_predict = str(first_stage_predict).lower()
     vce_sigma = str(vce_sigma).lower()
     stop_rule = str(stop_rule).lower()
     bootstrap_start = str(bootstrap_start).lower()
@@ -253,8 +248,6 @@ def quaidsce(
         raise ValueError("algorithm must be 'gn' or 'lm'")
     if start not in {"zero", "linear"}:
         raise ValueError("start must be 'zero' or 'linear'")
-    if first_stage_predict not in {"pr", "xb"}:
-        raise ValueError("first_stage_predict must be 'pr' or 'xb'")
     if vce_sigma not in {"objective", "final"}:
         raise ValueError("vce_sigma must be 'objective' or 'final'")
     if stop_rule not in {"tight", "standard"}:
@@ -305,11 +298,6 @@ def quaidsce(
     extension_active = cf_active or selection_custom
     if extension_active and not censor:
         raise ValueError("control-function/selection extensions require censor=True")
-    if extension_active and first_stage_predict != "xb":
-        raise ValueError(
-            "control-function/selection extensions require "
-            "first_stage_predict='xb'"
-        )
     if external_cf_active and reps and int(reps) > 0:
         raise ValueError(
             "bootstrap with a precomputed control function is disabled: the "
@@ -551,19 +539,11 @@ def quaidsce(
             np.column_stack(design_parts) if design_parts else np.zeros((N, 0))
         )
         fs = first_stage(
-            W, lnp, lnexp, Z, predict=first_stage_predict,
+            W, lnp, lnexp, Z,
             include_lnexp=include_selection_expenditure,
             design=selection_design, layout=layout,
             deadline=_deadline,
         )
-        if first_stage_predict == "pr":
-            notes.append(
-                "First stage uses cdf=Phi(Phi(x'tau)), pdf=phi(Phi(x'tau)) "
-                "because Stata's `predict` after `probit` defaults to the "
-                "predicted probability. This reproduces quaidsce v2.0 exactly; "
-                "pass first_stage_predict='xb' for the textbook "
-                "Shonkwiler-Yen transformation."
-            )
         if not include_selection_expenditure:
             notes.append(
                 "Log expenditure is omitted from the first-stage probits."
@@ -604,7 +584,7 @@ def quaidsce(
         max_iter=max_iter, chunk=chunk, nrtol_stop=nrtol_stop, sigma_tol=sigma_tol,
         inner_nrtol_early=inner_nrtol_early, stop_rule=stop_rule,
         vce_sigma=vce_sigma,
-        algorithm=algorithm,
+        algorithm=algorithm, blas_threads=blas_threads,
         verbose=False, log=say, gn_log=(print if gn_verbose else None),
         deadline=_deadline,
     )
@@ -635,7 +615,6 @@ def quaidsce(
         tau=fs.tau if censor else None,
         np_prob=fs.np_prob if censor else None,
         layout=fs.layout if censor else None,
-        strict_stata=strict_stata,
     )
     if censor:
         ev = el.as_stata_vector()
@@ -649,28 +628,6 @@ def quaidsce(
         V = Vx
         names = names + spec.elas_names()
 
-    if strict_stata and spec.ndemo == 0 and spec.quadratic:
-        notes.append(
-            "With no demographics, quaidsce_c.ado's uncompensated elasticity "
-            "uses beta_i*lambda_i in the last term where Poi (2012) has "
-            "beta_j*lambda_i; reproduced here. Pass strict_stata=False to use "
-            "the published formula."
-        )
-    if spec.ndemo > 0 and not spec.quadratic and censor and not cf_active:
-        notes.append(
-            "quaidsce_c.ado stores the expenditure elasticity in a *global* "
-            "macro in the demographics + noquadratic branch and then reads an "
-            "empty local. Stata therefore silently uses a zero latent expenditure "
-            "elasticity. strict_stata=True reproduces that result; "
-            "strict_stata=False uses the intended formula 1 + betanz_i/w_i."
-        )
-    if spec.ndemo > 0 and not spec.quadratic and censor and cf_active:
-        notes.append(
-            "The published noquadratic expenditure-elasticity formula is used "
-            "for the control-function extension even with strict_stata=True. "
-            "Reproducing the legacy Stata local/global-macro bug would be "
-            "inconsistent with the derivative of the augmented fitted share."
-        )
     if not nl.converged:
         notes.append(
             "The nonlinear estimator did not satisfy all requested convergence "
@@ -748,14 +705,13 @@ def quaidsce(
             anot=anot, quadratic=quadratic,
             censor=censor, method=method, initial=nl.theta,
             sigma_initial=nl.sigma,
-            first_stage_predict=first_stage_predict, strict_stata=strict_stata,
             vce_sigma=vce_sigma, sigma_tol=boot_sigma_tol,
             algorithm=algorithm, stop_rule=stop_rule, tol=tol,
             max_outer=max_outer, max_iter=max_iter, chunk=chunk,
             nrtol_stop=nrtol_stop, inner_nrtol_early=inner_nrtol_early,
             bootstrap_start=bootstrap_start,
             reps=int(reps), seed=seed, n_jobs=n_jobs,
-            touse=touse, verbose=verbose,
+            blas_threads=blas_threads, touse=touse, verbose=verbose,
             mp_context=mp_context, rep_timeout=rep_timeout,
         )
         res.V_analytic = res.V.copy()

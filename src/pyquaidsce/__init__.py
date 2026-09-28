@@ -1,5 +1,5 @@
 """
-pyquaidsce — a faithful Python port of the Stata package ``quaidsce`` v2.0.
+pyquaidsce — a Python implementation of censored QUAIDS inspired by the Stata package ``quaidsce`` v2.0.
 
     Caro, J. C., Melo, G., Molina, J. A. and Salgado, J. C. (2025)
     "quaidsce: Censored QUAIDS estimation", https://github.com/juancaros/quaidsce
@@ -33,7 +33,7 @@ from .reduced_form import ExpenditureReducedForm, fit_expenditure_reduced_form
 from .results import QuaidsceResults
 from .selection import FirstStageLayout
 
-__version__ = "1.5.0"
+__version__ = "1.6.0"
 
 __all__ = [
     "quaidsce",

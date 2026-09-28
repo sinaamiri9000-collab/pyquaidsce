@@ -15,7 +15,7 @@ Latent (uncensored) formulas, Poi (2012) with Ray (1983) scaling
                  - ( mu_i + 2 lambda_i D/(b c) ) ( alpha_j + sum_k gamma_jk lnp_k )
                  - mu_j lambda_i D^2 / (b c) ]
 
-Shonkwiler-Yen correction actually implemented by the ado
+Shonkwiler-Yen correction used by pyquaidsce
 ---------------------------------------------------------
     we_i     = wbar_i * cdfbar_i + delta_i * pdfbar_i
     e_i     <- 1 + (1/we_i) [ cdfbar_i (e_i - 1) wbar_i
@@ -24,21 +24,13 @@ Shonkwiler-Yen correction actually implemented by the ado
                               + tau_{i,j} pdfbar_i ( wbar_i - delta_i dubar_i ) ]
     ec_ij    = eu_ij + e_i * wbar_j                              (Slutsky)
 
-Known deviations in the Stata source, reproduced only when ``strict_stata``
---------------------------------------------------------------------------
-1. With **no demographics** and the quadratic term, the last term of the
-   uncompensated elasticity uses ``beta_i * lambda_i`` where Poi (2012) has
-   ``beta_j * lambda_i``.  ``strict_stata=True`` reproduces the ado.
-2. With **demographics but noquadratic**, the ado assigns the expenditure
-   elasticity to a *global* macro and then reads an (empty) *local* one.  The
-   censoring correction therefore silently uses a zero latent expenditure
-   elasticity. ``strict_stata=True`` reproduces that result;
-   ``strict_stata=False`` uses the intended ``1 + mu_i / w_i``.
-3. The reported ``ELAS_UNCOMP`` / ``ELAS_COMP`` vectors are stored in
-   ``i``-major order but *labelled* in ``j``-major order, so ``e(b)``'s
-   ``e_a_b`` actually holds ``eu_{b,a}``.  ``as_stata_vector()`` reproduces the
-   stored order; the matrices returned here use the natural
-   ``[good, price]`` convention.
+Implementation policy
+---------------------
+pyquaidsce >= 1.6.0 uses the published/theoretically intended formulas only.
+Legacy switches that reproduced known mistakes in the original Stata implementation
+were removed from the public API. The reported elasticity matrices use the natural
+``[good, price]`` convention; ``as_stata_vector()`` retains the historical storage
+order needed by the Stata-facing result layout.
 """
 
 from __future__ import annotations
@@ -173,7 +165,6 @@ def elasticities(
     a0: float,
     tau: Optional[np.ndarray] = None,
     np_prob: Optional[int] = None,
-    strict_stata: bool = False,
     *,
     layout: Optional[FirstStageLayout] = None,
 ) -> Elasticities:
@@ -236,24 +227,7 @@ def elasticities(
                 val = 1.0 + (betanz[i] + 2.0 * c.lam[i] * q * D) / wbar[i]
         ie_latent[i] = val
 
-    # ------------------------------------------------------------------ #
-    # Bug reproduction: in the demographics branch the ado writes the latent
-    # expenditure elasticity to a *global* macro,
-    #     global ie`i' = 1+`betanz`i''/`w_`i''m
-    # and with `noquadratic` the `local` of the same name is never set.  The
-    # censoring correction below then expands `(`ie`i''-1)` to the literal
-    # "(-1)", i.e. it silently uses a latent elasticity of ZERO.  Stata does not
-    # error, it just returns a wrong number -- confirmed against RUN 4 of
-    # bench/small4.log to 1e-15.
-    # ------------------------------------------------------------------ #
     ie_used = ie_latent
-    cf_extension = (
-        spec.control_function
-        or (layout is not None and layout.selection_cf_position is not None)
-    )
-    if (strict_stata and R > 0 and not spec.quadratic and spec.censor
-            and not cf_extension):
-        ie_used = np.zeros(n)
 
     ie = ie_latent.copy()
     if spec.censor:
@@ -289,7 +263,7 @@ def elasticities(
                     c.gamma[i, j] - c.beta[i] * (c.alpha[j] + gsum[j])
                 ) / wbar[i]
                 if spec.quadratic:
-                    b_last = c.beta[i] if strict_stata else c.beta[j]
+                    b_last = c.beta[j]
                     val = -kron + (
                         c.gamma[i, j]
                         - (c.beta[i] + 2.0 * c.lam[i] * q * D)

@@ -42,7 +42,6 @@ test_that("quaidsce basic estimation works with standard arguments", {
     expenditure = "exp_tot",
     demographics = c("hh_size", "urban"),
     anot = 4.0,
-    first_stage_predict = "xb",
     method = "fgnls",
     verbose = FALSE
   )
@@ -108,7 +107,6 @@ test_that("ivexp is forwarded and reduced-form diagnostics are returned", {
     ivexp = "instrument",
     anot = 4,
     method = "nls",
-    first_stage_predict = "xb",
     verbose = FALSE
   )
   expect_equal(fit$ivexp, "instrument")

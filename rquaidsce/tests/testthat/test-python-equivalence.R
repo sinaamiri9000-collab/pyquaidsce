@@ -28,7 +28,6 @@ test_that("R wrapper produces exact numerical match with direct Python estimator
     demographics = "z1",
     anot = 3.5,
     method = "fgnls",
-    first_stage_predict = "xb",
     verbose = FALSE
   )
 
@@ -42,7 +41,6 @@ test_that("R wrapper produces exact numerical match with direct Python estimator
     demographics = as.list("z1"),
     anot = 3.5,
     method = "fgnls",
-    first_stage_predict = "xb",
     verbose = FALSE
   )
 

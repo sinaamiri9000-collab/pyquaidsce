@@ -2,6 +2,17 @@
 
 All notable user-visible changes to `pyquaidsce` are documented here.
 
+## 1.6.0 — 2026-08-26
+
+- **Breaking API cleanup:** removed `first_stage_predict` and `strict_stata` from Python, R, and Stata. The Shonkwiler-Yen first stage now always uses the Probit linear index, and elasticity calculations always use the corrected theoretical formulas.
+- Removed the corresponding legacy branches from the Python estimator, elasticity engine, bootstrap forwarding, Stata bridge/ADO, R wrapper, examples, tests, and user documentation.
+- Standardized the package-wide default estimation method to **IFGNLS** across `quaidsce()`, the exported low-level `nlsur()` helper, the R wrapper, the Stata command, examples, and documentation.
+- Bumped Python, R, Stata, citation, and release metadata to 1.6.0 and updated the GitHub release workflow default tag.
+- Reframed the archived Stata benchmark as historical compatibility/timing evidence so it is not mistaken for a fresh v1.6.0 exact-replication claim.
+- Updated the master Python/R/Stata scenario suites so the former legacy-predictor scenario now verifies the implicit IFGNLS default.
+- Changed the default IFGNLS outer tolerance to `sigma_tol=1e-5` and the bootstrap default to `boot_sigma_tol=1e-5`.
+- Added `blas_threads`; the default is one BLAS thread per estimation process.
+
 ## 1.5.0 — 2026-08-25
 
 - Added `ivexp` consistently to the Python, R, and Stata interfaces. It fits

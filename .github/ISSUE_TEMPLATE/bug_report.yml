@@ -18,7 +18,7 @@ body:
     id: specification
     attributes:
       label: Model specification
-      description: Include goods, sample size, method, algorithm, starts, compatibility switches, and relevant code.
+      description: Include goods, sample size, method, algorithm, starting values, censoring/QUAIDS settings, and relevant code.
     validations:
       required: true
   - type: textarea

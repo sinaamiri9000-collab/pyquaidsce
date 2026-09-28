@@ -8,7 +8,7 @@
 - **Elasticities**: Expenditure (income), Marshallian (uncompensated), and Hicksian (compensated) price elasticities.
 - **Control functions**: Supports integrated expenditure endogeneity correction via `ivexp`, plus externally generated residuals.
 - **Parallel bootstrap**: Multi-core bootstrap with progress tracking and runtime safeguards for valid standard errors.
-- **Direct Stata compatibility**: matched coefficient ordering, output tables, and exact numerical reproduction switches.
+- **Stata integration**: matched coefficient ordering and native Stata-facing output tables, while using the corrected textbook econometric formulas.
 
 ---
 
@@ -28,7 +28,7 @@ Estimating censored demand systems in empirical research often requires extensiv
 - **Fast Execution**: Written with optimized analytic Jacobians and vectorized linear algebra (`numpy`/`scipy`), achieving a **44.6x wall-clock speedup** on the controlled benchmark reported below.
 - **Pure Python & Lightweight**: Only requires `numpy`, `scipy`, and `pandas`. No complex compilation or heavy external dependencies.
 - **Research Workflow Integration**: Easily run demand models in Jupyter notebooks, script automated sensitivity pipelines, and run on cloud servers/clusters.
-- **Verified Accuracy**: Delivers parameter estimates and elasticities that match Stata benchmarks up to high numerical precision (within `1e-5` to `1e-7`).
+- **Validated Numerics**: Tested against econometric identities and numerical derivatives; the repository also preserves high-precision historical Stata comparison evidence from earlier compatibility-capable releases.
 
 ---
 
@@ -71,9 +71,7 @@ res = quaidsce(
     expenditure="total_expenditure",           # Total expenditure across the system
     demographics=["hh_size", "urban"],         # Demographic scaling variables (Ray 1983)
     anot=10.0,                                 # Price index constant (alpha_0)
-    method="ifgnls",                           # 'nls', 'fgnls', or 'ifgnls'
-    first_stage_predict="xb",                  # 'pr' matches Stata; 'xb' uses linear index
-    strict_stata=False,                        # Corrected textbook formulas; True replicates Stata exactly
+    method="ifgnls",                           # default; alternatives: 'nls' or 'fgnls'
     reps=0,                                    # Set reps=200+ for bootstrap standard errors
     verbose=True,
 )
@@ -97,11 +95,21 @@ res_iv = quaidsce(
     demographics=["hh_size", "urban"],
     ivexp=["log_income", "employment_status"],
     anot=10.0,
-    first_stage_predict="xb",
     reps=200,  # rebuilds the reduced form in every bootstrap draw
 )
 print(res_iv.reduced_form_table())
 ```
+
+### Parallel bootstrap in Python
+
+If you use parallel bootstrap (`n_jobs > 1`) in a Python script, put your estimation code inside `main()` and add this at the end of the file:
+
+```python
+if __name__ == "__main__":
+    main()
+```
+
+This is required by Python multiprocessing when it uses `spawn`.
 
 For a step-by-step tutorial, see [Getting Started](docs/getting-started.md). For a complete reference of all input arguments, control functions, and output attributes, see the [User Guide & API Reference](docs/user-guide.md).
 
@@ -148,8 +156,7 @@ fit <- quaidsce(
   demographics = c("hh_size", "urban"),
   ivexp = c("log_income", "employment_status"),
   anot = 10.0,
-  method = "ifgnls",
-  first_stage_predict = "xb"
+  method = "ifgnls"
 )
 
 summary(fit)
@@ -161,25 +168,20 @@ See the [R Package Documentation](rquaidsce/README.md) for full details.
 
 ---
 
-## Key Options & Stata Compatibility
+## Canonical Econometric Behavior
 
-`pyquaidsce` provides two switches to let you choose between literal Stata replication and textbook formulas:
+Starting with **v1.6.0**, `pyquaidsce` has one canonical implementation for the two areas where the original Stata `quaidsce` ado contains known deviations from the published formulas:
 
-1. **`first_stage_predict`**:
-   - `"xb"` *(default)*: Uses the linear index $X'\tau$, following the standard theoretical textbook Shonkwiler–Yen (1999) formulation.
-   - `"pr"`: Uses the predicted probability $\Phi(X'\tau)$, reproducing legacy Stata `quaidsce` v2.0 behavior.
+- The Shonkwiler–Yen first stage always uses the Probit **linear index** $X'\tau$, so the correction uses $\Phi(X'\tau)$ and $\phi(X'\tau)$.
+- Elasticities always use the corrected theoretical formulas, including the no-demographics quadratic term and the demographics + linear-AIDS censoring branch.
 
-2. **`strict_stata`**:
-   - `False` *(default)*: Uses corrected textbook formulas for documented edge-cases (such as models without demographics or with `noquadratic`).
-   - `True`: Keeps documented Stata conventions and index ordering for 1-to-1 replication against Stata `.log` files.
-
-See [Stata Compatibility](docs/stata-compatibility.md) for methodology details, and the [User Guide & API Reference](docs/user-guide.md) for the complete list of all optimizer, convergence, and bootstrap options.
+See [Stata Compatibility](docs/stata-compatibility.md) for details about comparisons with the original Stata command.
 
 ---
 
-## Validation & Performance Benchmark
+## Validation & Historical Performance Benchmark
 
-We evaluated `pyquaidsce` against Stata 19.5 on a deterministic synthetic benchmark dataset with **20,000 observations, 4 goods, 3 demographic variables, censoring across all goods, and IFGNLS estimation**:
+The repository preserves a deterministic 20,000-observation benchmark against Stata 19.5 (4 goods, 3 demographics, censoring, IFGNLS). The stored comparison was produced during an earlier compatibility-capable release and is retained as historical validation and timing evidence. Because v1.6.0 intentionally removes the legacy error-replication paths, exact agreement with the original ado is no longer a release goal in specifications affected by those known deviations.
 
 - **Numerical Agreement**:
   - Structural parameters ($\alpha, \beta, \gamma, \lambda, \delta, \eta, \rho$): Maximum difference $< 1.68 \times 10^{-5}$
@@ -192,7 +194,7 @@ We evaluated `pyquaidsce` against Stata 19.5 on a deterministic synthetic benchm
   - **pyquaidsce**: 26.0 seconds
   - **Speedup**: **~44.6x faster**
 
-All raw data, logs, scripts, and comparison tables are available in [`benchmarks/cquaids_ifgnls_4g_20k/`](benchmarks/cquaids_ifgnls_4g_20k/). For more details, see [Validation](docs/validation.md) and [Performance](docs/performance.md).
+All raw data, archived logs, scripts, and comparison tables are available in [`benchmarks/cquaids_ifgnls_4g_20k/`](benchmarks/cquaids_ifgnls_4g_20k/). For current v1.6.0 validation policy and the historical timing evidence, see [Validation](docs/validation.md) and [Performance](docs/performance.md).
 
 ---
 
@@ -216,8 +218,8 @@ tools/            Diagnostic scripts and Stata log comparison utilities
 - [User Guide & API Reference](docs/user-guide.md): Complete reference for all input parameters, the result object, and code examples.
 - [Stata Package Guide](stata/README.md): How to install and run `pyquaidsce` directly within Stata.
 - [Methodology & Model Equations](docs/methodology.md): QUAIDS model specification, Shonkwiler-Yen censoring, and elasticity derivations.
-- [Stata Compatibility Guide](docs/stata-compatibility.md): Explanations of `first_stage_predict`, `strict_stata`, and replication tips.
-- [Validation Evidence](docs/validation.md): Numerical comparison across 113 parameters and elasticities against Stata.
+- [Stata Compatibility Guide](docs/stata-compatibility.md): Numerical-comparison guidance and the documented differences from the original Stata ado.
+- [Validation Evidence](docs/validation.md): Current v1.6.0 test policy plus archived Stata comparison evidence across 113 reported values.
 - [Performance & Benchmarking](docs/performance.md): Benchmark methodology, timing details, and optimization notes.
 - [Contributing](CONTRIBUTING.md): Guidelines for bug reports and contributions.
 

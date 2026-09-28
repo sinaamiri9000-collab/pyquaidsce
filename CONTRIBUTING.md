@@ -22,7 +22,7 @@ python -m unittest discover -s tests -v
 When submitting a bug report or numerical question, please include:
 - Your Python version and OS.
 - Installed versions of `numpy`, `scipy`, and `pandas`.
-- Model specification: number of goods, demographics, and options used (`method`, `first_stage_predict`, `strict_stata`).
+- Model specification: number of goods, demographics, censoring/quadratic status, and estimation method (`ifgnls`, `fgnls`, or `nls`).
 - A minimal reproducible example or anonymized sample data.
 - The corresponding Stata command and output if reporting a discrepancy with Stata.
 

@@ -1,4 +1,4 @@
-include CHANGELOG.md CITATION.cff CONTRIBUTING.md IVEXP_IMPLEMENTATION_REPORT.md LICENSE README.md
+include CHANGELOG.md CITATION.cff CONTRIBUTING.md LICENSE README.md
 recursive-include bench *.dta *.log
 recursive-include benchmarks *.csv *.do *.dta *.json *.log *.md *.py
 recursive-include docs *.md

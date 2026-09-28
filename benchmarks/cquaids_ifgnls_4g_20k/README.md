@@ -1,7 +1,10 @@
 # Controlled CQUAIDS / IFGNLS benchmark
 
-This is the public numerical-agreement and runtime benchmark for
-`pyquaidsce` 1.0.1.
+This directory preserves the public numerical-agreement and runtime benchmark
+originally recorded during the early `pyquaidsce` releases. The stored files under
+`results/` are historical outputs and should not be interpreted as a fresh v1.6.0
+exact-replication claim. The current `run_python.py` uses the canonical v1.6.0+
+Shonkwiler-Yen linear-index implementation.
 
 ## Design
 
@@ -15,7 +18,7 @@ This is the public numerical-agreement and runtime benchmark for
 | User-supplied initial vector | none |
 | Bootstrap | disabled |
 | Data | identical synthetic `.dta` file in Stata and Python |
-| Python Stata-compatibility path | `first_stage_predict="xb"`, `strict_stata=True` |
+| Censoring correction | textbook Shonkwiler-Yen linear-index Probit |
 
 The dataset is fully synthetic and generated from a fixed seed. Every good
 contains genuine zero budget shares, so all four participation probits and the
@@ -26,9 +29,9 @@ The synthetic data-generating process is intended for implementation
 comparison and runtime benchmarking. It is not a Monte Carlo design intended
 to recover a known vector of structural CQUAIDS parameters.
 
-## Recorded results
+## Archived recorded results
 
-The Stata and Python estimates are **almost identical**. The full-precision
+For the historical recorded run, the Stata and Python estimates were **almost identical**. The full-precision
 comparison covers 113 returned values:
 
 | Quantity | Maximum/relative difference |
@@ -84,9 +87,7 @@ cquaids_ifgnls_4g_20k/
     └── comparison_summary.json
 ```
 
-The files under `results/` are the actual stored outputs used for the headline
-comparison. The raw logs are retained so that both timing boundaries and
-reported model outputs can be inspected directly.
+The files under `results/` are the archived outputs used for the historical headline comparison. The raw logs are intentionally retained unchanged for auditability, including references to compatibility settings that no longer exist in v1.6.0.
 
 ## Reproduce the benchmark
 
@@ -96,7 +97,7 @@ From this directory, regenerate the deterministic dataset if desired:
 python generate_data.py
 ```
 
-Install `pyquaidsce==1.0.1` and run the Python side:
+Install the current `pyquaidsce` release and run the Python side:
 
 ```bash
 python run_python.py

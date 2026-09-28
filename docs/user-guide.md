@@ -41,7 +41,7 @@ This document provides a comprehensive reference for all input parameters of `qu
 | `selection_covariates` | `Sequence[str]` | `None` | Independent Probit covariates. `None` reuses Ray demographics; `[]` uses none. |
 | `selection_control_function` | `str` | `None` | Residual column used in each Probit with an equation-specific coefficient independent of `cfcoef`. |
 
-These extensions require `censor=True` and `first_stage_predict="xb"`.
+These extensions require `censor=True`. The first-stage censoring correction always uses the Probit linear index.
 `ivexp` cannot be combined with either external control-function argument, and
 its variables must be excluded from shares, prices, demographics, expenditure,
 and `selection_covariates`. Internal `reps>0` is supported for `ivexp` and
@@ -63,13 +63,13 @@ is unknown to the package.
 
 ---
 
-### Stata Compatibility Switches
+### Variance-Covariance Convention
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `first_stage_predict` | `str` | `"xb"` | First-stage Probit prediction: `"xb"` *(default)* uses the linear index $X'\tau$ (theoretical textbook Shonkwiler–Yen); `"pr"` reproduces legacy Stata-compatible prediction $\Phi(\Phi(X'\tau))$ and $\phi(\Phi(X'\tau))$. |
-| `strict_stata` | `bool` | `False` | If `True`, reproduces Stata's exact documented elasticity calculations (including its quirks). If `False` *(default)*, applies published corrected formulas. |
-| `vce_sigma` | `str` | `"objective"` | Residual covariance used in the second-stage standard error formula: `"objective"` (used in the final minimization, matching Stata) or `"final"` (recomputed from final residuals). |
+| `vce_sigma` | `str` | `"objective"` | Residual covariance used in the second-stage standard error formula: `"objective"` (used in the final minimization) or `"final"` (recomputed from final residuals). |
+
+The Shonkwiler–Yen correction is fixed to the textbook Probit linear-index construction, and elasticity formulas are fixed to their corrected theoretical forms in v1.6.0 and later.
 
 ---
 
@@ -79,7 +79,7 @@ is unknown to the package.
 |---|---|---|---|
 | `tol` | `float` | `1e-13` | Objective relative change tolerance. |
 | `nrtol_stop` | `float` | `1e-12` | Scaled relative gradient stopping tolerance (Gauss-Newton stationarity). |
-| `sigma_tol` | `float` | `1e-11` | Outer fixed-point parameter tolerance for IFGNLS iterations. |
+| `sigma_tol` | `float` | `1e-5` | Outer fixed-point parameter tolerance for IFGNLS iterations. |
 | `inner_nrtol_early` | `float` | `1e-8` | Early-stage inner Gauss-Newton tolerance used during inexact-outer IFGNLS. |
 | `stop_rule` | `str` | `"standard"` | Stopping criterion: `"standard"` (disjunctive rule matching Stata's `tolerance` / `ltolerance` / `nrtolerance`) or `"tight"` (stops only on the scaled gradient). |
 | `max_iter` | `int` | `300` | Maximum number of inner Gauss-Newton iterations per stage. |
@@ -95,10 +95,18 @@ is unknown to the package.
 | `reps` | `int` | `0` | Number of bootstrap replications. Set `reps=0` to disable bootstrap (point estimates only). |
 | `seed` | `int` | `None` | Random seed for reproducible bootstrap resamples. |
 | `n_jobs` | `int` | `1` | Number of parallel worker processes for bootstrap replications. |
+| `blas_threads` | `int` or `None` | `1` | Number of BLAS threads used by each estimation process. Use `None` to keep the existing BLAS setting. |
 | `bootstrap_start` | `str` | `"zero"` | Starting values for each bootstrap draw: `"zero"` (starts each draw from zero) or `"warm"` (starts each draw from full-sample estimates). |
-| `boot_sigma_tol` | `float` | `1e-7` | Outer covariance tolerance used inside bootstrap replications. |
+| `boot_sigma_tol` | `float` | `1e-5` | Outer covariance tolerance used inside bootstrap replications. |
 | `mp_context` | `str` or `None` | `None` | Multiprocessing start method. `None` selects the BLAS-safe cross-platform `"spawn"` default; an available method such as `"forkserver"` can be requested explicitly. |
 | `rep_timeout` | `float` or `None` | `None` | Per-replication wall-clock limit. Cooperative Probit/optimizer checks are backed by a parent watchdog that terminates the disposable child process if necessary. Adds process-start overhead when enabled. |
+
+If you use parallel bootstrap (`n_jobs > 1`) in a Python script, put your estimation code inside `main()` and add this at the end of the file:
+
+```python
+if __name__ == "__main__":
+    main()
+```
 
 ---
 
@@ -137,7 +145,7 @@ The object returned by `quaidsce(...)` contains all estimated parameters, standa
 | `res.nobs` | `int` | `e(N)` | Number of observations in the estimation sample. |
 | `res.converged` | `bool` | `e(converged)` | `True` if optimization converged successfully. |
 | `res.boot` | `BootResult` or `None` | `r(table)` after `bs` | Bootstrap replicates, standard errors, and percentile confidence intervals (when `reps > 0`). |
-| `res.notes` | `List[str]` | — | Informational notes regarding Stata compatibility switches. |
+| `res.notes` | `List[str]` | — | Informational notes about convergence, inference, censoring, and model diagnostics. |
 | `res.ivexp_names` | `List[str]` | `e(ivexp)` | Excluded expenditure instruments used by the internal reduced form. |
 | `res.reduced_form` | `ExpenditureReducedForm` or `None` | `e(reduced_form_b)`, `e(reduced_form_V)` | Internal log-expenditure OLS result, including residuals, fitted values, R-squared, and the joint excluded-instrument F test. |
 
@@ -265,8 +273,7 @@ fit <- quaidsce(
   expenditure = "total_exp",
   demographics = c("hh_size", "urban"),
   anot = 10.0,
-  method = "ifgnls",
-  first_stage_predict = "xb"
+  method = "ifgnls"
 )
 
 # Standard S3 methods
@@ -294,7 +301,7 @@ fit_warm <- quaidsce(
 ```stata
 * Estimate in Stata
 pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
-    demographics(hh_size urban) anot(10.0) method(ifgnls) first_stage_predict(xb)
+    demographics(hh_size urban) anot(10.0) method(ifgnls)
 
 * Warm-start using stored matrices
 matrix b_init = e(b_est)

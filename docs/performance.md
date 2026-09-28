@@ -18,21 +18,21 @@ Several computational strategies make `pyquaidsce` significantly faster than con
    The Jacobian is processed in chunks of observations rather than building the entire matrix in RAM simultaneously, keeping memory usage minimal.
 4. **Efficient Inexact-Outer IFGNLS**:
    Early outer iterations of the covariance matrix $\Sigma$ do not require solving the inner Gauss-Newton steps to machine precision. Tight tolerances are only applied as the outer fixed-point stabilizes, cutting the total number of optimization steps.
-5. **Parallel Bootstrap Worker Management**:
-   Each worker process pins its internal BLAS threads to 1, preventing CPU thread oversubscription and ensuring maximum throughput across cores during bootstrap replications. The default `spawn` context avoids inheriting OpenBLAS/MKL locks; completed replications stream back unordered for immediate progress, then are sorted by replication number before storage.
+5. **Controlled BLAS Parallelism**:
+   Point estimation and each bootstrap worker use one BLAS thread by default (`blas_threads=1`). The limit is temporary in Python and the previous BLAS setting is restored after estimation.
 
 ---
 
-## 2. Controlled Benchmark Results
+## 2. Archived Controlled Benchmark Results
 
-The benchmark setup consists of **20,000 observations, 4 goods, 3 demographics, and IFGNLS estimation** evaluated on the exact same hardware:
+The stored timing run was recorded during an earlier compatibility-capable release. It remains useful as same-machine performance evidence, but it is not presented as a fresh v1.6.0 timing run. The benchmark setup consists of **20,000 observations, 4 goods, 3 demographics, and IFGNLS estimation** evaluated on the exact same hardware:
 
 | Platform / Software | Point Estimation Runtime | Speedup |
 |---|---:|---:|
 | **Stata 19.5** | 1,161.2 seconds (~19 min 21 s) | 1.0x (Baseline) |
 | **pyquaidsce (Python 3.14)** | **26.0 seconds** | **~44.6x Faster** |
 
-*Note: Timings measure point-estimation computation time (excluding disk I/O).*
+*Note: Timings measure point-estimation computation time (excluding disk I/O). A paper that labels this number specifically as a v1.6.0 benchmark should rerun both implementations with the final release.*
 
 ---
 
@@ -43,6 +43,11 @@ When running large bootstrap routines (`reps=500+`):
 - **Use Multiprocessing**: Specify `n_jobs` equal to the number of available physical CPU cores:
   ```python
   res = quaidsce(..., reps=500, n_jobs=8)
+  ```
+  If you run parallel bootstrap from a Python script, put the estimation inside `main()` and add this at the end:
+  ```python
+  if __name__ == "__main__":
+      main()
   ```
 - **Warm-start Option**: Setting `bootstrap_start="warm"` reuses the full-sample parameter estimates as starting values for each bootstrap draw, further accelerating bootstrap convergence.
 - **Per-replication deadline**: `rep_timeout=900` drops a replication that passes

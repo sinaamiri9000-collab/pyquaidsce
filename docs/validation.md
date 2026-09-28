@@ -1,81 +1,65 @@
-# Numerical Validation against Stata quaidsce
+# Validation and Numerical Evidence
 
-To verify the numerical precision of `pyquaidsce`, we established a public, reproducible end-to-end benchmark comparing Python against Stata 19.5.
+`pyquaidsce` v1.6.0 is validated against econometric identities, numerical derivatives, cross-interface contracts, and archived Stata comparisons. Exact reproduction of known mistakes in the original Stata ado is **not** a v1.6.0 objective.
 
-All benchmark data, scripts, and logs can be found in [`benchmarks/cquaids_ifgnls_4g_20k/`](../benchmarks/cquaids_ifgnls_4g_20k/).
+## 1. Current v1.6.0 validation policy
 
----
+The current implementation uses two corrected behaviors:
 
-## 1. Benchmark Specification
+- the Shonkwiler-Yen first stage always uses the Probit linear index, $\Phi(X'\tau)$ and $\phi(X'\tau)$;
+- elasticities always use the corrected theoretical formulas.
 
-The validation benchmark is designed to thoroughly test the full censored QUAIDS estimator under realistic conditions:
+Therefore, differences from the original ado are expected in specifications affected by its nested-Probit transformation or documented elasticity indexing/macro mistakes. See [Stata Compatibility](stata-compatibility.md).
 
-- **Sample Size**: 20,000 observations
-- **System Dimensions**: 4 goods, 3 demographic scaling variables
-- **Censoring**: Zero budget shares present in every good (triggering 4 first-stage participation Probits and Shonkwiler–Yen transformations)
-- **Estimator**: Iterated FGNLS (`method="ifgnls"`)
-- **Initialization**: Default zero starting values in both programs
-- **Dataset**: Identical synthetic `.dta` file read by both Stata and Python
+## 2. Automated Python tests
 
----
+The repository contains **38 Python tests** covering:
 
-## 2. Comparison of Results
+- analytic Jacobians against finite differences;
+- adding-up, homogeneity, symmetry, and elasticity identities at model-consistent shares;
+- Probit estimation and information matrices;
+- input validation and parameter mapping;
+- control-function and custom-selection extensions;
+- integrated `ivexp` reduced forms, excluded-instrument F tests, and bootstrap rebuilding;
+- bootstrap covariance synchronization and timeout behavior;
+- Stata bridge argument/matrix forwarding;
+- verification that the public default estimation method is IFGNLS.
 
-A parameter-by-parameter comparison across all 113 reported quantities (structural coefficients, Probit parameters, standard errors, log-likelihood, and elasticities) yields the following differences:
-
-| Parameter Category | Stata vs. Python Max Difference | Note |
-|---|---:|---|
-| Structural parameters ($\alpha, \beta, \gamma, \lambda, \delta, \eta, \rho$) | $< 1.68 \times 10^{-5}$ | Exact agreement across all coefficients |
-| First-stage Probit parameters ($\tau$) | $< 1.21 \times 10^{-7}$ | Matches Stata's Newton-Raphson Probit |
-| Income and Price Elasticities | $< 7.34 \times 10^{-7}$ | All Marshallian & Hicksian elasticities |
-| Non-elasticity Standard Errors | $< 7.25 \times 10^{-6}$ | Delta-method covariance matrix |
-| Log-Likelihood | $< 4.99 \times 10^{-8}$ | Relative difference |
-
-The results show that `pyquaidsce` and Stata produce virtually identical point estimates and elasticities.
-
----
-
-## 3. Automated Unit & Theory Tests
-
-In addition to the Stata benchmark, `pyquaidsce` includes automated unit tests that verify:
-- **Analytic Jacobians**: Checked against numeric finite-difference Jacobians.
-- **Economic Theory Restrictions**: Confirming that Slutsky symmetry, price homogeneity, and adding-up restrictions hold at model-consistent shares.
-- **Probit Estimator**: Validated against SciPy BFGS optimization and analytic information matrices.
-- **Input Validation**: Ensuring appropriate error messages for invalid dimensions or non-positive prices/expenditures.
-- **Control Function Extension**: Parameter maps, independent selection layouts,
-  analytic/full/fast Jacobians, 220 conditional finite-difference derivatives,
-  API gates, and end-to-end recovery checks.
-- **Integrated `ivexp` Path**: Reduced-form OLS orthogonality and rank checks,
-  excluded-instrument F diagnostics, exact equivalence to the same manually
-  generated residual, validation gates, and verification that every bootstrap
-  replication re-estimates the reduced form.
-- **Release Integration**: Presence of 1.0.2/1.1/1.2 APIs, finite analytical
-  covariance handling, real cooperative timeout behavior, and Stata bridge
-  argument/matrix forwarding.
-
-Release 1.5.0 collects **38 Python tests**; all pass from the repository, and
-all 38 also pass from the built source distribution. The wheel passes an
-isolated import/API smoke test. A separate
-five-replication `pr`/`xb` bootstrap
-smoke test and its JSON results are stored under
-`benchmarks/release_120/results/`.
-
-### Running the Test Suite:
+Run them with:
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
----
+## 3. Archived Stata benchmark
 
-## 4. Reproducing the Benchmark
+The directory [`benchmarks/cquaids_ifgnls_4g_20k/`](../benchmarks/cquaids_ifgnls_4g_20k/) contains the deterministic 20,000-observation, 4-good, 3-demographic IFGNLS benchmark used during earlier releases. Its stored `results/` files are preserved unchanged for auditability.
 
-To reproduce the benchmark comparison locally:
+For that historical recorded comparison, the maximum reported differences were:
+
+| Quantity | Archived maximum/relative difference |
+|---|---:|
+| Structural parameters | `1.68e-05` |
+| First-stage Probit parameters | `1.21e-07` |
+| Expenditure/Marshallian/Hicksian elasticities | `7.34e-07` |
+| Non-elasticity standard errors | `7.25e-06` |
+| Log-likelihood, relative difference | `4.99e-08` |
+
+These numbers document the historical compatibility implementation; they should not be presented as a fresh v1.6.0 exact-replication result. The current benchmark script uses the v1.6.0 canonical first-stage definition.
+
+## 4. Historical same-machine timing
+
+The archived same-machine wall-clock timings were 1,161.171 seconds for Stata 19.5 and 26.033 seconds for Python, a 44.60x ratio. This is retained as historical performance evidence. A publication that labels the number specifically as a v1.6.0 benchmark should rerun both sides with the final release and report the new measurements.
+
+## 5. Reproducing the benchmark
 
 ```bash
 cd benchmarks/cquaids_ifgnls_4g_20k/
-python generate_data.py       # Generates benchmark_cquaids_4g_20k.dta
-python run_python.py          # Runs estimation in Python and saves results
-stata -b do run_stata.do      # (Optional) Runs estimation in Stata if installed
-python compare_results.py     # Computes differences between Python and Stata
+python generate_data.py
+python run_python.py
+# optional, when Stata is installed:
+# stata -b do run_stata.do
+python compare_results.py --same-machine
 ```
+
+When comparing current v1.6.0 output with the original ado, interpret discrepancies using the documented methodological differences rather than forcing legacy error replication.

@@ -64,12 +64,11 @@ def main() -> None:
     ap.add_argument("--expenditure")
     ap.add_argument("--demographics", nargs="*", default=[])
     ap.add_argument("--anot", type=float, default=10.0)
-    ap.add_argument("--method", default="fgnls",
+    ap.add_argument("--method", default="ifgnls",
                     choices=["nls", "fgnls", "ifgnls"])
     ap.add_argument("--reps", type=int, default=0)
     ap.add_argument("--n-jobs", type=int, default=1)
     ap.add_argument("--seed", type=int, default=123456)
-    ap.add_argument("--predict", default="pr", choices=["pr", "xb"])
     ap.add_argument("--no-normalize", action="store_true",
                     help="do not rescale the shares to sum to one")
     a = ap.parse_args()
@@ -104,7 +103,7 @@ def main() -> None:
     res = quaidsce(
         df, shares=shares, prices=prices, expenditure=expenditure,
         demographics=demos or None, anot=anot, method=a.method,
-        first_stage_predict=a.predict, reps=a.reps, n_jobs=a.n_jobs,
+        reps=a.reps, n_jobs=a.n_jobs,
         seed=a.seed, verbose=True,
     )
     print(f"\nestimated in {time.time() - t0:.1f}s "

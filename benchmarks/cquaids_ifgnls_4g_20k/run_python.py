@@ -31,7 +31,7 @@ import numpy as np
 import pandas as pd
 import scipy
 
-from pyquaidsce import quaidsce
+from pyquaidsce import __version__, quaidsce
 
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "data" / "benchmark_cquaids_4g_20k.dta"
@@ -70,7 +70,7 @@ def main() -> None:
         with redirect_stdout(tee):
             print("PYQUAIDSCE CONTROLLED CQUAIDS/IFGNLS BENCHMARK")
             print(f"Python: {sys.version.split()[0]}")
-            print(f"pyquaidsce: 1.0.1")
+            print(f"pyquaidsce: {__version__}")
             print(f"NumPy: {np.__version__}")
             print(f"SciPy: {scipy.__version__}")
             print(f"pandas: {pd.__version__}")
@@ -84,7 +84,7 @@ def main() -> None:
             print("Specification: censored QUAIDS, IFGNLS, 4 goods, 3 demographics")
             print("Starting values: zero/default; no user-supplied initial vector")
             print("Bootstrap: disabled")
-            print("Stata compatibility: first_stage_predict='pr', strict_stata=True")
+            print("Censoring correction: textbook Shonkwiler-Yen linear-index Probit")
             print("\n--- timed estimation starts ---")
 
             t0 = time.perf_counter()
@@ -98,8 +98,6 @@ def main() -> None:
                 method="ifgnls",
                 algorithm="gn",
                 start="zero",
-                first_stage_predict="xb",
-                strict_stata=True,
                 reps=0,
                 verbose=True,
             )

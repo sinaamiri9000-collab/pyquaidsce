@@ -61,10 +61,8 @@ res = quaidsce(
     expenditure="total_exp",
     demographics=demographics,
     anot=10.0,                  # Price index constant (alpha_0)
-    method="ifgnls",            # Iterated FGNLS
+    method="ifgnls",            # Iterated FGNLS (package default)
     algorithm="gn",             # Gauss-Newton optimizer
-    first_stage_predict="xb",   # Textbook Shonkwiler-Yen linear index (default)
-    strict_stata=False,         # Corrected textbook formulas (True replicates Stata exactly)
     reps=0,                     # Set reps > 0 to run bootstrap
     verbose=True,
 )
@@ -98,8 +96,6 @@ print(res.elasticity_tables())
 | `demographics(z1 z2)` | `demographics=["z1", "z2"]` |
 | `anot(10)` | `anot=10.0` |
 | `method(ifgnls)` | `method="ifgnls"` |
-| `first_stage_predict(xb)` | `first_stage_predict="xb"` |
-| `first_stage_predict(pr)` | `first_stage_predict="pr"` |
 | `noquadratic` | `quadratic=False` |
 | `nocensor` | `censor=False` |
 | `initial(b_init)` | `initial=b_init` |
@@ -134,7 +130,7 @@ if __name__ == "__main__":
 ```
 
 > [!NOTE]
-> When using multiprocessing (`n_jobs > 1`) on Windows, always enclose your script within `if __name__ == "__main__":`.
+> If you use parallel bootstrap (`n_jobs > 1`) in a Python script, put your estimation code inside `main()` and add `if __name__ == "__main__": main()` at the end of the file.
 
 After a successful bootstrap, `res.V` and `res.se` are the bootstrap covariance
 and standard errors. The conditional analytical reference is retained in

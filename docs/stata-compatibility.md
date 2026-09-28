@@ -1,61 +1,63 @@
-# Stata Compatibility and Implementation Guide
+# Stata Compatibility and Validation Guide
 
-`pyquaidsce` is designed to provide exact numerical reproduction of the Stata `quaidsce` command (v2.0, Caro et al. 2025), while also offering options to apply textbook econometric formulas where the original Stata ado-file contains documented quirks.
+`pyquaidsce` retains a Stata-facing interface, coefficient ordering, and output layout so results can be compared conveniently with the original `quaidsce` command. Starting with **v1.6.0**, however, the package no longer offers switches that intentionally reproduce known econometric mistakes in the original ado-file. Python, R, and Stata interfaces now use one canonical implementation.
 
-This guide explains the compatibility settings and how to achieve 1-to-1 replication.
+## Canonical first-stage censoring correction
 
----
+For the Shonkwiler & Yen (1999) two-step procedure, each participation Probit supplies the linear index $X_i'\tau_i$. The package always computes
 
-## 1. First-Stage Probit Predictions: `first_stage_predict`
+$$\Phi_i = \Phi(X_i'\tau_i), \qquad \phi_i = \phi(X_i'\tau_i).$$
 
-In the Shonkwiler & Yen (1999) two-step procedure, the participation probability $\Phi_i$ and normal density $\phi_i$ are functions of the Probit index $X_i'\tau_i$:
-- **Textbook Shonkwiler–Yen**: $\Phi_i = \Phi(X_i'\tau_i)$ and $\phi_i = \phi(X_i'\tau_i)$
+The original Stata ado calls `predict` after `probit` without requesting `xb`; because Stata's default prediction is a probability, that code can feed $\Phi(X'\tau)$ back into `normal()` and `normalden()`. `pyquaidsce` intentionally does **not** reproduce that nested transformation.
 
-In Stata, the `predict` command immediately following `probit` generates the **predicted probability** by default rather than the linear index ($X_i'\tau_i$). The original `quaidsce_c.ado` file calculates `normal(predict)` and `normalden(predict)`, which computes $\Phi(\Phi(X'\tau))$ and $\phi(\Phi(X'\tau))$.
+## Canonical elasticity formulas
 
-### Options:
-- **`first_stage_predict="xb"`** *(Default)*: Replicates Stata's exact implementation bit-for-bit. Use this if you are comparing results directly against Stata.
-- **`first_stage_predict="xb"`**: Uses the linear index $X_i'\tau_i$ inside $\Phi(\cdot)$ and $\phi(\cdot)$, matching standard textbook theory.
+`pyquaidsce` also uses the published/theoretically intended elasticity formulas in all specifications. In particular, it does not reproduce two identified ado-file edge-case errors: the no-demographics quadratic Marshallian term that uses the wrong beta index, and the demographics + linear-AIDS censoring branch where a global/local macro mismatch can zero the latent expenditure elasticity.
 
----
+These choices are fixed behavior in v1.6.0+. There is no compatibility switch in any public interface.
 
-## 2. Replicating Stata Elasticities: `strict_stata`
+## Comparing pyquaidsce with Stata
 
-During comprehensive code validation against Stata `quaidsce`, two specific behaviors were identified in the Stata ado-file's elasticity calculations:
+When comparing results, check the following before attributing a difference to the implementation:
 
-1. **Quadratic model without demographics (`ndemo=0`)**:
-   In the uncompensated price elasticity formula, Stata's ado-file multiplies the quadratic term by $\beta_i$ instead of $\beta_j$.
-2. **Linear AIDS with demographics and censoring (`quadratic=False` + `ndemo>0` + `censor=True`)**:
-   Stata assigns the latent income elasticity to a global macro and then inadvertently calls an empty local macro, effectively treating the latent elasticity as 0 in the censoring adjustment.
+1. **Estimation sample** — missing values and positivity filters must select the same observations.
+2. **Variable ordering** — shares and prices must use identical good ordering.
+3. **Expenditure definition** — use the same level/log definition and same system expenditure.
+4. **Starting values** — match `start`, `initial`, and `sigma_initial` where relevant.
+5. **Estimation method** — `pyquaidsce` defaults to **IFGNLS**; explicitly match `ifgnls`, `fgnls`, or `nls` in the comparison program.
+6. **Known ado deviations** — exact equality is not expected in cases where the original ado uses the nested-Probit transformation or one of the elasticity mistakes described above.
 
-### Options:
-- **`strict_stata=False`** *(Default)*: Applies the corrected theoretical formulas (Poi 2012 / Shonkwiler & Yen 1999).
-- **`strict_stata=True`**: Replicates Stata's exact returned values so that automated tests and diffs against Stata log files match.
+## Current defaults
 
----
+| Setting | v1.6.0 default |
+|---|---|
+| Censoring correction | Shonkwiler–Yen using the Probit linear index |
+| Elasticity formulas | Corrected theoretical formulas |
+| `method` | `"ifgnls"` |
+| `start` | `"zero"` |
+| `algorithm` | `"gn"` |
+| `vce_sigma` | `"objective"` |
 
-## 3. Checklist for Exact Replication against Stata
+## R example
 
-If you are trying to reproduce an existing Stata estimation in Python and see discrepancies, verify the following steps in order:
+```r
+library(rquaidsce)
 
-1. **Verify the Estimation Sample**:
-   Ensure that observations dropped due to missing values (`markout` in Stata) or non-positive values are identical in both programs.
-2. **Variable Ordering**:
-   Verify that your `prices` and `shares` lists have the exact same ordering of goods.
-3. **Total Expenditure Definition**:
-   Verify that `expenditure` is the sum of spending across the goods in the system (or log expenditure if `lnexpenditure` is used).
-4. **Optimization Starting Values**:
-   By default, both Stata `nlsur` and `pyquaidsce` use `start="zero"`. If you provided custom starting values in Stata (`initial(...)`), provide the same vector to `initial=...` in Python.
-5. **Estimation Method**:
-   Confirm whether you are using `method="ifgnls"`, `method="fgnls"`, or `method="nls"`.
+fit <- quaidsce(
+  data = df,
+  shares = c("w1", "w2", "w3", "w4"),
+  prices = c("p1", "p2", "p3", "p4"),
+  expenditure = "total_exp",
+  demographics = c("hh_size", "urban"),
+  anot = 10.0
+)
+```
 
----
+## Stata example
 
-## Summary of Defaults
+```stata
+pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
+    demographics(hh_size urban) anot(10.0)
+```
 
-| Parameter | Default | Effect |
-|---|---|---|
-| `first_stage_predict` | `"pr"` | Matches Stata default probability calculation |
-| `strict_stata` | `False` | Corrected textbook elasticity calculations (use `True` to match the ado exactly) |
-| `start` | `"zero"` | Starts optimization from zeros, matching Stata `nlsur` |
-| `method` | `"fgnls"` | Feasible Generalized NLS (use `"ifgnls"` for iterated) |
+Both examples use IFGNLS by default and the same canonical first-stage and elasticity definitions.

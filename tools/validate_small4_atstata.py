@@ -59,7 +59,7 @@ def main():
     lnp = np.log(df[PRICES].to_numpy(float))
     lnexp = np.log(df["total"].to_numpy(float))
     Z = df[DEMOS].to_numpy(float)
-    fs = first_stage(W, lnp, lnexp, Z, predict="pr")
+    fs = first_stage(W, lnp, lnexp, Z)
     d = DemandData(lnp=lnp, lnexp=lnexp, shares=W, demo=Z,
                    cdf=fs.cdf, pdf=fs.pdf, a0=10.0)
 
@@ -120,7 +120,7 @@ def main():
         c = unpack(th, spec)
         means = sample_means(d, fs.du, spec)
         el = elasticities(c, spec, means, a0=10.0, tau=fs.tau,
-                          np_prob=fs.np_prob, strict_stata=True)
+                          np_prob=fs.np_prob)
         ev = el.as_stata_vector()
         ev_st = np.array([ref[nm][0] for nm in spec.elas_names()])
         d_ei = float(np.abs(ev[:N_G] - ev_st[:N_G]).max())

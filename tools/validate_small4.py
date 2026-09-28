@@ -6,7 +6,7 @@ observations, 2 demographics, censoring in all four shares, with every
 coefficient dumped from Mata at 17 significant digits.  Four specifications
 came back:
 
-    RUN 1  quaidsce_c ... (default, i.e. fgnls)
+    RUN 1  original Stata quaidsce_c ... (its recorded default, i.e. fgnls)
     RUN 2  quaidsce_c ... method(nls)
     RUN 3  quaidsce_c ... method(ifgnls)
     RUN 4  quaidsce_c ... noquadratic
@@ -111,7 +111,6 @@ def report(run: int, res, ref: Dict[str, Tuple[float, float]], ll_ref: float,
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", nargs="*", type=int, default=[1, 2, 3, 4])
-    ap.add_argument("--predict", default="pr", choices=["pr", "xb"])
     ap.add_argument("--algorithm", default="gn", choices=["gn", "lm"])
     ap.add_argument("--start", default="zero", choices=["zero", "linear"])
     ap.add_argument("--vce", default="objective", choices=["objective", "final"])
@@ -134,7 +133,7 @@ def main():
             df0, shares=SHARES, prices=PRICES, expenditure="total",
             demographics=DEMOS, anot=10.0,
             method=cfg["method"], quadratic=cfg["quadratic"],
-            censor=cfg["censor"], first_stage_predict=a.predict,
+            censor=cfg["censor"],
             algorithm=a.algorithm, start=a.start, vce_sigma=a.vce,
             stop_rule=a.stop_rule,
             verbose=False,

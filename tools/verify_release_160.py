@@ -1,4 +1,4 @@
-"""Reproducible five-replication PR/XB bootstrap smoke test for release 1.3.0."""
+"""Reproducible canonical bootstrap smoke test for release 1.6.0."""
 
 from __future__ import annotations
 
@@ -18,10 +18,10 @@ import pandas as pd
 from pyquaidsce import quaidsce
 
 DATA = ROOT / "benchmarks/cquaids_ifgnls_4g_20k/data/benchmark_cquaids_4g_20k.dta"
-OUTPUT = ROOT / "benchmarks/release_120/results/bootstrap_smoke.json"
+OUTPUT = ROOT / "benchmarks/release_160/results/bootstrap_smoke.json"
 
 
-def fit_mode(frame: pd.DataFrame, predict: str) -> dict:
+def fit_mode(frame: pd.DataFrame) -> dict:
     started = time.perf_counter()
     res = quaidsce(
         frame,
@@ -33,10 +33,8 @@ def fit_mode(frame: pd.DataFrame, predict: str) -> dict:
         method="ifgnls",
         algorithm="gn",
         start="linear",
-        first_stage_predict=predict,
-        strict_stata=True,
         reps=5,
-        seed=12000 + (0 if predict == "pr" else 1),
+        seed=16000,
         bootstrap_start="zero",
         n_jobs=2,
         mp_context="spawn",
@@ -53,7 +51,6 @@ def fit_mode(frame: pd.DataFrame, predict: str) -> dict:
     assert np.isnan(res.analytic_se[-n_elasticities:]).all()
     assert np.isfinite(res.se[-n_elasticities:]).all()
     return {
-        "predict": predict,
         "elapsed_seconds": elapsed,
         "reps_requested": res.boot.reps_requested,
         "reps_ok": res.boot.reps_ok,
@@ -79,7 +76,6 @@ def verify_timeout(frame: pd.DataFrame) -> str:
             anot=10.0,
             method="nls",
             start="linear",
-            first_stage_predict="xb",
             reps=2,
             seed=12099,
             n_jobs=1,
@@ -96,10 +92,10 @@ def verify_timeout(frame: pd.DataFrame) -> str:
 def main() -> None:
     frame = pd.read_stata(DATA).iloc[:3000].reset_index(drop=True)
     report = {
-        "package_version": "1.3.0",
+        "package_version": "1.6.0",
         "dataset": str(DATA.relative_to(ROOT)),
         "observations": len(frame),
-        "runs": [fit_mode(frame, "pr"), fit_mode(frame, "xb")],
+        "runs": [fit_mode(frame)],
         "timeout_check": verify_timeout(frame),
     }
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)

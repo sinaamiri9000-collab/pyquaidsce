@@ -132,7 +132,6 @@ def compare(res, ref, sc, tag, out_dir):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--method", default="ifgnls")
-    ap.add_argument("--predict", default="pr", choices=["pr", "xb"])
     ap.add_argument("--vce", default="objective", choices=["objective", "final"])
     ap.add_argument("--max-iter", type=int, default=400)
     ap.add_argument("--out", default="out")
@@ -154,12 +153,12 @@ def main():
     res = quaidsce(
         d, shares=SHARES, prices=PRICES, expenditure=EXPVAR,
         demographics=DEMOS, anot=10.0, method=a.method,
-        first_stage_predict=a.predict, vce_sigma=a.vce, start=a.start, algorithm=a.algorithm,
+        vce_sigma=a.vce, start=a.start, algorithm=a.algorithm,
         max_iter=a.max_iter, verbose=True, gn_verbose=a.gn_verbose,
         initial=init,
     )
     el = time.time() - t0
-    tag = f"{a.method}_{a.predict}_{a.vce}_{a.start}_{a.algorithm}_{a.initial}"
+    tag = f"{a.method}_{a.vce}_{a.start}_{a.algorithm}_{a.initial}"
     print(f"\nelapsed {el:.1f}s   outer={res.n_outer}  GN steps={res.n_gn}")
     df, dll = compare(res, ref, sc, tag, a.out)
 

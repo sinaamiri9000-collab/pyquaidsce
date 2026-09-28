@@ -26,7 +26,7 @@ Estimating censored demand systems in empirical research often requires extensiv
 
 `pyquaidsce` was developed to solve this practical bottleneck:
 - **Fast Execution**: Written with optimized analytic Jacobians and vectorized linear algebra (`numpy`/`scipy`), achieving a **44.6x wall-clock speedup** on the controlled benchmark reported below.
-- **Pure Python & Lightweight**: Only requires `numpy`, `scipy`, and `pandas`. No complex compilation or heavy external dependencies.
+- **Pure Python & Lightweight**: Uses `numpy`, `scipy`, `pandas`, and `threadpoolctl`. No complex compilation or heavy external dependencies.
 - **Research Workflow Integration**: Easily run demand models in Jupyter notebooks, script automated sensitivity pipelines, and run on cloud servers/clusters.
 - **Validated Numerics**: Tested against econometric identities and numerical derivatives; the repository also preserves high-precision historical Stata comparison evidence from earlier compatibility-capable releases.
 
@@ -48,7 +48,7 @@ cd pyquaidsce
 pip install -e .
 ```
 
-**Requirements**: Python >= 3.9, with standard `numpy`, `scipy`, and `pandas`.
+**Requirements**: Python >= 3.9, with `numpy`, `scipy`, `pandas`, and `threadpoolctl`.
 
 ---
 

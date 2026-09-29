@@ -57,7 +57,9 @@ Or copy `quaidsce.ado`, `quaidsce.sthlp`, `pyquaidsce.ado`, and `pyquaidsce.sthl
 | File | Description |
 | :--- | :--- |
 | [`quaidsce.ado`](quaidsce.ado) | The official Stata command program. Parses user syntax, handles sample filtering (`if`/`in`), invokes the Python bridge, posts matrices and scalars to `e()`, and formats the regression and elasticity tables. |
-| [`pyquaidsce.sthlp`](pyquaidsce.sthlp) | The official interactive Stata Help file rendered inside Stata's Viewer when running `help pyquaidsce`. |
+| [`quaidsce.sthlp`](quaidsce.sthlp) | The official interactive Stata Help file rendered inside Stata's Viewer when running `help quaidsce`. |
+| [`pyquaidsce.ado`](pyquaidsce.ado) | Backward-compatible alias for the `quaidsce` command. |
+| [`pyquaidsce.sthlp`](pyquaidsce.sthlp) | Help redirect for the backward-compatible alias. |
 | [`stata.toc`](stata.toc) | Stata package Table of Contents used by Stata's `net` package manager. |
 | [`pyquaidsce.pkg`](pyquaidsce.pkg) | Stata package manifest detailing files and metadata for `net install`. |
 

@@ -10,7 +10,7 @@
 {title:Title}
 
 {p2colset 5 20 22 2}{...}
-{p2col :{bf:pyquaidsce} {hline 2}}Fast Censored Quadratic Almost Ideal Demand System (QUAIDS) Estimation in Stata via Python{p_end}
+{p2col :{bf:quaidsce} {hline 2}}Fast Censored Quadratic Almost Ideal Demand System (QUAIDS) Estimation in Stata via Python{p_end}
 {p2colreset}{...}
 
 

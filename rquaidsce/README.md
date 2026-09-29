@@ -28,7 +28,7 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
 }
 
 # Install pyquaidsce directly from GitHub
-remotes::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "r")
+remotes::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "rquaidsce")
 ```
 
 ---

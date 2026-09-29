@@ -62,33 +62,33 @@ display as result "Data prepared: N = " _N " observations."
 * Tier 1: Model Specification & Variable Formats
 * ==============================================================================
 display as text _n "[01/24] RUNNING: Baseline 14-Good IFGNLS..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') method(ifgnls) nolog
 display as result "       --> [PASS] Baseline LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[02/24] RUNNING: Direct Log-Prices & Log-Expenditure..."
-pyquaidsce w1_red-w14_red, lnprices(ln_P_med1-ln_P_med14) lnexpenditure(ln_gasto_total) ///
+quaidsce w1_red-w14_red, lnprices(ln_P_med1-ln_P_med14) lnexpenditure(ln_gasto_total) ///
     demographics(`demo_list') anot(`anot_val') method(ifgnls) nolog
 display as result "       --> [PASS] Log-vars LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[03/24] RUNNING: Linear AIDS Model (noquadratic)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') noquadratic method(ifgnls) nolog
 display as result "       --> [PASS] Linear AIDS LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[04/24] RUNNING: Uncensored QUAIDS (nocensor, Poi 2012)..."
-pyquaidsce w1_sub w2_sub w3_sub if w1_red > 0 & w2_red > 0 & w3_red > 0, ///
+quaidsce w1_sub w2_sub w3_sub if w1_red > 0 & w2_red > 0 & w3_red > 0, ///
     prices(`p_prefix'1 `p_prefix'2 `p_prefix'3) expenditure(sub_exp) ///
     demographics(`demo_list') anot(`anot_val') nocensor method(ifgnls) nolog
 display as result "       --> [PASS] Uncensored LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[05/24] RUNNING: Translog Constant Variation (anot = 10.0)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(10.0) method(ifgnls) nolog
 display as result "       --> [PASS] anot(10) LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[06/24] RUNNING: 3-Good Subsystem Estimation..."
-pyquaidsce w1_sub w2_sub w3_sub, prices(`p_prefix'1 `p_prefix'2 `p_prefix'3) expenditure(sub_exp) ///
+quaidsce w1_sub w2_sub w3_sub, prices(`p_prefix'1 `p_prefix'2 `p_prefix'3) expenditure(sub_exp) ///
     demographics(`demo_list') anot(`anot_val') method(ifgnls) nolog
 display as result "       --> [PASS] 3-Good LL = " %10.4f e(ll) ", Converged = " e(converged)
 
@@ -96,41 +96,41 @@ display as result "       --> [PASS] 3-Good LL = " %10.4f e(ll) ", Converged = "
 * Tier 2: Solvers, Algorithms & Numerical Tolerances
 * ==============================================================================
 display as text _n "[07/24] RUNNING: Nonlinear Least Squares (method=nls)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') method(nls) nolog
 matrix b_nls = e(b_est)
 matrix sigma_nls = e(Sigma)
 display as result "       --> [PASS] NLS LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[08/24] RUNNING: Feasible Generalized NLS (method=fgnls)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') method(fgnls) nolog
 display as result "       --> [PASS] FGNLS LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[09/24] RUNNING: Iterated FGNLS (method=ifgnls)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') method(ifgnls) nolog
 matrix b_base = e(b_est)
 matrix sigma_base = e(Sigma)
 display as result "       --> [PASS] IFGNLS LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[10/24] RUNNING: Levenberg-Marquardt Optimizer (algorithm=lm)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') algorithm(lm) method(ifgnls) nolog
 display as result "       --> [PASS] LM LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[11/24] RUNNING: Strict Gradient Stopping Rule (stop_rule=tight)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') stop_rule(tight) method(ifgnls) nolog
 display as result "       --> [PASS] Tight rule LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[12/24] RUNNING: Alternative VCE Sigma Formula (vce_sigma=final)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') vce_sigma(final) method(ifgnls) nolog
 display as result "       --> [PASS] VCE final LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[13/24] RUNNING: Chunk Size Variation (chunk=500)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') chunk(500) method(ifgnls) nolog
 display as result "       --> [PASS] Chunk 500 LL = " %10.4f e(ll) ", Converged = " e(converged)
 
@@ -138,27 +138,27 @@ display as result "       --> [PASS] Chunk 500 LL = " %10.4f e(ll) ", Converged 
 * Tier 3: Censoring, Probit Specifications & Control Functions
 * ==============================================================================
 display as text _n "[14/24] RUNNING: Implicit Default Method (IFGNLS)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') nolog
 display as result "       --> [PASS] Default method = " e(method) ", LL = " %10.4f e(ll)
 
 display as text _n "[15/24] RUNNING: Selection Price Subset (selection_prices=P_med1..3)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') selection_prices(`p_prefix'1 `p_prefix'2 `p_prefix'3) method(ifgnls) nolog
 display as result "       --> [PASS] Selection prices LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[16/24] RUNNING: Selection Independent Covariates (npersonas edad)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') selection_covariates(npersonas edad) method(ifgnls) nolog
 display as result "       --> [PASS] Selection covs LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[17/24] RUNNING: Selection Omit Log Expenditure (selection_noexpenditure)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') selection_noexpenditure method(ifgnls) nolog
 display as result "       --> [PASS] Selection no-exp LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[18/24] RUNNING: Endogeneity Control Function (control_function=vhat)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') control_function(vhat) method(ifgnls) nolog
 display as result "       --> [PASS] Control Function LL = " %10.4f e(ll) ", Converged = " e(converged)
 
@@ -166,22 +166,22 @@ display as result "       --> [PASS] Control Function LL = " %10.4f e(ll) ", Con
 * Tier 4: Warm-Starting & Matrix Transfers
 * ==============================================================================
 display as text _n "[19/24] RUNNING: Linearized AIDS Starting Values (start=linear)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') start(linear) method(ifgnls) nolog
 display as result "       --> [PASS] start(linear) LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[20/24] RUNNING: Custom Structural Free Parameters (initial=b_base)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') initial(b_base) method(ifgnls) nolog
 display as result "       --> [PASS] initial() LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[21/24] RUNNING: Custom Residual Covariance Matrix (sigma_initial=sigma_base)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') initial(b_base) sigma_initial(sigma_base) method(ifgnls) nolog
 display as result "       --> [PASS] sigma_initial() LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[22/24] RUNNING: Chained Multi-Stage Warm-Start (NLS theta/sigma -> IFGNLS)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') initial(b_nls) sigma_initial(sigma_nls) method(ifgnls) nolog
 display as result "       --> [PASS] Chained start LL = " %10.4f e(ll) ", Converged = " e(converged)
 
@@ -189,7 +189,7 @@ display as result "       --> [PASS] Chained start LL = " %10.4f e(ll) ", Conver
 * Tier 5: Bootstrap, Multiprocessing & Postestimation
 * ==============================================================================
 display as text _n "[23/24] RUNNING: Parallel Bootstrap Standard Errors (reps=10, n_jobs=4, seed=123456)..."
-pyquaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
+quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') reps(10) n_jobs(4) seed(123456) mp_context(spawn) method(ifgnls) nolog
 display as result "       --> [PASS] Bootstrap completed with " e(boot_reps) " ok replications."
 

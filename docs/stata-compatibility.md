@@ -41,7 +41,7 @@ When comparing results, check the following before attributing a difference to t
 ## R example
 
 ```r
-library(rquaidsce)
+library(pyquaidsce)
 
 fit <- quaidsce(
   data = df,
@@ -56,7 +56,7 @@ fit <- quaidsce(
 ## Stata example
 
 ```stata
-pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
+quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
     demographics(hh_size urban) anot(10.0)
 ```
 

@@ -2,7 +2,7 @@
 
 Fast Censored Quadratic Almost Ideal Demand System (QUAIDS) estimation in Stata via Python engine.
 
-This package provides the official Stata command `pyquaidsce`, allowing Stata users to estimate censored QUAIDS demand systems with the **up to 44.6x speedup** of the `pyquaidsce` Python core while staying completely within the native Stata workflow.
+This package provides the official Stata command `quaidsce`, allowing Stata users to estimate censored QUAIDS demand systems with the **up to 44.6x speedup** of the `pyquaidsce` Python core while staying completely within the native Stata workflow.
 
 ---
 
@@ -20,7 +20,7 @@ If you have not installed the Python core yet, install it from your terminal or 
 ```bash
 pip install pyquaidsce
 ```
-*(Note: If `pyquaidsce` is missing when you run the Stata command, `pyquaidsce.ado` will automatically attempt to install it for you via pip).*
+*(Note: If `pyquaidsce` is missing when you run the Stata command, `quaidsce.ado` will automatically attempt to install it for you via pip).*
 
 ---
 
@@ -34,9 +34,9 @@ Run the following single line inside Stata:
 net install pyquaidsce, from("https://raw.githubusercontent.com/sinaamiri9000-collab/pyquaidsce/main/stata") replace
 ```
 
-Once installed, Stata will recognize `pyquaidsce` globally and make the interactive help file available via:
+Once installed, Stata will recognize `quaidsce` globally (with `pyquaidsce` kept as a backward-compatible alias) and make the interactive help file available via:
 ```stata
-help pyquaidsce
+help quaidsce
 ```
 
 ---
@@ -48,7 +48,7 @@ If you cloned the repository locally:
 ```stata
 adopath + "path/to/pyquaidsce/stata"
 ```
-Or copy `pyquaidsce.ado` and `pyquaidsce.sthlp` directly into your personal Stata PLUS directory (type `sysdir` in Stata to find the exact path, typically `~/ado/plus/p/`).
+Or copy `quaidsce.ado`, `quaidsce.sthlp`, `pyquaidsce.ado`, and `pyquaidsce.sthlp` directly into your personal Stata PLUS directory (type `sysdir` in Stata to find the exact path, typically `~/ado/plus/p/`).
 
 ---
 
@@ -56,7 +56,7 @@ Or copy `pyquaidsce.ado` and `pyquaidsce.sthlp` directly into your personal Stat
 
 | File | Description |
 | :--- | :--- |
-| [`pyquaidsce.ado`](pyquaidsce.ado) | The official Stata command program. Parses user syntax, handles sample filtering (`if`/`in`), invokes the Python bridge, posts matrices and scalars to `e()`, and formats the regression and elasticity tables. |
+| [`quaidsce.ado`](quaidsce.ado) | The official Stata command program. Parses user syntax, handles sample filtering (`if`/`in`), invokes the Python bridge, posts matrices and scalars to `e()`, and formats the regression and elasticity tables. |
 | [`pyquaidsce.sthlp`](pyquaidsce.sthlp) | The official interactive Stata Help file rendered inside Stata's Viewer when running `help pyquaidsce`. |
 | [`stata.toc`](stata.toc) | Stata package Table of Contents used by Stata's `net` package manager. |
 | [`pyquaidsce.pkg`](pyquaidsce.pkg) | Stata package manifest detailing files and metadata for `net install`. |
@@ -70,10 +70,10 @@ Or copy `pyquaidsce.ado` and `pyquaidsce.sthlp` directly into your personal Stat
 use mydata.dta, clear
 
 // 2. Estimate censored QUAIDS with IFGNLS
-pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) method(ifgnls)
+quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) method(ifgnls)
 
 // 3. Estimate with parallel bootstrap standard errors (e.g. 200 replications across 4 CPU cores)
-pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) reps(200) n_jobs(4) mp_context(spawn) rep_timeout(900) seed(12345)
+quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) reps(200) n_jobs(4) mp_context(spawn) rep_timeout(900) seed(12345)
 ```
 
 `rep_timeout()` combines cooperative checks between numerical work units with a
@@ -85,7 +85,7 @@ Advanced control-function and custom-selection options are available from
 Stata. The Shonkwiler-Yen correction always uses the Probit linear index. Precomputed residuals require `reps(0)`:
 
 ```stata
-pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
+quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
     demographics(hh_size urban) control_function(vhat) ///
     selection_control_function(vhat_sel) selection_prices(p3 p1) ///
     selection_covariates(urban) selection_noexpenditure reps(0)
@@ -98,7 +98,7 @@ latent demand equations. Its bootstrap rebuilds the reduced form in every
 replication:
 
 ```stata
-pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
+quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
     demographics(hh_size urban) ivexp(log_income employment) ///
     reps(200) seed(12345)
 ```
@@ -107,7 +107,7 @@ pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
 
 ## Postestimation & Stored Results
 
-`pyquaidsce` stores standard Stata estimation results in `e()`, making them fully compatible with Stata's postestimation toolkit (`test`, `lincom`, `outreg2`, `esttab`):
+`quaidsce` stores standard Stata estimation results in `e()`, making them fully compatible with Stata's postestimation toolkit (`test`, `lincom`, `outreg2`, `esttab`):
 
 ### Scalars
 - `e(N)`: Number of observations in the estimation sample

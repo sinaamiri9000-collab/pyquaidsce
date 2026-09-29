@@ -1,4 +1,4 @@
-Package: rquaidsce
+Package: pyquaidsce
 Type: Package
 Title: Censored Quadratic Almost Ideal Demand System (QUAIDS) Estimation
 Version: 1.6.0

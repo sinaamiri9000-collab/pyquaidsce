@@ -1,4 +1,4 @@
 library(testthat)
-library(rquaidsce)
+library(pyquaidsce)
 
-test_check("rquaidsce")
+test_check("pyquaidsce")

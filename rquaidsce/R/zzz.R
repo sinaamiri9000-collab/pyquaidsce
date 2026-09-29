@@ -67,7 +67,7 @@
   }
 
   if (!requireNamespace("reticulate", quietly = TRUE)) {
-    stop("Package 'reticulate' is required to use 'rquaidsce'. Please install it with `install.packages('reticulate')`.", call. = FALSE)
+    stop("Package 'reticulate' is required to use 'pyquaidsce'. Please install it with `install.packages('reticulate')`.", call. = FALSE)
   }
 
   # Import pyquaidsce
@@ -91,7 +91,7 @@
          "Please ensure 'pyquaidsce' is installed in your active Python environment (`pip install pyquaidsce`).\n",
          "If your Python environment is in a custom path, specify it before loading the package:\n",
          "  Sys.setenv(RETICULATE_PYTHON = 'path/to/python')\n",
-         "  library(rquaidsce)",
+         "  library(pyquaidsce)",
          call. = FALSE)
   }
 

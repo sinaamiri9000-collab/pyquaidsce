@@ -81,6 +81,9 @@
 {title:Description}
 
 {pstd}
+{cmd:quaidsce} is the recommended Stata command name because the estimator is also called {cmd:quaidsce()} in the Python and R interfaces. The equivalent command {cmd:pyquaidsce} runs the same current implementation. If an older installation of the original Stata {cmd:quaidsce} command is still present and is found first on Stata's ado-path, use {cmd:pyquaidsce} to invoke this package directly.
+
+{pstd}
 {cmd:quaidsce} estimates the Quadratic Almost Ideal Demand System (QUAIDS) of Banks, Blundell, and Lewbel (1997) with Ray (1983) demographic scaling and the Shonkwiler & Yen (1999) two-step correction for zero budget shares.
 
 {pstd}

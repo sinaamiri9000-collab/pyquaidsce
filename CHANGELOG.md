@@ -6,7 +6,7 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 - Unified the main estimator name across interfaces: Python and R use `quaidsce()`, and Stata now uses the `quaidsce` command.
 - Renamed the R package from `rquaidsce` to `pyquaidsce`. The Python package name remains `pyquaidsce`.
-- Kept `pyquaidsce` as a backward-compatible Stata command alias while `quaidsce` is the documented command.
+- Stata now documents `quaidsce` as the recommended common-name command while retaining `pyquaidsce` as an equivalent direct command. The direct name can distinguish the current package when an older original `quaidsce` installation is still present.
 
 
 ## 1.6.0 — 2026-08-26

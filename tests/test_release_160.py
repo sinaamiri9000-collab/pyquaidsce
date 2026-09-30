@@ -348,11 +348,14 @@ class MergeIntegrityTests(unittest.TestCase):
         self.assertIn("library(pyquaidsce)", r_tests)
         self.assertIn('test_check("pyquaidsce")', r_tests)
 
-        ado = (ROOT / "stata" / "quaidsce.ado").read_text(encoding="utf-8")
-        self.assertIn("program define quaidsce, eclass", ado)
-        self.assertIn('ereturn local cmd "quaidsce"', ado)
-        alias = (ROOT / "stata" / "pyquaidsce.ado").read_text(encoding="utf-8")
-        self.assertIn("quaidsce `0'", alias)
+        direct = (ROOT / "stata" / "pyquaidsce.ado").read_text(encoding="utf-8")
+        self.assertIn("program define pyquaidsce, eclass", direct)
+        self.assertIn('ereturn local cmd "pyquaidsce"', direct)
+
+        alias = (ROOT / "stata" / "quaidsce.ado").read_text(encoding="utf-8")
+        self.assertIn("program define quaidsce, eclass", alias)
+        self.assertIn("pyquaidsce `0'", alias)
+        self.assertIn('ereturn local cmd "quaidsce"', alias)
 
     def test_bootstrap_runner_module_importable(self):
         """bootstrap_runner.py must be importable and expose main()."""

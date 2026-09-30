@@ -2,7 +2,7 @@
 
 Fast Censored Quadratic Almost Ideal Demand System (QUAIDS) estimation in Stata via Python engine.
 
-This package provides the official Stata command `quaidsce`, allowing Stata users to estimate censored QUAIDS demand systems with the **up to 44.6x speedup** of the `pyquaidsce` Python core while staying completely within the native Stata workflow.
+This package provides two command names for the same current estimator. The recommended command is `quaidsce`, matching the estimator name used in Python and R. The direct command `pyquaidsce` invokes this package explicitly and can be useful when an older installation of the original Stata `quaidsce` command is still present.
 
 ---
 
@@ -34,9 +34,20 @@ Run the following single line inside Stata:
 net install pyquaidsce, from("https://raw.githubusercontent.com/sinaamiri9000-collab/pyquaidsce/main/stata") replace
 ```
 
-Once installed, Stata will recognize `quaidsce` globally (with `pyquaidsce` kept as a backward-compatible alias) and make the interactive help file available via:
+Once installed, both command names are available:
+
+```stata
+quaidsce ...
+pyquaidsce ...
+```
+
+`quaidsce` is the recommended common name. `pyquaidsce` is the direct current-package command. If an older installation of the original Stata `quaidsce` command is found first on Stata's ado-path, use `pyquaidsce` to invoke the current package explicitly.
+
+Both help names are available:
+
 ```stata
 help quaidsce
+help pyquaidsce
 ```
 
 ---
@@ -56,10 +67,10 @@ Or copy `quaidsce.ado`, `quaidsce.sthlp`, `pyquaidsce.ado`, and `pyquaidsce.sthl
 
 | File | Description |
 | :--- | :--- |
-| [`quaidsce.ado`](quaidsce.ado) | The official Stata command program. Parses user syntax, handles sample filtering (`if`/`in`), invokes the Python bridge, posts matrices and scalars to `e()`, and formats the regression and elasticity tables. |
-| [`quaidsce.sthlp`](quaidsce.sthlp) | The official interactive Stata Help file rendered inside Stata's Viewer when running `help quaidsce`. |
-| [`pyquaidsce.ado`](pyquaidsce.ado) | Backward-compatible alias for the `quaidsce` command. |
-| [`pyquaidsce.sthlp`](pyquaidsce.sthlp) | Help redirect for the backward-compatible alias. |
+| [`pyquaidsce.ado`](pyquaidsce.ado) | The direct implementation of the current Stata interface. Use this command name when you need to distinguish the current package from an older `quaidsce` installation. |
+| [`quaidsce.ado`](quaidsce.ado) | Recommended common-name wrapper. It calls the current `pyquaidsce` implementation and keeps the estimator name aligned across Python, R, and Stata. |
+| [`quaidsce.sthlp`](quaidsce.sthlp) | Full help for the recommended `quaidsce` command. |
+| [`pyquaidsce.sthlp`](pyquaidsce.sthlp) | Full help for the direct `pyquaidsce` command. |
 | [`stata.toc`](stata.toc) | Stata package Table of Contents used by Stata's `net` package manager. |
 | [`pyquaidsce.pkg`](pyquaidsce.pkg) | Stata package manifest detailing files and metadata for `net install`. |
 
@@ -74,7 +85,10 @@ use mydata.dta, clear
 // 2. Estimate censored QUAIDS with IFGNLS
 quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) method(ifgnls)
 
-// 3. Estimate with parallel bootstrap standard errors (e.g. 200 replications across 4 CPU cores)
+// 3. The direct package command is equivalent
+pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) method(ifgnls)
+
+// 4. Estimate with parallel bootstrap standard errors (e.g. 200 replications across 4 CPU cores)
 quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) reps(200) n_jobs(4) mp_context(spawn) rep_timeout(900) seed(12345)
 ```
 
@@ -109,7 +123,7 @@ quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
 
 ## Postestimation & Stored Results
 
-`quaidsce` stores standard Stata estimation results in `e()`, making them fully compatible with Stata's postestimation toolkit (`test`, `lincom`, `outreg2`, `esttab`):
+Both `quaidsce` and `pyquaidsce` store standard Stata estimation results in `e()`, making them fully compatible with Stata's postestimation toolkit (`test`, `lincom`, `outreg2`, `esttab`):
 
 ### Scalars
 - `e(N)`: Number of observations in the estimation sample

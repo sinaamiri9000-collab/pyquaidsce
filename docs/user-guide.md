@@ -296,11 +296,17 @@ fit_warm <- quaidsce(
 
 ---
 
-## 5. Stata Interface (`quaidsce`)
+## 5. Stata Interface (`quaidsce` and `pyquaidsce`)
+
+The recommended command is `quaidsce`, matching the estimator name used in Python and R. The equivalent direct command `pyquaidsce` runs the same current implementation. If an older installation of the original Stata `quaidsce` command is still present, `pyquaidsce` can be used to distinguish the current package explicitly.
 
 ```stata
 * Estimate in Stata
 quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
+    demographics(hh_size urban) anot(10.0) method(ifgnls)
+
+* Equivalent direct command for the current package
+pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
     demographics(hh_size urban) anot(10.0) method(ifgnls)
 
 * Warm-start using stored matrices

@@ -364,7 +364,7 @@ def run_from_stata(
 
 
 # --------------------------------------------------------------------------- #
-#  Out-of-process estimation helpers (called from quaidsce.ado)
+#  Out-of-process estimation helpers (called from the Stata pyquaidsce/quaidsce front ends)
 # --------------------------------------------------------------------------- #
 
 def launch_from_stata(

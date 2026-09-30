@@ -329,7 +329,7 @@ class MergeIntegrityTests(unittest.TestCase):
             self.assertIn(option, help_text)
 
     def test_ado_runs_the_complete_estimation_out_of_process(self):
-        ado = (ROOT / "stata" / "quaidsce.ado").read_text(encoding="utf-8")
+        ado = (ROOT / "stata" / "pyquaidsce.ado").read_text(encoding="utf-8")
         self.assertIn("launch_from_stata", ado)
         self.assertIn("poll_bootstrap", ado)
         self.assertIn("load_stata_results", ado)

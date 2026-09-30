@@ -85,7 +85,7 @@ use mydata.dta, clear
 // 2. Estimate censored QUAIDS with IFGNLS
 quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) method(ifgnls)
 
-// 3. The direct package command is equivalent
+// 3. or
 pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) method(ifgnls)
 
 // 4. Estimate with parallel bootstrap standard errors (e.g. 200 replications across 4 CPU cores)

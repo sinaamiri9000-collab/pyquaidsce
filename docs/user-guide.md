@@ -298,7 +298,7 @@ fit_warm <- quaidsce(
 
 ## 5. Stata Interface (`quaidsce` and `pyquaidsce`)
 
-The recommended command is `quaidsce`, matching the estimator name used in Python and R. The equivalent direct command `pyquaidsce` runs the same current implementation. If an older installation of the original Stata `quaidsce` command is still present, `pyquaidsce` can be used to distinguish the current package explicitly.
+You can use either `quaidsce` or `pyquaidsce` in Stata. Both commands run the same estimator. If you already have the older Stata `quaidsce` installed and want to avoid a name conflict, use `pyquaidsce`.
 
 ```stata
 * Estimate in Stata

@@ -2,7 +2,7 @@
 
 Fast Censored Quadratic Almost Ideal Demand System (QUAIDS) estimation in Stata via Python engine.
 
-This package provides two command names for the same current estimator. The recommended command is `quaidsce`, matching the estimator name used in Python and R. The direct command `pyquaidsce` invokes this package explicitly and can be useful when an older installation of the original Stata `quaidsce` command is still present.
+This package can be called with either `quaidsce` or `pyquaidsce`. Both commands run the same estimator. If you already have the older Stata `quaidsce` installed and want to avoid a name conflict, use `pyquaidsce`.
 
 ---
 
@@ -34,16 +34,16 @@ Run the following single line inside Stata:
 net install pyquaidsce, from("https://raw.githubusercontent.com/sinaamiri9000-collab/pyquaidsce/main/stata") replace
 ```
 
-Once installed, both command names are available:
+Once installed, you can use either command:
 
 ```stata
 quaidsce ...
 pyquaidsce ...
 ```
 
-`quaidsce` is the recommended common name. `pyquaidsce` is the direct current-package command. If an older installation of the original Stata `quaidsce` command is found first on Stata's ado-path, use `pyquaidsce` to invoke the current package explicitly.
+Both do the same thing. If you already have the older Stata `quaidsce` installed and want to avoid a name conflict, use `pyquaidsce`.
 
-Both help names are available:
+For help, both names work:
 
 ```stata
 help quaidsce

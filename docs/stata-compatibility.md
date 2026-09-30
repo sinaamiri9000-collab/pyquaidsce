@@ -55,7 +55,7 @@ fit <- quaidsce(
 
 ## Stata example
 
-The recommended command is `quaidsce`. The equivalent direct command `pyquaidsce` is also available and can be useful when an older installation of the original Stata `quaidsce` command is still present.
+You can use either `quaidsce` or `pyquaidsce`. Both run the same estimator. If you already have the older Stata `quaidsce` installed and want to avoid a name conflict, use `pyquaidsce`.
 
 ```stata
 quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///

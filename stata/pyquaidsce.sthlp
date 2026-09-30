@@ -81,7 +81,7 @@
 {title:Description}
 
 {pstd}
-{cmd:pyquaidsce} is a direct command for the current {cmd:pyquaidsce} package. It runs the same estimator as the recommended common-name command {cmd:quaidsce}. Use {cmd:pyquaidsce} when you want to distinguish this implementation from an older installation of the original Stata {cmd:quaidsce} command.
+You can use either {cmd:pyquaidsce} or {cmd:quaidsce}. Both commands run the same estimator. If you already have the older Stata {cmd:quaidsce} installed and want to avoid a name conflict, use {cmd:pyquaidsce}.
 
 {pstd}
 {cmd:pyquaidsce} estimates the Quadratic Almost Ideal Demand System (QUAIDS) of Banks, Blundell, and Lewbel (1997) with Ray (1983) demographic scaling and the Shonkwiler & Yen (1999) two-step correction for zero budget shares.

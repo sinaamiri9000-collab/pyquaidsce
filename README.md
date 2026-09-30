@@ -131,13 +131,17 @@ test [beta]beta_1 = [beta]beta_2
 matrix list e(elas_u)
 ```
 
-The recommended command is `quaidsce`, matching the estimator name used in Python and R. The equivalent command `pyquaidsce` runs the same current implementation. If you still have an older installation of the original Stata `quaidsce` command and want to distinguish the current package explicitly, use:
+In Stata, you can use either command name:
 
 ```stata
+quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban)
+
 pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban)
 ```
 
-Both help names are available:
+Both commands run the same estimator. If you already have the older Stata `quaidsce` installed and want to avoid a name conflict, use `pyquaidsce`.
+
+For help, both names work:
 
 ```stata
 help quaidsce

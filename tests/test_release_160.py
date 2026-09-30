@@ -313,7 +313,7 @@ class MergeIntegrityTests(unittest.TestCase):
         self.assertFalse(captured["selection_expenditure"])
 
     def test_stata_no_options_use_returned_macro_names(self):
-        ado = (ROOT / "stata" / "quaidsce.ado").read_text(encoding="utf-8")
+        ado = (ROOT / "stata" / "pyquaidsce.ado").read_text(encoding="utf-8")
         self.assertIn('local is_censor = ("`censor\'" == "")', ado)
         self.assertIn('local is_verbose = ("`log\'" == "")', ado)
         self.assertNotIn('local is_censor = ("`nocensor\'"', ado)

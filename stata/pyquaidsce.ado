@@ -1,5 +1,5 @@
 *! version 1.6.0  26aug2026
-*! pyquaidsce: Censored QUAIDS demand system estimation in Stata using Python engine
+*! pyquaidsce: direct Stata command for the pyquaidsce package
 *! Author: Sina Amiri (Department of Economics, Shiraz University)
 
 program define pyquaidsce, eclass

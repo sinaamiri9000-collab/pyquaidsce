@@ -2,6 +2,13 @@
 
 All notable user-visible changes to `pyquaidsce` are documented here.
 
+## Unreleased
+
+- Unified the main estimator name across interfaces: Python and R use `quaidsce()`, and Stata now uses the `quaidsce` command.
+- Renamed the R package from `rquaidsce` to `pyquaidsce`. The Python package name remains `pyquaidsce`.
+- Stata accepts both `quaidsce` and `pyquaidsce`. Both run the same estimator; `pyquaidsce` can be used to avoid a name conflict with an older installed `quaidsce` command.
+
+
 ## 1.6.0 — 2026-08-26
 
 - **Breaking API cleanup:** removed `first_stage_predict` and `strict_stata` from Python, R, and Stata. The Shonkwiler-Yen first stage now always uses the Probit linear index, and elasticity calculations always use the corrected theoretical formulas.

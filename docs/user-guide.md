@@ -258,12 +258,12 @@ df_results.to_csv("quaidsce_estimates.csv", index=False)
 
 ---
 
-## 4. R Package Reference (`rquaidsce`)
+## 4. R Package Reference (`pyquaidsce`)
 
-The R package `rquaidsce` provides a native R interface that calls `pyquaidsce` seamlessly via `reticulate`.
+The R package `pyquaidsce` provides a native R interface that calls `pyquaidsce` seamlessly via `reticulate`.
 
 ```r
-library(rquaidsce)
+library(pyquaidsce)
 
 # Estimate Censored QUAIDS in R
 fit <- quaidsce(
@@ -296,10 +296,16 @@ fit_warm <- quaidsce(
 
 ---
 
-## 5. Stata Interface (`pyquaidsce.ado`)
+## 5. Stata Interface (`quaidsce` and `pyquaidsce`)
+
+You can use either `quaidsce` or `pyquaidsce` in Stata. Both commands run the same estimator. If you already have the older Stata `quaidsce` installed and want to avoid a name conflict, use `pyquaidsce`.
 
 ```stata
 * Estimate in Stata
+quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
+    demographics(hh_size urban) anot(10.0) method(ifgnls)
+
+* Equivalent direct command for the current package
 pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
     demographics(hh_size urban) anot(10.0) method(ifgnls)
 
@@ -307,6 +313,6 @@ pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
 matrix b_init = e(b_est)
 matrix sigma_init = e(Sigma)
 
-pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
+quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
     demographics(hh_size urban) anot(10.0) initial(b_init) sigma_initial(sigma_init)
 ```

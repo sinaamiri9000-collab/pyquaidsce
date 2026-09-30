@@ -1,4 +1,4 @@
-# rquaidsce: Censored QUAIDS Demand System Estimation in R
+# pyquaidsce: Censored QUAIDS Demand System Estimation in R
 
 An R interface to the high-performance `pyquaidsce` econometric engine, implementing:
 - **Quadratic Almost Ideal Demand System (QUAIDS)** (Banks, Blundell, and Lewbel, 1997)
@@ -14,7 +14,7 @@ An R interface to the high-performance `pyquaidsce` econometric engine, implemen
 ## Installation
 
 ### 1. Requirements
-`rquaidsce` uses `reticulate` to communicate seamlessly with Python. Ensure Python (>= 3.9) and `pyquaidsce` are installed:
+`pyquaidsce` uses `reticulate` to communicate seamlessly with Python. Ensure Python (>= 3.9) and `pyquaidsce` are installed:
 
 ```bash
 pip install pyquaidsce
@@ -27,8 +27,8 @@ if (!requireNamespace("remotes", quietly = TRUE)) {
   install.packages("remotes")
 }
 
-# Install rquaidsce directly from GitHub
-remotes::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "rquaidsce")
+# Install pyquaidsce directly from GitHub
+remotes::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "R")
 ```
 
 ---
@@ -36,7 +36,7 @@ remotes::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "rquaidsce")
 ## Quick Example
 
 ```r
-library(rquaidsce)
+library(pyquaidsce)
 
 # Load your household data
 # df <- read.csv("household_data.csv")

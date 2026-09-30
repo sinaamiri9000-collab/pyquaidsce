@@ -1,7 +1,7 @@
 """
 Bridge between Stata and pyquaidsce using Stata Function Interface (sfi).
 
-This module is called directly from within Stata's `pyquaidsce.ado`.
+This module is called directly from within Stata's `quaidsce.ado`.
 It reads data from Stata's active memory, estimates the censored QUAIDS model,
 and populates Stata matrices, scalars, and macros for `ereturn post`.
 """
@@ -364,7 +364,7 @@ def run_from_stata(
 
 
 # --------------------------------------------------------------------------- #
-#  Out-of-process estimation helpers (called from pyquaidsce.ado)
+#  Out-of-process estimation helpers (called from the Stata pyquaidsce/quaidsce front ends)
 # --------------------------------------------------------------------------- #
 
 def launch_from_stata(

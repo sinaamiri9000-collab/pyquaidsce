@@ -117,37 +117,54 @@ For a step-by-step tutorial, see [Getting Started](docs/getting-started.md). For
 
 ## Using pyquaidsce in Stata
 
-Prefer working in Stata? `pyquaidsce` includes an official Stata package (`pyquaidsce.ado`) that lets you estimate censored QUAIDS models directly inside Stata while harnessing Python's **up to 44.6x speedup**:
+Prefer working in Stata? `pyquaidsce` includes an official Stata package (`quaidsce.ado`) that lets you estimate censored QUAIDS models directly inside Stata while harnessing Python's **up to 44.6x speedup**:
 
 ```stata
 // 1. Install the Stata package directly from GitHub
 net install pyquaidsce, from("https://raw.githubusercontent.com/sinaamiri9000-collab/pyquaidsce/main/stata") replace
 
 // 2. Estimate your model in Stata with familiar syntax
-pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) ivexp(log_income employment_status) anot(10) method(ifgnls)
+quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) ivexp(log_income employment_status) anot(10) method(ifgnls)
 
 // 3. Postestimation commands work seamlessly
 test [beta]beta_1 = [beta]beta_2
 matrix list e(elas_u)
 ```
 
+In Stata, you can use either command name:
+
+```stata
+quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban)
+
+pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban)
+```
+
+Both commands run the same estimator. If you already have the older Stata `quaidsce` installed and want to avoid a name conflict, use `pyquaidsce`.
+
+For help, both names work:
+
+```stata
+help quaidsce
+help pyquaidsce
+```
+
 See the [Stata Package Guide](stata/README.md) for full details, options, and troubleshooting.
 
 ---
 
-## Using rquaidsce in R
+## Using pyquaidsce in R
 
-Prefer working in R? `rquaidsce` provides a native R interface with standard S3 methods (`summary`, `coef`, `vcov`, `print`):
+Prefer working in R? `pyquaidsce` provides a native R interface with standard S3 methods (`summary`, `coef`, `vcov`, `print`):
 
 ```r
-# 1. Install remotes (if not already installed) & install rquaidsce from GitHub
+# 1. Install remotes (if not already installed) & install the R interface from GitHub
 if (!requireNamespace("remotes", quietly = TRUE)) {
   install.packages("remotes")
 }
-remotes::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "rquaidsce")
+remotes::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "R")
 
 # 2. Estimate Censored QUAIDS in R
-library(rquaidsce)
+library(pyquaidsce)
 fit <- quaidsce(
   data = df,
   shares = c("w1", "w2", "w3", "w4"),
@@ -164,7 +181,7 @@ fit$elasticities$income
 fit$elasticities$uncompensated
 ```
 
-See the [R Package Documentation](rquaidsce/README.md) for full details.
+See the [R Package Documentation](R/README.md) for full details.
 
 ---
 
@@ -202,7 +219,7 @@ All raw data, archived logs, scripts, and comparison tables are available in [`b
 
 ```text
 src/pyquaidsce/   Core Python package source code and Stata bridge
-stata/            Official Stata package (pyquaidsce.ado, pyquaidsce.sthlp, pkg files)
+stata/            Official Stata package (quaidsce command; pyquaidsce distribution)
 tests/            Mathematical unit tests, theory checks, and Stata regression tests
 examples/         Ready-to-run Python and Stata sample scripts
 benchmarks/       Reproducible benchmark data, scripts, and logs

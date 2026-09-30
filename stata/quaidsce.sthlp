@@ -1,16 +1,16 @@
 {smcl}
 {* *! version 1.6.0  26aug2026}{...}
 {vieweralsosee "[R] quaids" "help quaids"}{...}
-{viewerjumpto "Syntax" "pyquaidsce##syntax"}{...}
-{viewerjumpto "Description" "pyquaidsce##description"}{...}
-{viewerjumpto "Options" "pyquaidsce##options"}{...}
-{viewerjumpto "Examples" "pyquaidsce##examples"}{...}
-{viewerjumpto "Stored results" "pyquaidsce##results"}{...}
-{viewerjumpto "Author" "pyquaidsce##author"}{...}
+{viewerjumpto "Syntax" "quaidsce##syntax"}{...}
+{viewerjumpto "Description" "quaidsce##description"}{...}
+{viewerjumpto "Options" "quaidsce##options"}{...}
+{viewerjumpto "Examples" "quaidsce##examples"}{...}
+{viewerjumpto "Stored results" "quaidsce##results"}{...}
+{viewerjumpto "Author" "quaidsce##author"}{...}
 {title:Title}
 
 {p2colset 5 20 22 2}{...}
-{p2col :{bf:pyquaidsce} {hline 2}}Fast Censored Quadratic Almost Ideal Demand System (QUAIDS) Estimation in Stata via Python{p_end}
+{p2col :{bf:quaidsce} {hline 2}}Fast Censored Quadratic Almost Ideal Demand System (QUAIDS) Estimation in Stata via Python{p_end}
 {p2colreset}{...}
 
 
@@ -18,7 +18,7 @@
 {title:Syntax}
 
 {p 8 18 2}
-{cmd:pyquaidsce} {it:sharelist} {ifin} {cmd:,}
+{cmd:quaidsce} {it:sharelist} {ifin} {cmd:,}
 {opt prices(varlist)} {c |} {opt lnprices(varlist)}
 {opt expenditure(varname)} {c |} {opt lnexpenditure(varname)}
 [{it:options}]
@@ -81,10 +81,10 @@
 {title:Description}
 
 {pstd}
-You can use either {cmd:pyquaidsce} or {cmd:quaidsce}. Both commands run the same estimator. If you already have the older Stata {cmd:quaidsce} installed and want to avoid a name conflict, use {cmd:pyquaidsce}.
+You can use either {cmd:quaidsce} or {cmd:pyquaidsce}. Both commands run the same estimator. If you already have the older Stata {cmd:quaidsce} installed and want to avoid a name conflict, use {cmd:pyquaidsce}.
 
 {pstd}
-{cmd:pyquaidsce} estimates the Quadratic Almost Ideal Demand System (QUAIDS) of Banks, Blundell, and Lewbel (1997) with Ray (1983) demographic scaling and the Shonkwiler & Yen (1999) two-step correction for zero budget shares.
+{cmd:quaidsce} estimates the Quadratic Almost Ideal Demand System (QUAIDS) of Banks, Blundell, and Lewbel (1997) with Ray (1983) demographic scaling and the Shonkwiler & Yen (1999) two-step correction for zero budget shares.
 
 {pstd}
 It provides a fast Stata front end powered by the {cmd:pyquaidsce} Python computation engine, achieving up to a {bf:44.6x speedup} under IFGNLS in benchmark tests. Point estimation and optional bootstrap replications run in a background Python process while Stata polls for progress, so the Stata GUI remains responsive.
@@ -126,7 +126,7 @@ from the information supplied to the command.
 {title:Stored results}
 
 {pstd}
-{cmd:pyquaidsce} stores the following in {cmd:e()}:
+{cmd:quaidsce} stores the following in {cmd:e()}:
 
 {synoptset 18 tabbed}{...}
 {p2col 5 18 22 2: Scalars}{p_end}
@@ -141,7 +141,7 @@ from the information supplied to the command.
 
 {synoptset 18 tabbed}{...}
 {p2col 5 18 22 2: Macros}{p_end}
-{synopt:{cmd:e(cmd)}}{cmd:pyquaidsce}{p_end}
+{synopt:{cmd:e(cmd)}}{cmd:quaidsce}{p_end}
 {synopt:{cmd:e(title)}}model title{p_end}
 {synopt:{cmd:e(method)}}estimation method ({cmd:ifgnls}, {cmd:fgnls}, {cmd:nls}){p_end}
 {synopt:{cmd:e(control_function)}}demand control-function variable, if supplied{p_end}

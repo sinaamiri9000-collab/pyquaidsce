@@ -107,7 +107,7 @@ elasticity_se.quaidsce <- function(object, ...) {
 #' @export
 #' @method print quaidsce
 print.quaidsce <- function(x, ...) {
-  cat("\nCensored QUAIDS Demand System Estimation (rquaidsce)\n")
+  cat("\nCensored QUAIDS Demand System Estimation (pyquaidsce)\n")
   cat(paste(rep("-", 65), collapse = ""), "\n")
   cat(sprintf("Number of observations : %d\n", x$nobs))
   cat(sprintf("Number of equations    : %d (%s)\n", length(x$shares), paste(x$shares, collapse = ", ")))

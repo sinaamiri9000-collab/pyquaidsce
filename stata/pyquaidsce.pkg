@@ -5,5 +5,7 @@ d Distribution-Date: 20260826
 d License: GPL-3.0-only
 d Author: Sina Amiri (Department of Economics, Shiraz University)
 d
+f quaidsce.ado
+f quaidsce.sthlp
 f pyquaidsce.ado
 f pyquaidsce.sthlp

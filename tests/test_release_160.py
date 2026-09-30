@@ -318,7 +318,7 @@ class MergeIntegrityTests(unittest.TestCase):
         self.assertIn('local is_verbose = ("`log\'" == "")', ado)
         self.assertNotIn('local is_censor = ("`nocensor\'"', ado)
         self.assertNotIn('local is_verbose = ("`nolog\'"', ado)
-        help_text = (ROOT / "stata" / "pyquaidsce.sthlp").read_text(
+        help_text = (ROOT / "stata" / "quaidsce.sthlp").read_text(
             encoding="utf-8"
         )
         for option in (
@@ -337,6 +337,25 @@ class MergeIntegrityTests(unittest.TestCase):
         self.assertNotIn("reps=0,", ado)
         self.assertEqual(ado.count("launch_from_stata("), 1)
         self.assertIn('local method "ifgnls"', ado)
+
+    def test_unified_user_facing_names(self):
+        """All three interfaces expose quaidsce while the package stays pyquaidsce."""
+        r_desc = (ROOT / "R" / "DESCRIPTION").read_text(encoding="utf-8")
+        self.assertIn("Package: pyquaidsce", r_desc)
+        r_tests = (ROOT / "R" / "tests" / "testthat.R").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("library(pyquaidsce)", r_tests)
+        self.assertIn('test_check("pyquaidsce")', r_tests)
+
+        direct = (ROOT / "stata" / "pyquaidsce.ado").read_text(encoding="utf-8")
+        self.assertIn("program define pyquaidsce, eclass", direct)
+        self.assertIn('ereturn local cmd "pyquaidsce"', direct)
+
+        alias = (ROOT / "stata" / "quaidsce.ado").read_text(encoding="utf-8")
+        self.assertIn("program define quaidsce, eclass", alias)
+        self.assertIn("pyquaidsce `0'", alias)
+        self.assertIn('ereturn local cmd "quaidsce"', alias)
 
     def test_bootstrap_runner_module_importable(self):
         """bootstrap_runner.py must be importable and expose main()."""

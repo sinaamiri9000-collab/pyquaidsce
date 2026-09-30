@@ -340,9 +340,9 @@ class MergeIntegrityTests(unittest.TestCase):
 
     def test_unified_user_facing_names(self):
         """All three interfaces expose quaidsce while the package stays pyquaidsce."""
-        r_desc = (ROOT / "rquaidsce" / "DESCRIPTION").read_text(encoding="utf-8")
+        r_desc = (ROOT / "R" / "DESCRIPTION").read_text(encoding="utf-8")
         self.assertIn("Package: pyquaidsce", r_desc)
-        r_tests = (ROOT / "rquaidsce" / "tests" / "testthat.R").read_text(
+        r_tests = (ROOT / "R" / "tests" / "testthat.R").read_text(
             encoding="utf-8"
         )
         self.assertIn("library(pyquaidsce)", r_tests)

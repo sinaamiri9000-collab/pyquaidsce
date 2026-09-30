@@ -161,7 +161,7 @@ Prefer working in R? `pyquaidsce` provides a native R interface with standard S3
 if (!requireNamespace("remotes", quietly = TRUE)) {
   install.packages("remotes")
 }
-remotes::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "rquaidsce")
+remotes::install_github("sinaamiri9000-collab/pyquaidsce", subdir = "R")
 
 # 2. Estimate Censored QUAIDS in R
 library(pyquaidsce)
@@ -181,7 +181,7 @@ fit$elasticities$income
 fit$elasticities$uncompensated
 ```
 
-See the [R Package Documentation](rquaidsce/README.md) for full details.
+See the [R Package Documentation](R/README.md) for full details.
 
 ---
 

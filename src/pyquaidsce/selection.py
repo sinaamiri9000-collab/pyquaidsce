@@ -12,6 +12,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Sequence, Tuple
 
+import numpy as np
+
 
 @dataclass(frozen=True)
 class FirstStageLayout:
@@ -101,3 +103,43 @@ def legacy_layout(
         selection_cf_position=None,
         constant_position=len(ordered),
     )
+
+
+def selection_layout(price_names, selected_prices, covariate_names, *, include_expenditure=True):
+    """Build an explicitly selected price/expenditure/covariate design."""
+    ordered, positions, cov_positions = [], {}, {}
+    for price in selected_prices:
+        positions[price] = len(ordered)
+        ordered.append(f"p{list(price_names).index(price)+1}")
+    exp_pos = None
+    if include_expenditure:
+        exp_pos = len(ordered)
+        ordered.append("M")
+    for name in covariate_names:
+        cov_positions[name] = len(ordered)
+        label = str(name)
+        while label in ordered or label == "cons":
+            label = f"z[{label}]"
+        ordered.append(label)
+    return FirstStageLayout(tuple(ordered), tuple(price_names), positions,
+                            exp_pos, cov_positions, None, len(ordered))
+
+
+def build_selection_design(lnp, lnexp, covariates, layout):
+    """Populate regressors without an intercept or control residual."""
+    X = np.empty((len(lnexp), layout.constant_position))
+    for price, pos in layout.price_positions.items():
+        X[:, pos] = lnp[:, layout.demand_price_names.index(price)]
+    if layout.expenditure_position is not None:
+        X[:, layout.expenditure_position] = lnexp
+    for j, pos in enumerate(layout.covariate_positions.values()):
+        X[:, pos] = covariates[:, j]
+    if layout.selection_cf_position is not None:
+        raise ValueError("this selection design requires a separate control residual")
+    return X
+
+
+def selection_index(design, tau, layout, neqn):
+    """Evaluate xb, preserving complex coefficients for inference."""
+    coefficients = np.asarray(tau).reshape(neqn, layout.width)
+    return np.asarray(design) @ coefficients[:, :-1].T + coefficients[:, -1]

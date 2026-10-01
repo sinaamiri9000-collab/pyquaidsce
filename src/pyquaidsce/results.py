@@ -11,13 +11,14 @@ from .elasticities import Elasticities, Means
 from .params import Coefs, Spec
 from .selection import FirstStageLayout
 from .statafmt import coef_table, g
+from .result_base import DemandResults
 
 if TYPE_CHECKING:  # pragma: no cover
     from .reduced_form import ExpenditureReducedForm
 
 
 @dataclass
-class QuaidsceResults:
+class QuaidsceResults(DemandResults):
     # ---- specification --------------------------------------------------- #
     spec: Spec
     anot: float
@@ -96,20 +97,6 @@ class QuaidsceResults:
                 out[-n_elasticities:] = np.nan
         return out
 
-    def named(self) -> Dict[str, float]:
-        return dict(zip(self.names, self.b))
-
-    def get(self, key: str) -> float:
-        """Look up a coefficient by ``eq:name`` or bare ``name``."""
-        d = self.named()
-        if key in d:
-            return d[key]
-        for k, v in d.items():
-            if k.split(":", 1)[-1] == key:
-                return v
-        raise KeyError(key)
-
-    # ------------------------------------------------------------------ #
     def _title(self) -> str:
         if self.spec.censor and self.spec.quadratic:
             return "Censored Quadratic AIDS model"
@@ -184,28 +171,6 @@ class QuaidsceResults:
         return "\n".join(header) + coef_table(
             list(rf.regressor_names), rf.b, rf.se, level=level
         )
-
-    def elasticity_tables(self) -> str:
-        n = self.spec.neqn
-        nm = self.share_names
-        out = ["", "Expenditure (income) elasticities, at means", "-" * 44]
-        w = max(len(x) for x in nm) + 2
-        for i in range(n):
-            out.append(f"  {nm[i]:<{w}} {self.elas.income[i]:>12.6f}")
-        for lab, M in (
-            ("Uncompensated (Marshallian) price elasticities [row = good, "
-             "column = price]", self.elas.uncompensated),
-            ("Compensated (Hicksian) price elasticities [row = good, "
-             "column = price]", self.elas.compensated),
-        ):
-            out += ["", lab, "-" * min(len(lab), 100)]
-            out.append(" " * w + "".join(f"{x[:10]:>12}" for x in nm))
-            for i in range(n):
-                out.append(
-                    f"  {nm[i]:<{w}}" + "".join(f"{M[i, j]:>12.6f}"
-                                                for j in range(n))
-                )
-        return "\n".join(out)
 
     def __str__(self) -> str:  # pragma: no cover
         return self.summary()

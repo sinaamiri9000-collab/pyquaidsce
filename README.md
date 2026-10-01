@@ -10,6 +10,14 @@
 - **Parallel bootstrap**: Multi-core bootstrap with progress tracking and runtime safeguards for valid standard errors.
 - **Stata integration**: matched coefficient ordering and native Stata-facing output tables, while using the corrected textbook econometric formulas.
 
+The unreleased source also provides **basic translog demand, with optional S&Y** through
+`from pyquaidsce import translog`, with Pollak--Wales demographic translation,
+the shared SUR/bootstrap engines, complete elasticity derivatives, and
+two-step bootstrap inference. See the [translog guide](docs/translog.md) and the
+[Uruguay/Stata benchmark](benchmarks/translog_uruguay/README.md). The published
+1.6.0 distribution does not include this addition. Expenditure endogeneity
+correction for translog remains outside this implementation.
+
 ---
 
 ## Motivation

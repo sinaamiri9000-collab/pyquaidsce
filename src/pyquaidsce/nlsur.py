@@ -32,8 +32,10 @@ import numpy as np
 
 from ._timing import check_deadline
 from ._threads import with_blas_threads
-from .jacfree import JacCache, jacobian_free, make_cache
-from .model import DemandData, jacobian_full, residuals
+from .backend import ModelBackend, QUAIDS_BACKEND
+from .jacfree import JacCache
+from .data import DemandData
+from .model import jacobian_full
 from .params import Spec, delta_blocks
 
 
@@ -60,6 +62,7 @@ class NlsurResult:
     n_gn: int
     converged: bool
     history: List[float] = field(default_factory=list)
+    nrtol: float = np.nan
 
 
 # --------------------------------------------------------------------------- #
@@ -98,6 +101,7 @@ def _normal_equations(
     P: np.ndarray,
     chunk: int,
     deadline: Optional[float] = None,
+    model: ModelBackend = QUAIDS_BACKEND,
 ) -> Tuple[np.ndarray, np.ndarray, float]:
     """Accumulate ``G = sum J'Sinv J``, ``g = sum J'Sinv u`` and the objective."""
     N = d.nobs
@@ -111,8 +115,8 @@ def _normal_equations(
         check_deadline(deadline)
         e = min(s + chunk, N)
         sl = slice(s, e)
-        u = d.shares[sl, :m] - _fitted_chunk(theta, d, spec, sl)
-        J = jacobian_free(theta, d, spec, cache, sl)
+        u = d.shares[sl, :m] - _fitted_chunk(theta, d, spec, sl, model)
+        J = model.jacobian(theta, d, spec, cache, sl)
         # whiten: batched (m x m) @ (m x K) via BLAS, then one symmetric rank-k
         if identity_P:  # the NLS stage needs no whitening at all
             uw = u
@@ -131,19 +135,14 @@ def _normal_equations(
     return G, g, obj
 
 
-def _fitted_chunk(theta, d: DemandData, spec: Spec, sl: slice) -> np.ndarray:
-    from .model import fitted_shares
-
-    sub = DemandData(
-        lnp=d.lnp[sl], lnexp=d.lnexp[sl], shares=d.shares[sl],
-        demo=d.demo[sl], cdf=d.cdf[sl], pdf=d.pdf[sl], a0=d.a0,
-        control_function=d.control_function[sl],
-    )
-    return fitted_shares(theta, sub, spec)
+def _fitted_chunk(theta, d: DemandData, spec, sl: slice,
+                  model: ModelBackend = QUAIDS_BACKEND) -> np.ndarray:
+    return model.fitted(theta, d.subset(sl), spec)
 
 
-def _objective(theta, d: DemandData, spec: Spec, P: np.ndarray) -> float:
-    u = residuals(theta, d, spec)
+def _objective(theta, d: DemandData, spec, P: np.ndarray,
+               model: ModelBackend = QUAIDS_BACKEND) -> float:
+    u = d.shares[:, :spec.n_eq_estimated] - model.fitted(theta, d, spec)
     uw = u if P is None else u @ P.T
     return float(uw.ravel() @ uw.ravel())
 
@@ -155,11 +154,12 @@ def _safe_obj(
     spec: Spec,
     P: np.ndarray,
     deadline: Optional[float] = None,
+    model: ModelBackend = QUAIDS_BACKEND,
 ) -> float:
     check_deadline(deadline)
     try:
         with np.errstate(over="ignore", invalid="ignore", divide="ignore"):
-            v = _objective(theta, d, spec, P)
+            v = _objective(theta, d, spec, P, model)
         return v if np.isfinite(v) else np.inf
     except (FloatingPointError, ValueError):
         return np.inf
@@ -206,6 +206,7 @@ def gauss_newton(
     nrtol_stop: float = 1e-12,
     stop_rule: str = "standard",
     deadline: Optional[float] = None,
+    model: ModelBackend = QUAIDS_BACKEND,
 ) -> Tuple[np.ndarray, float, int, bool]:
     """Minimise ``sum_t u_t' sigma^-1 u_t``.
 
@@ -214,11 +215,11 @@ def gauss_newton(
     ``diag(J'J)^-1/2``.  ``algorithm="gn"`` (the default) is plain
     Gauss-Newton with Hartley
     step halving, i.e. the scheme Stata's ``nl``/``nlsur`` use; it is kept as the
-    reference behaviour, but on a large censored system it creeps along the flat
-    valley of the criterion while LM turns the corner.  Both target the same
-    stationary point.
+    reference behaviour, but on a large censored system it can creep along the
+    flat valley of the criterion while LM turns the corner. Both minimize the
+    same criterion; starts and stopping rules can lead to different local optima.
     """
-    cache = make_cache(spec)
+    cache = model.make_cache(spec)
     P = _whitener(sigma)
     theta = np.asarray(theta0, dtype=float).copy()
     converged = False
@@ -229,7 +230,7 @@ def gauss_newton(
     for it in range(1, max_iter + 1):
         check_deadline(deadline)
         G, g, obj = _normal_equations(
-            theta, d, spec, cache, P, chunk, deadline=deadline
+            theta, d, spec, cache, P, chunk, deadline=deadline, model=model
         )
 
         if algorithm == "gn":
@@ -239,7 +240,7 @@ def gauss_newton(
             for _ in range(40):
                 check_deadline(deadline)
                 cand = theta + t * direction
-                oc = _safe_obj(cand, d, spec, P, deadline=deadline)
+                oc = _safe_obj(cand, d, spec, P, deadline=deadline, model=model)
                 if oc < obj:
                     best = (cand, oc, t, 0.0)
                     break
@@ -249,7 +250,7 @@ def gauss_newton(
                 for _ in range(30):
                     check_deadline(deadline)
                     cand = theta + _solve_scaled(G, g, mu=m2)
-                    oc = _safe_obj(cand, d, spec, P, deadline=deadline)
+                    oc = _safe_obj(cand, d, spec, P, deadline=deadline, model=model)
                     if oc < obj:
                         best = (cand, oc, 1.0, m2)
                         break
@@ -267,7 +268,7 @@ def gauss_newton(
                 check_deadline(deadline)
                 step = _solve_scaled(G, g, mu=mu)
                 cand = theta + step
-                oc = _safe_obj(cand, d, spec, P, deadline=deadline)
+                oc = _safe_obj(cand, d, spec, P, deadline=deadline, model=model)
                 pred = 2.0 * float(step @ g) - float(step @ (G @ step))
                 rho = (obj - oc) / pred if pred > 0 else -1.0
                 if oc < obj and rho > 0:
@@ -341,6 +342,7 @@ def nlsur(
     log: Optional[Callable[[str], None]] = None,
     gn_log: Optional[Callable[[str], None]] = None,
     deadline: Optional[float] = None,
+    model: ModelBackend = QUAIDS_BACKEND,
 ) -> NlsurResult:
     """Fit the system.
 
@@ -356,14 +358,18 @@ def nlsur(
         the last minimisation (textbook FGNLS, and what Stata reports);
         ``"final"`` recomputes it from the final residuals.  The two coincide
         for ``ifgnls`` at convergence.
+    model : ModelBackend
+        Equations, analytic Jacobian, cache and starting-value provider. The
+        default preserves the QUAIDS interface; other demand systems supply
+        their own backend and dimension specification.
     """
     method = method.lower()
     if method not in ("nls", "fgnls", "ifgnls"):
         raise ValueError(f"unknown method {method!r}")
     if algorithm not in ("gn", "lm"):
         raise ValueError(f"unknown algorithm {algorithm!r}")
-    if start not in ("zero", "linear"):
-        raise ValueError(f"unknown start {start!r}")
+    if start not in model.start_methods:
+        raise ValueError(f"unknown start {start!r}; allowed: {model.start_methods}")
     if stop_rule not in ("tight", "standard"):
         raise ValueError(f"unknown stop_rule {stop_rule!r}")
     if vce_sigma not in ("objective", "final"):
@@ -376,14 +382,11 @@ def nlsur(
     K = spec.n_free
     if theta0 is not None:
         theta = np.asarray(theta0, float).copy()
-    elif start == "linear":
-        from .start import linear_start
-        theta = linear_start(d, spec)
     else:
-        theta = np.zeros(K)
+        theta = model.initial(d, spec, start)
 
     def sigma_from(th: np.ndarray) -> np.ndarray:
-        u = residuals(th, d, spec)
+        u = d.shares[:, :m] - model.fitted(th, d, spec)
         return (u.T @ u) / N
 
     history: List[float] = []
@@ -397,7 +400,7 @@ def nlsur(
     # NLS stage -- which is where nearly all of the cost of IFGNLS sits.
     if sigma0 is not None and theta0 is not None and method == "ifgnls":
         sigma_obj = np.asarray(sigma0, dtype=float)
-        history.append(_objective(theta, d, spec, _whitener(sigma_obj)))
+        history.append(_objective(theta, d, spec, _whitener(sigma_obj), model))
         n_outer = 2
         tight = False
         outer_converged = False
@@ -414,7 +417,7 @@ def nlsur(
                 nrtol_stop=(nrtol_stop if tight
                             else max(nrtol_stop, inner_nrtol_early)),
                 stop_rule=stop_rule,
-                deadline=deadline,
+                deadline=deadline, model=model,
             )
             total_gn += ngn
             history.append(obj)
@@ -432,7 +435,7 @@ def nlsur(
         return _finish(theta, d, spec, sigma_obj, sigma_from, method,
                        vce_sigma, chunk, n_outer, total_gn,
                        bool(ok and outer_converged), obj, history,
-                       deadline=deadline)
+                       deadline=deadline, model=model)
 
     # ---- step 1: NLS ------------------------------------------------------ #
     say("Calculating NLS estimates...")
@@ -441,7 +444,7 @@ def nlsur(
         theta, d, spec, I_m, tol=tol, max_iter=max_iter, chunk=chunk,
         say=gn_log, algorithm=algorithm, nrtol_stop=nrtol_stop,
         stop_rule=stop_rule,
-        deadline=deadline,
+        deadline=deadline, model=model,
     )
     total_gn += ngn
     history.append(obj)
@@ -457,7 +460,7 @@ def nlsur(
             theta, d, spec, sigma, tol=tol, max_iter=max_iter, chunk=chunk,
             say=gn_log, algorithm=algorithm, nrtol_stop=nrtol_stop,
             stop_rule=stop_rule,
-            deadline=deadline,
+            deadline=deadline, model=model,
         )
         total_gn += ngn
         history.append(obj)
@@ -487,7 +490,7 @@ def nlsur(
                     nrtol_stop=(nrtol_stop if tight else
                                 max(nrtol_stop, inner_nrtol_early)),
                     stop_rule=stop_rule,
-                    deadline=deadline,
+                    deadline=deadline, model=model,
                 )
                 total_gn += ngn
                 history.append(obj)
@@ -509,12 +512,13 @@ def nlsur(
         overall_converged = bool(ok and outer_converged)
     return _finish(theta, d, spec, sigma_obj, sigma_from, method, vce_sigma,
                    chunk, n_outer, total_gn, overall_converged, obj, history,
-                   deadline=deadline)
+                   deadline=deadline, model=model)
 
 
 def _finish(theta, d, spec, sigma_obj, sigma_from, method, vce_sigma, chunk,
             n_outer, total_gn, ok, obj, history,
-            deadline: Optional[float] = None) -> NlsurResult:
+            deadline: Optional[float] = None,
+            model: ModelBackend = QUAIDS_BACKEND) -> NlsurResult:
     """Assemble e(V), e(ll) and the result object."""
     check_deadline(deadline)
     N, m = d.nobs, spec.n_eq_estimated
@@ -523,12 +527,19 @@ def _finish(theta, d, spec, sigma_obj, sigma_from, method, vce_sigma, chunk,
     if method == "nls":
         sigma_V = sigma_final
 
-    cache = make_cache(spec)
+    cache = model.make_cache(spec)
     P = _whitener(sigma_V)
-    G, _, _ = _normal_equations(
-        theta, d, spec, cache, P, chunk, deadline=deadline
+    G, gradient, objective = _normal_equations(
+        theta, d, spec, cache, P, chunk, deadline=deadline, model=model
     )
     V = np.linalg.inv(G)
+    if not np.array_equal(sigma_V, sigma_obj):
+        # Stationarity is a property of the optimized objective, regardless of
+        # which residual covariance is requested for analytical inference.
+        G, gradient, objective = _normal_equations(
+            theta, d, spec, cache, _whitener(sigma_obj), chunk,
+            deadline=deadline, model=model)
+    nrtol = abs(float(gradient @ _solve_scaled(G, gradient))) / max(abs(objective), 1e-300)
 
     _, logdet = np.linalg.slogdet(sigma_final)
     llf = -(N * m / 2.0) * (1.0 + LOG2PI) - (N / 2.0) * logdet
@@ -536,5 +547,5 @@ def _finish(theta, d, spec, sigma_obj, sigma_from, method, vce_sigma, chunk,
     return NlsurResult(
         theta=theta, V=V, sigma=sigma_final, llf=float(llf), obj=float(obj),
         nobs=N, neq=m, method=method, n_outer=n_outer, n_gn=total_gn,
-        converged=bool(ok), history=history,
+        converged=bool(ok), history=history, nrtol=nrtol,
     )

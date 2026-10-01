@@ -4,6 +4,34 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 ## Unreleased
 
+- Added Shonkwiler--Yen to Python `translog(censor=True)`: all alphas are
+  free, every equation is estimated, and latent/observed shares remain
+  unnormalized. Gamma symmetry and demographic quantity translation are kept.
+- Added independent participation designs, participation/latent predictions,
+  complete S&Y expenditure and price derivatives, conditional analytical SEs,
+  and full two-step serial/spawn bootstrap. Compensated S&Y output is labeled
+  as a Slutsky transformation.
+- Extracted the shared participation engine and censoring transformation from
+  QUAIDS orchestration while preserving its existing APIs and behavior.
+- Added optional `start="nested"` for S&Y demographic translation. It obtains
+  initial values from a no-translation submodel using the same SUR engine;
+  final model restrictions and standard GN/IFGNLS defaults are unchanged.
+  Translog results now diagnose a large final scaled gradient instead of
+  accepting a domain-limited tiny step as sufficient evidence of convergence.
+
+- Added Python `translog()` for basic indirect translog demand,
+  with demographic translation, analytic share/parameter derivatives,
+  predictions for all goods, and full delta-method elasticity inference.
+- Introduced a model backend interface for the existing nonlinear SUR engine,
+  shared observation/output helpers, and shared spawn-safe bootstrap execution.
+  Existing `quaidsce()` APIs and results retain their behavior.
+- Added an independent zero-start Uruguay benchmark against the supplied
+  `demandsys` output, including an explicit diagnostic for Stata's
+  fixed-predicted-share elasticity standard errors.
+- Added translog theory, derivative, missing-data, inference, and serial/spawn
+  bootstrap checks. The current R and Stata entry points remain QUAIDS/AIDs
+  interfaces; they do not yet expose the new Python translog entry point.
+
 - Unified the main estimator name across interfaces: Python and R use `quaidsce()`, and Stata now uses the `quaidsce` command.
 - Renamed the R package from `rquaidsce` to `pyquaidsce`. The Python package name remains `pyquaidsce`.
 - Stata accepts both `quaidsce` and `pyquaidsce`. Both run the same estimator; `pyquaidsce` can be used to avoid a name conflict with an older installed `quaidsce` command.

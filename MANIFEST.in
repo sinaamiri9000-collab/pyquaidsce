@@ -1,6 +1,7 @@
 include CHANGELOG.md CITATION.cff CONTRIBUTING.md LICENSE README.md
+include TRANSLOG_REPORT_FA.md TRANSLOG_SY_REPORT_FA.md
 recursive-include bench *.dta *.log
-recursive-include benchmarks *.csv *.do *.dta *.json *.log *.md *.py
+recursive-include benchmarks *.csv *.do *.dta *.json *.log *.md *.py *.txt *.npz
 recursive-include docs *.md
 recursive-include examples *.do *.py
 recursive-include R DESCRIPTION LICENSE NAMESPACE README.md *.R *.Rd

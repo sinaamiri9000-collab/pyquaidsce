@@ -130,7 +130,10 @@ def _init_worker(payload, blas_threads: Optional[int] = 1):
 
 
 def _one_rep(task):
-    from .estimator import quaidsce
+    if _WORK.get("estimator", "quaidsce") == "translog":
+        from .translog import translog as estimate
+    else:
+        from .estimator import quaidsce as estimate
 
     rep_index, rep_seed = task
     df = _WORK["df"]
@@ -145,7 +148,7 @@ def _one_rep(task):
             None if rep_timeout is None
             else time.perf_counter() + float(rep_timeout)
         )
-        r = quaidsce(
+        r = estimate(
             boot_df, reps=0, verbose=False, _deadline=deadline, **kw
         )
         if deadline is not None and time.perf_counter() > deadline:
@@ -339,7 +342,30 @@ def bootstrap(
         sigma_tol=sigma_tol,
         blas_threads=blas_threads,
     )
-    payload = {"df": df, "kw": kw, "rep_timeout": rep_timeout}
+    return bootstrap_estimator(
+        data=df, estimator="quaidsce", kwargs=kw, reps=reps, seed=seed,
+        n_jobs=n_jobs, blas_threads=blas_threads, verbose=verbose,
+        mp_context=mp_context, rep_timeout=rep_timeout,
+    )
+
+
+def bootstrap_estimator(
+    *, data, estimator, kwargs, reps, seed=None, n_jobs=1, blas_threads=1,
+    verbose=True, mp_context=None, rep_timeout=None,
+) -> BootResult:
+    """Shared resampling, spawn workers and timeout supervision for any model.
+
+    Named built-in estimators keep jobs serializable on Windows and macOS.
+    The historical bootstrap() adapter supplies the unchanged QUAIDS options.
+    """
+    if estimator not in {"quaidsce", "translog"}:
+        raise ValueError("unknown bootstrap estimator")
+    if int(reps) != reps or reps < 2:
+        raise ValueError("bootstrap requires at least two replications")
+    reps = int(reps)
+    payload = {"df": data, "kw": dict(kwargs), "rep_timeout": rep_timeout,
+               "estimator": estimator}
+
 
     ss = np.random.SeedSequence(seed)
     seeds = [int(x) for x in ss.generate_state(reps, dtype=np.uint32)]

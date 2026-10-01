@@ -1,5 +1,10 @@
 # Benchmarks
 
+The new [`translog_uruguay/`](translog_uruguay/README.md) benchmark compares the
+unreleased uncensored translog estimator against the user-supplied Stata
+`demandsys` results. Its numerical evidence is separate from the historical
+QUAIDS benchmark below.
+
 This directory contains reproducible benchmark assets for `pyquaidsce`. The
 stored numerical-comparison outputs were recorded with an earlier
 compatibility-capable release and are retained as **historical validation and

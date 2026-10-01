@@ -1,0 +1,34 @@
+[
+  {
+    "start": "zero",
+    "llf": 113244.59988027856,
+    "nrtol": 0.11480943218508549,
+    "min_effective_expenditure_ratio": 3.974188533817369e-09,
+    "alpha_sum": 0.028613918776461134,
+    "stationary": false
+  },
+  {
+    "start": "mean",
+    "llf": 138810.83769853972,
+    "nrtol": 0.05718693888594024,
+    "min_effective_expenditure_ratio": 4.8046626566211614e-08,
+    "alpha_sum": 1.1350734194023622,
+    "stationary": false
+  },
+  {
+    "start": "linear initial",
+    "llf": 139660.4653021209,
+    "nrtol": 0.04855752523956166,
+    "min_effective_expenditure_ratio": 5.370582867314511e-10,
+    "alpha_sum": 1.162350152419349,
+    "stationary": false
+  },
+  {
+    "start": "nested",
+    "llf": 147656.99756186985,
+    "nrtol": 2.991590730722406e-17,
+    "min_effective_expenditure_ratio": 0.21855721667335026,
+    "alpha_sum": 0.9250241678370459,
+    "stationary": true
+  }
+]

@@ -1,0 +1,2290 @@
+{
+  "model": "basic translog",
+  "censor": false,
+  "method": "ifgnls",
+  "demographics_method": "translating",
+  "nobs": 6573,
+  "elasticity_display_nobs": 6848,
+  "llf": 124232.06,
+  "coefficients": [
+    {
+      "name": "alpha:alpha_1",
+      "estimate": 0.0975555,
+      "se": 0.0204869
+    },
+    {
+      "name": "alpha:alpha_2",
+      "estimate": 0.5113247,
+      "se": 0.0472405
+    },
+    {
+      "name": "alpha:alpha_3",
+      "estimate": -0.1078578,
+      "se": 0.0285322
+    },
+    {
+      "name": "alpha:alpha_4",
+      "estimate": -0.000118,
+      "se": 0.0205458
+    },
+    {
+      "name": "alpha:alpha_5",
+      "estimate": 0.2053194,
+      "se": 0.0583752
+    },
+    {
+      "name": "alpha:alpha_6",
+      "estimate": 0.0312578,
+      "se": 0.0105309
+    },
+    {
+      "name": "alpha:alpha_7",
+      "estimate": 0.3237781,
+      "se": 0.0375559
+    },
+    {
+      "name": "alpha:alpha_8",
+      "estimate": 0.0097074,
+      "se": 0.0120703
+    },
+    {
+      "name": "alpha:alpha_9",
+      "estimate": -0.0272004,
+      "se": 0.0264849
+    },
+    {
+      "name": "alpha:alpha_10",
+      "estimate": 0.0225767,
+      "se": 0.0387051
+    },
+    {
+      "name": "alpha:alpha_11",
+      "estimate": 0.0094851,
+      "se": 0.0095471
+    },
+    {
+      "name": "alpha:alpha_12",
+      "estimate": -0.0608172,
+      "se": 0.074973
+    },
+    {
+      "name": "alpha:alpha_13",
+      "estimate": 0.0794706,
+      "se": 0.0169225
+    },
+    {
+      "name": "alpha:alpha_14",
+      "estimate": -0.0944818,
+      "se": 0.0376586
+    },
+    {
+      "name": "Gamma:gamma_1_1",
+      "estimate": 0.0120698,
+      "se": 0.0072705
+    },
+    {
+      "name": "Gamma:gamma_1_2",
+      "estimate": 0.0205914,
+      "se": 0.0087295
+    },
+    {
+      "name": "Gamma:gamma_1_3",
+      "estimate": 0.0033982,
+      "se": 0.0065398
+    },
+    {
+      "name": "Gamma:gamma_1_4",
+      "estimate": -0.0009767,
+      "se": 0.0046896
+    },
+    {
+      "name": "Gamma:gamma_1_5",
+      "estimate": 0.0169236,
+      "se": 0.0120502
+    },
+    {
+      "name": "Gamma:gamma_1_6",
+      "estimate": 0.0036094,
+      "se": 0.0021012
+    },
+    {
+      "name": "Gamma:gamma_1_7",
+      "estimate": 0.0054944,
+      "se": 0.0064425
+    },
+    {
+      "name": "Gamma:gamma_1_8",
+      "estimate": 0.0020873,
+      "se": 0.0028099
+    },
+    {
+      "name": "Gamma:gamma_1_9",
+      "estimate": -0.0072147,
+      "se": 0.0062137
+    },
+    {
+      "name": "Gamma:gamma_1_10",
+      "estimate": -0.0013609,
+      "se": 0.00825
+    },
+    {
+      "name": "Gamma:gamma_1_11",
+      "estimate": -0.0019406,
+      "se": 0.0023105
+    },
+    {
+      "name": "Gamma:gamma_1_12",
+      "estimate": -0.0396084,
+      "se": 0.0149062
+    },
+    {
+      "name": "Gamma:gamma_1_13",
+      "estimate": -0.0164455,
+      "se": 0.0048096
+    },
+    {
+      "name": "Gamma:gamma_1_14",
+      "estimate": -0.0105926,
+      "se": 0.0079696
+    },
+    {
+      "name": "Gamma:gamma_2_2",
+      "estimate": 0.0578083,
+      "se": 0.0252824
+    },
+    {
+      "name": "Gamma:gamma_2_3",
+      "estimate": -0.0020942,
+      "se": 0.0116816
+    },
+    {
+      "name": "Gamma:gamma_2_4",
+      "estimate": 0.005676,
+      "se": 0.0092413
+    },
+    {
+      "name": "Gamma:gamma_2_5",
+      "estimate": 0.0554235,
+      "se": 0.0229621
+    },
+    {
+      "name": "Gamma:gamma_2_6",
+      "estimate": 0.0036967,
+      "se": 0.0044629
+    },
+    {
+      "name": "Gamma:gamma_2_7",
+      "estimate": 0.0070875,
+      "se": 0.0136032
+    },
+    {
+      "name": "Gamma:gamma_2_8",
+      "estimate": -0.0028561,
+      "se": 0.0061696
+    },
+    {
+      "name": "Gamma:gamma_2_9",
+      "estimate": 0.0090564,
+      "se": 0.0117392
+    },
+    {
+      "name": "Gamma:gamma_2_10",
+      "estimate": -0.0588164,
+      "se": 0.0178627
+    },
+    {
+      "name": "Gamma:gamma_2_11",
+      "estimate": 0.0107851,
+      "se": 0.0044413
+    },
+    {
+      "name": "Gamma:gamma_2_12",
+      "estimate": -0.0439523,
+      "se": 0.0298024
+    },
+    {
+      "name": "Gamma:gamma_2_13",
+      "estimate": 0.0074662,
+      "se": 0.0078147
+    },
+    {
+      "name": "Gamma:gamma_2_14",
+      "estimate": -0.0237644,
+      "se": 0.0170475
+    },
+    {
+      "name": "Gamma:gamma_3_3",
+      "estimate": -0.0078979,
+      "se": 0.0117445
+    },
+    {
+      "name": "Gamma:gamma_3_4",
+      "estimate": 0.0058374,
+      "se": 0.0062005
+    },
+    {
+      "name": "Gamma:gamma_3_5",
+      "estimate": -0.0393102,
+      "se": 0.0151667
+    },
+    {
+      "name": "Gamma:gamma_3_6",
+      "estimate": -0.001856,
+      "se": 0.0028395
+    },
+    {
+      "name": "Gamma:gamma_3_7",
+      "estimate": -0.0169828,
+      "se": 0.0085798
+    },
+    {
+      "name": "Gamma:gamma_3_8",
+      "estimate": -0.0017929,
+      "se": 0.0037351
+    },
+    {
+      "name": "Gamma:gamma_3_9",
+      "estimate": 0.0044974,
+      "se": 0.008078
+    },
+    {
+      "name": "Gamma:gamma_3_10",
+      "estimate": 0.0159209,
+      "se": 0.0110898
+    },
+    {
+      "name": "Gamma:gamma_3_11",
+      "estimate": -0.0042529,
+      "se": 0.0030987
+    },
+    {
+      "name": "Gamma:gamma_3_12",
+      "estimate": 0.0315525,
+      "se": 0.0194347
+    },
+    {
+      "name": "Gamma:gamma_3_13",
+      "estimate": -0.0187214,
+      "se": 0.0055757
+    },
+    {
+      "name": "Gamma:gamma_3_14",
+      "estimate": -0.0042261,
+      "se": 0.0107116
+    },
+    {
+      "name": "Gamma:gamma_4_4",
+      "estimate": 0.000616,
+      "se": 0.007014
+    },
+    {
+      "name": "Gamma:gamma_4_5",
+      "estimate": 0.0065583,
+      "se": 0.0125225
+    },
+    {
+      "name": "Gamma:gamma_4_6",
+      "estimate": -0.0066097,
+      "se": 0.0025174
+    },
+    {
+      "name": "Gamma:gamma_4_7",
+      "estimate": 0.0018392,
+      "se": 0.0067804
+    },
+    {
+      "name": "Gamma:gamma_4_8",
+      "estimate": 0.0034455,
+      "se": 0.0029475
+    },
+    {
+      "name": "Gamma:gamma_4_9",
+      "estimate": 0.0067196,
+      "se": 0.0061945
+    },
+    {
+      "name": "Gamma:gamma_4_10",
+      "estimate": -0.0073861,
+      "se": 0.0093813
+    },
+    {
+      "name": "Gamma:gamma_4_11",
+      "estimate": -0.0004734,
+      "se": 0.002388
+    },
+    {
+      "name": "Gamma:gamma_4_12",
+      "estimate": -0.0098495,
+      "se": 0.0153167
+    },
+    {
+      "name": "Gamma:gamma_4_13",
+      "estimate": -0.0058933,
+      "se": 0.0038104
+    },
+    {
+      "name": "Gamma:gamma_4_14",
+      "estimate": -0.008851,
+      "se": 0.0086108
+    },
+    {
+      "name": "Gamma:gamma_5_5",
+      "estimate": 0.0526901,
+      "se": 0.0461632
+    },
+    {
+      "name": "Gamma:gamma_5_6",
+      "estimate": 0.0117477,
+      "se": 0.0071719
+    },
+    {
+      "name": "Gamma:gamma_5_7",
+      "estimate": 0.0184057,
+      "se": 0.0176319
+    },
+    {
+      "name": "Gamma:gamma_5_8",
+      "estimate": -0.0082871,
+      "se": 0.0073567
+    },
+    {
+      "name": "Gamma:gamma_5_9",
+      "estimate": -0.0023771,
+      "se": 0.0152826
+    },
+    {
+      "name": "Gamma:gamma_5_10",
+      "estimate": 0.0533649,
+      "se": 0.0245205
+    },
+    {
+      "name": "Gamma:gamma_5_11",
+      "estimate": -0.0054027,
+      "se": 0.0055064
+    },
+    {
+      "name": "Gamma:gamma_5_12",
+      "estimate": -0.1062854,
+      "se": 0.0415458
+    },
+    {
+      "name": "Gamma:gamma_5_13",
+      "estimate": -0.0027497,
+      "se": 0.0096852
+    },
+    {
+      "name": "Gamma:gamma_5_14",
+      "estimate": -0.0780323,
+      "se": 0.0220953
+    },
+    {
+      "name": "Gamma:gamma_6_6",
+      "estimate": 0.0080297,
+      "se": 0.0028527
+    },
+    {
+      "name": "Gamma:gamma_6_7",
+      "estimate": 0.0018011,
+      "se": 0.0033772
+    },
+    {
+      "name": "Gamma:gamma_6_8",
+      "estimate": 8.66e-05,
+      "se": 0.0014248
+    },
+    {
+      "name": "Gamma:gamma_6_9",
+      "estimate": 0.0018058,
+      "se": 0.002977
+    },
+    {
+      "name": "Gamma:gamma_6_10",
+      "estimate": 0.0019549,
+      "se": 0.0052307
+    },
+    {
+      "name": "Gamma:gamma_6_11",
+      "estimate": 6.04e-06,
+      "se": 0.0010709
+    },
+    {
+      "name": "Gamma:gamma_6_12",
+      "estimate": -0.0172618,
+      "se": 0.0078516
+    },
+    {
+      "name": "Gamma:gamma_6_13",
+      "estimate": -0.0013202,
+      "se": 0.0015857
+    },
+    {
+      "name": "Gamma:gamma_6_14",
+      "estimate": -0.0066283,
+      "se": 0.0041318
+    },
+    {
+      "name": "Gamma:gamma_7_7",
+      "estimate": 0.0586796,
+      "se": 0.0141212
+    },
+    {
+      "name": "Gamma:gamma_7_8",
+      "estimate": 0.0003206,
+      "se": 0.0040881
+    },
+    {
+      "name": "Gamma:gamma_7_9",
+      "estimate": -0.0170541,
+      "se": 0.0086298
+    },
+    {
+      "name": "Gamma:gamma_7_10",
+      "estimate": -0.0148813,
+      "se": 0.013119
+    },
+    {
+      "name": "Gamma:gamma_7_11",
+      "estimate": 0.005908,
+      "se": 0.0032478
+    },
+    {
+      "name": "Gamma:gamma_7_12",
+      "estimate": 0.0040351,
+      "se": 0.0220963
+    },
+    {
+      "name": "Gamma:gamma_7_13",
+      "estimate": -0.0002695,
+      "se": 0.005419
+    },
+    {
+      "name": "Gamma:gamma_7_14",
+      "estimate": -0.0173538,
+      "se": 0.0119876
+    },
+    {
+      "name": "Gamma:gamma_8_8",
+      "estimate": 0.0058703,
+      "se": 0.0025543
+    },
+    {
+      "name": "Gamma:gamma_8_9",
+      "estimate": 0.0022809,
+      "se": 0.003696
+    },
+    {
+      "name": "Gamma:gamma_8_10",
+      "estimate": 0.003358,
+      "se": 0.0055852
+    },
+    {
+      "name": "Gamma:gamma_8_11",
+      "estimate": 0.0001218,
+      "se": 0.0013949
+    },
+    {
+      "name": "Gamma:gamma_8_12",
+      "estimate": -0.0074133,
+      "se": 0.0095239
+    },
+    {
+      "name": "Gamma:gamma_8_13",
+      "estimate": 0.0014926,
+      "se": 0.0023982
+    },
+    {
+      "name": "Gamma:gamma_8_14",
+      "estimate": -0.002744,
+      "se": 0.0051818
+    },
+    {
+      "name": "Gamma:gamma_9_9",
+      "estimate": -0.0038841,
+      "se": 0.0110658
+    },
+    {
+      "name": "Gamma:gamma_9_10",
+      "estimate": 0.0467901,
+      "se": 0.012879
+    },
+    {
+      "name": "Gamma:gamma_9_11",
+      "estimate": 0.0005127,
+      "se": 0.0030325
+    },
+    {
+      "name": "Gamma:gamma_9_12",
+      "estimate": -0.0762555,
+      "se": 0.0200953
+    },
+    {
+      "name": "Gamma:gamma_9_13",
+      "estimate": 0.0005505,
+      "se": 0.0051402
+    },
+    {
+      "name": "Gamma:gamma_9_14",
+      "estimate": 0.0158438,
+      "se": 0.0108637
+    },
+    {
+      "name": "Gamma:gamma_10_10",
+      "estimate": 0.0085332,
+      "se": 0.0257535
+    },
+    {
+      "name": "Gamma:gamma_10_11",
+      "estimate": 0.0019661,
+      "se": 0.0042002
+    },
+    {
+      "name": "Gamma:gamma_10_12",
+      "estimate": -0.1008976,
+      "se": 0.0307055
+    },
+    {
+      "name": "Gamma:gamma_10_13",
+      "estimate": -0.0189911,
+      "se": 0.006766
+    },
+    {
+      "name": "Gamma:gamma_10_14",
+      "estimate": 0.0545401,
+      "se": 0.0162728
+    },
+    {
+      "name": "Gamma:gamma_11_11",
+      "estimate": -0.0024428,
+      "se": 0.0017203
+    },
+    {
+      "name": "Gamma:gamma_11_12",
+      "estimate": -0.0089455,
+      "se": 0.0071059
+    },
+    {
+      "name": "Gamma:gamma_11_13",
+      "estimate": -0.0027251,
+      "se": 0.0019839
+    },
+    {
+      "name": "Gamma:gamma_11_14",
+      "estimate": 0.0012979,
+      "se": 0.0040489
+    },
+    {
+      "name": "Gamma:gamma_12_12",
+      "estimate": 0.2453396,
+      "se": 0.0666412
+    },
+    {
+      "name": "Gamma:gamma_12_13",
+      "estimate": 0.0494298,
+      "se": 0.0123246
+    },
+    {
+      "name": "Gamma:gamma_12_14",
+      "estimate": -0.0056845,
+      "se": 0.0266091
+    },
+    {
+      "name": "Gamma:gamma_13_13",
+      "estimate": -0.0060877,
+      "se": 0.0059346
+    },
+    {
+      "name": "Gamma:gamma_13_14",
+      "estimate": 0.0096227,
+      "se": 0.0066733
+    },
+    {
+      "name": "Gamma:gamma_14_14",
+      "estimate": 0.0540459,
+      "se": 0.0211829
+    },
+    {
+      "name": "Nu:nu_npersonas_1",
+      "estimate": 0.0080082,
+      "se": 0.0073056
+    },
+    {
+      "name": "Nu:nu_npersonas_2",
+      "estimate": 0.1363004,
+      "se": 0.0093589
+    },
+    {
+      "name": "Nu:nu_npersonas_3",
+      "estimate": -0.0038174,
+      "se": 0.0017791
+    },
+    {
+      "name": "Nu:nu_npersonas_4",
+      "estimate": -0.002384,
+      "se": 0.0012822
+    },
+    {
+      "name": "Nu:nu_npersonas_5",
+      "estimate": -0.019174,
+      "se": 0.011213
+    },
+    {
+      "name": "Nu:nu_npersonas_6",
+      "estimate": -0.0009625,
+      "se": 0.0010033
+    },
+    {
+      "name": "Nu:nu_npersonas_7",
+      "estimate": 0.3712448,
+      "se": 0.0219753
+    },
+    {
+      "name": "Nu:nu_npersonas_8",
+      "estimate": 0.0002913,
+      "se": 0.0021077
+    },
+    {
+      "name": "Nu:nu_npersonas_9",
+      "estimate": 0.0007239,
+      "se": 0.0021311
+    },
+    {
+      "name": "Nu:nu_npersonas_10",
+      "estimate": 0.0015725,
+      "se": 0.0022265
+    },
+    {
+      "name": "Nu:nu_npersonas_11",
+      "estimate": -0.0007012,
+      "se": 0.0004275
+    },
+    {
+      "name": "Nu:nu_npersonas_12",
+      "estimate": 0.0116509,
+      "se": 0.0058739
+    },
+    {
+      "name": "Nu:nu_npersonas_13",
+      "estimate": 0.0005689,
+      "se": 0.0045842
+    },
+    {
+      "name": "Nu:nu_npersonas_14",
+      "estimate": 0.0067135,
+      "se": 0.0040594
+    },
+    {
+      "name": "Nu:nu_edad_1",
+      "estimate": -0.0024954,
+      "se": 0.0005429
+    },
+    {
+      "name": "Nu:nu_edad_2",
+      "estimate": -0.0030296,
+      "se": 0.0007512
+    },
+    {
+      "name": "Nu:nu_edad_3",
+      "estimate": -0.000325,
+      "se": 0.0001213
+    },
+    {
+      "name": "Nu:nu_edad_4",
+      "estimate": 4.14e-05,
+      "se": 8.48e-05
+    },
+    {
+      "name": "Nu:nu_edad_5",
+      "estimate": 0.0054585,
+      "se": 0.000817
+    },
+    {
+      "name": "Nu:nu_edad_6",
+      "estimate": -0.0002117,
+      "se": 7.29e-05
+    },
+    {
+      "name": "Nu:nu_edad_7",
+      "estimate": -0.0039561,
+      "se": 0.0017394
+    },
+    {
+      "name": "Nu:nu_edad_8",
+      "estimate": -0.0005826,
+      "se": 0.0001291
+    },
+    {
+      "name": "Nu:nu_edad_9",
+      "estimate": -0.0002651,
+      "se": 0.0001433
+    },
+    {
+      "name": "Nu:nu_edad_10",
+      "estimate": -0.0011511,
+      "se": 0.000151
+    },
+    {
+      "name": "Nu:nu_edad_11",
+      "estimate": -6.76e-05,
+      "se": 2.76e-05
+    },
+    {
+      "name": "Nu:nu_edad_12",
+      "estimate": -0.001561,
+      "se": 0.0004189
+    },
+    {
+      "name": "Nu:nu_edad_13",
+      "estimate": 3.58e-05,
+      "se": 0.0003807
+    },
+    {
+      "name": "Nu:nu_edad_14",
+      "estimate": -0.0009309,
+      "se": 0.0002852
+    },
+    {
+      "name": "Nu:nu_Sex_1",
+      "estimate": -0.0351235,
+      "se": 0.0157491
+    },
+    {
+      "name": "Nu:nu_Sex_2",
+      "estimate": 0.0841547,
+      "se": 0.0245956
+    },
+    {
+      "name": "Nu:nu_Sex_3",
+      "estimate": 0.0215438,
+      "se": 0.0033289
+    },
+    {
+      "name": "Nu:nu_Sex_4",
+      "estimate": 0.0023651,
+      "se": 0.0022656
+    },
+    {
+      "name": "Nu:nu_Sex_5",
+      "estimate": -0.0521847,
+      "se": 0.0230923
+    },
+    {
+      "name": "Nu:nu_Sex_6",
+      "estimate": -0.0011063,
+      "se": 0.0020064
+    },
+    {
+      "name": "Nu:nu_Sex_7",
+      "estimate": 0.2749488,
+      "se": 0.0549145
+    },
+    {
+      "name": "Nu:nu_Sex_8",
+      "estimate": 0.0098156,
+      "se": 0.0037823
+    },
+    {
+      "name": "Nu:nu_Sex_9",
+      "estimate": 0.0049776,
+      "se": 0.0038044
+    },
+    {
+      "name": "Nu:nu_Sex_10",
+      "estimate": -0.0032388,
+      "se": 0.00409
+    },
+    {
+      "name": "Nu:nu_Sex_11",
+      "estimate": 0.0003907,
+      "se": 0.00077
+    },
+    {
+      "name": "Nu:nu_Sex_12",
+      "estimate": 0.0436351,
+      "se": 0.0117514
+    },
+    {
+      "name": "Nu:nu_Sex_13",
+      "estimate": -0.012486,
+      "se": 0.0107556
+    },
+    {
+      "name": "Nu:nu_Sex_14",
+      "estimate": 0.0265619,
+      "se": 0.0080025
+    },
+    {
+      "name": "Nu:nu_prim_comp_1",
+      "estimate": -0.1123941,
+      "se": 0.021985
+    },
+    {
+      "name": "Nu:nu_prim_comp_2",
+      "estimate": -0.2109579,
+      "se": 0.0332743
+    },
+    {
+      "name": "Nu:nu_prim_comp_3",
+      "estimate": -0.0094832,
+      "se": 0.0051393
+    },
+    {
+      "name": "Nu:nu_prim_comp_4",
+      "estimate": -0.0032247,
+      "se": 0.0035833
+    },
+    {
+      "name": "Nu:nu_prim_comp_5",
+      "estimate": 0.0446317,
+      "se": 0.033939
+    },
+    {
+      "name": "Nu:nu_prim_comp_6",
+      "estimate": -0.0032134,
+      "se": 0.0030373
+    },
+    {
+      "name": "Nu:nu_prim_comp_7",
+      "estimate": -0.4157672,
+      "se": 0.0741454
+    },
+    {
+      "name": "Nu:nu_prim_comp_8",
+      "estimate": -0.0397228,
+      "se": 0.0056055
+    },
+    {
+      "name": "Nu:nu_prim_comp_9",
+      "estimate": -0.0121583,
+      "se": 0.00595
+    },
+    {
+      "name": "Nu:nu_prim_comp_10",
+      "estimate": -0.025377,
+      "se": 0.0063027
+    },
+    {
+      "name": "Nu:nu_prim_comp_11",
+      "estimate": -0.0019337,
+      "se": 0.0011994
+    },
+    {
+      "name": "Nu:nu_prim_comp_12",
+      "estimate": -0.088044,
+      "se": 0.0173988
+    },
+    {
+      "name": "Nu:nu_prim_comp_13",
+      "estimate": -0.062872,
+      "se": 0.0145565
+    },
+    {
+      "name": "Nu:nu_prim_comp_14",
+      "estimate": -0.0448273,
+      "se": 0.0119035
+    },
+    {
+      "name": "Nu:nu_sec_comp_1",
+      "estimate": -0.2475579,
+      "se": 0.0398264
+    },
+    {
+      "name": "Nu:nu_sec_comp_2",
+      "estimate": -0.679496,
+      "se": 0.0634536
+    },
+    {
+      "name": "Nu:nu_sec_comp_3",
+      "estimate": -0.0111772,
+      "se": 0.0083039
+    },
+    {
+      "name": "Nu:nu_sec_comp_4",
+      "estimate": -0.0021077,
+      "se": 0.0054321
+    },
+    {
+      "name": "Nu:nu_sec_comp_5",
+      "estimate": -0.0535454,
+      "se": 0.0612591
+    },
+    {
+      "name": "Nu:nu_sec_comp_6",
+      "estimate": -0.0186436,
+      "se": 0.0046626
+    },
+    {
+      "name": "Nu:nu_sec_comp_7",
+      "estimate": -0.9091252,
+      "se": 0.1209302
+    },
+    {
+      "name": "Nu:nu_sec_comp_8",
+      "estimate": -0.0781321,
+      "se": 0.0091127
+    },
+    {
+      "name": "Nu:nu_sec_comp_9",
+      "estimate": -0.0312042,
+      "se": 0.0098371
+    },
+    {
+      "name": "Nu:nu_sec_comp_10",
+      "estimate": -0.0685284,
+      "se": 0.011074
+    },
+    {
+      "name": "Nu:nu_sec_comp_11",
+      "estimate": -0.0006452,
+      "se": 0.001762
+    },
+    {
+      "name": "Nu:nu_sec_comp_12",
+      "estimate": -0.2663831,
+      "se": 0.0345416
+    },
+    {
+      "name": "Nu:nu_sec_comp_13",
+      "estimate": -0.0766565,
+      "se": 0.0247232
+    },
+    {
+      "name": "Nu:nu_sec_comp_14",
+      "estimate": -0.1201949,
+      "se": 0.0219064
+    },
+    {
+      "name": "Nu:nu_sup_comp_1",
+      "estimate": -0.2650739,
+      "se": 0.0463693
+    },
+    {
+      "name": "Nu:nu_sup_comp_2",
+      "estimate": -0.5282924,
+      "se": 0.0751354
+    },
+    {
+      "name": "Nu:nu_sup_comp_3",
+      "estimate": 0.0045761,
+      "se": 0.0079762
+    },
+    {
+      "name": "Nu:nu_sup_comp_4",
+      "estimate": -0.006686,
+      "se": 0.0053525
+    },
+    {
+      "name": "Nu:nu_sup_comp_5",
+      "estimate": -0.0864479,
+      "se": 0.0661452
+    },
+    {
+      "name": "Nu:nu_sup_comp_6",
+      "estimate": -0.0149275,
+      "se": 0.00462
+    },
+    {
+      "name": "Nu:nu_sup_comp_7",
+      "estimate": -1.252378,
+      "se": 0.165313
+    },
+    {
+      "name": "Nu:nu_sup_comp_8",
+      "estimate": -0.062077,
+      "se": 0.0085059
+    },
+    {
+      "name": "Nu:nu_sup_comp_9",
+      "estimate": -0.0391452,
+      "se": 0.0105138
+    },
+    {
+      "name": "Nu:nu_sup_comp_10",
+      "estimate": -0.0644254,
+      "se": 0.011085
+    },
+    {
+      "name": "Nu:nu_sup_comp_11",
+      "estimate": -0.0035234,
+      "se": 0.0017797
+    },
+    {
+      "name": "Nu:nu_sup_comp_12",
+      "estimate": -0.1665614,
+      "se": 0.0310937
+    },
+    {
+      "name": "Nu:nu_sup_comp_13",
+      "estimate": -0.2280268,
+      "se": 0.0373883
+    },
+    {
+      "name": "Nu:nu_sup_comp_14",
+      "estimate": -0.1112697,
+      "se": 0.0223921
+    },
+    {
+      "name": "Nu:nu_log_ing_1",
+      "estimate": 0.0215404,
+      "se": 0.003883
+    },
+    {
+      "name": "Nu:nu_log_ing_2",
+      "estimate": -0.0210101,
+      "se": 0.0052913
+    },
+    {
+      "name": "Nu:nu_log_ing_3",
+      "estimate": 0.0018142,
+      "se": 0.0008524
+    },
+    {
+      "name": "Nu:nu_log_ing_4",
+      "estimate": 0.0003759,
+      "se": 0.0005791
+    },
+    {
+      "name": "Nu:nu_log_ing_5",
+      "estimate": -0.0129496,
+      "se": 0.0053767
+    },
+    {
+      "name": "Nu:nu_log_ing_6",
+      "estimate": 0.0014623,
+      "se": 0.0004756
+    },
+    {
+      "name": "Nu:nu_log_ing_7",
+      "estimate": -0.0825965,
+      "se": 0.0130546
+    },
+    {
+      "name": "Nu:nu_log_ing_8",
+      "estimate": 0.0033458,
+      "se": 0.0009017
+    },
+    {
+      "name": "Nu:nu_log_ing_9",
+      "estimate": 0.001517,
+      "se": 0.0009644
+    },
+    {
+      "name": "Nu:nu_log_ing_10",
+      "estimate": 0.0061605,
+      "se": 0.0010094
+    },
+    {
+      "name": "Nu:nu_log_ing_11",
+      "estimate": 0.0005704,
+      "se": 0.0001948
+    },
+    {
+      "name": "Nu:nu_log_ing_12",
+      "estimate": 0.0070616,
+      "se": 0.0028548
+    },
+    {
+      "name": "Nu:nu_log_ing_13",
+      "estimate": 0.0054779,
+      "se": 0.0024491
+    },
+    {
+      "name": "Nu:nu_log_ing_14",
+      "estimate": 0.0006958,
+      "se": 0.0018845
+    }
+  ],
+  "uncompensated": [
+    {
+      "good": 1,
+      "price": 1,
+      "estimate": -0.8663996,
+      "se": 0.0873311
+    },
+    {
+      "good": 2,
+      "price": 1,
+      "estimate": 0.0962581,
+      "se": 0.0354197
+    },
+    {
+      "good": 3,
+      "price": 1,
+      "estimate": 0.0576024,
+      "se": 0.0870558
+    },
+    {
+      "good": 4,
+      "price": 1,
+      "estimate": -0.0368599,
+      "se": 0.2385899
+    },
+    {
+      "good": 5,
+      "price": 1,
+      "estimate": 0.1334977,
+      "se": 0.086113
+    },
+    {
+      "good": 6,
+      "price": 1,
+      "estimate": 0.6171668,
+      "se": 0.3505523
+    },
+    {
+      "good": 7,
+      "price": 1,
+      "estimate": 0.0945244,
+      "se": 0.0967467
+    },
+    {
+      "good": 8,
+      "price": 1,
+      "estimate": 0.0979706,
+      "se": 0.1142411
+    },
+    {
+      "good": 9,
+      "price": 1,
+      "estimate": -0.0880628,
+      "se": 0.0865898
+    },
+    {
+      "good": 10,
+      "price": 1,
+      "estimate": -0.0037561,
+      "se": 0.1017718
+    },
+    {
+      "good": 11,
+      "price": 1,
+      "estimate": -0.1743531,
+      "se": 0.2229284
+    },
+    {
+      "good": 12,
+      "price": 1,
+      "estimate": -0.1373683,
+      "se": 0.055904
+    },
+    {
+      "good": 13,
+      "price": 1,
+      "estimate": -0.1751006,
+      "se": 0.0540102
+    },
+    {
+      "good": 14,
+      "price": 1,
+      "estimate": -0.0849191,
+      "se": 0.0734149
+    },
+    {
+      "good": 1,
+      "price": 2,
+      "estimate": 0.2294073,
+      "se": 0.1069641
+    },
+    {
+      "good": 2,
+      "price": 2,
+      "estimate": -0.855797,
+      "se": 0.099968
+    },
+    {
+      "good": 3,
+      "price": 2,
+      "estimate": -0.046001,
+      "se": 0.1554386
+    },
+    {
+      "good": 4,
+      "price": 2,
+      "estimate": 0.2696526,
+      "se": 0.4702544
+    },
+    {
+      "good": 5,
+      "price": 2,
+      "estimate": 0.3741052,
+      "se": 0.1634481
+    },
+    {
+      "good": 6,
+      "price": 2,
+      "estimate": 0.59416,
+      "se": 0.7462655
+    },
+    {
+      "good": 7,
+      "price": 2,
+      "estimate": 0.073413,
+      "se": 0.2042187
+    },
+    {
+      "good": 8,
+      "price": 2,
+      "estimate": -0.1405294,
+      "se": 0.2508258
+    },
+    {
+      "good": 9,
+      "price": 2,
+      "estimate": 0.1044049,
+      "se": 0.1637944
+    },
+    {
+      "good": 10,
+      "price": 2,
+      "estimate": -0.7494642,
+      "se": 0.2166043
+    },
+    {
+      "good": 11,
+      "price": 2,
+      "estimate": 1.022526,
+      "se": 0.4249109
+    },
+    {
+      "good": 12,
+      "price": 2,
+      "estimate": -0.188001,
+      "se": 0.1122822
+    },
+    {
+      "good": 13,
+      "price": 2,
+      "estimate": 0.0604288,
+      "se": 0.089119
+    },
+    {
+      "good": 14,
+      "price": 2,
+      "estimate": -0.2428475,
+      "se": 0.1564969
+    },
+    {
+      "good": 1,
+      "price": 3,
+      "estimate": 0.0669765,
+      "se": 0.0802902
+    },
+    {
+      "good": 2,
+      "price": 3,
+      "estimate": 0.0185365,
+      "se": 0.0474325
+    },
+    {
+      "good": 3,
+      "price": 3,
+      "estimate": -1.03666,
+      "se": 0.1542475
+    },
+    {
+      "good": 4,
+      "price": 3,
+      "estimate": 0.3206307,
+      "se": 0.315021
+    },
+    {
+      "good": 5,
+      "price": 3,
+      "estimate": -0.2568608,
+      "se": 0.107791
+    },
+    {
+      "good": 6,
+      "price": 3,
+      "estimate": -0.2844936,
+      "se": 0.4749232
+    },
+    {
+      "good": 7,
+      "price": 3,
+      "estimate": -0.2268594,
+      "se": 0.1276445
+    },
+    {
+      "good": 8,
+      "price": 3,
+      "estimate": -0.046838,
+      "se": 0.1517602
+    },
+    {
+      "good": 9,
+      "price": 3,
+      "estimate": 0.0873596,
+      "se": 0.1127092
+    },
+    {
+      "good": 10,
+      "price": 3,
+      "estimate": 0.2221739,
+      "se": 0.1365198
+    },
+    {
+      "good": 11,
+      "price": 3,
+      "estimate": -0.3870169,
+      "se": 0.2982729
+    },
+    {
+      "good": 12,
+      "price": 3,
+      "estimate": 0.144104,
+      "se": 0.0733572
+    },
+    {
+      "good": 13,
+      "price": 3,
+      "estimate": -0.1881147,
+      "se": 0.0627886
+    },
+    {
+      "good": 14,
+      "price": 3,
+      "estimate": -0.0136122,
+      "se": 0.0988587
+    },
+    {
+      "good": 1,
+      "price": 4,
+      "estimate": -0.0047885,
+      "se": 0.0575943
+    },
+    {
+      "good": 2,
+      "price": 4,
+      "estimate": 0.0305619,
+      "se": 0.0375862
+    },
+    {
+      "good": 3,
+      "price": 4,
+      "estimate": 0.0843977,
+      "se": 0.0824549
+    },
+    {
+      "good": 4,
+      "price": 4,
+      "estimate": -0.9560945,
+      "se": 0.3547941
+    },
+    {
+      "good": 5,
+      "price": 4,
+      "estimate": 0.0539248,
+      "se": 0.0896042
+    },
+    {
+      "good": 6,
+      "price": 4,
+      "estimate": -1.098733,
+      "se": 0.4179947
+    },
+    {
+      "good": 7,
+      "price": 4,
+      "estimate": 0.0351924,
+      "se": 0.1018245
+    },
+    {
+      "good": 8,
+      "price": 4,
+      "estimate": 0.1475343,
+      "se": 0.1196005
+    },
+    {
+      "good": 9,
+      "price": 4,
+      "estimate": 0.1008921,
+      "se": 0.0863254
+    },
+    {
+      "good": 10,
+      "price": 4,
+      "estimate": -0.0837653,
+      "se": 0.1156618
+    },
+    {
+      "good": 11,
+      "price": 4,
+      "estimate": -0.0387427,
+      "se": 0.2304764
+    },
+    {
+      "good": 12,
+      "price": 4,
+      "estimate": -0.0302504,
+      "se": 0.058033
+    },
+    {
+      "good": 13,
+      "price": 4,
+      "estimate": -0.0600354,
+      "se": 0.0433471
+    },
+    {
+      "good": 14,
+      "price": 4,
+      "estimate": -0.0744659,
+      "se": 0.0794879
+    },
+    {
+      "good": 1,
+      "price": 5,
+      "estimate": 0.2289208,
+      "se": 0.147821
+    },
+    {
+      "good": 2,
+      "price": 5,
+      "estimate": 0.2472207,
+      "se": 0.092884
+    },
+    {
+      "good": 3,
+      "price": 5,
+      "estimate": -0.50398,
+      "se": 0.2005638
+    },
+    {
+      "good": 4,
+      "price": 5,
+      "estimate": 0.3539925,
+      "se": 0.6369957
+    },
+    {
+      "good": 5,
+      "price": 5,
+      "estimate": -0.600076,
+      "se": 0.3298073
+    },
+    {
+      "good": 6,
+      "price": 5,
+      "estimate": 1.987807,
+      "se": 1.196508
+    },
+    {
+      "good": 7,
+      "price": 5,
+      "estimate": 0.298563,
+      "se": 0.2644888
+    },
+    {
+      "good": 8,
+      "price": 5,
+      "estimate": -0.3152477,
+      "se": 0.2984813
+    },
+    {
+      "good": 9,
+      "price": 5,
+      "estimate": -0.0125073,
+      "se": 0.2133233
+    },
+    {
+      "good": 10,
+      "price": 5,
+      "estimate": 0.6799371,
+      "se": 0.3008814
+    },
+    {
+      "good": 11,
+      "price": 5,
+      "estimate": -0.5011579,
+      "se": 0.5306169
+    },
+    {
+      "good": 12,
+      "price": 5,
+      "estimate": -0.3822537,
+      "se": 0.155925
+    },
+    {
+      "good": 13,
+      "price": 5,
+      "estimate": -0.0104139,
+      "se": 0.1103972
+    },
+    {
+      "good": 14,
+      "price": 5,
+      "estimate": -0.6994361,
+      "se": 0.2008622
+    },
+    {
+      "good": 1,
+      "price": 6,
+      "estimate": 0.0453632,
+      "se": 0.0257331
+    },
+    {
+      "good": 2,
+      "price": 6,
+      "estimate": 0.0159949,
+      "se": 0.018135
+    },
+    {
+      "good": 3,
+      "price": 6,
+      "estimate": -0.0236691,
+      "se": 0.0377906
+    },
+    {
+      "good": 4,
+      "price": 6,
+      "estimate": -0.3352254,
+      "se": 0.1270875
+    },
+    {
+      "good": 5,
+      "price": 6,
+      "estimate": 0.0850707,
+      "se": 0.0511715
+    },
+    {
+      "good": 6,
+      "price": 6,
+      "estimate": 0.2836951,
+      "se": 0.4718195
+    },
+    {
+      "good": 7,
+      "price": 6,
+      "estimate": 0.0279207,
+      "se": 0.050705
+    },
+    {
+      "good": 8,
+      "price": 6,
+      "estimate": 0.0045816,
+      "se": 0.057944
+    },
+    {
+      "good": 9,
+      "price": 6,
+      "estimate": 0.0262498,
+      "se": 0.0415474
+    },
+    {
+      "good": 10,
+      "price": 6,
+      "estimate": 0.0251785,
+      "se": 0.0645246
+    },
+    {
+      "good": 11,
+      "price": 6,
+      "estimate": 0.001684,
+      "se": 0.1033557
+    },
+    {
+      "good": 12,
+      "price": 6,
+      "estimate": -0.0643879,
+      "se": 0.0295863
+    },
+    {
+      "good": 13,
+      "price": 6,
+      "estimate": -0.0140637,
+      "se": 0.0180631
+    },
+    {
+      "good": 14,
+      "price": 6,
+      "estimate": -0.0601684,
+      "se": 0.0380499
+    },
+    {
+      "good": 1,
+      "price": 7,
+      "estimate": 0.042376,
+      "se": 0.0791352
+    },
+    {
+      "good": 2,
+      "price": 7,
+      "estimate": 0.001563,
+      "se": 0.0552943
+    },
+    {
+      "good": 3,
+      "price": 7,
+      "estimate": -0.2483299,
+      "se": 0.1132258
+    },
+    {
+      "good": 4,
+      "price": 7,
+      "estimate": 0.0703758,
+      "se": 0.3449223
+    },
+    {
+      "good": 5,
+      "price": 7,
+      "estimate": 0.1074273,
+      "se": 0.1260211
+    },
+    {
+      "good": 6,
+      "price": 7,
+      "estimate": 0.275426,
+      "se": 0.5648647
+    },
+    {
+      "good": 7,
+      "price": 7,
+      "estimate": -0.2174267,
+      "se": 0.1986782
+    },
+    {
+      "good": 8,
+      "price": 7,
+      "estimate": -0.0129079,
+      "se": 0.1662096
+    },
+    {
+      "good": 9,
+      "price": 7,
+      "estimate": -0.262453,
+      "se": 0.1196551
+    },
+    {
+      "good": 10,
+      "price": 7,
+      "estimate": -0.2091962,
+      "se": 0.1614779
+    },
+    {
+      "good": 11,
+      "price": 7,
+      "estimate": 0.547233,
+      "se": 0.3120914
+    },
+    {
+      "good": 12,
+      "price": 7,
+      "estimate": -0.0089049,
+      "se": 0.0837212
+    },
+    {
+      "good": 13,
+      "price": 7,
+      "estimate": -0.0284242,
+      "se": 0.0617929
+    },
+    {
+      "good": 14,
+      "price": 7,
+      "estimate": -0.1855391,
+      "se": 0.1100485
+    },
+    {
+      "good": 1,
+      "price": 8,
+      "estimate": 0.0299782,
+      "se": 0.034516
+    },
+    {
+      "good": 2,
+      "price": 8,
+      "estimate": -0.007531,
+      "se": 0.0250759
+    },
+    {
+      "good": 3,
+      "price": 8,
+      "estimate": -0.0194874,
+      "se": 0.0497113
+    },
+    {
+      "good": 4,
+      "price": 8,
+      "estimate": 0.1798547,
+      "se": 0.1496834
+    },
+    {
+      "good": 5,
+      "price": 8,
+      "estimate": -0.0550525,
+      "se": 0.0525393
+    },
+    {
+      "good": 6,
+      "price": 8,
+      "estimate": 0.0189594,
+      "se": 0.2384833
+    },
+    {
+      "good": 7,
+      "price": 8,
+      "estimate": 0.0085171,
+      "se": 0.0613935
+    },
+    {
+      "good": 8,
+      "price": 8,
+      "estimate": -0.8164302,
+      "se": 0.101451
+    },
+    {
+      "good": 9,
+      "price": 8,
+      "estimate": 0.0362146,
+      "se": 0.0515928
+    },
+    {
+      "good": 10,
+      "price": 8,
+      "estimate": 0.0458915,
+      "se": 0.0688953
+    },
+    {
+      "good": 11,
+      "price": 8,
+      "estimate": 0.0163751,
+      "se": 0.1346616
+    },
+    {
+      "good": 12,
+      "price": 8,
+      "estimate": -0.0236536,
+      "se": 0.0360569
+    },
+    {
+      "good": 13,
+      "price": 8,
+      "estimate": 0.0211998,
+      "se": 0.0273636
+    },
+    {
+      "good": 14,
+      "price": 8,
+      "estimate": -0.0209174,
+      "se": 0.0478343
+    },
+    {
+      "good": 1,
+      "price": 9,
+      "estimate": -0.0734019,
+      "se": 0.0761952
+    },
+    {
+      "good": 2,
+      "price": 9,
+      "estimate": 0.0523524,
+      "se": 0.0477163
+    },
+    {
+      "good": 3,
+      "price": 9,
+      "estimate": 0.0741912,
+      "se": 0.1075558
+    },
+    {
+      "good": 4,
+      "price": 9,
+      "estimate": 0.3567973,
+      "se": 0.3146984
+    },
+    {
+      "good": 5,
+      "price": 9,
+      "estimate": -0.0022222,
+      "se": 0.1093799
+    },
+    {
+      "good": 6,
+      "price": 9,
+      "estimate": 0.3179182,
+      "se": 0.4981094
+    },
+    {
+      "good": 7,
+      "price": 9,
+      "estimate": -0.2407023,
+      "se": 0.1287599
+    },
+    {
+      "good": 8,
+      "price": 9,
+      "estimate": 0.1084282,
+      "se": 0.1502723
+    },
+    {
+      "good": 9,
+      "price": 9,
+      "estimate": -1.049362,
+      "se": 0.153497
+    },
+    {
+      "good": 10,
+      "price": 9,
+      "estimate": 0.5928611,
+      "se": 0.1562306
+    },
+    {
+      "good": 11,
+      "price": 9,
+      "estimate": 0.0644165,
+      "se": 0.2927176
+    },
+    {
+      "good": 12,
+      "price": 9,
+      "estimate": -0.2740321,
+      "se": 0.0746636
+    },
+    {
+      "good": 13,
+      "price": 9,
+      "estimate": 0.0213206,
+      "se": 0.0586607
+    },
+    {
+      "good": 14,
+      "price": 9,
+      "estimate": 0.1617313,
+      "se": 0.1001238
+    },
+    {
+      "good": 1,
+      "price": 10,
+      "estimate": -0.0009905,
+      "se": 0.1013392
+    },
+    {
+      "good": 2,
+      "price": 10,
+      "estimate": -0.2240141,
+      "se": 0.0713867
+    },
+    {
+      "good": 3,
+      "price": 10,
+      "estimate": 0.2275895,
+      "se": 0.1473976
+    },
+    {
+      "good": 4,
+      "price": 10,
+      "estimate": -0.3596378,
+      "se": 0.477077
+    },
+    {
+      "good": 5,
+      "price": 10,
+      "estimate": 0.397219,
+      "se": 0.1745755
+    },
+    {
+      "good": 6,
+      "price": 10,
+      "estimate": 0.3433454,
+      "se": 0.8752907
+    },
+    {
+      "good": 7,
+      "price": 10,
+      "estimate": -0.2093947,
+      "se": 0.1966139
+    },
+    {
+      "good": 8,
+      "price": 10,
+      "estimate": 0.1527227,
+      "se": 0.2270692
+    },
+    {
+      "good": 9,
+      "price": 10,
+      "estimate": 0.6689869,
+      "se": 0.1767805
+    },
+    {
+      "good": 10,
+      "price": 10,
+      "estimate": -0.9286519,
+      "se": 0.3174159
+    },
+    {
+      "good": 11,
+      "price": 10,
+      "estimate": 0.2061411,
+      "se": 0.4052846
+    },
+    {
+      "good": 12,
+      "price": 10,
+      "estimate": -0.3665612,
+      "se": 0.1147191
+    },
+    {
+      "good": 13,
+      "price": 10,
+      "estimate": -0.2013069,
+      "se": 0.0763053
+    },
+    {
+      "good": 14,
+      "price": 10,
+      "estimate": 0.519738,
+      "se": 0.1485963
+    },
+    {
+      "good": 1,
+      "price": 11,
+      "estimate": -0.0195198,
+      "se": 0.0283791
+    },
+    {
+      "good": 2,
+      "price": 11,
+      "estimate": 0.0483296,
+      "se": 0.0179069
+    },
+    {
+      "good": 3,
+      "price": 11,
+      "estimate": -0.0526369,
+      "se": 0.0411629
+    },
+    {
+      "good": 4,
+      "price": 11,
+      "estimate": -0.0199225,
+      "se": 0.1215283
+    },
+    {
+      "good": 5,
+      "price": 11,
+      "estimate": -0.0344707,
+      "se": 0.0393532
+    },
+    {
+      "good": 6,
+      "price": 11,
+      "estimate": 0.005469,
+      "se": 0.1792276
+    },
+    {
+      "good": 7,
+      "price": 11,
+      "estimate": 0.0932593,
+      "se": 0.0485669
+    },
+    {
+      "good": 8,
+      "price": 11,
+      "estimate": 0.0094045,
+      "se": 0.0567334
+    },
+    {
+      "good": 9,
+      "price": 11,
+      "estimate": 0.0113965,
+      "se": 0.04234
+    },
+    {
+      "good": 10,
+      "price": 11,
+      "estimate": 0.0286683,
+      "se": 0.0518119
+    },
+    {
+      "good": 11,
+      "price": 11,
+      "estimate": -1.226287,
+      "se": 0.1568431
+    },
+    {
+      "good": 12,
+      "price": 11,
+      "estimate": -0.0296682,
+      "se": 0.0268717
+    },
+    {
+      "good": 13,
+      "price": 11,
+      "estimate": -0.0267847,
+      "se": 0.0225943
+    },
+    {
+      "good": 14,
+      "price": 11,
+      "estimate": 0.0163483,
+      "se": 0.0373951
+    },
+    {
+      "good": 1,
+      "price": 12,
+      "estimate": -0.4167259,
+      "se": 0.1811055
+    },
+    {
+      "good": 2,
+      "price": 12,
+      "estimate": -0.1075212,
+      "se": 0.120407
+    },
+    {
+      "good": 3,
+      "price": 12,
+      "estimate": 0.4857693,
+      "se": 0.2576793
+    },
+    {
+      "good": 4,
+      "price": 12,
+      "estimate": -0.4328224,
+      "se": 0.7787851
+    },
+    {
+      "good": 5,
+      "price": 12,
+      "estimate": -0.6927264,
+      "se": 0.2943755
+    },
+    {
+      "good": 6,
+      "price": 12,
+      "estimate": -2.816871,
+      "se": 1.305869
+    },
+    {
+      "good": 7,
+      "price": 12,
+      "estimate": 0.1313571,
+      "se": 0.3316466
+    },
+    {
+      "good": 8,
+      "price": 12,
+      "estimate": -0.2295216,
+      "se": 0.38666
+    },
+    {
+      "good": 9,
+      "price": 12,
+      "estimate": -0.9957705,
+      "se": 0.2748519
+    },
+    {
+      "good": 10,
+      "price": 12,
+      "estimate": -1.173522,
+      "se": 0.3732104
+    },
+    {
+      "good": 11,
+      "price": 12,
+      "estimate": -0.7948835,
+      "se": 0.6839605
+    },
+    {
+      "good": 12,
+      "price": 12,
+      "estimate": -0.0135733,
+      "se": 0.2498527
+    },
+    {
+      "good": 13,
+      "price": 12,
+      "estimate": 0.6326404,
+      "se": 0.1384315
+    },
+    {
+      "good": 14,
+      "price": 12,
+      "estimate": 0.0181083,
+      "se": 0.2456323
+    },
+    {
+      "good": 1,
+      "price": 13,
+      "estimate": -0.1969195,
+      "se": 0.0581552
+    },
+    {
+      "good": 2,
+      "price": 13,
+      "estimate": 0.0351097,
+      "se": 0.031773
+    },
+    {
+      "good": 3,
+      "price": 13,
+      "estimate": -0.2441518,
+      "se": 0.0733236
+    },
+    {
+      "good": 4,
+      "price": 13,
+      "estimate": -0.2945294,
+      "se": 0.1933488
+    },
+    {
+      "good": 5,
+      "price": 13,
+      "estimate": -0.014712,
+      "se": 0.0692892
+    },
+    {
+      "good": 6,
+      "price": 13,
+      "estimate": -0.2157256,
+      "se": 0.2651033
+    },
+    {
+      "good": 7,
+      "price": 13,
+      "estimate": 0.0002431,
+      "se": 0.0813236
+    },
+    {
+      "good": 8,
+      "price": 13,
+      "estimate": 0.0659038,
+      "se": 0.0975172
+    },
+    {
+      "good": 9,
+      "price": 13,
+      "estimate": 0.0127978,
+      "se": 0.071768
+    },
+    {
+      "good": 10,
+      "price": 13,
+      "estimate": -0.2291012,
+      "se": 0.0825269
+    },
+    {
+      "good": 11,
+      "price": 13,
+      "estimate": -0.2576039,
+      "se": 0.1911477
+    },
+    {
+      "good": 12,
+      "price": 13,
+      "estimate": 0.1926218,
+      "se": 0.0460003
+    },
+    {
+      "good": 13,
+      "price": 13,
+      "estimate": -1.084805,
+      "se": 0.0661193
+    },
+    {
+      "good": 14,
+      "price": 13,
+      "estimate": 0.0940502,
+      "se": 0.0615403
+    },
+    {
+      "good": 1,
+      "price": 14,
+      "estimate": -0.1091205,
+      "se": 0.09765
+    },
+    {
+      "good": 2,
+      "price": 14,
+      "estimate": -0.0760853,
+      "se": 0.0689161
+    },
+    {
+      "good": 3,
+      "price": 14,
+      "estimate": -0.0357769,
+      "se": 0.1425812
+    },
+    {
+      "good": 4,
+      "price": 14,
+      "estimate": -0.4290584,
+      "se": 0.437982
+    },
+    {
+      "good": 5,
+      "price": 14,
+      "estimate": -0.5379064,
+      "se": 0.1556974
+    },
+    {
+      "good": 6,
+      "price": 14,
+      "estimate": -1.08768,
+      "se": 0.6895391
+    },
+    {
+      "good": 7,
+      "price": 14,
+      "estimate": -0.2411147,
+      "se": 0.1789971
+    },
+    {
+      "good": 8,
+      "price": 14,
+      "estimate": -0.0899754,
+      "se": 0.2106059
+    },
+    {
+      "good": 9,
+      "price": 14,
+      "estimate": 0.2421213,
+      "se": 0.151351
+    },
+    {
+      "good": 10,
+      "price": 14,
+      "estimate": 0.6944329,
+      "se": 0.1985098
+    },
+    {
+      "good": 11,
+      "price": 14,
+      "estimate": 0.1467688,
+      "se": 0.3907855
+    },
+    {
+      "good": 12,
+      "price": 14,
+      "estimate": -0.0003687,
+      "se": 0.1008622
+    },
+    {
+      "good": 13,
+      "price": 14,
+      "estimate": 0.1301975,
+      "se": 0.0760206
+    },
+    {
+      "good": 14,
+      "price": 14,
+      "estimate": -0.5180015,
+      "se": 0.19438
+    }
+  ],
+  "r2": [
+    0.0108,
+    0.1426,
+    0.099,
+    0.0129,
+    0.0318,
+    0.0056,
+    0.1745,
+    0.0087,
+    0.0321,
+    0.0227,
+    0.0204,
+    0.0806,
+    0.0246,
+    0.0232
+  ]
+}

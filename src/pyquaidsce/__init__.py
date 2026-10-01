@@ -32,11 +32,18 @@ from .probit import probit
 from .reduced_form import ExpenditureReducedForm, fit_expenditure_reduced_form
 from .results import QuaidsceResults
 from .selection import FirstStageLayout
+from .translog import ElasticityStandardErrors, TranslogResults, translog
+from .translog_model import TranslogCoefs, TranslogSpec
 
 __version__ = "1.6.0"
 
 __all__ = [
     "quaidsce",
+    "translog",
+    "TranslogSpec",
+    "TranslogCoefs",
+    "TranslogResults",
+    "ElasticityStandardErrors",
     "first_stage",
     "nlsur",
     "probit",

@@ -74,7 +74,8 @@ def export_result(result, frame, prices, cleaned, elapsed, output, data_path, se
         data_sha256=hashlib.sha256(data_path.read_bytes()).hexdigest(),
     )
     summary["passed"] = bool(result.converged and result.nobs == 6573
-        and not result.spec.latent_adding_up and result.spec.n_eq_estimated == 14
+        and result.spec.n_eq_estimated == 14
+        and (not result.spec.latent_adding_up or np.max(abs(latent.sum(axis=1)-1)) < 1e-10)
         and inner.b.min() > 0 and expenditure_error < 1e-7 and price_error < 1e-7
         and np.isfinite(result.b).all() and np.isfinite(result.V).all())
     (output / "sy_summary.json").write_text(json.dumps(summary, indent=2)+"\n")
@@ -99,6 +100,8 @@ def main():
     parser.add_argument("--data", type=Path, default=ROOT / "data/bd_uruguay.csv")
     parser.add_argument("--output", type=Path, default=ROOT / "results_sy")
     parser.add_argument("--start", choices=["zero", "mean", "nested"], default="nested")
+    parser.add_argument("--latent-adding", action="store_true",
+                        help="Impose adding-up on latent shares before S&Y")
     parser.add_argument("--reps", type=int, default=0)
     parser.add_argument("--seed", type=int, default=20261001)
     parser.add_argument("--jobs", type=int, default=1)
@@ -106,7 +109,8 @@ def main():
     frame, prices, cleaned = load_data(args.data)
     started = time.perf_counter()
     result = translog(frame, SHARES, prices=prices, expenditure="gasto_total",
-        demographics=DEMOS, censor=True, start=args.start, reps=args.reps, seed=args.seed,
+        demographics=DEMOS, censor=True, latent_adding=args.latent_adding,
+        start=args.start, reps=args.reps, seed=args.seed,
         bootstrap_start="warm", n_jobs=args.jobs, mp_context="spawn")
     summary = export_result(result, frame, prices, cleaned, time.perf_counter()-started,
                             args.output, args.data, args.seed)

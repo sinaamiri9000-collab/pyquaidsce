@@ -61,6 +61,7 @@ def quaidsce(
     anot: float,
     quadratic: bool = True,
     censor: bool = True,
+    latent_adding: bool = False,
     method: str = "ifgnls",
     initial: Optional[ArrayLike] = None,
     sigma_initial: Optional[np.ndarray] = None,
@@ -102,6 +103,9 @@ def quaidsce(
     anot : the ``alpha_0`` of the translog price index (Stata's ``anot()``).
     quadratic : ``False`` reproduces ``noquadratic`` (i.e. plain AIDS).
     censor : ``False`` reproduces ``nocensor`` (i.e. Poi's ``quaids``).
+    latent_adding : with ``censor=True``, impose adding-up on latent shares.
+        The default ``False`` preserves relaxed alpha/beta/lambda blocks.
+        ``True`` is invalid with ``censor=False``, where adding-up is mandatory.
     method : ``"nls"``, ``"fgnls"`` or ``"ifgnls"`` (the package default).
     reps : bootstrap replications; 0 disables the bootstrap.
     control_function : column containing an externally generated reduced-form
@@ -207,6 +211,7 @@ def quaidsce(
         quadratic=quadratic,
         censor=censor,
         control_function=(control_function is not None or ivexp_active),
+        latent_adding=latent_adding,
     )
 
     price_names = list(prices or lnprices)
@@ -551,6 +556,12 @@ def quaidsce(
             "block-diagonal conditional approximation; use a full bootstrap "
             "for generated-regressor inference."
         )
+    if censor:
+        notes.append(
+            "Latent adding-up is imposed; the S&Y observed means are not constrained to sum to one."
+            if spec.latent_adding_up else
+            "Latent adding-up is relaxed; alpha/beta/lambda remain free."
+        )
     fitted = fitted_shares(nl.theta, d, spec)
     if np.any(fitted < 0):
         notes.append(
@@ -593,7 +604,7 @@ def quaidsce(
             selection_covariates=selection_covariates,
             selection_expenditure=selection_expenditure,
             anot=anot, quadratic=quadratic,
-            censor=censor, method=method, initial=nl.theta,
+            censor=censor, latent_adding=latent_adding, method=method, initial=nl.theta,
             sigma_initial=nl.sigma,
             vce_sigma=vce_sigma, sigma_tol=boot_sigma_tol,
             algorithm=algorithm, stop_rule=stop_rule, tol=tol,

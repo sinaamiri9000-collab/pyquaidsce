@@ -285,7 +285,8 @@ def translog(
     data, shares: Sequence[str], *, prices: Optional[Sequence[str]] = None,
     lnprices: Optional[Sequence[str]] = None, expenditure: Optional[str] = None,
     lnexpenditure: Optional[str] = None, demographics: Optional[Sequence[str]] = None,
-    censor: bool = False, selection_prices: Optional[Sequence[str]] = None,
+    censor: bool = False, latent_adding: bool = False,
+    selection_prices: Optional[Sequence[str]] = None,
     selection_expenditure: bool = True, selection_covariates: Optional[Sequence[str]] = None,
     method="ifgnls", initial=None, sigma_initial=None,
     start="zero", algorithm="gn", stop_rule="standard", vce_sigma="objective",
@@ -298,7 +299,9 @@ def translog(
     """Estimate basic translog demand with demographic translation.
 
     Uncensored SUR omits the last equation and imposes sum(alpha)=1. S&Y uses
-    all equations and frees all alphas, retaining denominator constant 1.
+    all equations and frees all alphas by default, retaining denominator constant 1.
+    Set ``latent_adding=True`` to impose sum(alpha)=1 in S&Y. The option cannot
+    be enabled with ``censor=False``, where adding-up is mandatory.
     Probits default to all log prices, log expenditure and the demographics;
     their design can be selected independently. No expenditure control function
     or generalized translog intercept is included.
@@ -329,7 +332,7 @@ def translog(
     price_names = list(prices if prices is not None else lnprices)
     demo_names = list(demo_values)
     exp_name = expenditure if expenditure is not None else lnexpenditure
-    spec = TranslogSpec(len(shares), len(demo_names), bool(censor))
+    spec = TranslogSpec(len(shares), len(demo_names), bool(censor), latent_adding)
     if len(price_names) != spec.neqn:
         raise ValueError("number of prices must match number of shares")
     if not isinstance(censor, (bool, np.bool_)) or not isinstance(selection_expenditure, (bool, np.bool_)):
@@ -406,7 +409,7 @@ def translog(
     initialization = {}
     if start == "nested" and initial is None and spec.ndemo:
         say("Obtaining starting values from the S&Y translog without demographic translation...")
-        nested_spec = TranslogSpec(spec.neqn, 0, True)
+        nested_spec = TranslogSpec(spec.neqn, 0, True, latent_adding)
         nested_data = DemandData(d.lnp, d.lnexp, d.shares, np.empty((d.nobs, 0)), d.cdf, d.pdf)
         nested = nlsur(nested_data, nested_spec, start="zero", method=method,
             algorithm=algorithm, stop_rule=stop_rule, vce_sigma=vce_sigma,
@@ -483,7 +486,9 @@ def translog(
         res.notes.append(f"Diagnostic: {int(np.sum(fitted < 0))} fitted share values are negative; values were not clipped.")
     if censor:
         res.notes.extend([
-            "Latent adding-up is relaxed: all alpha coefficients are free; fitted shares are not renormalized.",
+            ("Latent adding-up is imposed: sum(alpha)=1; the S&Y observed means are not constrained to sum to one."
+             if spec.latent_adding_up else
+             "Latent adding-up is relaxed: all alpha coefficients are free; fitted shares are not renormalized."),
             "Compensated elasticities are a Slutsky transformation; utility-consistent Hicksian demand is not guaranteed.",
             "Analytical structural and elasticity SEs condition on fitted Probits and evaluation means; use full two-step bootstrap for generated-regressor inference.",
         ])
@@ -491,7 +496,8 @@ def translog(
         from .bootstrap import bootstrap_estimator
         kwargs = dict(shares=shares, prices=prices, lnprices=lnprices,
                       expenditure=expenditure, lnexpenditure=lnexpenditure,
-                      demographics=demo_names, censor=censor, method=method, start=start,
+                      demographics=demo_names, censor=censor, latent_adding=latent_adding,
+                      method=method, start=start,
                       algorithm=algorithm, stop_rule=stop_rule, vce_sigma=vce_sigma,
                       tol=tol, max_outer=max_outer, max_iter=max_iter, chunk=chunk,
                       nrtol_stop=nrtol_stop, inner_nrtol_early=inner_nrtol_early,

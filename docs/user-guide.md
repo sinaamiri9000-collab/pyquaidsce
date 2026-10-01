@@ -28,6 +28,15 @@ This document provides a comprehensive reference for all input parameters of `qu
 |---|---|---|---|
 | `quadratic` | `bool` | `True` | If `True`, estimates the Quadratic AIDS (QUAIDS) model. If `False`, estimates the linear AIDS model (equivalent to Stata's `noquadratic`). |
 | `censor` | `bool` | `True` | If `True`, applies the Shonkwiler & Yen (1999) two-step censoring correction. If `False`, estimates uncensored QUAIDS (equivalent to Stata's `nocensor` / Poi 2012). |
+| `latent_adding` | `bool` | `False` | With `censor=True`, set `True` to impose adding-up on latent shares. Enabling it with `censor=False` raises an error; uncensored adding-up is mandatory. |
+
+For censored QUAIDS/AIDs, `latent_adding=True` recovers the last alpha, beta,
+and (for QUAIDS) lambda from sums of one, zero, and zero, respectively.
+Existing Gamma and demographic eta restrictions remain in place. If a demand
+control function is active, its coefficient sum is also zero. Every S&Y
+equation is still estimated and delta coefficients remain unrestricted.
+The option constrains latent shares, not the transformed observed means.
+See [latent adding-up](latent-adding.md) for both model parameterizations.
 
 ---
 

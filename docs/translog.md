@@ -143,10 +143,14 @@ observed_mean = fit.predict(kind="shares")
 participation = fit.predict(kind="participation")
 ```
 
-S&Y estimates **every** equation and **every** alpha. It keeps the denominator
-constant one, Gamma symmetry and the same demographic translation. It imposes
-neither latent adding-up nor zero Gamma/demographic sums. There is no public
-adding-up switch yet. The uncensored restrictions and behavior are preserved.
+S&Y estimates **every** equation and frees **every** alpha by default. Set
+`latent_adding=True` to recover the last alpha as `1 - sum(alpha[:-1])`.
+It keeps the denominator constant one, Gamma symmetry and the same
+demographic translation. Zero Gamma or demographic sums are not required:
+sum(alpha)=1 already makes the numerator sum equal to the denominator and
+the translated latent shares sum to one. See [latent adding-up](latent-adding.md).
+Enabling `latent_adding` without censoring raises an error; the uncensored
+restrictions and mandatory adding-up are preserved.
 Observed zero shares remain in estimation. Each estimated Probit needs both
 positive and zero shares. Demographics are optional for translog censoring.
 Observed and predicted shares are not normalized after estimation.

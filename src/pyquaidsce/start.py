@@ -90,17 +90,18 @@ def linear_start(d: DemandData, spec: Spec) -> np.ndarray:
     gamma -= gamma.mean(axis=1, keepdims=True)
     gamma = 0.5 * (gamma + gamma.T)
 
-    if not spec.censor:  # adding-up is imposed by the parameterisation
+    if spec.latent_adding_up:
         alpha = alpha + (1.0 - alpha.sum()) / n
         beta = beta - beta.mean()
         lam = lam - lam.mean()
+        cfcoef = cfcoef - cfcoef.mean()
     if R > 0:
         eta = eta - eta.mean(axis=1, keepdims=True)
 
     # ---- pack into the free vector ---------------------------------------- #
     th = np.zeros(spec.n_free)
     sl = free_slices(spec)
-    w = n if spec.censor else n - 1
+    w = spec.n_share_free
     th[sl["alpha"]] = alpha[:w]
     th[sl["beta"]] = beta[:w]
     gv = [gamma[i, j] for j in range(n - 1) for i in range(j, n - 1)]
@@ -110,7 +111,7 @@ def linear_start(d: DemandData, spec: Spec) -> np.ndarray:
     if spec.censor:
         th[sl["delta"]] = delta
     if spec.control_function:
-        th[sl["cfcoef"]] = cfcoef
+        th[sl["cfcoef"]] = cfcoef[:w]
     if R > 0:
         ev = []
         for r in range(R):

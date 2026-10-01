@@ -44,8 +44,13 @@ class Spec:
     quadratic: bool = True
     censor: bool = True
     control_function: bool = False
+    latent_adding: bool = False
 
     def __post_init__(self) -> None:
+        if not isinstance(self.latent_adding, (bool, np.bool_)):
+            raise ValueError("latent_adding must be a boolean")
+        if self.latent_adding and not self.censor:
+            raise ValueError("latent_adding=True requires censor=True; uncensored adding-up is mandatory")
         if self.neqn < 3:
             raise ValueError("must specify at least 3 expenditure shares")
         if self.censor and self.ndemo == 0:
@@ -59,24 +64,27 @@ class Spec:
 
     # ---- counts ---------------------------------------------------------- #
     @property
+    def latent_adding_up(self) -> bool:
+        return not self.censor or self.latent_adding
+
+    @property
+    def n_share_free(self) -> int:
+        return self.neqn - int(self.latent_adding_up)
+
+    @property
     def n_free(self) -> int:
         """Number of *estimated* parameters, i.e. Stata's ``nparam()``."""
         n, R = self.neqn, self.ndemo
+        w = self.n_share_free
+        k = 2 * w + n * (n - 1) // 2
+        if self.quadratic:
+            k += w
         if self.censor:
-            #  alpha n, beta n, gamma n(n-1)/2, [lambda n], delta n
-            k = 2 * n + n * (n - 1) // 2
-            if self.quadratic:
-                k += n
-            k += n  # delta
-        else:
-            #  alpha n-1, beta n-1, gamma n(n-1)/2, [lambda n-1]
-            k = 2 * (n - 1) + n * (n - 1) // 2
-            if self.quadratic:
-                k += n - 1
+            k += n  # selection-correction coefficients remain unrestricted
         if R > 0:
             k += R * (n - 1) + R
         if self.control_function:
-            k += n
+            k += w
         return k
 
     @property
@@ -178,10 +186,10 @@ def unpack(theta: np.ndarray, spec: Spec) -> Coefs:
     * ``alpha`` is initialised to **1** and ``beta``/``lambda`` to **0**, so that
       under ``nocensor`` the n-th good's parameters satisfy the adding-up
       restrictions sum(alpha)=1, sum(beta)=0, sum(lambda)=0.
-    * When censoring **is** used the n-th element is *overwritten* by a free
-      parameter, i.e. adding-up is **not** imposed on alpha/beta/lambda (it
-      cannot be, because the Shonkwiler-Yen transformation destroys it).  It
-      *is* still imposed on ``eta``.
+    * With censoring, alpha/beta/lambda are free by default. Setting
+      ``latent_adding=True`` recovers the last element from adding-up.
+      Gamma and eta retain their existing restrictions in both modes.
+      Selection-correction coefficients remain free in every censored model.
     """
     theta = np.asarray(theta, dtype=float).ravel()
     n, R = spec.neqn, spec.ndemo
@@ -196,7 +204,7 @@ def unpack(theta: np.ndarray, spec: Spec) -> Coefs:
         alpha[i] = theta[col]
         alpha[n - 1] -= alpha[i]
         col += 1
-    if spec.censor:
+    if not spec.latent_adding_up:
         alpha[n - 1] = theta[col]
         col += 1
 
@@ -205,7 +213,7 @@ def unpack(theta: np.ndarray, spec: Spec) -> Coefs:
         beta[i] = theta[col]
         beta[n - 1] -= beta[i]
         col += 1
-    if spec.censor:
+    if not spec.latent_adding_up:
         beta[n - 1] = theta[col]
         col += 1
 
@@ -230,7 +238,7 @@ def unpack(theta: np.ndarray, spec: Spec) -> Coefs:
             lam[i] = theta[col]
             lam[n - 1] -= lam[i]
             col += 1
-        if spec.censor:
+        if not spec.latent_adding_up:
             lam[n - 1] = theta[col]
             col += 1
 
@@ -242,8 +250,11 @@ def unpack(theta: np.ndarray, spec: Spec) -> Coefs:
 
     cfcoef = np.zeros(n)
     if spec.control_function:
-        cfcoef[:] = theta[col:col + n]
-        col += n
+        w = spec.n_share_free
+        cfcoef[:w] = theta[col:col + w]
+        if spec.latent_adding_up:
+            cfcoef[-1] = -cfcoef[:-1].sum()
+        col += w
 
     eta = np.zeros((R, n))
     rho = np.zeros(R)
@@ -309,7 +320,7 @@ def delta_matrix(spec: Spec) -> np.ndarray:
     ng, R = spec.neqn, spec.ndemo
     ngm1 = ng - 1
 
-    if spec.censor:
+    if not spec.latent_adding_up:
         block = np.eye(ng)
     else:
         block = np.vstack([np.eye(ngm1), -np.ones((1, ngm1))])
@@ -343,9 +354,9 @@ def delta_matrix(spec: Spec) -> np.ndarray:
     if spec.quadratic:
         Delta = _blockdiag(Delta, block)
     if spec.censor:
-        Delta = _blockdiag(Delta, block)
-    if spec.control_function:
         Delta = _blockdiag(Delta, np.eye(ng))
+    if spec.control_function:
+        Delta = _blockdiag(Delta, block)
     if R > 0:
         for _ in range(R):
             Delta = _blockdiag(Delta, blockd)
@@ -385,7 +396,7 @@ def vech_index(n: int) -> List[Tuple[int, int]]:
 def free_slices(spec: Spec) -> dict:
     """Slices of the *free* parameter vector, keyed by block name."""
     n, R = spec.neqn, spec.ndemo
-    w = n if spec.censor else n - 1  # width of the alpha/beta/lambda blocks
+    w = spec.n_share_free
     out, p = {}, 0
     out["alpha"] = slice(p, p + w); p += w
     out["beta"] = slice(p, p + w); p += w
@@ -396,7 +407,7 @@ def free_slices(spec: Spec) -> dict:
     if spec.censor:
         out["delta"] = slice(p, p + n); p += n
     if spec.control_function:
-        out["cfcoef"] = slice(p, p + n); p += n
+        out["cfcoef"] = slice(p, p + w); p += w
     if R > 0:
         out["eta"] = slice(p, p + R * (n - 1)); p += R * (n - 1)
         out["rho"] = slice(p, p + R); p += R
@@ -415,7 +426,7 @@ def delta_blocks(spec: Spec):
     n, R = spec.neqn, spec.ndemo
     ngm1 = n - 1
     fs, xs = full_slices(spec), free_slices(spec)
-    block = np.eye(n) if spec.censor else np.vstack(
+    block = np.eye(n) if not spec.latent_adding_up else np.vstack(
         [np.eye(ngm1), -np.ones((1, ngm1))]
     )
     blockd = np.vstack([np.eye(ngm1), -np.ones((1, ngm1))])
@@ -434,7 +445,7 @@ def delta_blocks(spec: Spec):
     if spec.censor:
         out.append((fs["delta"], xs["delta"], np.eye(n)))
     if spec.control_function:
-        out.append((fs["cfcoef"], xs["cfcoef"], np.eye(n)))
+        out.append((fs["cfcoef"], xs["cfcoef"], block))
     if R > 0:
         e_full, e_free = fs["eta"].start, xs["eta"].start
         for r in range(R):

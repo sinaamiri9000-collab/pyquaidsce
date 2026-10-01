@@ -44,10 +44,15 @@ To be consistent with utility maximization, the following restrictions are impos
 3. **Demographic Adding-Up**:
    $$\sum_{i=1}^n \eta_{ri} = 0 \quad \forall r$$
 
-4. **Adding-up for Uncensored Models** (`censor=False`):
+4. **Latent Adding-up** (mandatory with `censor=False`; optional with
+   `censor=True, latent_adding=True`):
    $$\sum_{i=1}^n \alpha_i = 1, \quad \sum_{i=1}^n \beta_i = 0, \quad \sum_{i=1}^n \lambda_i = 0$$
 
-*(In censored models, adding-up does not hold on observed shares because of the Shonkwiler–Yen transformation, so all $n$ equations are estimated).*
+With censoring, `latent_adding=False` preserves the relaxed alpha/beta/lambda
+blocks. Enabling latent adding-up does not constrain the S&Y observed means:
+all $n$ equations are still estimated and delta coefficients remain free.
+For a demand control function, latent adding-up also requires the
+control-function coefficients to sum to zero.
 
 ---
 

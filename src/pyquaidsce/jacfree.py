@@ -61,7 +61,7 @@ def make_cache(spec: Spec) -> JacCache:
             np.stack([Gam[pos[(max(i, l), min(i, l))]] for l in range(n)])
         ))
     blk_ab = np.ascontiguousarray(
-        np.eye(n) if spec.censor
+        np.eye(n) if not spec.latent_adding_up
         else np.vstack([np.eye(n - 1), -np.ones((1, n - 1))])
     )
     blk_eta = np.ascontiguousarray(
@@ -154,8 +154,9 @@ def jacobian_free(
         for i in range(m):
             J[:, i, d0 + i] = d.pdf[:, i]
         if spec.control_function:
-            c0 = xs["cfcoef"].start
-            for i in range(m):
-                J[:, i, c0 + i] = d.cdf[:, i] * d.control_function
+            J[:, :, xs["cfcoef"]] = (
+                d.cdf[:, :m, None] * d.control_function[:, None, None]
+                * cache.blk_ab[None, :m, :]
+            )
 
     return J

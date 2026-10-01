@@ -303,6 +303,7 @@ def bootstrap(
     verbose: bool = True,
     mp_context: Optional[str] = None,
     rep_timeout: Optional[float] = None,
+    latent_adding: bool = False,
 ) -> BootResult:
     df = data.loc[touse].reset_index(drop=True) if hasattr(data, "loc") else data
     kw = dict(
@@ -325,6 +326,7 @@ def bootstrap(
         anot=anot,
         quadratic=quadratic,
         censor=censor,
+        latent_adding=latent_adding,
         method=method,
         initial=(np.asarray(initial, float)
                  if bootstrap_start == "warm" else None),

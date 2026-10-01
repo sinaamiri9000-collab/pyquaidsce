@@ -6,7 +6,8 @@ For c = Nu z, b = 1 - p'c/m and r_j = log(p_j/(m b)),
     w_i = p_i c_i/m + b s_i.
 
 Uncensored models impose sum(alpha)=1 and Gamma symmetry. S&Y models free all
-alphas, retain denominator constant 1, and estimate every equation. There is no independent
+alphas by default, or impose sum(alpha)=1 with latent_adding=True. Both retain
+denominator constant 1 and estimate every equation. There is no independent
 committed-quantity intercept (the generalized translog model is not included).
 """
 
@@ -28,14 +29,19 @@ class TranslogSpec:
     neqn: int
     ndemo: int = 0
     censor: bool = False
+    latent_adding: bool = False
 
     def __post_init__(self):
+        if not isinstance(self.latent_adding, (bool, np.bool_)):
+            raise ValueError("latent_adding must be a boolean")
+        if self.latent_adding and not self.censor:
+            raise ValueError("latent_adding=True requires censor=True; uncensored adding-up is mandatory")
         if self.neqn < 2 or self.ndemo < 0:
             raise ValueError("translog requires at least two goods and ndemo >= 0")
 
     @property
     def latent_adding_up(self):
-        return not self.censor
+        return not self.censor or self.latent_adding
 
     @property
     def n_alpha(self):
@@ -204,7 +210,10 @@ def jacobian_free(theta, data, spec, rows=None):
     out = np.zeros((data.nobs, m, spec.n_free), dtype=np.result_type(np.asarray(theta).dtype, float))
     scale = inn.b / inn.denominator
     a = spec.n_alpha
-    out[:, :, :a] = scale[:, None, None] * np.eye(n)[:m, :a]
+    alpha_map = np.eye(n)[:, :a]
+    if spec.latent_adding_up:
+        alpha_map[-1, :] = -1
+    out[:, :, :a] = scale[:, None, None] * alpha_map[None, :m, :]
     s = inn.s[:, :m]
     for k, (i, j) in enumerate(gamma_indices(n)):
         term = np.zeros((data.nobs, m), dtype=out.dtype)
@@ -311,7 +320,7 @@ class TranslogBackend:
         if start == "mean":
             theta[:spec.n_alpha] = data.shares[:, :spec.n_alpha].mean(axis=0)
             if spec.censor:
-                theta[:spec.n_alpha] /= np.maximum(data.cdf.mean(axis=0), 1e-6)
+                theta[:spec.n_alpha] /= np.maximum(data.cdf[:, :spec.n_alpha].mean(axis=0), 1e-6)
         return theta
 
 

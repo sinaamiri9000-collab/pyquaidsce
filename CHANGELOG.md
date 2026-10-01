@@ -4,6 +4,13 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 ## Unreleased
 
+- Added Python `latent_adding=False` to `quaidsce()` (QUAIDS/AIDs) and
+  `translog()`. With S&Y, `True` imposes adding-up on latent shares through
+  the free-parameter map, including QUAIDS control-function coefficients.
+  All observed equations and selection-correction coefficients remain free.
+  Bootstrap refits and nested/linear/mean starts retain the selected mode.
+  Enabling this option without censoring is rejected; uncensored adding-up
+  remains mandatory. Existing censored defaults remain relaxed.
 - Added Shonkwiler--Yen to Python `translog(censor=True)`: all alphas are
   free, every equation is estimated, and latent/observed shares remain
   unnormalized. Gamma symmetry and demographic quantity translation are kept.

@@ -117,6 +117,8 @@ class QuaidsceResults(DemandResults):
             f"Alpha_0                = {g(self.anot, 10):>10}",
             f"Log-likelihood         = {g(self.llf, 10):>10}",
         ]
+        if self.spec.censor:
+            head.append(f"Latent adding-up       = {'imposed' if self.spec.latent_adding_up else 'relaxed'}")
         if self.boot is not None:
             head.append(
                 "Bootstrap replications = "

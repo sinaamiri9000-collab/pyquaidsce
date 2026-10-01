@@ -18,6 +18,10 @@ two-step bootstrap inference. See the [translog guide](docs/translog.md) and the
 1.6.0 distribution does not include this addition. Expenditure endogeneity
 correction for translog remains outside this implementation.
 
+Both Python estimators now accept `latent_adding=True` with `censor=True` to
+impose adding-up on latent shares. The default remains relaxed for S&Y;
+uncensored adding-up remains mandatory. See the [latent adding-up guide](docs/latent-adding.md).
+
 ---
 
 ## Motivation

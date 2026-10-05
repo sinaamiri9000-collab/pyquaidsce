@@ -116,6 +116,25 @@ before consideration as the default. The observed larger cq likelihood makes
 comparison of independent starting paths important even for the nlsur route.
 These are recommendations for further implementation, not production changes.
 
+## Comparison with the previous standard/GN implementation
+
+The separate [Persian comparison](STANDARD-COMPARISON.fa.md) compares all reported
+structural coefficients and iteration counts to the archived standard/GN zero
+fits. A matched, single-thread stage-two benchmark has 90 timed fits (five per
+model/backend), after one warm-up each. The largest analytic coefficient
+difference across the six models is `2.77e-6`. Outer solves decrease while total
+inner iterations increase. Analytic timing ratios range from 0.41 to 3.00.
+One cq archival-count difference is reproduced and explained by `~1e-15`
+rounding in the frozen first-stage projection; the observation is retained.
+
+```bash
+PYTHONPATH=src python -m validation.convergence.standard_compare
+```
+
+The `results/standard-*` artifacts contain every coefficient comparison, timing,
+history, summary and the rounding probe. These timings exclude first-stage
+fitting, coefficient covariance, standard errors and output construction.
+
 ## Artifacts and scope
 
 - `REPORT.fa.md`: detailed Persian explanation, exact formulas, corrections to

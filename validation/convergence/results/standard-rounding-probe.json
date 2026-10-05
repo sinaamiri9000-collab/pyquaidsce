@@ -1,0 +1,18 @@
+{
+  "model": "cq",
+  "scope": "old standard GN only; rounding probe, not a timed benchmark repetition",
+  "matrix_projection": "design @ coefficients.T + constants",
+  "column_projection": "ProbitResult.xb: design @ coefficients_j + constant_j, one equation at a time",
+  "input_rounding_difference": {
+    "index_max_abs": 5.329070518200751e-15,
+    "cdf_max_abs": 9.992007221626409e-16,
+    "pdf_max_abs": 9.853229343548264e-16
+  },
+  "matrix_inner_solves": 37,
+  "matrix_inner_iterations": 70,
+  "column_inner_solves": 38,
+  "column_inner_iterations": 71,
+  "matrix_theta_max_abs_difference_from_archive": 2.1600750438333094e-08,
+  "column_theta_max_abs_difference_from_archive": 0.0,
+  "significance": "Columnwise projection reproduces the archived old counts and coefficients; both benchmark backends use the same matrix projection and remain directly comparable."
+}

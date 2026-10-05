@@ -1,0 +1,722 @@
+[
+  {
+    "model": "cq",
+    "backend": "old-standard-gn",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": false,
+    "inner_iterations_match_archive": false
+  },
+  {
+    "model": "cq",
+    "backend": "nlsur-analytic",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "cq",
+    "backend": "nlsur-fd",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "cq",
+    "backend": "nlsur-analytic",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "cq",
+    "backend": "nlsur-fd",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "cq",
+    "backend": "old-standard-gn",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": false,
+    "inner_iterations_match_archive": false
+  },
+  {
+    "model": "cq",
+    "backend": "nlsur-fd",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "cq",
+    "backend": "old-standard-gn",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": false,
+    "inner_iterations_match_archive": false
+  },
+  {
+    "model": "cq",
+    "backend": "nlsur-analytic",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "cq",
+    "backend": "old-standard-gn",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": false,
+    "inner_iterations_match_archive": false
+  },
+  {
+    "model": "cq",
+    "backend": "nlsur-analytic",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "cq",
+    "backend": "nlsur-fd",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "cq",
+    "backend": "nlsur-analytic",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "cq",
+    "backend": "nlsur-fd",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "cq",
+    "backend": "old-standard-gn",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": false,
+    "inner_iterations_match_archive": false
+  },
+  {
+    "model": "ca",
+    "backend": "old-standard-gn",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "nlsur-analytic",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "nlsur-fd",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "nlsur-analytic",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "nlsur-fd",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "old-standard-gn",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "nlsur-fd",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "old-standard-gn",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "nlsur-analytic",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "old-standard-gn",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "nlsur-analytic",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "nlsur-fd",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "nlsur-analytic",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "nlsur-fd",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ca",
+    "backend": "old-standard-gn",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "old-standard-gn",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "nlsur-analytic",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "nlsur-fd",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "nlsur-analytic",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "nlsur-fd",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "old-standard-gn",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "nlsur-fd",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "old-standard-gn",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "nlsur-analytic",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "old-standard-gn",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "nlsur-analytic",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "nlsur-fd",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "nlsur-analytic",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "nlsur-fd",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "uq",
+    "backend": "old-standard-gn",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "old-standard-gn",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "nlsur-analytic",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "nlsur-fd",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "nlsur-analytic",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "nlsur-fd",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "old-standard-gn",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "nlsur-fd",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "old-standard-gn",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "nlsur-analytic",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "old-standard-gn",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "nlsur-analytic",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "nlsur-fd",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "nlsur-analytic",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "nlsur-fd",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "ua",
+    "backend": "old-standard-gn",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "old-standard-gn",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "nlsur-analytic",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "nlsur-fd",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "nlsur-analytic",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "nlsur-fd",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "old-standard-gn",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "nlsur-fd",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "old-standard-gn",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "nlsur-analytic",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "old-standard-gn",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "nlsur-analytic",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "nlsur-fd",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "nlsur-analytic",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "nlsur-fd",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "nq",
+    "backend": "old-standard-gn",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "old-standard-gn",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "nlsur-analytic",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "nlsur-fd",
+    "repetition": 1,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "nlsur-analytic",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "nlsur-fd",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "old-standard-gn",
+    "repetition": 2,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "nlsur-fd",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "old-standard-gn",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "nlsur-analytic",
+    "repetition": 3,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "old-standard-gn",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "nlsur-analytic",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "nlsur-fd",
+    "repetition": 4,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "nlsur-analytic",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "nlsur-fd",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  },
+  {
+    "model": "na",
+    "backend": "old-standard-gn",
+    "repetition": 5,
+    "success": true,
+    "inner_solves_match_archive": true,
+    "inner_iterations_match_archive": true
+  }
+]

@@ -43,3 +43,37 @@ out/
 !validation/results/**/*.csv
 !validation/results/**/*.log
 validation/.cache/
+
+# Authorized aggregate U11 experiment evidence; exact CSV allowlist only.
+!validation/real_data/u11/results/coefficient_blocks.csv
+!validation/real_data/u11/results/coefficient_comparison.csv
+!validation/real_data/u11/results/comparison.csv
+!validation/real_data/u11/results/nlsur_criteria_accepted_steps.csv
+!validation/real_data/u11/results/nlsur_criteria_hicksian_elasticities.csv
+!validation/real_data/u11/results/nlsur_criteria_income_elasticities.csv
+!validation/real_data/u11/results/nlsur_criteria_inner_history.csv
+!validation/real_data/u11/results/nlsur_criteria_marshallian_elasticities.csv
+!validation/real_data/u11/results/nlsur_criteria_outer_history.csv
+!validation/real_data/u11/results/nlsur_criteria_parameter_covariance.csv
+!validation/real_data/u11/results/phase_summary.csv
+!validation/real_data/u11/results/stage_end_diagnostics.csv
+!validation/real_data/u11/results/standard_accepted_steps.csv
+!validation/real_data/u11/results/standard_hicksian_elasticities.csv
+!validation/real_data/u11/results/standard_income_elasticities.csv
+!validation/real_data/u11/results/standard_inner_history.csv
+!validation/real_data/u11/results/standard_marshallian_elasticities.csv
+!validation/real_data/u11/results/standard_outer_history.csv
+!validation/real_data/u11/results/standard_parameter_covariance.csv
+!validation/real_data/u11/specification/free_parameter_order.csv
+!validation/real_data/u11/specification/imputation_summary.csv
+!validation/real_data/u11/specification/item_weights.csv
+!validation/real_data/u11/specification/mapping.csv
+!validation/real_data/u11/specification/price_normalization.csv
+!validation/real_data/u11/specification/rf.csv
+!validation/real_data/u11/specification/shared_probit_coefficients.csv
+!validation/real_data/u11/specification/support.csv
+
+# U11 solver logs contain stage/step diagnostics only.
+!validation/real_data/u11/logs/nlsur_criteria.log
+!validation/real_data/u11/logs/report_output.log
+!validation/real_data/u11/logs/standard.log

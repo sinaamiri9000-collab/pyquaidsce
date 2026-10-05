@@ -1,0 +1,103 @@
+{
+  "max_abs_free_coefficient_difference": 2.1022815917426385e-05,
+  "max_abs_full_coefficient_difference": 2.1022815917426385e-05,
+  "rms_full_coefficient_difference": 2.313259630050545e-06,
+  "fitted_share_max_abs_difference": 4.004231407561676e-07,
+  "fitted_share_rms_difference": 4.5761642087226224e-08,
+  "likelihood_difference": -6.309710443019867e-08,
+  "residual_covariance_relative_frobenius_difference": 3.2381682530582984e-07,
+  "parameter_covariance_relative_frobenius_difference": 1.4106709201563146e-05,
+  "all_elasticities_max_abs_difference": 2.429342716103733e-06,
+  "marshallian_max_abs_difference": 2.4288966491425867e-06,
+  "hicksian_max_abs_difference": 2.429342716103733e-06,
+  "income_max_abs_difference": 7.587539303521851e-07,
+  "nlsur_criteria_to_standard_time_ratio": 7.030951619650103,
+  "standard_vs_cached_auxiliary_max_abs_theta_difference": 0.0,
+  "standard_vs_cached_auxiliary_likelihood_difference": 0.0,
+  "largest_coefficient_changes": [
+    {
+      "coefficient": "rho:rho_region_2",
+      "standard": 4.6800340172658315,
+      "nlsur_criteria": 4.680055040081749,
+      "difference": 2.1022815917426385e-05,
+      "absolute_difference": 2.1022815917426385e-05
+    },
+    {
+      "coefficient": "rho:rho_region_1",
+      "standard": 2.9998230706116074,
+      "nlsur_criteria": 2.9998399257493444,
+      "difference": 1.6855137737081805e-05,
+      "absolute_difference": 1.6855137737081805e-05
+    },
+    {
+      "coefficient": "rho:rho_region_5",
+      "standard": 4.060949757454422,
+      "nlsur_criteria": 4.060962362705471,
+      "difference": 1.260525104918031e-05,
+      "absolute_difference": 1.260525104918031e-05
+    },
+    {
+      "coefficient": "rho:rho_region_3",
+      "standard": 2.5232691848950997,
+      "nlsur_criteria": 2.523280548943249,
+      "difference": 1.1364048149165029e-05,
+      "absolute_difference": 1.1364048149165029e-05
+    },
+    {
+      "coefficient": "rho:rho_region_4",
+      "standard": 2.0500570929167954,
+      "nlsur_criteria": 2.0500664084062308,
+      "difference": 9.315489435390845e-06,
+      "absolute_difference": 9.315489435390845e-06
+    },
+    {
+      "coefficient": "rho:rho_scale",
+      "standard": 0.9014562774024512,
+      "nlsur_criteria": 0.9014635023572005,
+      "difference": 7.224954749363022e-06,
+      "absolute_difference": 7.224954749363022e-06
+    },
+    {
+      "coefficient": "alpha:alpha_7",
+      "standard": 0.7054509741909722,
+      "nlsur_criteria": 0.705449320013319,
+      "difference": -1.6541776532985608e-06,
+      "absolute_difference": 1.6541776532985608e-06
+    },
+    {
+      "coefficient": "rho:rho_children",
+      "standard": -0.2137420696621536,
+      "nlsur_criteria": -0.21374353470419044,
+      "difference": -1.465042036852271e-06,
+      "absolute_difference": 1.465042036852271e-06
+    },
+    {
+      "coefficient": "alpha:alpha_8",
+      "standard": -0.3838730792921112,
+      "nlsur_criteria": -0.3838722008045846,
+      "difference": 8.78487526556615e-07,
+      "absolute_difference": 8.78487526556615e-07
+    },
+    {
+      "coefficient": "alpha:alpha_5",
+      "standard": -0.07179108603254629,
+      "nlsur_criteria": -0.0717903969073408,
+      "difference": 6.891252054830321e-07,
+      "absolute_difference": 6.891252054830321e-07
+    },
+    {
+      "coefficient": "gamma:gamma_7_7",
+      "standard": -0.13466254657352897,
+      "nlsur_criteria": -0.13466189539956092,
+      "difference": 6.511739680525874e-07,
+      "absolute_difference": 6.511739680525874e-07
+    },
+    {
+      "coefficient": "beta:beta_7",
+      "standard": -0.2949059609839249,
+      "nlsur_criteria": -0.2949055148160151,
+      "difference": 4.461679097844673e-07,
+      "absolute_difference": 4.461679097844673e-07
+    }
+  ]
+}

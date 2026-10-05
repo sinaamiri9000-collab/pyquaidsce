@@ -1,0 +1,152 @@
+[
+  {
+    "check": "standard: finite theta",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "standard: finite parameter covariance",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "standard: positive definite residual covariance",
+    "passed": true,
+    "value": 2.4253411978035197e-06
+  },
+  {
+    "check": "standard: covariance equals residual covariance",
+    "passed": true,
+    "value": 0.0
+  },
+  {
+    "check": "standard: Gamma symmetry",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "standard: Gamma homogeneity",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "standard: eta adding-up",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "standard: positive demographic scaling",
+    "passed": true,
+    "value": 2.5763068731333996
+  },
+  {
+    "check": "standard: GN trace counts",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "standard: outer trace counts",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "standard: accepted objective decreases",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "standard: finite elasticities",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "nlsur_criteria: finite theta",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "nlsur_criteria: finite parameter covariance",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "nlsur_criteria: positive definite residual covariance",
+    "passed": true,
+    "value": 2.425345797538005e-06
+  },
+  {
+    "check": "nlsur_criteria: covariance equals residual covariance",
+    "passed": true,
+    "value": 0.0
+  },
+  {
+    "check": "nlsur_criteria: Gamma symmetry",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "nlsur_criteria: Gamma homogeneity",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "nlsur_criteria: eta adding-up",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "nlsur_criteria: positive demographic scaling",
+    "passed": true,
+    "value": 2.5763176952176328
+  },
+  {
+    "check": "nlsur_criteria: GN trace counts",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "nlsur_criteria: outer trace counts",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "nlsur_criteria: accepted objective decreases",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "nlsur_criteria: finite elasticities",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "exactly equal first accepted theta",
+    "passed": true,
+    "value": 0.0
+  },
+  {
+    "check": "exactly equal common initial NLS trajectory",
+    "passed": true,
+    "value": 11
+  },
+  {
+    "check": "standard reproduces cached unrestricted U11",
+    "passed": true,
+    "value": 0.0
+  },
+  {
+    "check": "unchanged inner optimization AST",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "unchanged outer nonconvergence AST",
+    "passed": true,
+    "value": null
+  },
+  {
+    "check": "production source files unmodified",
+    "passed": true,
+    "value": null
+  }
+]

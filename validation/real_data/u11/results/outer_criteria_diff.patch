@@ -1,0 +1,36 @@
+--- original AST formatted
++++ criteria-only AST formatted
+@@ -63,13 +63,9 @@
+             sigma_obj = sigma_new
+             n_outer = outer
+             rel = float(np.max(np.abs(theta - theta_prev) / (np.abs(theta_prev) + 1e-08)))
+-            if rel < sigma_tol:
+-                if tight:
+-                    outer_converged = True
+-                    break
+-                tight = True
+-            else:
+-                tight = False
++            if observe_outer(theta_prev, theta, sigma_new, outer, ok):
++                outer_converged = True
++                break
+         return _finish(theta, d, spec, sigma_obj, sigma_from, method, vce_sigma, chunk, n_outer, total_gn, bool(ok and outer_converged), obj, history, deadline=deadline)
+     say('Calculating NLS estimates...')
+     I_m = np.eye(m)
+@@ -101,13 +97,9 @@
+                 sigma_obj = sigma_new
+                 n_outer = outer
+                 rel = float(np.max(np.abs(theta - theta_prev) / (np.abs(theta_prev) + 1e-08)))
+-                if rel < sigma_tol:
+-                    if tight:
+-                        outer_converged = True
+-                        break
+-                    tight = True
+-                else:
+-                    tight = False
++                if observe_outer(theta_prev, theta, sigma_new, outer, ok):
++                    outer_converged = True
++                    break
+     overall_converged = bool(ok)
+     if method == 'ifgnls':
+         overall_converged = bool(ok and outer_converged)

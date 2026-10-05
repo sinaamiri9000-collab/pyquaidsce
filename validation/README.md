@@ -116,3 +116,15 @@ concentrated Gaussian likelihood, and a Python reconstruction of the uploaded
 `nlsur.ado` logic. This study excludes linear initialization and contains 120
 primary fits, 24 shared-point probes, 760 passed numerical checks and a rerun of
 the 42 existing tests. Its scope is conditional stage-two point estimation.
+
+## Real-data U11 stopping-predicate comparison
+
+The [U11 experiment](real_data/u11/README.md) and
+[Persian report](real_data/u11/REPORT.fa.md) compare version 1.6.0's existing
+standard stop rule with the uploaded nlsur stopping predicates while preserving
+the entire numerical solver. This unrestricted 11-good model has no curvature
+constraint. Both runs converge and yield closely matching coefficients, shares,
+likelihood and mean-point elasticities. The second run uses fewer outer stages
+but more inner steps and takes about seven times as long in this single timing
+comparison. Public files contain the author's authorized aggregate results,
+model metadata and executable audit; private household data are excluded.

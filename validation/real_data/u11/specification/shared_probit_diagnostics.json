@@ -1,0 +1,90 @@
+[
+  {
+    "equation": 1,
+    "nobs": 37658,
+    "iterations": 7,
+    "converged": true,
+    "llf": -20150.463478963127,
+    "dropped_regressor_indices": []
+  },
+  {
+    "equation": 2,
+    "nobs": 37658,
+    "iterations": 6,
+    "converged": true,
+    "llf": -19412.269622183478,
+    "dropped_regressor_indices": []
+  },
+  {
+    "equation": 3,
+    "nobs": 37658,
+    "iterations": 6,
+    "converged": true,
+    "llf": -20513.25960125149,
+    "dropped_regressor_indices": []
+  },
+  {
+    "equation": 4,
+    "nobs": 37658,
+    "iterations": 6,
+    "converged": true,
+    "llf": -22385.92796795169,
+    "dropped_regressor_indices": []
+  },
+  {
+    "equation": 5,
+    "nobs": 37658,
+    "iterations": 6,
+    "converged": true,
+    "llf": -21215.10464348272,
+    "dropped_regressor_indices": []
+  },
+  {
+    "equation": 6,
+    "nobs": 37658,
+    "iterations": 11,
+    "converged": true,
+    "llf": -794.4663751472008,
+    "dropped_regressor_indices": []
+  },
+  {
+    "equation": 7,
+    "nobs": 37658,
+    "iterations": 10,
+    "converged": true,
+    "llf": -969.8496520112188,
+    "dropped_regressor_indices": []
+  },
+  {
+    "equation": 8,
+    "nobs": 37658,
+    "iterations": 9,
+    "converged": true,
+    "llf": -4059.854550947097,
+    "dropped_regressor_indices": []
+  },
+  {
+    "equation": 9,
+    "nobs": 37658,
+    "iterations": 10,
+    "converged": true,
+    "llf": -1038.3336491943692,
+    "dropped_regressor_indices": []
+  },
+  {
+    "equation": 10,
+    "nobs": 37658,
+    "iterations": 8,
+    "converged": true,
+    "llf": -5981.966435081589,
+    "dropped_regressor_indices": []
+  },
+  {
+    "equation": 11,
+    "nobs": 37658,
+    "iterations": 6,
+    "converged": true,
+    "llf": -18129.247626279743,
+    "dropped_regressor_indices": []
+  }
+]

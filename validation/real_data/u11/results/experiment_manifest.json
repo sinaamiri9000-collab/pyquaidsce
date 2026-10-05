@@ -1,0 +1,89 @@
+{
+  "package": "pyquaidsce 1.6.0",
+  "repository_branch": "validation-tests",
+  "repository_HEAD": "fa8d6fc375a144a68da75e9dc2002cd81a9439be",
+  "data_sha256": "9819184dc68b471247253c74c1f257b98dfc983d3cb6f45218390ea0b49e9fb1",
+  "demand_inputs": {
+    "lnp": {
+      "shape": [
+        37658,
+        11
+      ],
+      "dtype": "float64",
+      "sha256": "4a464dd24b710986d6889489d037b6c2c540ff6e2cf13fc6219e12069b419b13"
+    },
+    "lnexp": {
+      "shape": [
+        37658
+      ],
+      "dtype": "float64",
+      "sha256": "83a4063ecfaaa82f7caf7a80c8bc77bd72eeebe495b6cb1dfbbcf3651b0c5c57"
+    },
+    "shares": {
+      "shape": [
+        37658,
+        11
+      ],
+      "dtype": "float64",
+      "sha256": "3c6feb8015e1aa3cfce92d162dd3eb7d6529818311557bfefb87373b4dc1435f"
+    },
+    "demo": {
+      "shape": [
+        37658,
+        8
+      ],
+      "dtype": "float64",
+      "sha256": "cf7a9de1294e27cad224c6f8dba96dcdb584f56d5d755c4eb944485ccdd46cd6"
+    },
+    "cdf": {
+      "shape": [
+        37658,
+        11
+      ],
+      "dtype": "float64",
+      "sha256": "89cdabc833d3422425e4e9856ffde8c0c2736c917e4f056d3403c1ba33571cdb"
+    },
+    "pdf": {
+      "shape": [
+        37658,
+        11
+      ],
+      "dtype": "float64",
+      "sha256": "9ee8e4e00aa91da2d254b2445919fe181ac00039883a2ca53ff6fadb50c67904"
+    },
+    "control_function": {
+      "shape": [
+        37658
+      ],
+      "dtype": "float64",
+      "sha256": "f1a10007a89e06e26020309c7dd02fcca1d5b53324db3a1565af2e43e38eb936"
+    }
+  },
+  "nobs": 37658,
+  "n_free": 198,
+  "n_eq_estimated": 11,
+  "shared_selection": true,
+  "first_stage_estimates": "Previously fitted full-sample U11 Probits, unchanged for both runs.",
+  "initial_theta": "All zeros, no theta0/sigma0; original initial NLS and FGNLS stages preserved.",
+  "no_curvature_constraint": true,
+  "no_linear_start": true,
+  "bootstrap_reps": 0,
+  "fits_per_backend": 1,
+  "max_inner": 400,
+  "max_outer": 400,
+  "chunk": 15000,
+  "BLAS_threads": 1,
+  "eps": 1e-05,
+  "tau": 0.001,
+  "ifgnlseps": 1e-10,
+  "native_stata_executed": false,
+  "optimization_engine_changed": false,
+  "checks_passed": 30,
+  "timing_scope": "New single numerical fit for each backend, including final covariance assembly and common recording hooks. Shared preparation and first-stage Probits excluded.",
+  "scripts": {
+    "build_report.py": "c5c220cd10eb1af26aafba9259d11632d86b6f99cc1ad7f04ea29be35b40fe96",
+    "run_comparison.py": "6b20a0d433fe5f923c81388c6ee8a9c01c112e94be7a25bdac78355705c3e90c"
+  },
+  "production_nlsur_sha256": "3439ca0c2c75fa5bbac159b21e8d8ad8f6f9422b0673baff3581db1dc6ae473e",
+  "publication": "Private local results. No raw household arrays or pickles in the shareable bundle."
+}

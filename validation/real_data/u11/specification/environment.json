@@ -1,0 +1,70 @@
+{
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "pandas": "2.2.3",
+  "machine": "x86_64",
+  "BLAS_threads": 1,
+  "threadpools": [
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-fdde5778.so",
+      "version": "0.3.30",
+      "threading_layer": "pthreads",
+      "architecture": "SkylakeX"
+    },
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-6cdc3b4a.so",
+      "version": "0.3.30",
+      "threading_layer": "pthreads",
+      "architecture": "SkylakeX"
+    }
+  ],
+  "original_preparation_environment": {
+    "summary": {
+      "nobs": 37658,
+      "share_sum_max_abs_error": 4.440892098500626e-16,
+      "anot": 11.0,
+      "elapsed_prepare_sec": 0.28986573219299316,
+      "price_imputation_totals": {
+        "observed_retained": 314924,
+        "tier1_shahrestan": 257526,
+        "tier2_province": 103907,
+        "tier3_region": 14285,
+        "tier4_national": 0
+      },
+      "n_clusters": 6771,
+      "n_source_clusters": 6771,
+      "cpi_audit": {
+        "max_abs_cpiu_schedule_error": 8.737690238014295e-08,
+        "max_abs_cpir_schedule_error": 5.881826314890759e-08
+      }
+    },
+    "seconds": 21.428386802001114,
+    "data_sha256": "9819184dc68b471247253c74c1f257b98dfc983d3cb6f45218390ea0b49e9fb1",
+    "package_version": "1.6.0",
+    "package_path": "/workspace/pyquaidsce/src/pyquaidsce/__init__.py",
+    "bundle_target_version": "1.5.0",
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "bootstrap_reps": 0,
+    "point_start": "zero",
+    "shared_auxiliary_fits": 1,
+    "BLAS_threads": 1,
+    "max_outer": 400,
+    "max_iter": 400,
+    "chunk": 15000,
+    "sigma_tol": 1e-05,
+    "compatibility_changes": [
+      "Use installed pyquaidsce 1.6.0 directly; omit obsolete first_stage_predict/strict_stata public arguments."
+    ]
+  }
+}

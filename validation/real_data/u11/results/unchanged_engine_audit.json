@@ -1,0 +1,12 @@
+{
+  "inner_optimization_AST_identical": true,
+  "outer_nonconvergence_AST_identical": true,
+  "standard_has_only_observations": true,
+  "normalized_inner_sha256": "dcb438dfb84abbe42d5e0a38a572236bbab7f2cefcd6911736861c0447ceefb9",
+  "normalized_outer_sha256": "3499984f9324649dfa6a887b40cb0c1a5c3df015cb25fbf3e322bb951c9e058f",
+  "no_accepted_step_policy": "Keep original optimizer exit; report False instead of applying old nrtol flag. No new step or acceptance rule.",
+  "initial_NLS_and_FGNLS_unchanged": true,
+  "eps": 1e-05,
+  "tau": 0.001,
+  "ifgnlseps": 1e-10
+}

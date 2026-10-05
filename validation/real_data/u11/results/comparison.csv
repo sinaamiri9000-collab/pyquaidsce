@@ -1,0 +1,3 @@
+backend,nobs,n_free,converged,n_outer,n_ifgnls_updates,n_gn,seconds,llf,earlier_inner_failures
+standard,37658,198,True,48,46,79,117.00075869800094,746207.7647189428,0
+nlsur_criteria,37658,198,True,17,15,565,822.6266738680006,746207.7647188797,0

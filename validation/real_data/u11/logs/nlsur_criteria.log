@@ -1,0 +1,132 @@
+nlsur_criteria: Calculating NLS estimates...
+nlsur_criteria stage 1 GN 1: Q=4269.85607594, parameter ratio=1.359e+08, RSS ratio=4.372e+04, elapsed=1.3s
+nlsur_criteria stage 1 GN 10: Q=1737.12198797, parameter ratio=1.948e+05, RSS ratio=2.998, elapsed=13.2s
+nlsur_criteria stage 1 GN 20: Q=1737.1081605, parameter ratio=2513, RSS ratio=7.707e-05, elapsed=26.1s
+nlsur_criteria stage 1 GN 30: Q=1737.10815935, parameter ratio=61.64, RSS ratio=3.923e-08, elapsed=39.2s
+nlsur_criteria stage 1 GN 40: Q=1737.10815935, parameter ratio=1.474, RSS ratio=1.571e-10, elapsed=52.4s
+nlsur_criteria stage 1 GN 41: Q=1737.10815935, parameter ratio=0.5059, RSS ratio=1.309e-11, elapsed=53.7s
+  nlsur_criteria NLS stage 1: 41 GN, success=True, LL=692282.714894962
+nlsur_criteria: Calculating FGNLS estimates...
+nlsur_criteria stage 2 GN 1: Q=405807.581037, parameter ratio=1.593e+06, RSS ratio=2035, elapsed=55.2s
+nlsur_criteria stage 2 GN 10: Q=383805.203629, parameter ratio=6090, RSS ratio=0.004808, elapsed=68.6s
+nlsur_criteria stage 2 GN 20: Q=383805.1889, parameter ratio=139.6, RSS ratio=2.071e-06, elapsed=83.4s
+nlsur_criteria stage 2 GN 30: Q=383805.188893, parameter ratio=3.313, RSS ratio=1.244e-09, elapsed=98.0s
+nlsur_criteria stage 2 GN 34: Q=383805.188893, parameter ratio=0.7442, RSS ratio=9.1e-11, elapsed=104.1s
+  nlsur_criteria FGNLS stage 2: 34 GN, success=True, LL=729713.959957667
+nlsur_criteria: FGNLS iteration 3...
+nlsur_criteria stage 3 GN 1: Q=406128.772089, parameter ratio=2.665e+05, RSS ratio=1958, elapsed=105.7s
+nlsur_criteria stage 3 GN 10: Q=399606.925156, parameter ratio=2383, RSS ratio=0.01409, elapsed=119.0s
+nlsur_criteria stage 3 GN 20: Q=399606.862896, parameter ratio=447.4, RSS ratio=7.214e-05, elapsed=133.6s
+nlsur_criteria stage 3 GN 30: Q=399606.862151, parameter ratio=117.9, RSS ratio=3.608e-06, elapsed=148.1s
+nlsur_criteria stage 3 GN 40: Q=399606.86211, parameter ratio=28.86, RSS ratio=2.104e-07, elapsed=162.7s
+nlsur_criteria stage 3 GN 50: Q=399606.862107, parameter ratio=6.989, RSS ratio=1.231e-08, elapsed=177.3s
+nlsur_criteria stage 3 GN 60: Q=399606.862107, parameter ratio=1.69, RSS ratio=7.574e-10, elapsed=191.9s
+nlsur_criteria stage 3 GN 64: Q=399606.862107, parameter ratio=0.958, RSS ratio=1.457e-10, elapsed=197.7s
+  nlsur_criteria IFGNLS stage 3: 64 GN, success=True, LL=742774.407089899
+  nlsur criteria outer 3: theta=0.5805, Sigma=0.000442, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 4...
+nlsur_criteria stage 4 GN 1: Q=411023.614987, parameter ratio=4.549e+05, RSS ratio=776, elapsed=199.3s
+nlsur_criteria stage 4 GN 10: Q=410444.544946, parameter ratio=1.079e+04, RSS ratio=0.02569, elapsed=212.4s
+nlsur_criteria stage 4 GN 20: Q=410444.339163, parameter ratio=2650, RSS ratio=0.001005, elapsed=226.9s
+nlsur_criteria stage 4 GN 30: Q=410444.324689, parameter ratio=836.8, RSS ratio=0.0001065, elapsed=241.5s
+nlsur_criteria stage 4 GN 40: Q=410444.323122, parameter ratio=274.4, RSS ratio=1.16e-05, elapsed=255.9s
+nlsur_criteria stage 4 GN 50: Q=410444.322951, parameter ratio=90.51, RSS ratio=1.265e-06, elapsed=270.3s
+nlsur_criteria stage 4 GN 60: Q=410444.322932, parameter ratio=29.88, RSS ratio=1.38e-07, elapsed=285.5s
+nlsur_criteria stage 4 GN 70: Q=410444.32293, parameter ratio=9.868, RSS ratio=1.509e-08, elapsed=300.1s
+nlsur_criteria stage 4 GN 80: Q=410444.32293, parameter ratio=3.259, RSS ratio=1.702e-09, elapsed=314.7s
+nlsur_criteria stage 4 GN 90: Q=410444.32293, parameter ratio=1.076, RSS ratio=8.509e-11, elapsed=329.0s
+nlsur_criteria stage 4 GN 91: Q=410444.32293, parameter ratio=0.9635, RSS ratio=1.702e-10, elapsed=330.4s
+  nlsur_criteria IFGNLS stage 4: 91 GN, success=True, LL=745601.980309685
+  nlsur criteria outer 4: theta=0.229, Sigma=0.000201, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 5...
+nlsur_criteria stage 5 GN 1: Q=413567.531377, parameter ratio=2.431e+05, RSS ratio=161.9, elapsed=331.9s
+nlsur_criteria stage 5 GN 10: Q=413536.736638, parameter ratio=6786, RSS ratio=0.007018, elapsed=345.4s
+nlsur_criteria stage 5 GN 20: Q=413536.693645, parameter ratio=947.7, RSS ratio=0.000112, elapsed=360.0s
+nlsur_criteria stage 5 GN 30: Q=413536.692398, parameter ratio=193.2, RSS ratio=5.614e-06, elapsed=374.7s
+nlsur_criteria stage 5 GN 40: Q=413536.692334, parameter ratio=43.35, RSS ratio=2.908e-07, elapsed=389.2s
+nlsur_criteria stage 5 GN 50: Q=413536.692331, parameter ratio=9.851, RSS ratio=1.512e-08, elapsed=404.2s
+nlsur_criteria stage 5 GN 60: Q=413536.692331, parameter ratio=2.242, RSS ratio=7.46e-10, elapsed=418.8s
+nlsur_criteria stage 5 GN 66: Q=413536.692331, parameter ratio=0.9222, RSS ratio=4.223e-11, elapsed=427.4s
+  nlsur_criteria IFGNLS stage 5: 66 GN, success=True, LL=746104.437587383
+  nlsur criteria outer 5: theta=0.2132, Sigma=0.0001231, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 6...
+nlsur_criteria stage 6 GN 1: Q=414121.518809, parameter ratio=1.096e+05, RSS ratio=28.12, elapsed=428.9s
+nlsur_criteria stage 6 GN 10: Q=414117.001858, parameter ratio=1134, RSS ratio=0.0003643, elapsed=442.0s
+nlsur_criteria stage 6 GN 20: Q=414117.000434, parameter ratio=128, RSS ratio=1.102e-06, elapsed=456.7s
+nlsur_criteria stage 6 GN 30: Q=414117.000424, parameter ratio=21.3, RSS ratio=3.338e-08, elapsed=471.8s
+nlsur_criteria stage 6 GN 40: Q=414117.000424, parameter ratio=3.875, RSS ratio=1.139e-09, elapsed=486.2s
+nlsur_criteria stage 6 GN 47: Q=414117.000424, parameter ratio=0.5916, RSS ratio=4.498e-10, elapsed=496.4s
+  nlsur_criteria IFGNLS stage 6: 47 GN, success=True, LL=746190.227015261
+  nlsur criteria outer 6: theta=0.08267, Sigma=6.222e-05, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 7...
+nlsur_criteria stage 7 GN 1: Q=414217.985826, parameter ratio=3.006e+04, RSS ratio=4.832, elapsed=498.0s
+nlsur_criteria stage 7 GN 10: Q=414217.418901, parameter ratio=159.4, RSS ratio=2.778e-05, elapsed=511.3s
+nlsur_criteria stage 7 GN 20: Q=414217.418811, parameter ratio=9.857, RSS ratio=1.675e-08, elapsed=526.1s
+nlsur_criteria stage 7 GN 30: Q=414217.418811, parameter ratio=2.274, RSS ratio=3.092e-10, elapsed=541.0s
+nlsur_criteria stage 7 GN 35: Q=414217.418811, parameter ratio=0.9738, RSS ratio=2.81e-11, elapsed=548.6s
+  nlsur_criteria IFGNLS stage 7: 35 GN, success=True, LL=746204.781453647
+  nlsur criteria outer 7: theta=0.03119, Sigma=2.757e-05, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 8...
+nlsur_criteria stage 8 GN 1: Q=414234.586537, parameter ratio=2.043e+04, RSS ratio=0.824, elapsed=550.1s
+nlsur_criteria stage 8 GN 10: Q=414234.498733, parameter ratio=67.26, RSS ratio=3.624e-06, elapsed=563.2s
+nlsur_criteria stage 8 GN 20: Q=414234.498719, parameter ratio=29.09, RSS ratio=1.585e-08, elapsed=577.7s
+nlsur_criteria stage 8 GN 30: Q=414234.498719, parameter ratio=5.175, RSS ratio=3.513e-10, elapsed=592.1s
+nlsur_criteria stage 8 GN 40: Q=414234.498719, parameter ratio=0.8499, RSS ratio=8.431e-11, elapsed=606.9s
+  nlsur_criteria IFGNLS stage 8: 40 GN, success=True, LL=746207.256076961
+  nlsur criteria outer 8: theta=0.0126, Sigma=1.168e-05, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 9...
+nlsur_criteria stage 9 GN 1: Q=414237.417861, parameter ratio=1.604e+04, RSS ratio=0.1405, elapsed=608.4s
+nlsur_criteria stage 9 GN 10: Q=414237.403157, parameter ratio=55.38, RSS ratio=5.906e-07, elapsed=621.3s
+nlsur_criteria stage 9 GN 20: Q=414237.403154, parameter ratio=13.15, RSS ratio=4.665e-09, elapsed=635.9s
+nlsur_criteria stage 9 GN 30: Q=414237.403154, parameter ratio=2.226, RSS ratio=2.108e-10, elapsed=650.3s
+nlsur_criteria stage 9 GN 35: Q=414237.403154, parameter ratio=0.8991, RSS ratio=1.124e-10, elapsed=657.4s
+  nlsur_criteria IFGNLS stage 9: 35 GN, success=True, LL=746207.677874924
+  nlsur criteria outer 9: theta=0.005243, Sigma=4.867e-06, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 10...
+nlsur_criteria stage 10 GN 1: Q=414237.900622, parameter ratio=5086, RSS ratio=0.02399, elapsed=658.9s
+nlsur_criteria stage 10 GN 10: Q=414237.898114, parameter ratio=26.9, RSS ratio=1.017e-07, elapsed=671.9s
+nlsur_criteria stage 10 GN 20: Q=414237.898113, parameter ratio=5.532, RSS ratio=9.977e-10, elapsed=686.5s
+nlsur_criteria stage 10 GN 30: Q=414237.898113, parameter ratio=0.9203, RSS ratio=7.026e-11, elapsed=701.0s
+  nlsur_criteria IFGNLS stage 10: 30 GN, success=True, LL=746207.749880153
+  nlsur criteria outer 10: theta=0.002185, Sigma=2.017e-06, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 11...
+nlsur_criteria stage 11 GN 1: Q=414237.983022, parameter ratio=1825, RSS ratio=0.004099, elapsed=702.5s
+nlsur_criteria stage 11 GN 10: Q=414237.982593, parameter ratio=12.44, RSS ratio=1.793e-08, elapsed=715.7s
+nlsur_criteria stage 11 GN 20: Q=414237.982593, parameter ratio=2.396, RSS ratio=1.686e-10, elapsed=730.1s
+nlsur_criteria stage 11 GN 24: Q=414237.982593, parameter ratio=0.588, RSS ratio=8.431e-11, elapsed=735.9s
+  nlsur_criteria IFGNLS stage 11: 24 GN, success=True, LL=746207.762182466
+  nlsur criteria outer 11: theta=0.0009098, Sigma=8.344e-07, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 12...
+nlsur_criteria stage 12 GN 1: Q=414237.997098, parameter ratio=708.9, RSS ratio=0.0007005, elapsed=737.5s
+nlsur_criteria stage 12 GN 10: Q=414237.997025, parameter ratio=5.404, RSS ratio=3.105e-09, elapsed=750.4s
+nlsur_criteria stage 12 GN 20: Q=414237.997025, parameter ratio=1.01, RSS ratio=8.431e-11, elapsed=765.1s
+nlsur_criteria stage 12 GN 21: Q=414237.997025, parameter ratio=0.8979, RSS ratio=1.124e-10, elapsed=766.6s
+  nlsur_criteria IFGNLS stage 12: 21 GN, success=True, LL=746207.764285273
+  nlsur criteria outer 12: theta=0.0003784, Sigma=3.45e-07, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 13...
+nlsur_criteria stage 13 GN 1: Q=414237.999504, parameter ratio=283.6, RSS ratio=0.0001198, elapsed=768.1s
+nlsur_criteria stage 13 GN 10: Q=414237.999491, parameter ratio=2.21, RSS ratio=4.778e-10, elapsed=781.4s
+nlsur_criteria stage 13 GN 14: Q=414237.999491, parameter ratio=0.57, RSS ratio=2.951e-10, elapsed=787.3s
+  nlsur_criteria IFGNLS stage 13: 14 GN, success=True, LL=746207.764644786
+  nlsur criteria outer 13: theta=0.000157, Sigma=1.425e-07, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 14...
+nlsur_criteria stage 14 GN 1: Q=414237.999915, parameter ratio=115.6, RSS ratio=2.048e-05, elapsed=788.9s
+nlsur_criteria stage 14 GN 10: Q=414237.999913, parameter ratio=0.9778, RSS ratio=1.124e-10, elapsed=802.1s
+  nlsur_criteria IFGNLS stage 14: 10 GN, success=True, LL=746207.764706253
+  nlsur criteria outer 14: theta=6.499e-05, Sigma=5.887e-08, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 15...
+nlsur_criteria stage 15 GN 1: Q=414237.999985, parameter ratio=48.36, RSS ratio=3.502e-06, elapsed=803.5s
+nlsur_criteria stage 15 GN 5: Q=414237.999985, parameter ratio=0.4608, RSS ratio=1.068e-09, elapsed=809.4s
+  nlsur_criteria IFGNLS stage 15: 5 GN, success=True, LL=746207.764716761
+  nlsur criteria outer 15: theta=2.594e-05, Sigma=2.429e-08, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 16...
+nlsur_criteria stage 16 GN 1: Q=414237.999998, parameter ratio=18.76, RSS ratio=6.008e-07, elapsed=810.9s
+nlsur_criteria stage 16 GN 5: Q=414237.999997, parameter ratio=0.6238, RSS ratio=3.372e-10, elapsed=816.7s
+  nlsur_criteria IFGNLS stage 16: 5 GN, success=True, LL=746207.764718571
+  nlsur criteria outer 16: theta=1.182e-05, Sigma=1.011e-08, inner success=True, stop=False
+nlsur_criteria: FGNLS iteration 17...
+nlsur_criteria stage 17 GN 1: Q=414238, parameter ratio=8.446, RSS ratio=1.033e-07, elapsed=818.2s
+nlsur_criteria stage 17 GN 3: Q=414238, parameter ratio=0.6063, RSS ratio=5.34e-10, elapsed=821.1s
+  nlsur_criteria IFGNLS stage 17: 3 GN, success=True, LL=746207.764718880
+  nlsur criteria outer 17: theta=4.468e-06, Sigma=4.179e-09, inner success=True, stop=True
+{"backend": "nlsur_criteria", "converged": true, "n_outer": 17, "n_gn": 565, "seconds": 822.6266738680006, "llf": 746207.7647188797}

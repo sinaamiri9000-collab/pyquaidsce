@@ -1,0 +1,35 @@
+--- original AST formatted
++++ criteria-only AST formatted
+@@ -44,7 +44,7 @@
+                     m2 *= 10.0
+             if best is None:
+                 cutoff = 1e-05 if stop_rule == 'standard' else nrtol_stop
+-                converged = bool(nrtol < cutoff)
++                converged = False
+                 break
+             cand, oc, t, m2 = best
+         else:
+@@ -70,20 +70,17 @@
+                 nu *= 2.0
+             if not accepted:
+                 cutoff = 1e-05 if stop_rule == 'standard' else nrtol_stop
+-                converged = bool(nrtol < cutoff)
++                converged = False
+                 break
+             t, m2 = (1.0, mu)
+         rel = (obj - oc) / max(abs(obj), 1e-300)
+         smax = float(np.max(np.abs(cand - theta) / (np.abs(theta) + 1e-06)))
+         mreldif = float(np.max(np.abs(cand - theta) / (np.abs(theta) + 1.0)))
++        criterion_param, criterion_rss = observe_accepted(theta, cand, obj, oc, it, mreldif, nrtol, t, m2)
+         theta, obj = (cand, oc)
+         if say is not None:
+             say(f'    GN {it:3d}  obj={obj:.12g}  rel={rel:.3e} step={smax:.2e} t={t:g} mu={m2:.2e} nrtol={nrtol:.2e}')
+-        if stop_rule == 'standard':
+-            if mreldif < 1e-05 or rel < 1e-07 or nrtol < 1e-05:
+-                converged = True
+-                break
+-        elif nrtol < nrtol_stop or (rel < tol and smax < 1e-09):
++        if criterion_param and criterion_rss:
+             converged = True
+             break
+     return (theta, obj, it, converged)

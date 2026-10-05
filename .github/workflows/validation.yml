@@ -1,0 +1,49 @@
+name: small4 validation
+
+on:
+  workflow_dispatch:
+    inputs:
+      large_reps:
+        description: Draws in each of four larger bootstrap batches
+        required: true
+        default: "100"
+  push:
+    branches: [validation-tests]
+    paths:
+      - "validation/**"
+      - ".github/workflows/validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  existing-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install .
+      - run: python -m unittest discover -s tests -v
+      - run: python -m compileall -q validation src/pyquaidsce
+
+  audit:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install .
+      - name: Run audit with fixed expectations
+        env:
+          VALIDATION_REPS: ${{ inputs.large_reps }}
+        run: python -m validation.run --large-reps "$VALIDATION_REPS" --output validation-results
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: small4-validation
+          path: validation-results/

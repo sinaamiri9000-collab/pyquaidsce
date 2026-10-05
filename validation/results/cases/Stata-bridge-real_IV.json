@@ -1,0 +1,94 @@
+{
+  "id": "Stata-bridge-real_IV",
+  "group": "interface_python",
+  "expectation": "public contract holds",
+  "checks": [
+    {
+      "name": "bridge_real_estimator_b",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          112
+        ],
+        "expected_shape": [
+          112
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "bridge_real_estimator_V",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          112,
+          112
+        ],
+        "expected_shape": [
+          112,
+          112
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "bridge_real_elasticities",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          4,
+          4
+        ],
+        "expected_shape": [
+          4,
+          4
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "bridge_parameter_labels",
+      "passed": true,
+      "observed": null,
+      "expected": null
+    },
+    {
+      "name": "bridge_sample_scalar",
+      "passed": true,
+      "observed": null,
+      "expected": null
+    },
+    {
+      "name": "bridge_reduced_form_b",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          8
+        ],
+        "expected_shape": [
+          8
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 0.39998121500002526,
+  "status": "PASS"
+}

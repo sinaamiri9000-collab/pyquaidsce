@@ -38,3 +38,8 @@ out/
 !benchmarks/cquaids_ifgnls_4g_20k/data/benchmark_cquaids_4g_20k.dta
 !benchmarks/cquaids_ifgnls_4g_20k/results/python_results.csv
 !benchmarks/cquaids_ifgnls_4g_20k/results/stata_python_comparison.csv
+
+# Deliberately public validation evidence (derived exclusively from small4).
+!validation/results/**/*.csv
+!validation/results/**/*.log
+validation/.cache/

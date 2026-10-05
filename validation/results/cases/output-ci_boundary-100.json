@@ -1,0 +1,44 @@
+{
+  "id": "output-ci_boundary-100",
+  "group": "outputs",
+  "expectation": "well-defined confidence endpoints are boundary probes, not forced rejection tests",
+  "checks": [
+    {
+      "name": "full_percentile_lower",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          104
+        ],
+        "expected_shape": [
+          104
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "full_percentile_upper",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          104
+        ],
+        "expected_shape": [
+          104
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 0.0002175979998355615,
+  "status": "PASS"
+}

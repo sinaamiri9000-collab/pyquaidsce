@@ -1,0 +1,81 @@
+{
+  "id": "invalid-mp_context",
+  "group": "invalid",
+  "expectation": "explicit rejection of invalid input",
+  "fixture": "original",
+  "kwargs": {
+    "shares": [
+      "sw1",
+      "sw2",
+      "sw4",
+      "sw9"
+    ],
+    "prices": [
+      "p1",
+      "p2",
+      "p4",
+      "p9"
+    ],
+    "expenditure": "total",
+    "demographics": [
+      "x1",
+      "x2"
+    ],
+    "anot": 10.0,
+    "verbose": false,
+    "reps": 2,
+    "n_jobs": 2,
+    "mp_context": "absent"
+  },
+  "reference": "",
+  "checks": [
+    {
+      "name": "expected_exception_type",
+      "passed": true,
+      "observed": "ValueError",
+      "expected": [
+        "ValueError",
+        "TypeError"
+      ]
+    },
+    {
+      "name": "expected_exception_message",
+      "passed": true,
+      "observed": "multiprocessing context 'absent' is not supported; available methods are ['fork', 'spawn', 'forkserver']",
+      "expected": "not supported"
+    },
+    {
+      "name": "BLAS_state_restored",
+      "passed": true,
+      "observed": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ],
+      "expected": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ]
+    }
+  ],
+  "warnings": [],
+  "audit_timeout_seconds": 90,
+  "exception": {
+    "type": "ValueError",
+    "message": "multiprocessing context 'absent' is not supported; available methods are ['fork', 'spawn', 'forkserver']",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/pyquaidsce/validation/run.py\", line 219, in capture_fit\n    res = quaidsce(df, **kw, _deadline=time.perf_counter() + audit_timeout)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/_threads.py\", line 57, in wrapped\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/estimator.py\", line 696, in quaidsce\n    res.boot = bootstrap(\n               ^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/bootstrap.py\", line 410, in bootstrap\n    raise ValueError(\nValueError: multiprocessing context 'absent' is not supported; available methods are ['fork', 'spawn', 'forkserver']\n"
+  },
+  "elapsed_seconds": 0.29415001699999266,
+  "status": "EXPECTED_ERROR"
+}

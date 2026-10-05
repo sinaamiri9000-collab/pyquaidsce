@@ -1,0 +1,73 @@
+{
+  "id": "invalid-chunk-0",
+  "group": "invalid",
+  "expectation": "explicit rejection of invalid input",
+  "fixture": "original",
+  "kwargs": {
+    "shares": [
+      "sw1",
+      "sw2",
+      "sw4",
+      "sw9"
+    ],
+    "prices": [
+      "p1",
+      "p2",
+      "p4",
+      "p9"
+    ],
+    "expenditure": "total",
+    "demographics": [
+      "x1",
+      "x2"
+    ],
+    "anot": 10.0,
+    "verbose": false,
+    "chunk": 0
+  },
+  "reference": "",
+  "checks": [
+    {
+      "name": "expected_exception_type",
+      "passed": true,
+      "observed": "ValueError",
+      "expected": [
+        "ValueError",
+        "TypeError"
+      ]
+    },
+    {
+      "name": "BLAS_state_restored",
+      "passed": true,
+      "observed": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ],
+      "expected": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ]
+    }
+  ],
+  "warnings": [],
+  "audit_timeout_seconds": 90,
+  "exception": {
+    "type": "ValueError",
+    "message": "max_outer must be >= 2; max_iter and chunk must be >= 1",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/pyquaidsce/validation/run.py\", line 219, in capture_fit\n    res = quaidsce(df, **kw, _deadline=time.perf_counter() + audit_timeout)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/_threads.py\", line 57, in wrapped\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/estimator.py\", line 260, in quaidsce\n    raise ValueError(\"max_outer must be >= 2; max_iter and chunk must be >= 1\")\nValueError: max_outer must be >= 2; max_iter and chunk must be >= 1\n"
+  },
+  "elapsed_seconds": 0.0020368100003906875,
+  "status": "EXPECTED_ERROR"
+}

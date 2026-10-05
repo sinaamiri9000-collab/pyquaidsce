@@ -1,0 +1,22 @@
+{
+  "id": "output-missing_lookup",
+  "group": "outputs",
+  "expectation": "public contract holds",
+  "checks": [
+    {
+      "name": "missing_coefficient_KeyError",
+      "passed": true,
+      "observed": null,
+      "expected": null
+    },
+    {
+      "name": "missing_reduced_form_ValueError",
+      "passed": true,
+      "observed": null,
+      "expected": null
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 4.293400024835137e-05,
+  "status": "PASS"
+}

@@ -1,0 +1,74 @@
+{
+  "id": "selection-independent_no_exp",
+  "group": "selection",
+  "expectation": "converged fit and independent numerical checks",
+  "fixture": "derived",
+  "kwargs": {
+    "shares": [
+      "sw1",
+      "sw2",
+      "sw4",
+      "sw9"
+    ],
+    "prices": [
+      "p1",
+      "p2",
+      "p4",
+      "p9"
+    ],
+    "expenditure": "total",
+    "demographics": [
+      "x1",
+      "x2"
+    ],
+    "anot": 10.0,
+    "verbose": false,
+    "selection_covariates": [
+      "s1",
+      "s2"
+    ],
+    "selection_expenditure": false
+  },
+  "reference": "",
+  "checks": [
+    {
+      "name": "unexpected_exception",
+      "passed": false,
+      "observed": "TimeoutError: bootstrap replication exceeded its time limit",
+      "expected": "no exception"
+    },
+    {
+      "name": "BLAS_state_restored",
+      "passed": true,
+      "observed": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ],
+      "expected": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ]
+    }
+  ],
+  "warnings": [],
+  "audit_timeout_seconds": 90,
+  "exception": {
+    "type": "TimeoutError",
+    "message": "bootstrap replication exceeded its time limit",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/pyquaidsce/validation/run.py\", line 219, in capture_fit\n    res = quaidsce(df, **kw, _deadline=time.perf_counter() + audit_timeout)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/_threads.py\", line 57, in wrapped\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/estimator.py\", line 580, in quaidsce\n    nl = nlsur(\n         ^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/_threads.py\", line 57, in wrapped\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/nlsur.py\", line 484, in nlsur\n    theta, obj, ngn, ok = gauss_newton(\n                          ^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/nlsur.py\", line 240, in gauss_newton\n    check_deadline(deadline)\n  File \"/workspace/pyquaidsce/src/pyquaidsce/_timing.py\", line 17, in check_deadline\n    raise TimeoutError(\"bootstrap replication exceeded its time limit\")\nTimeoutError: bootstrap replication exceeded its time limit\n"
+  },
+  "elapsed_seconds": 90.00223419199983,
+  "status": "FAIL"
+}

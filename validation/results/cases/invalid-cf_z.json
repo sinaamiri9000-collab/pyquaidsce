@@ -1,0 +1,82 @@
+{
+  "id": "invalid-cf_z",
+  "group": "invalid",
+  "expectation": "explicit rejection of invalid input",
+  "fixture": "derived",
+  "kwargs": {
+    "shares": [
+      "sw1",
+      "sw2",
+      "sw4",
+      "sw9"
+    ],
+    "prices": [
+      "p1",
+      "p2",
+      "p4",
+      "p9"
+    ],
+    "expenditure": "total",
+    "demographics": [
+      "x1",
+      "x2"
+    ],
+    "anot": 10.0,
+    "verbose": false,
+    "control_function": "cf",
+    "selection_covariates": [
+      "cf"
+    ]
+  },
+  "reference": "",
+  "checks": [
+    {
+      "name": "expected_exception_type",
+      "passed": true,
+      "observed": "ValueError",
+      "expected": [
+        "ValueError",
+        "TypeError"
+      ]
+    },
+    {
+      "name": "expected_exception_message",
+      "passed": true,
+      "observed": "a demand control residual in the Probit must be supplied through selection_control_function, not selection_covariates",
+      "expected": "selection_control_function"
+    },
+    {
+      "name": "BLAS_state_restored",
+      "passed": true,
+      "observed": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ],
+      "expected": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ]
+    }
+  ],
+  "warnings": [],
+  "audit_timeout_seconds": 90,
+  "exception": {
+    "type": "ValueError",
+    "message": "a demand control residual in the Probit must be supplied through selection_control_function, not selection_covariates",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/pyquaidsce/validation/run.py\", line 219, in capture_fit\n    res = quaidsce(df, **kw, _deadline=time.perf_counter() + audit_timeout)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/_threads.py\", line 57, in wrapped\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/estimator.py\", line 371, in quaidsce\n    raise ValueError(\nValueError: a demand control residual in the Probit must be supplied through selection_control_function, not selection_covariates\n"
+  },
+  "elapsed_seconds": 0.001640582000163704,
+  "status": "EXPECTED_ERROR"
+}

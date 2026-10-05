@@ -1,0 +1,40 @@
+{
+  "id": "lifecycle-hard_watchdog",
+  "group": "lifecycle",
+  "expectation": "terminate an injected noncooperative blocked worker and reap it",
+  "checks": [
+    {
+      "name": "stuck_worker_started",
+      "passed": true,
+      "observed": null,
+      "expected": null
+    },
+    {
+      "name": "hard_watchdog_timeout",
+      "passed": true,
+      "observed": [
+        [
+          1,
+          null,
+          "TimeoutError: bootstrap replication exceeded 5 seconds"
+        ]
+      ],
+      "expected": "parent terminates a worker that never checks its deadline"
+    },
+    {
+      "name": "hard_watchdog_wall_bound",
+      "passed": true,
+      "observed": 5.028023736999785,
+      "expected": 9
+    },
+    {
+      "name": "hard_watchdog_no_orphan",
+      "passed": true,
+      "observed": null,
+      "expected": null
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 5.028679576000286,
+  "status": "PASS"
+}

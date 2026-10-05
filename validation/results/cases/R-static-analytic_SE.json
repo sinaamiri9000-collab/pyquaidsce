@@ -1,0 +1,20 @@
+{
+  "id": "R-static-analytic_SE",
+  "group": "interface_static",
+  "expectation": "source contract: R summary does not convert undefined elasticity uncertainty into zero",
+  "checks": [
+    {
+      "name": "R_summary_preserves_undefined_SE",
+      "passed": false,
+      "observed": {
+        "raw_zero_elasticity_SE": 36,
+        "python_undefined_elasticity_SE": 36,
+        "source": "R/R/methods.R"
+      },
+      "expected": "undefined analytical elasticity SEs remain NA/NaN"
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 8.529899969289545e-05,
+  "status": "FAIL"
+}

@@ -1,0 +1,27 @@
+{
+  "id": "public-probit_no_constant",
+  "group": "public_helpers",
+  "expectation": "ProbitResult.xb respects probit(add_constant=False)",
+  "checks": [
+    {
+      "name": "no_constant_coefficient_dimension",
+      "passed": true,
+      "observed": null,
+      "expected": null
+    },
+    {
+      "name": "unexpected_exception",
+      "passed": false,
+      "observed": "ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1 is different from 2)",
+      "expected": "no exception"
+    }
+  ],
+  "exception": {
+    "type": "ValueError",
+    "message": "matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1 is different from 2)",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/pyquaidsce/validation/contracts.py\", line 50, in run\n    fn(check)\n  File \"/workspace/pyquaidsce/validation/contracts.py\", line 67, in no_constant\n    check.close(\"xb_without_constant\", p.xb(X), X @ p.b)\n                                       ^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/probit.py\", line 41, in xb\n    return X @ self.b[:-1] + self.b[-1]\n           ~~^~~~~~~~~~~~~\nValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1 is different from 2)\n"
+  },
+  "warnings": [],
+  "elapsed_seconds": 0.003309326000362489,
+  "status": "FAIL"
+}

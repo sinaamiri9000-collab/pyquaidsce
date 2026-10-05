@@ -1,0 +1,38 @@
+{
+  "id": "methodology-NLS_covariance",
+  "group": "methodology",
+  "expectation": "identity-weighted NLS uses its conditional sandwich covariance, not efficient GLS covariance",
+  "checks": [
+    {
+      "name": "conditional_multivariate_NLS_covariance",
+      "passed": false,
+      "observed": {
+        "max_abs_error": 0.17212711840897946,
+        "actual_shape": [
+          30,
+          30
+        ],
+        "expected_shape": [
+          30,
+          30
+        ]
+      },
+      "expected": {
+        "atol": 1e-07,
+        "rtol": 1e-05
+      }
+    },
+    {
+      "name": "NLS_covariance_SE_ratio",
+      "passed": false,
+      "observed": {
+        "min_ratio": 0.3028567697283974,
+        "max_ratio": 0.8656901208861026
+      },
+      "expected": "OLS sandwich conditional on first stage; full generated-regressor inference still needs bootstrap"
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 0.04028123400030381,
+  "status": "FAIL"
+}

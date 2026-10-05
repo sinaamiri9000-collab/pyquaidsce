@@ -1,0 +1,52 @@
+{
+  "id": "public-nlsur",
+  "group": "public_helpers",
+  "expectation": "public contract holds",
+  "checks": [
+    {
+      "name": "public_nlsur_theta",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 2.1600750438333094e-08,
+        "actual_shape": [
+          30
+        ],
+        "expected_shape": [
+          30
+        ]
+      },
+      "expected": {
+        "atol": 1e-06,
+        "rtol": 1e-05
+      }
+    },
+    {
+      "name": "public_nlsur_sigma",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 5.152604037883535e-11,
+        "actual_shape": [
+          4,
+          4
+        ],
+        "expected_shape": [
+          4,
+          4
+        ]
+      },
+      "expected": {
+        "atol": 1e-06,
+        "rtol": 1e-05
+      }
+    },
+    {
+      "name": "public_nlsur_converged",
+      "passed": true,
+      "observed": null,
+      "expected": null
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 0.28174414400018577,
+  "status": "PASS"
+}

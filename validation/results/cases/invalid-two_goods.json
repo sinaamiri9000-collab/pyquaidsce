@@ -1,0 +1,74 @@
+{
+  "id": "invalid-two_goods",
+  "group": "invalid",
+  "expectation": "explicit rejection of invalid input",
+  "fixture": "original",
+  "kwargs": {
+    "shares": [
+      "sw1",
+      "sw2"
+    ],
+    "prices": [
+      "p1",
+      "p2"
+    ],
+    "expenditure": "total",
+    "demographics": [
+      "x1",
+      "x2"
+    ],
+    "anot": 10.0,
+    "verbose": false
+  },
+  "reference": "",
+  "checks": [
+    {
+      "name": "expected_exception_type",
+      "passed": true,
+      "observed": "ValueError",
+      "expected": [
+        "ValueError",
+        "TypeError"
+      ]
+    },
+    {
+      "name": "expected_exception_message",
+      "passed": true,
+      "observed": "must specify at least 3 expenditure shares",
+      "expected": "at least 3"
+    },
+    {
+      "name": "BLAS_state_restored",
+      "passed": true,
+      "observed": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ],
+      "expected": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ]
+    }
+  ],
+  "warnings": [],
+  "audit_timeout_seconds": 90,
+  "exception": {
+    "type": "ValueError",
+    "message": "must specify at least 3 expenditure shares",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/pyquaidsce/validation/run.py\", line 219, in capture_fit\n    res = quaidsce(df, **kw, _deadline=time.perf_counter() + audit_timeout)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/_threads.py\", line 57, in wrapped\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/estimator.py\", line 314, in quaidsce\n    spec = Spec(\n           ^^^^^\n  File \"<string>\", line 8, in __init__\n  File \"/workspace/pyquaidsce/src/pyquaidsce/params.py\", line 50, in __post_init__\n    raise ValueError(\"must specify at least 3 expenditure shares\")\nValueError: must specify at least 3 expenditure shares\n"
+  },
+  "elapsed_seconds": 0.0017626560002099723,
+  "status": "EXPECTED_ERROR"
+}

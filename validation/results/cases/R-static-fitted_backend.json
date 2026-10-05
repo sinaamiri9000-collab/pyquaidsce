@@ -1,0 +1,20 @@
+{
+  "id": "R-static-fitted_backend",
+  "group": "interface_static",
+  "expectation": "source contract: R fitted values must not silently become NULL",
+  "checks": [
+    {
+      "name": "R_backend_method_exists",
+      "passed": false,
+      "observed": {
+        "wrapper_calls": "res_py$fitted_shares()",
+        "python_method_exists": false,
+        "source": "R/R/quaidsce.R"
+      },
+      "expected": "R fitted()/residuals() use an available backend API"
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 2.524799992897897e-05,
+  "status": "FAIL"
+}

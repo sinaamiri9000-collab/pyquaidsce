@@ -1,0 +1,73 @@
+{
+  "id": "invalid-blas_threads-0",
+  "group": "invalid",
+  "expectation": "explicit rejection of invalid input",
+  "fixture": "original",
+  "kwargs": {
+    "shares": [
+      "sw1",
+      "sw2",
+      "sw4",
+      "sw9"
+    ],
+    "prices": [
+      "p1",
+      "p2",
+      "p4",
+      "p9"
+    ],
+    "expenditure": "total",
+    "demographics": [
+      "x1",
+      "x2"
+    ],
+    "anot": 10.0,
+    "verbose": false,
+    "blas_threads": 0
+  },
+  "reference": "",
+  "checks": [
+    {
+      "name": "expected_exception_type",
+      "passed": true,
+      "observed": "ValueError",
+      "expected": [
+        "ValueError",
+        "TypeError"
+      ]
+    },
+    {
+      "name": "BLAS_state_restored",
+      "passed": true,
+      "observed": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ],
+      "expected": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ]
+    }
+  ],
+  "warnings": [],
+  "audit_timeout_seconds": 90,
+  "exception": {
+    "type": "ValueError",
+    "message": "blas_threads must be a positive integer or None",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/pyquaidsce/validation/run.py\", line 219, in capture_fit\n    res = quaidsce(df, **kw, _deadline=time.perf_counter() + audit_timeout)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/_threads.py\", line 56, in wrapped\n    with blas_thread_limit(value):\n         ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/contextlib.py\", line 137, in __enter__\n    return next(self.gen)\n           ^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/_threads.py\", line 36, in blas_thread_limit\n    value = _validate_blas_threads(n)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/_threads.py\", line 25, in _validate_blas_threads\n    raise ValueError(\"blas_threads must be a positive integer or None\")\nValueError: blas_threads must be a positive integer or None\n"
+  },
+  "elapsed_seconds": 0.00164046200006851,
+  "status": "EXPECTED_ERROR"
+}

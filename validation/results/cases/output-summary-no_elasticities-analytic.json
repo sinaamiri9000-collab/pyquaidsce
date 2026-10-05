@@ -1,0 +1,16 @@
+{
+  "id": "output-summary-no_elasticities-analytic",
+  "group": "outputs",
+  "expectation": "summary(elasticities=False) suppresses elasticity coefficient rows",
+  "checks": [
+    {
+      "name": "elasticity_rows_suppressed",
+      "passed": true,
+      "observed": [],
+      "expected": []
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 0.0037960999998176703,
+  "status": "PASS"
+}

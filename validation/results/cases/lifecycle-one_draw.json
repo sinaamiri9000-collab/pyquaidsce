@@ -1,0 +1,79 @@
+{
+  "id": "lifecycle-one_draw",
+  "group": "lifecycle",
+  "expectation": "one successful draw cannot produce standard errors",
+  "fixture": "original",
+  "kwargs": {
+    "shares": [
+      "sw1",
+      "sw2",
+      "sw4",
+      "sw9"
+    ],
+    "prices": [
+      "p1",
+      "p2",
+      "p4",
+      "p9"
+    ],
+    "expenditure": "total",
+    "demographics": [
+      "x1",
+      "x2"
+    ],
+    "anot": 10.0,
+    "verbose": false,
+    "reps": 1,
+    "seed": 16001
+  },
+  "reference": "",
+  "checks": [
+    {
+      "name": "expected_exception_type",
+      "passed": true,
+      "observed": "RuntimeError",
+      "expected": [
+        "RuntimeError"
+      ]
+    },
+    {
+      "name": "expected_exception_message",
+      "passed": true,
+      "observed": "fewer than two bootstrap replications converged; standard errors cannot be computed",
+      "expected": "fewer than two"
+    },
+    {
+      "name": "BLAS_state_restored",
+      "passed": true,
+      "observed": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ],
+      "expected": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ]
+    }
+  ],
+  "warnings": [],
+  "audit_timeout_seconds": 90,
+  "exception": {
+    "type": "RuntimeError",
+    "message": "fewer than two bootstrap replications converged; standard errors cannot be computed",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/pyquaidsce/validation/run.py\", line 219, in capture_fit\n    res = quaidsce(df, **kw, _deadline=time.perf_counter() + audit_timeout)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/_threads.py\", line 57, in wrapped\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/estimator.py\", line 696, in quaidsce\n    res.boot = bootstrap(\n               ^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/bootstrap.py\", line 428, in bootstrap\n    raise RuntimeError(\nRuntimeError: fewer than two bootstrap replications converged; standard errors cannot be computed\n"
+  },
+  "elapsed_seconds": 0.8136866499999087,
+  "status": "EXPECTED_ERROR"
+}

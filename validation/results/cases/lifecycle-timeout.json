@@ -1,0 +1,81 @@
+{
+  "id": "lifecycle-timeout",
+  "group": "lifecycle",
+  "expectation": "watchdog rejects all timed-out draws",
+  "fixture": "original",
+  "kwargs": {
+    "shares": [
+      "sw1",
+      "sw2",
+      "sw4",
+      "sw9"
+    ],
+    "prices": [
+      "p1",
+      "p2",
+      "p4",
+      "p9"
+    ],
+    "expenditure": "total",
+    "demographics": [
+      "x1",
+      "x2"
+    ],
+    "anot": 10.0,
+    "verbose": false,
+    "reps": 2,
+    "seed": 16001,
+    "rep_timeout": 1e-06,
+    "mp_context": "spawn"
+  },
+  "reference": "",
+  "checks": [
+    {
+      "name": "expected_exception_type",
+      "passed": true,
+      "observed": "RuntimeError",
+      "expected": [
+        "RuntimeError"
+      ]
+    },
+    {
+      "name": "expected_exception_message",
+      "passed": true,
+      "observed": "every bootstrap replication failed; first error: TimeoutError: bootstrap replication exceeded its time limit",
+      "expected": "TimeoutError"
+    },
+    {
+      "name": "BLAS_state_restored",
+      "passed": true,
+      "observed": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ],
+      "expected": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ]
+    }
+  ],
+  "warnings": [],
+  "audit_timeout_seconds": 90,
+  "exception": {
+    "type": "RuntimeError",
+    "message": "every bootstrap replication failed; first error: TimeoutError: bootstrap replication exceeded its time limit",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/pyquaidsce/validation/run.py\", line 219, in capture_fit\n    res = quaidsce(df, **kw, _deadline=time.perf_counter() + audit_timeout)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/_threads.py\", line 57, in wrapped\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/estimator.py\", line 696, in quaidsce\n    res.boot = bootstrap(\n               ^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/bootstrap.py\", line 423, in bootstrap\n    raise RuntimeError(\nRuntimeError: every bootstrap replication failed; first error: TimeoutError: bootstrap replication exceeded its time limit\n"
+  },
+  "elapsed_seconds": 2.1370880949998536,
+  "status": "EXPECTED_ERROR"
+}

@@ -1,0 +1,6352 @@
+[
+  {
+    "id": "core-cq-nls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-cq-nls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-cq-nls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-cq-nls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-cq-fgnls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-cq-fgnls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-cq-fgnls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-cq-fgnls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-cq-ifgnls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-cq-ifgnls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-cq-ifgnls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-cq-ifgnls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ca-nls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "quadratic": false,
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ca-nls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "quadratic": false,
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ca-nls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "quadratic": false,
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ca-nls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "quadratic": false,
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ca-fgnls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "quadratic": false,
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ca-fgnls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "quadratic": false,
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ca-fgnls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "quadratic": false,
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ca-fgnls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "quadratic": false,
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ca-ifgnls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "quadratic": false,
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ca-ifgnls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "quadratic": false,
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ca-ifgnls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "quadratic": false,
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ca-ifgnls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "quadratic": false,
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-uq-nls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-uq-nls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-uq-nls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-uq-nls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-uq-fgnls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-uq-fgnls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-uq-fgnls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-uq-fgnls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-uq-ifgnls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-uq-ifgnls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-uq-ifgnls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-uq-ifgnls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ua-nls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ua-nls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ua-nls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ua-nls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ua-fgnls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ua-fgnls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ua-fgnls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ua-fgnls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ua-ifgnls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ua-ifgnls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ua-ifgnls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-ua-ifgnls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-nq-nls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "demographics": null,
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-nq-nls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "demographics": null,
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-nq-nls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "demographics": null,
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-nq-nls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "demographics": null,
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-nq-fgnls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "demographics": null,
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-nq-fgnls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "demographics": null,
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-nq-fgnls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "demographics": null,
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-nq-fgnls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "demographics": null,
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-nq-ifgnls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "demographics": null,
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-nq-ifgnls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "demographics": null,
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-nq-ifgnls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "demographics": null,
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-nq-ifgnls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "demographics": null,
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-na-nls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "demographics": null,
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-na-nls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "demographics": null,
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-na-nls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "demographics": null,
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-na-nls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "demographics": null,
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-na-fgnls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "demographics": null,
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-na-fgnls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "demographics": null,
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-na-fgnls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "demographics": null,
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-na-fgnls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "demographics": null,
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-na-ifgnls-gn-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "demographics": null,
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-na-ifgnls-gn-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "demographics": null,
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-na-ifgnls-lm-zero",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "demographics": null,
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "zero"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "core-na-ifgnls-lm-linear",
+    "group": "core",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "demographics": null,
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "censor",
+      "demographics",
+      "method",
+      "algorithm",
+      "start",
+      "data",
+      "shares",
+      "prices",
+      "expenditure",
+      "anot",
+      "reps"
+    ]
+  },
+  {
+    "id": "input-price_logs-c1",
+    "group": "inputs",
+    "kwargs": {
+      "censor": true
+    },
+    "fixture": "price_logs",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "lnprices",
+      "lnexpenditure",
+      "censor"
+    ]
+  },
+  {
+    "id": "input-expenditure_logs-c1",
+    "group": "inputs",
+    "kwargs": {
+      "censor": true
+    },
+    "fixture": "expenditure_logs",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "lnprices",
+      "lnexpenditure",
+      "censor"
+    ]
+  },
+  {
+    "id": "input-both_logs-c1",
+    "group": "inputs",
+    "kwargs": {
+      "censor": true
+    },
+    "fixture": "both_logs",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "lnprices",
+      "lnexpenditure",
+      "censor"
+    ]
+  },
+  {
+    "id": "input-price_logs-c0",
+    "group": "inputs",
+    "kwargs": {
+      "censor": false
+    },
+    "fixture": "price_logs",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-uq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "lnprices",
+      "lnexpenditure",
+      "censor"
+    ]
+  },
+  {
+    "id": "input-expenditure_logs-c0",
+    "group": "inputs",
+    "kwargs": {
+      "censor": false
+    },
+    "fixture": "expenditure_logs",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-uq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "lnprices",
+      "lnexpenditure",
+      "censor"
+    ]
+  },
+  {
+    "id": "input-both_logs-c0",
+    "group": "inputs",
+    "kwargs": {
+      "censor": false
+    },
+    "fixture": "both_logs",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-uq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "lnprices",
+      "lnexpenditure",
+      "censor"
+    ]
+  },
+  {
+    "id": "input-renamed",
+    "group": "inputs",
+    "kwargs": {},
+    "fixture": "renamed",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "data",
+      "shares",
+      "prices",
+      "demographics"
+    ]
+  },
+  {
+    "id": "input-irrelevant",
+    "group": "inputs",
+    "kwargs": {},
+    "fixture": "irrelevant",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "data",
+      "shares",
+      "prices",
+      "demographics"
+    ]
+  },
+  {
+    "id": "input-reverse_rows",
+    "group": "inputs",
+    "kwargs": {},
+    "fixture": "reverse_rows",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "data",
+      "shares",
+      "prices",
+      "demographics"
+    ]
+  },
+  {
+    "id": "input-custom_index",
+    "group": "inputs",
+    "kwargs": {},
+    "fixture": "custom_index",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "data",
+      "shares",
+      "prices",
+      "demographics"
+    ]
+  },
+  {
+    "id": "input-permuted_goods",
+    "group": "inputs",
+    "kwargs": {},
+    "fixture": "permuted_goods",
+    "checks": [
+      "permuted_goods"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "data",
+      "shares",
+      "prices",
+      "demographics"
+    ]
+  },
+  {
+    "id": "input-permuted_demos",
+    "group": "inputs",
+    "kwargs": {
+      "demographics": [
+        "x2",
+        "x1"
+      ]
+    },
+    "fixture": "original",
+    "checks": [
+      "permuted_demos"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "data",
+      "shares",
+      "prices",
+      "demographics"
+    ]
+  },
+  {
+    "id": "input-one_demo",
+    "group": "inputs",
+    "kwargs": {
+      "demographics": [
+        "x1"
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "data",
+      "shares",
+      "prices",
+      "demographics"
+    ]
+  },
+  {
+    "id": "input-three_goods_censored",
+    "group": "inputs",
+    "kwargs": {},
+    "fixture": "three_goods",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "data",
+      "shares",
+      "prices",
+      "demographics"
+    ]
+  },
+  {
+    "id": "input-three_goods_uncensored",
+    "group": "inputs",
+    "kwargs": {
+      "censor": false
+    },
+    "fixture": "three_goods",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "data",
+      "shares",
+      "prices",
+      "demographics",
+      "censor"
+    ]
+  },
+  {
+    "id": "input-missing_required",
+    "group": "inputs",
+    "kwargs": {},
+    "fixture": "missing_required",
+    "checks": [
+      "complete_case"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "data",
+      "shares",
+      "prices",
+      "demographics"
+    ]
+  },
+  {
+    "id": "input-missing_irrelevant",
+    "group": "inputs",
+    "kwargs": {},
+    "fixture": "missing_irrelevant",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "data",
+      "shares",
+      "prices",
+      "demographics"
+    ]
+  },
+  {
+    "id": "input-infinite_required",
+    "group": "inputs",
+    "kwargs": {},
+    "fixture": "infinite_required",
+    "checks": [
+      "complete_case"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "data",
+      "shares",
+      "prices",
+      "demographics"
+    ]
+  },
+  {
+    "id": "selection-explicit_defaults",
+    "group": "selection",
+    "kwargs": {
+      "selection_prices": [
+        "p1",
+        "p2",
+        "p4",
+        "p9"
+      ],
+      "selection_covariates": [
+        "x1",
+        "x2"
+      ],
+      "selection_expenditure": true
+    },
+    "fixture": "original",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-price_subset",
+    "group": "selection",
+    "kwargs": {
+      "selection_prices": [
+        "p1",
+        "p4"
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-price_reorder",
+    "group": "selection",
+    "kwargs": {
+      "selection_prices": [
+        "p9",
+        "p4",
+        "p2",
+        "p1"
+      ]
+    },
+    "fixture": "original",
+    "checks": [
+      "selection_reorder"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-no_prices",
+    "group": "selection",
+    "kwargs": {
+      "selection_prices": []
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-covariate_subset",
+    "group": "selection",
+    "kwargs": {
+      "selection_covariates": [
+        "x1"
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-covariate_reorder",
+    "group": "selection",
+    "kwargs": {
+      "selection_covariates": [
+        "x2",
+        "x1"
+      ]
+    },
+    "fixture": "original",
+    "checks": [
+      "selection_reorder"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-independent_covariate",
+    "group": "selection",
+    "kwargs": {
+      "selection_covariates": [
+        "s1"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-no_covariates",
+    "group": "selection",
+    "kwargs": {
+      "selection_covariates": []
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-no_expenditure",
+    "group": "selection",
+    "kwargs": {
+      "selection_expenditure": false
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-none_raw",
+    "group": "selection",
+    "kwargs": {
+      "selection_expenditure": null
+    },
+    "fixture": "original",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-none_logged",
+    "group": "selection",
+    "kwargs": {
+      "selection_expenditure": null
+    },
+    "fixture": "both_logs",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-false_logged",
+    "group": "selection",
+    "kwargs": {
+      "selection_expenditure": false
+    },
+    "fixture": "both_logs",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "selection-none_logged",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-intercept_only",
+    "group": "selection",
+    "kwargs": {
+      "selection_prices": [],
+      "selection_covariates": [],
+      "selection_expenditure": false
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-linear_subset",
+    "group": "selection",
+    "kwargs": {
+      "quadratic": false,
+      "selection_prices": [
+        "p4",
+        "p1"
+      ],
+      "selection_expenditure": false
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure",
+      "quadratic"
+    ]
+  },
+  {
+    "id": "selection-independent_no_exp",
+    "group": "selection",
+    "kwargs": {
+      "selection_covariates": [
+        "s1",
+        "s2"
+      ],
+      "selection_expenditure": false
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-price_only",
+    "group": "selection",
+    "kwargs": {
+      "selection_covariates": [],
+      "selection_expenditure": false
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-exp_only",
+    "group": "selection",
+    "kwargs": {
+      "selection_prices": [],
+      "selection_covariates": []
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "selection-collinear_covariates",
+    "group": "selection",
+    "kwargs": {
+      "selection_covariates": [
+        "x1",
+        "x1_copy"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [
+      "dropped_column"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "cf-demand",
+    "group": "control_function",
+    "kwargs": {
+      "control_function": "cf"
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "ivexp",
+      "control_function",
+      "selection_control_function"
+    ]
+  },
+  {
+    "id": "cf-participation",
+    "group": "control_function",
+    "kwargs": {
+      "selection_control_function": "cf"
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "ivexp",
+      "control_function",
+      "selection_control_function"
+    ]
+  },
+  {
+    "id": "cf-both_same",
+    "group": "control_function",
+    "kwargs": {
+      "control_function": "cf",
+      "selection_control_function": "cf"
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "ivexp",
+      "control_function",
+      "selection_control_function"
+    ]
+  },
+  {
+    "id": "cf-both_distinct",
+    "group": "control_function",
+    "kwargs": {
+      "control_function": "cf",
+      "selection_control_function": "cf2"
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "ivexp",
+      "control_function",
+      "selection_control_function"
+    ]
+  },
+  {
+    "id": "cf-linear_both",
+    "group": "control_function",
+    "kwargs": {
+      "quadratic": false,
+      "control_function": "cf",
+      "selection_control_function": "cf2"
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "ivexp",
+      "control_function",
+      "selection_control_function",
+      "quadratic"
+    ]
+  },
+  {
+    "id": "cf-iv_one",
+    "group": "control_function",
+    "kwargs": {
+      "ivexp": [
+        "iv1"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [
+      "reduced_form"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "ivexp",
+      "control_function",
+      "selection_control_function"
+    ]
+  },
+  {
+    "id": "cf-iv_two",
+    "group": "control_function",
+    "kwargs": {
+      "ivexp": [
+        "iv1",
+        "iv2"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [
+      "reduced_form"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "ivexp",
+      "control_function",
+      "selection_control_function"
+    ]
+  },
+  {
+    "id": "cf-manual_one",
+    "group": "control_function",
+    "kwargs": {
+      "control_function": "cf",
+      "selection_control_function": "cf"
+    },
+    "fixture": "derived",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "cf-iv_one",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "ivexp",
+      "control_function",
+      "selection_control_function"
+    ]
+  },
+  {
+    "id": "cf-iv_logged",
+    "group": "control_function",
+    "kwargs": {
+      "ivexp": [
+        "iv1"
+      ]
+    },
+    "fixture": "derived_logs",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "cf-iv_one",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "ivexp",
+      "control_function",
+      "selection_control_function"
+    ]
+  },
+  {
+    "id": "cf-iv_custom_selection",
+    "group": "control_function",
+    "kwargs": {
+      "ivexp": [
+        "iv1"
+      ],
+      "selection_prices": [
+        "p4",
+        "p1"
+      ],
+      "selection_expenditure": false,
+      "selection_covariates": [
+        "s1"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [
+      "reduced_form"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "ivexp",
+      "control_function",
+      "selection_control_function",
+      "selection_prices",
+      "selection_expenditure",
+      "selection_covariates"
+    ]
+  },
+  {
+    "id": "cf-iv_linear",
+    "group": "control_function",
+    "kwargs": {
+      "ivexp": [
+        "iv1"
+      ],
+      "quadratic": false
+    },
+    "fixture": "derived",
+    "checks": [
+      "reduced_form"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "ivexp",
+      "control_function",
+      "selection_control_function",
+      "quadratic"
+    ]
+  },
+  {
+    "id": "cf-residual_rescaled",
+    "group": "control_function",
+    "kwargs": {
+      "control_function": "cf_scaled",
+      "selection_control_function": "cf_scaled"
+    },
+    "fixture": "derived",
+    "checks": [
+      "residual_rescaled"
+    ],
+    "reference": "cf-both_same",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "ivexp",
+      "control_function",
+      "selection_control_function"
+    ]
+  },
+  {
+    "id": "numeric-initial",
+    "group": "numerical",
+    "kwargs": {},
+    "fixture": "original",
+    "checks": [
+      "initial"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "initial",
+      "sigma_initial"
+    ]
+  },
+  {
+    "id": "numeric-initial_sigma",
+    "group": "numerical",
+    "kwargs": {},
+    "fixture": "original",
+    "checks": [
+      "initial_sigma"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "initial",
+      "sigma_initial"
+    ]
+  },
+  {
+    "id": "numeric-nls_to_ifgnls",
+    "group": "numerical",
+    "kwargs": {},
+    "fixture": "original",
+    "checks": [
+      "initial_sigma"
+    ],
+    "reference": "core-cq-nls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "initial",
+      "sigma_initial"
+    ]
+  },
+  {
+    "id": "numeric-initial_precedence",
+    "group": "numerical",
+    "kwargs": {
+      "start": "linear"
+    },
+    "fixture": "original",
+    "checks": [
+      "initial"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "initial",
+      "sigma_initial",
+      "start"
+    ]
+  },
+  {
+    "id": "numeric-sigma_only",
+    "group": "numerical",
+    "kwargs": {},
+    "fixture": "original",
+    "checks": [
+      "sigma_only"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": []
+  },
+  {
+    "id": "numeric-chunk_1",
+    "group": "numerical",
+    "kwargs": {
+      "chunk": 1
+    },
+    "fixture": "original",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "chunk"
+    ]
+  },
+  {
+    "id": "numeric-chunk_127",
+    "group": "numerical",
+    "kwargs": {
+      "chunk": 127
+    },
+    "fixture": "original",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "chunk"
+    ]
+  },
+  {
+    "id": "numeric-chunk_oversize",
+    "group": "numerical",
+    "kwargs": {
+      "chunk": 10000
+    },
+    "fixture": "original",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "chunk"
+    ]
+  },
+  {
+    "id": "numeric-blas_2",
+    "group": "numerical",
+    "kwargs": {
+      "blas_threads": 2
+    },
+    "fixture": "original",
+    "checks": [
+      "equivalent",
+      "blas_restore"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "blas_threads"
+    ]
+  },
+  {
+    "id": "numeric-blas_none",
+    "group": "numerical",
+    "kwargs": {
+      "blas_threads": null
+    },
+    "fixture": "original",
+    "checks": [
+      "equivalent",
+      "blas_restore"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "blas_threads"
+    ]
+  },
+  {
+    "id": "numeric-vce_final",
+    "group": "numerical",
+    "kwargs": {
+      "vce_sigma": "final"
+    },
+    "fixture": "original",
+    "checks": [
+      "equivalent_point",
+      "covariance"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "vce_sigma"
+    ]
+  },
+  {
+    "id": "numeric-fgnls_vce_final",
+    "group": "numerical",
+    "kwargs": {
+      "method": "fgnls",
+      "vce_sigma": "final"
+    },
+    "fixture": "original",
+    "checks": [
+      "equivalent_point",
+      "covariance"
+    ],
+    "reference": "core-cq-fgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "method",
+      "vce_sigma"
+    ]
+  },
+  {
+    "id": "numeric-nls_vce_final",
+    "group": "numerical",
+    "kwargs": {
+      "method": "nls",
+      "vce_sigma": "final"
+    },
+    "fixture": "original",
+    "checks": [
+      "equivalent",
+      "covariance"
+    ],
+    "reference": "core-cq-nls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "method",
+      "vce_sigma"
+    ]
+  },
+  {
+    "id": "numeric-tight",
+    "group": "numerical",
+    "kwargs": {
+      "stop_rule": "tight"
+    },
+    "fixture": "original",
+    "checks": [
+      "stationarity"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "stop_rule"
+    ]
+  },
+  {
+    "id": "numeric-tight_tolerances",
+    "group": "numerical",
+    "kwargs": {
+      "stop_rule": "tight",
+      "tol": 1e-14,
+      "nrtol_stop": 1e-13,
+      "sigma_tol": 1e-06,
+      "inner_nrtol_early": 1e-10
+    },
+    "fixture": "original",
+    "checks": [
+      "stationarity"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "stop_rule",
+      "tol",
+      "nrtol_stop",
+      "sigma_tol",
+      "inner_nrtol_early"
+    ]
+  },
+  {
+    "id": "numeric-loose_tolerances",
+    "group": "numerical",
+    "kwargs": {
+      "tol": 1e-08,
+      "nrtol_stop": 1e-08,
+      "sigma_tol": 0.0001,
+      "inner_nrtol_early": 1e-06
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "tol",
+      "nrtol_stop",
+      "sigma_tol",
+      "inner_nrtol_early"
+    ]
+  },
+  {
+    "id": "numeric-inner_exhaustion",
+    "group": "numerical",
+    "kwargs": {
+      "method": "nls",
+      "max_iter": 1
+    },
+    "fixture": "original",
+    "checks": [
+      "nonconvergence"
+    ],
+    "reference": "",
+    "expectation": "nonconverged result with explanatory note",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "method",
+      "max_iter"
+    ]
+  },
+  {
+    "id": "numeric-outer_exhaustion",
+    "group": "numerical",
+    "kwargs": {
+      "max_outer": 2
+    },
+    "fixture": "original",
+    "checks": [
+      "nonconvergence"
+    ],
+    "reference": "",
+    "expectation": "nonconverged result with explanatory note",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "max_outer"
+    ]
+  },
+  {
+    "id": "interaction-iv_lm_linear",
+    "group": "interactions",
+    "kwargs": {
+      "ivexp": [
+        "iv1"
+      ],
+      "algorithm": "lm",
+      "start": "linear"
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "ivexp",
+      "algorithm",
+      "start"
+    ]
+  },
+  {
+    "id": "interaction-linear_lm_selection",
+    "group": "interactions",
+    "kwargs": {
+      "quadratic": false,
+      "algorithm": "lm",
+      "selection_prices": [
+        "p4",
+        "p1"
+      ],
+      "selection_expenditure": false
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "quadratic",
+      "algorithm",
+      "selection_prices",
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "interaction-cf_lm",
+    "group": "interactions",
+    "kwargs": {
+      "control_function": "cf",
+      "selection_control_function": "cf2",
+      "algorithm": "lm"
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "control_function",
+      "selection_control_function",
+      "algorithm"
+    ]
+  },
+  {
+    "id": "interaction-uncensored_logs_tight",
+    "group": "interactions",
+    "kwargs": {
+      "censor": false,
+      "stop_rule": "tight"
+    },
+    "fixture": "both_logs",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "censor",
+      "stop_rule"
+    ]
+  },
+  {
+    "id": "interaction-no_demo_linear_logs",
+    "group": "interactions",
+    "kwargs": {
+      "censor": false,
+      "quadratic": false,
+      "demographics": null
+    },
+    "fixture": "both_logs",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "censor",
+      "quadratic",
+      "demographics"
+    ]
+  },
+  {
+    "id": "interaction-three_goods_selection",
+    "group": "interactions",
+    "kwargs": {
+      "selection_prices": [
+        "p4",
+        "p1"
+      ],
+      "selection_covariates": [],
+      "quadratic": false
+    },
+    "fixture": "three_goods",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "selection_prices",
+      "selection_covariates",
+      "quadratic"
+    ]
+  },
+  {
+    "id": "interaction-anot_8",
+    "group": "interactions",
+    "kwargs": {
+      "anot": 8.0
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "anot"
+    ]
+  },
+  {
+    "id": "interaction-anot_12",
+    "group": "interactions",
+    "kwargs": {
+      "anot": 12.0
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "anot"
+    ]
+  },
+  {
+    "id": "interaction-uppercase",
+    "group": "interactions",
+    "kwargs": {
+      "method": "IFGNLS",
+      "algorithm": "GN",
+      "start": "ZERO",
+      "vce_sigma": "OBJECTIVE",
+      "stop_rule": "STANDARD",
+      "bootstrap_start": "ZERO"
+    },
+    "fixture": "original",
+    "checks": [
+      "equivalent"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "method",
+      "algorithm",
+      "start",
+      "vce_sigma",
+      "stop_rule",
+      "bootstrap_start"
+    ]
+  },
+  {
+    "id": "interaction-verbose",
+    "group": "interactions",
+    "kwargs": {
+      "verbose": true
+    },
+    "fixture": "original",
+    "checks": [
+      "equivalent",
+      "verbose"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "verbose"
+    ]
+  },
+  {
+    "id": "interaction-gn_verbose",
+    "group": "interactions",
+    "kwargs": {
+      "gn_verbose": true
+    },
+    "fixture": "original",
+    "checks": [
+      "equivalent",
+      "gn_verbose"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "gn_verbose"
+    ]
+  },
+  {
+    "id": "interaction-callback",
+    "group": "interactions",
+    "kwargs": {},
+    "fixture": "original",
+    "checks": [
+      "equivalent",
+      "callback"
+    ],
+    "reference": "core-cq-ifgnls-gn-zero",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "log"
+    ]
+  },
+  {
+    "id": "boot-serial",
+    "group": "bootstrap",
+    "kwargs": {
+      "reps": 8,
+      "seed": 16001,
+      "n_jobs": 1
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "mp_context",
+      "bootstrap_start",
+      "boot_sigma_tol"
+    ]
+  },
+  {
+    "id": "boot-repeat",
+    "group": "bootstrap",
+    "kwargs": {
+      "reps": 8,
+      "seed": 16001,
+      "n_jobs": 1
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap",
+      "bootstrap_compare"
+    ],
+    "reference": "boot-serial",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "mp_context",
+      "bootstrap_start",
+      "boot_sigma_tol"
+    ]
+  },
+  {
+    "id": "boot-parallel",
+    "group": "bootstrap",
+    "kwargs": {
+      "reps": 8,
+      "seed": 16001,
+      "n_jobs": 2
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap",
+      "bootstrap_compare"
+    ],
+    "reference": "boot-serial",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "mp_context",
+      "bootstrap_start",
+      "boot_sigma_tol"
+    ]
+  },
+  {
+    "id": "boot-spawn",
+    "group": "bootstrap",
+    "kwargs": {
+      "reps": 8,
+      "seed": 16001,
+      "n_jobs": 2,
+      "mp_context": "spawn"
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap",
+      "bootstrap_compare"
+    ],
+    "reference": "boot-parallel",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "mp_context",
+      "bootstrap_start",
+      "boot_sigma_tol"
+    ]
+  },
+  {
+    "id": "boot-warm",
+    "group": "bootstrap",
+    "kwargs": {
+      "reps": 8,
+      "seed": 16001,
+      "n_jobs": 1,
+      "bootstrap_start": "warm"
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap",
+      "bootstrap_compare"
+    ],
+    "reference": "boot-serial",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "mp_context",
+      "bootstrap_start",
+      "boot_sigma_tol"
+    ]
+  },
+  {
+    "id": "boot-blas_2",
+    "group": "bootstrap",
+    "kwargs": {
+      "reps": 8,
+      "seed": 16001,
+      "n_jobs": 2,
+      "blas_threads": 2
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap",
+      "bootstrap_compare"
+    ],
+    "reference": "boot-parallel",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "mp_context",
+      "bootstrap_start",
+      "boot_sigma_tol",
+      "blas_threads"
+    ]
+  },
+  {
+    "id": "boot-blas_none",
+    "group": "bootstrap",
+    "kwargs": {
+      "reps": 8,
+      "seed": 16001,
+      "n_jobs": 1,
+      "blas_threads": null
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap",
+      "bootstrap_compare"
+    ],
+    "reference": "boot-serial",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "mp_context",
+      "bootstrap_start",
+      "boot_sigma_tol",
+      "blas_threads"
+    ]
+  },
+  {
+    "id": "boot-forkserver",
+    "group": "bootstrap",
+    "kwargs": {
+      "reps": 8,
+      "seed": 16001,
+      "n_jobs": 2,
+      "mp_context": "forkserver"
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap",
+      "bootstrap_compare"
+    ],
+    "reference": "boot-parallel",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "mp_context",
+      "bootstrap_start",
+      "boot_sigma_tol"
+    ]
+  },
+  {
+    "id": "boot-iv",
+    "group": "bootstrap",
+    "kwargs": {
+      "reps": 8,
+      "seed": 16001,
+      "n_jobs": 1,
+      "ivexp": [
+        "iv1"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [
+      "bootstrap",
+      "count_reduced_forms"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "mp_context",
+      "bootstrap_start",
+      "boot_sigma_tol",
+      "ivexp"
+    ]
+  },
+  {
+    "id": "boot-uncensored",
+    "group": "bootstrap",
+    "kwargs": {
+      "reps": 8,
+      "seed": 16001,
+      "n_jobs": 1,
+      "censor": false
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "mp_context",
+      "bootstrap_start",
+      "boot_sigma_tol",
+      "censor"
+    ]
+  },
+  {
+    "id": "boot-linear",
+    "group": "bootstrap",
+    "kwargs": {
+      "reps": 8,
+      "seed": 16001,
+      "n_jobs": 1,
+      "quadratic": false,
+      "method": "fgnls"
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "mp_context",
+      "bootstrap_start",
+      "boot_sigma_tol",
+      "quadratic",
+      "method"
+    ]
+  },
+  {
+    "id": "boot-sigma_tol",
+    "group": "bootstrap",
+    "kwargs": {
+      "reps": 8,
+      "seed": 16001,
+      "n_jobs": 1,
+      "boot_sigma_tol": 1e-06
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "mp_context",
+      "bootstrap_start",
+      "boot_sigma_tol"
+    ]
+  },
+  {
+    "id": "boot-large-base-16001",
+    "group": "bootstrap_large",
+    "kwargs": {
+      "reps": 100,
+      "seed": 16001,
+      "n_jobs": 2,
+      "mp_context": "spawn"
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "ivexp",
+      "mp_context"
+    ]
+  },
+  {
+    "id": "boot-large-base-16002",
+    "group": "bootstrap_large",
+    "kwargs": {
+      "reps": 100,
+      "seed": 16002,
+      "n_jobs": 2,
+      "mp_context": "spawn"
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "ivexp",
+      "mp_context"
+    ]
+  },
+  {
+    "id": "boot-large-iv-16001",
+    "group": "bootstrap_large",
+    "kwargs": {
+      "reps": 100,
+      "seed": 16001,
+      "n_jobs": 2,
+      "mp_context": "spawn",
+      "ivexp": [
+        "iv1"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [
+      "bootstrap"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "ivexp",
+      "mp_context"
+    ]
+  },
+  {
+    "id": "boot-large-iv-16002",
+    "group": "bootstrap_large",
+    "kwargs": {
+      "reps": 100,
+      "seed": 16002,
+      "n_jobs": 2,
+      "mp_context": "spawn",
+      "ivexp": [
+        "iv1"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [
+      "bootstrap"
+    ],
+    "reference": "",
+    "expectation": "converged fit and independent numerical checks",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed",
+      "n_jobs",
+      "ivexp",
+      "mp_context"
+    ]
+  },
+  {
+    "id": "invalid-method-0",
+    "group": "invalid",
+    "kwargs": {
+      "method": "bad"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "method"
+    ]
+  },
+  {
+    "id": "invalid-algorithm-0",
+    "group": "invalid",
+    "kwargs": {
+      "algorithm": "bad"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "algorithm"
+    ]
+  },
+  {
+    "id": "invalid-start-0",
+    "group": "invalid",
+    "kwargs": {
+      "start": "bad"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "start"
+    ]
+  },
+  {
+    "id": "invalid-vce_sigma-0",
+    "group": "invalid",
+    "kwargs": {
+      "vce_sigma": "bad"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "vce_sigma"
+    ]
+  },
+  {
+    "id": "invalid-stop_rule-0",
+    "group": "invalid",
+    "kwargs": {
+      "stop_rule": "bad"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "stop_rule"
+    ]
+  },
+  {
+    "id": "invalid-bootstrap_start-0",
+    "group": "invalid",
+    "kwargs": {
+      "bootstrap_start": "bad"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "bootstrap_start"
+    ]
+  },
+  {
+    "id": "invalid-anot-0",
+    "group": "invalid",
+    "kwargs": {
+      "anot": "NaN"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "anot"
+    ]
+  },
+  {
+    "id": "invalid-anot-1",
+    "group": "invalid",
+    "kwargs": {
+      "anot": "Infinity"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "anot"
+    ]
+  },
+  {
+    "id": "invalid-max_iter-0",
+    "group": "invalid",
+    "kwargs": {
+      "max_iter": 0
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "max_iter"
+    ]
+  },
+  {
+    "id": "invalid-max_iter-1",
+    "group": "invalid",
+    "kwargs": {
+      "max_iter": -1
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "max_iter"
+    ]
+  },
+  {
+    "id": "invalid-max_iter-2",
+    "group": "invalid",
+    "kwargs": {
+      "max_iter": 1.5
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "max_iter"
+    ]
+  },
+  {
+    "id": "invalid-max_outer-0",
+    "group": "invalid",
+    "kwargs": {
+      "max_outer": 1
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "max_outer"
+    ]
+  },
+  {
+    "id": "invalid-max_outer-1",
+    "group": "invalid",
+    "kwargs": {
+      "max_outer": -1
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "max_outer"
+    ]
+  },
+  {
+    "id": "invalid-max_outer-2",
+    "group": "invalid",
+    "kwargs": {
+      "max_outer": 2.5
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "max_outer"
+    ]
+  },
+  {
+    "id": "invalid-chunk-0",
+    "group": "invalid",
+    "kwargs": {
+      "chunk": 0
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "chunk"
+    ]
+  },
+  {
+    "id": "invalid-chunk-1",
+    "group": "invalid",
+    "kwargs": {
+      "chunk": -1
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "chunk"
+    ]
+  },
+  {
+    "id": "invalid-chunk-2",
+    "group": "invalid",
+    "kwargs": {
+      "chunk": 1.5
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "chunk"
+    ]
+  },
+  {
+    "id": "invalid-tol-0",
+    "group": "invalid",
+    "kwargs": {
+      "tol": 0
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "tol"
+    ]
+  },
+  {
+    "id": "invalid-tol-1",
+    "group": "invalid",
+    "kwargs": {
+      "tol": -1
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "tol"
+    ]
+  },
+  {
+    "id": "invalid-tol-2",
+    "group": "invalid",
+    "kwargs": {
+      "tol": "NaN"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "tol"
+    ]
+  },
+  {
+    "id": "invalid-tol-3",
+    "group": "invalid",
+    "kwargs": {
+      "tol": "Infinity"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "tol"
+    ]
+  },
+  {
+    "id": "invalid-nrtol_stop-0",
+    "group": "invalid",
+    "kwargs": {
+      "nrtol_stop": 0
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "nrtol_stop"
+    ]
+  },
+  {
+    "id": "invalid-nrtol_stop-1",
+    "group": "invalid",
+    "kwargs": {
+      "nrtol_stop": -1
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "nrtol_stop"
+    ]
+  },
+  {
+    "id": "invalid-nrtol_stop-2",
+    "group": "invalid",
+    "kwargs": {
+      "nrtol_stop": "NaN"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "nrtol_stop"
+    ]
+  },
+  {
+    "id": "invalid-nrtol_stop-3",
+    "group": "invalid",
+    "kwargs": {
+      "nrtol_stop": "Infinity"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "nrtol_stop"
+    ]
+  },
+  {
+    "id": "invalid-sigma_tol-0",
+    "group": "invalid",
+    "kwargs": {
+      "sigma_tol": 0
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "sigma_tol"
+    ]
+  },
+  {
+    "id": "invalid-sigma_tol-1",
+    "group": "invalid",
+    "kwargs": {
+      "sigma_tol": -1
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "sigma_tol"
+    ]
+  },
+  {
+    "id": "invalid-sigma_tol-2",
+    "group": "invalid",
+    "kwargs": {
+      "sigma_tol": "NaN"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "sigma_tol"
+    ]
+  },
+  {
+    "id": "invalid-sigma_tol-3",
+    "group": "invalid",
+    "kwargs": {
+      "sigma_tol": "Infinity"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "sigma_tol"
+    ]
+  },
+  {
+    "id": "invalid-inner_nrtol_early-0",
+    "group": "invalid",
+    "kwargs": {
+      "inner_nrtol_early": 0
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "inner_nrtol_early"
+    ]
+  },
+  {
+    "id": "invalid-inner_nrtol_early-1",
+    "group": "invalid",
+    "kwargs": {
+      "inner_nrtol_early": -1
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "inner_nrtol_early"
+    ]
+  },
+  {
+    "id": "invalid-inner_nrtol_early-2",
+    "group": "invalid",
+    "kwargs": {
+      "inner_nrtol_early": "NaN"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "inner_nrtol_early"
+    ]
+  },
+  {
+    "id": "invalid-inner_nrtol_early-3",
+    "group": "invalid",
+    "kwargs": {
+      "inner_nrtol_early": "Infinity"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "inner_nrtol_early"
+    ]
+  },
+  {
+    "id": "invalid-boot_sigma_tol-0",
+    "group": "invalid",
+    "kwargs": {
+      "boot_sigma_tol": 0,
+      "reps": 2
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "boot_sigma_tol",
+      "reps"
+    ]
+  },
+  {
+    "id": "invalid-boot_sigma_tol-1",
+    "group": "invalid",
+    "kwargs": {
+      "boot_sigma_tol": -1,
+      "reps": 2
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "boot_sigma_tol",
+      "reps"
+    ]
+  },
+  {
+    "id": "invalid-boot_sigma_tol-2",
+    "group": "invalid",
+    "kwargs": {
+      "boot_sigma_tol": "NaN",
+      "reps": 2
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "boot_sigma_tol",
+      "reps"
+    ]
+  },
+  {
+    "id": "invalid-boot_sigma_tol-3",
+    "group": "invalid",
+    "kwargs": {
+      "boot_sigma_tol": "Infinity",
+      "reps": 2
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "boot_sigma_tol",
+      "reps"
+    ]
+  },
+  {
+    "id": "invalid-blas_threads-0",
+    "group": "invalid",
+    "kwargs": {
+      "blas_threads": 0
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "blas_threads"
+    ]
+  },
+  {
+    "id": "invalid-blas_threads-1",
+    "group": "invalid",
+    "kwargs": {
+      "blas_threads": -1
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "blas_threads"
+    ]
+  },
+  {
+    "id": "invalid-blas_threads-2",
+    "group": "invalid",
+    "kwargs": {
+      "blas_threads": 1.5
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "blas_threads"
+    ]
+  },
+  {
+    "id": "invalid-blas_threads-3",
+    "group": "invalid",
+    "kwargs": {
+      "blas_threads": true
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "blas_threads"
+    ]
+  },
+  {
+    "id": "invalid-rep_timeout-0",
+    "group": "invalid",
+    "kwargs": {
+      "rep_timeout": 0
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "rep_timeout"
+    ]
+  },
+  {
+    "id": "invalid-rep_timeout-1",
+    "group": "invalid",
+    "kwargs": {
+      "rep_timeout": -1
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "rep_timeout"
+    ]
+  },
+  {
+    "id": "invalid-rep_timeout-2",
+    "group": "invalid",
+    "kwargs": {
+      "rep_timeout": "NaN"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "rep_timeout"
+    ]
+  },
+  {
+    "id": "invalid-rep_timeout-3",
+    "group": "invalid",
+    "kwargs": {
+      "rep_timeout": "Infinity"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "rep_timeout"
+    ]
+  },
+  {
+    "id": "invalid-reps-0",
+    "group": "invalid",
+    "kwargs": {
+      "reps": -1
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "reps"
+    ]
+  },
+  {
+    "id": "invalid-reps-1",
+    "group": "invalid",
+    "kwargs": {
+      "reps": 2.5
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "reps"
+    ]
+  },
+  {
+    "id": "invalid-n_jobs-0",
+    "group": "invalid",
+    "kwargs": {
+      "n_jobs": 0,
+      "reps": 2
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "n_jobs",
+      "reps"
+    ]
+  },
+  {
+    "id": "invalid-n_jobs-1",
+    "group": "invalid",
+    "kwargs": {
+      "n_jobs": -1,
+      "reps": 2
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "n_jobs",
+      "reps"
+    ]
+  },
+  {
+    "id": "invalid-n_jobs-2",
+    "group": "invalid",
+    "kwargs": {
+      "n_jobs": 1.5,
+      "reps": 2
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "n_jobs",
+      "reps"
+    ]
+  },
+  {
+    "id": "invalid-seed-0",
+    "group": "invalid",
+    "kwargs": {
+      "seed": -1,
+      "reps": 2
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "seed",
+      "reps"
+    ]
+  },
+  {
+    "id": "invalid-seed-1",
+    "group": "invalid",
+    "kwargs": {
+      "seed": 1.5,
+      "reps": 2
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "seed",
+      "reps"
+    ]
+  },
+  {
+    "id": "invalid-both_prices",
+    "group": "invalid",
+    "kwargs": {
+      "lnprices": [
+        "lp1",
+        "lp2",
+        "lp4",
+        "lp9"
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "exactly one",
+    "covers": [
+      "lnprices"
+    ]
+  },
+  {
+    "id": "invalid-no_prices",
+    "group": "invalid",
+    "kwargs": {
+      "prices": null
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "exactly one",
+    "covers": [
+      "prices"
+    ]
+  },
+  {
+    "id": "invalid-both_expenditure",
+    "group": "invalid",
+    "kwargs": {
+      "lnexpenditure": "lm"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "exactly one",
+    "covers": [
+      "lnexpenditure"
+    ]
+  },
+  {
+    "id": "invalid-no_expenditure",
+    "group": "invalid",
+    "kwargs": {
+      "expenditure": null
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "exactly one",
+    "covers": [
+      "expenditure"
+    ]
+  },
+  {
+    "id": "invalid-two_goods",
+    "group": "invalid",
+    "kwargs": {
+      "shares": [
+        "sw1",
+        "sw2"
+      ],
+      "prices": [
+        "p1",
+        "p2"
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "at least 3",
+    "covers": [
+      "shares",
+      "prices"
+    ]
+  },
+  {
+    "id": "invalid-price_count",
+    "group": "invalid",
+    "kwargs": {
+      "prices": [
+        "p1",
+        "p2",
+        "p4"
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "number of price",
+    "covers": [
+      "prices"
+    ]
+  },
+  {
+    "id": "invalid-duplicate_shares",
+    "group": "invalid",
+    "kwargs": {
+      "shares": [
+        "sw1",
+        "sw1",
+        "sw1",
+        "sw1"
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "duplicate",
+    "covers": [
+      "shares"
+    ]
+  },
+  {
+    "id": "invalid-duplicate_prices",
+    "group": "invalid",
+    "kwargs": {
+      "prices": [
+        "p1",
+        "p1",
+        "p1",
+        "p1"
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "duplicate",
+    "covers": [
+      "prices"
+    ]
+  },
+  {
+    "id": "invalid-duplicate_demos",
+    "group": "invalid",
+    "kwargs": {
+      "demographics": [
+        "x1",
+        "x1"
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "duplicate",
+    "covers": [
+      "demographics"
+    ]
+  },
+  {
+    "id": "invalid-no_demos",
+    "group": "invalid",
+    "kwargs": {
+      "demographics": []
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "demographic",
+    "covers": [
+      "demographics"
+    ]
+  },
+  {
+    "id": "invalid-missing_column",
+    "group": "invalid",
+    "kwargs": {
+      "expenditure": "absent"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "not found",
+    "covers": [
+      "expenditure"
+    ]
+  },
+  {
+    "id": "invalid-negative_share",
+    "group": "invalid",
+    "kwargs": {},
+    "fixture": "negative_share",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "nonnegative",
+    "covers": [
+      "data"
+    ]
+  },
+  {
+    "id": "invalid-zero_price",
+    "group": "invalid",
+    "kwargs": {},
+    "fixture": "zero_price",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "nonpositive",
+    "covers": [
+      "data"
+    ]
+  },
+  {
+    "id": "invalid-negative_price",
+    "group": "invalid",
+    "kwargs": {},
+    "fixture": "negative_price",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "nonpositive",
+    "covers": [
+      "data"
+    ]
+  },
+  {
+    "id": "invalid-zero_expenditure",
+    "group": "invalid",
+    "kwargs": {},
+    "fixture": "zero_expenditure",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "nonpositive",
+    "covers": [
+      "data"
+    ]
+  },
+  {
+    "id": "invalid-empty_sample",
+    "group": "invalid",
+    "kwargs": {},
+    "fixture": "empty_sample",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "no complete",
+    "covers": [
+      "data"
+    ]
+  },
+  {
+    "id": "invalid-no_zero_share",
+    "group": "invalid",
+    "kwargs": {},
+    "fixture": "no_zero_share",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "no censoring",
+    "covers": [
+      "data"
+    ]
+  },
+  {
+    "id": "invalid-all_zero_share",
+    "group": "invalid",
+    "kwargs": {},
+    "fixture": "all_zero_share",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "no variation",
+    "covers": [
+      "data"
+    ]
+  },
+  {
+    "id": "invalid-uncensored_sum",
+    "group": "invalid",
+    "kwargs": {
+      "censor": false
+    },
+    "fixture": "bad_sum",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "sum to one",
+    "covers": [
+      "data",
+      "censor"
+    ]
+  },
+  {
+    "id": "invalid-selection_nonprice",
+    "group": "invalid",
+    "kwargs": {
+      "selection_prices": [
+        "x1"
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "subset",
+    "covers": [
+      "selection_prices"
+    ]
+  },
+  {
+    "id": "invalid-selection_duplicates",
+    "group": "invalid",
+    "kwargs": {
+      "selection_prices": [
+        "p1",
+        "p1"
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "duplicate",
+    "covers": [
+      "selection_prices"
+    ]
+  },
+  {
+    "id": "invalid-selection_z_duplicates",
+    "group": "invalid",
+    "kwargs": {
+      "selection_covariates": [
+        "x1",
+        "x1"
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "duplicate",
+    "covers": [
+      "selection_covariates"
+    ]
+  },
+  {
+    "id": "invalid-selection_exp_type",
+    "group": "invalid",
+    "kwargs": {
+      "selection_expenditure": "yes"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "True, False",
+    "covers": [
+      "selection_expenditure"
+    ]
+  },
+  {
+    "id": "invalid-selection_uncensored",
+    "group": "invalid",
+    "kwargs": {
+      "censor": false,
+      "selection_prices": []
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "censor=True",
+    "covers": [
+      "censor",
+      "selection_prices"
+    ]
+  },
+  {
+    "id": "invalid-cf_uncensored",
+    "group": "invalid",
+    "kwargs": {
+      "censor": false,
+      "control_function": "cf"
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "censor=True",
+    "covers": [
+      "data",
+      "censor",
+      "control_function"
+    ]
+  },
+  {
+    "id": "invalid-cf_constant",
+    "group": "invalid",
+    "kwargs": {
+      "control_function": "constant_cf"
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "variation",
+    "covers": [
+      "data",
+      "control_function"
+    ]
+  },
+  {
+    "id": "invalid-cf_nan",
+    "group": "invalid",
+    "kwargs": {
+      "control_function": "cf"
+    },
+    "fixture": "cf_nan",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "finite",
+    "covers": [
+      "data",
+      "control_function"
+    ]
+  },
+  {
+    "id": "invalid-cf_demo",
+    "group": "invalid",
+    "kwargs": {
+      "control_function": "x1"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "demographic",
+    "covers": [
+      "control_function"
+    ]
+  },
+  {
+    "id": "invalid-cf_z",
+    "group": "invalid",
+    "kwargs": {
+      "control_function": "cf",
+      "selection_covariates": [
+        "cf"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "selection_control_function",
+    "covers": [
+      "data",
+      "control_function",
+      "selection_covariates"
+    ]
+  },
+  {
+    "id": "invalid-cf_collinear",
+    "group": "invalid",
+    "kwargs": {
+      "selection_control_function": "lm"
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "collinear",
+    "covers": [
+      "data",
+      "selection_control_function"
+    ]
+  },
+  {
+    "id": "invalid-cf_bootstrap",
+    "group": "invalid",
+    "kwargs": {
+      "control_function": "cf",
+      "reps": 2
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "disabled",
+    "covers": [
+      "data",
+      "control_function",
+      "reps"
+    ]
+  },
+  {
+    "id": "invalid-selection_cf_bootstrap",
+    "group": "invalid",
+    "kwargs": {
+      "selection_control_function": "cf",
+      "reps": 2
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "disabled",
+    "covers": [
+      "data",
+      "selection_control_function",
+      "reps"
+    ]
+  },
+  {
+    "id": "invalid-iv_empty",
+    "group": "invalid",
+    "kwargs": {
+      "ivexp": []
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "at least one",
+    "covers": [
+      "data",
+      "ivexp"
+    ]
+  },
+  {
+    "id": "invalid-iv_string",
+    "group": "invalid",
+    "kwargs": {
+      "ivexp": "iv1"
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "sequence",
+    "covers": [
+      "data",
+      "ivexp"
+    ]
+  },
+  {
+    "id": "invalid-iv_duplicate",
+    "group": "invalid",
+    "kwargs": {
+      "ivexp": [
+        "iv1",
+        "iv1"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "duplicate",
+    "covers": [
+      "data",
+      "ivexp"
+    ]
+  },
+  {
+    "id": "invalid-iv_overlap",
+    "group": "invalid",
+    "kwargs": {
+      "ivexp": [
+        "p1"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "excluded",
+    "covers": [
+      "data",
+      "ivexp"
+    ]
+  },
+  {
+    "id": "invalid-iv_selection_overlap",
+    "group": "invalid",
+    "kwargs": {
+      "ivexp": [
+        "iv1"
+      ],
+      "selection_covariates": [
+        "iv1"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "excluded",
+    "covers": [
+      "data",
+      "ivexp",
+      "selection_covariates"
+    ]
+  },
+  {
+    "id": "invalid-iv_external",
+    "group": "invalid",
+    "kwargs": {
+      "ivexp": [
+        "iv1"
+      ],
+      "control_function": "cf"
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "cannot be combined",
+    "covers": [
+      "data",
+      "ivexp",
+      "control_function"
+    ]
+  },
+  {
+    "id": "invalid-iv_uncensored",
+    "group": "invalid",
+    "kwargs": {
+      "ivexp": [
+        "iv1"
+      ],
+      "censor": false
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "censor=True",
+    "covers": [
+      "data",
+      "ivexp",
+      "censor"
+    ]
+  },
+  {
+    "id": "invalid-iv_rank",
+    "group": "invalid",
+    "kwargs": {
+      "ivexp": [
+        "x1_copy"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "rank deficient",
+    "covers": [
+      "data",
+      "ivexp"
+    ]
+  },
+  {
+    "id": "invalid-iv_perfect_fit",
+    "group": "invalid",
+    "kwargs": {
+      "ivexp": [
+        "lm"
+      ]
+    },
+    "fixture": "derived",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "perfectly",
+    "covers": [
+      "data",
+      "ivexp"
+    ]
+  },
+  {
+    "id": "invalid-initial_length",
+    "group": "invalid",
+    "kwargs": {
+      "initial": [
+        0.0,
+        0.0
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "initial",
+    "covers": [
+      "initial"
+    ]
+  },
+  {
+    "id": "invalid-initial_nan",
+    "group": "invalid",
+    "kwargs": {
+      "initial": [
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN",
+        "NaN"
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "finite",
+    "covers": [
+      "initial"
+    ]
+  },
+  {
+    "id": "invalid-sigma_shape",
+    "group": "invalid",
+    "kwargs": {
+      "sigma_initial": [
+        [
+          1.0
+        ]
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "shape",
+    "covers": [
+      "sigma_initial"
+    ]
+  },
+  {
+    "id": "invalid-sigma_nan",
+    "group": "invalid",
+    "kwargs": {
+      "sigma_initial": [
+        [
+          "NaN",
+          "NaN",
+          "NaN",
+          "NaN"
+        ],
+        [
+          "NaN",
+          "NaN",
+          "NaN",
+          "NaN"
+        ],
+        [
+          "NaN",
+          "NaN",
+          "NaN",
+          "NaN"
+        ],
+        [
+          "NaN",
+          "NaN",
+          "NaN",
+          "NaN"
+        ]
+      ]
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "finite",
+    "covers": [
+      "sigma_initial"
+    ]
+  },
+  {
+    "id": "invalid-mp_context",
+    "group": "invalid",
+    "kwargs": {
+      "reps": 2,
+      "n_jobs": 2,
+      "mp_context": "absent"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "ValueError",
+      "TypeError"
+    ],
+    "message": "not supported",
+    "covers": [
+      "reps",
+      "n_jobs",
+      "mp_context"
+    ]
+  },
+  {
+    "id": "invalid-first_stage_predict",
+    "group": "invalid",
+    "kwargs": {
+      "first_stage_predict": true
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "first_stage_predict"
+    ]
+  },
+  {
+    "id": "invalid-strict_stata",
+    "group": "invalid",
+    "kwargs": {
+      "strict_stata": true
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "explicit rejection of invalid input",
+    "exception": [
+      "TypeError"
+    ],
+    "message": "",
+    "covers": [
+      "strict_stata"
+    ]
+  },
+  {
+    "id": "lifecycle-one_draw",
+    "group": "lifecycle",
+    "kwargs": {
+      "reps": 1,
+      "seed": 16001
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "one successful draw cannot produce standard errors",
+    "exception": [
+      "RuntimeError"
+    ],
+    "message": "fewer than two",
+    "covers": [
+      "reps",
+      "seed"
+    ]
+  },
+  {
+    "id": "lifecycle-timeout",
+    "group": "lifecycle",
+    "kwargs": {
+      "reps": 2,
+      "seed": 16001,
+      "rep_timeout": 1e-06,
+      "mp_context": "spawn"
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "watchdog rejects all timed-out draws",
+    "exception": [
+      "RuntimeError"
+    ],
+    "message": "TimeoutError",
+    "covers": [
+      "rep_timeout",
+      "mp_context",
+      "reps",
+      "seed"
+    ]
+  },
+  {
+    "id": "lifecycle-partial_failure",
+    "group": "lifecycle",
+    "kwargs": {
+      "reps": 4,
+      "seed": 16001
+    },
+    "fixture": "original",
+    "checks": [
+      "bootstrap",
+      "partial_failure"
+    ],
+    "reference": "",
+    "expectation": "one injected failed draw is excluded and reported",
+    "exception": [],
+    "message": "",
+    "covers": [
+      "reps",
+      "seed"
+    ]
+  },
+  {
+    "id": "lifecycle-all_failure",
+    "group": "lifecycle",
+    "kwargs": {
+      "reps": 2,
+      "seed": 16001
+    },
+    "fixture": "original",
+    "checks": [],
+    "reference": "",
+    "expectation": "all injected failed draws raise an explicit error",
+    "exception": [
+      "RuntimeError"
+    ],
+    "message": "every bootstrap",
+    "covers": [
+      "reps",
+      "seed"
+    ]
+  }
+]

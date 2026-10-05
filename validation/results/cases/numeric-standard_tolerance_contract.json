@@ -1,0 +1,24 @@
+{
+  "id": "numeric-standard_tolerance_contract",
+  "group": "source_contracts",
+  "expectation": "documented convergence tolerances are consulted under the default stop_rule",
+  "checks": [
+    {
+      "name": "standard_uses_public_tolerances",
+      "passed": false,
+      "observed": {
+        "names": [
+          "converged",
+          "mreldif",
+          "nrtol",
+          "rel"
+        ],
+        "source": "src/pyquaidsce/nlsur.py:307"
+      },
+      "expected": "documented tol and nrtol_stop affect standard stopping thresholds"
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 0.003866565999942395,
+  "status": "FAIL"
+}

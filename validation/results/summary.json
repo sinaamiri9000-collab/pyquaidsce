@@ -1,0 +1,31 @@
+{
+  "complete_design_executed": true,
+  "scenario_counts": {
+    "PASS": 177,
+    "NONCONVERGED": 17,
+    "FAIL": 42,
+    "EXPECTED_ERROR": 84,
+    "NOT_RUN": 2
+  },
+  "scenarios": 322,
+  "checks": 10998,
+  "failed_checks": 71,
+  "existing_suite": {
+    "tests_run": 42,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "successful": true
+  },
+  "public_arguments": 41,
+  "arguments_executed": 41,
+  "total_scenario_seconds": 524.4748425880002,
+  "bootstrap_requested": 520,
+  "bootstrap_successful": 512,
+  "ordinary_bootstrap_requested": 508,
+  "ordinary_bootstrap_successful": 501,
+  "large_bootstrap_requested": 400,
+  "large_bootstrap_successful": 394,
+  "native_interfaces": "not executed; Python bridge execution and static R contracts are distinct evidence",
+  "release_gate_passed": false
+}

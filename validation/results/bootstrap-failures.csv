@@ -1,0 +1,9 @@
+case_id,replication,reason,seed,requested,injected
+boot-uncensored,6,RuntimeError: second-stage estimator did not converge,16001,8,False
+boot-large-base-16001,30,RuntimeError: second-stage estimator did not converge,16001,100,False
+boot-large-base-16002,17,RuntimeError: second-stage estimator did not converge,16002,100,False
+boot-large-base-16002,26,RuntimeError: second-stage estimator did not converge,16002,100,False
+boot-large-iv-16001,60,RuntimeError: second-stage estimator did not converge,16001,100,False
+boot-large-iv-16002,12,RuntimeError: second-stage estimator did not converge,16002,100,False
+boot-large-iv-16002,86,RuntimeError: second-stage estimator did not converge,16002,100,False
+lifecycle-partial_failure,2,InjectedValidationFailure: deterministic lifecycle test,16001,4,True

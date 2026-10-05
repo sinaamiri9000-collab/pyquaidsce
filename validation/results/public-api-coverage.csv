@@ -1,0 +1,24 @@
+export,evidence
+quaidsce,scenario matrix
+first_stage,public-first_stage
+nlsur,public-nlsur
+probit,public-probit_no_constant
+Spec,existing tests.test_suite.InternalMathTests
+Coefs,matrix/model-point oracles
+DemandData,matrix/oracle reconstruction
+FirstStageLayout,selection matrix/public-first_stage
+ExpenditureReducedForm,control_function QR oracle
+fit_expenditure_reduced_form,control_function QR oracle/public-reduced_form_labels
+QuaidsceResults,matrix/summary contracts
+Elasticities,matrix/model-point oracles
+elasticities,model-point finite differences
+fitted_share_derivatives,observation-level finite differences/public-stale_derivative_design
+sample_means,matrix means/public-sample_means
+unpack,finite-difference mapping/independent prediction
+full_vector,reported parameter mapping/public-delta_mapping
+delta_matrix,public-delta_mapping
+fitted_shares,independent direct formula
+latent_shares,public-latent_shares
+augmented_latent_shares,public-latent_shares
+jacobian_full,matrix independent numerical Jacobian
+__version__,environment metadata/existing suite

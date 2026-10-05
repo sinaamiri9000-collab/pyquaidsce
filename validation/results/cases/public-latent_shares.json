@@ -1,0 +1,48 @@
+{
+  "id": "public-latent_shares",
+  "group": "public_helpers",
+  "expectation": "public contract holds",
+  "checks": [
+    {
+      "name": "latent_direct_equation",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 1.9984014443252818e-15,
+        "actual_shape": [
+          2000,
+          4
+        ],
+        "expected_shape": [
+          2000,
+          4
+        ]
+      },
+      "expected": {
+        "atol": 2e-10,
+        "rtol": 2e-10
+      }
+    },
+    {
+      "name": "augmented_minus_latent",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 5.551115123125783e-17,
+        "actual_shape": [
+          2000,
+          4
+        ],
+        "expected_shape": [
+          2000,
+          4
+        ]
+      },
+      "expected": {
+        "atol": 1e-12,
+        "rtol": 1e-12
+      }
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 0.026763647999814566,
+  "status": "PASS"
+}

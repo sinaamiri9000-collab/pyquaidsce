@@ -1,0 +1,16 @@
+{
+  "id": "public-reduced_form_labels",
+  "group": "public_helpers",
+  "expectation": "reported regressor names must match coefficient dimensions",
+  "checks": [
+    {
+      "name": "mismatched_labels_rejected",
+      "passed": false,
+      "observed": "returned mislabeled coefficient vector",
+      "expected": "ValueError"
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 0.0011804780001511972,
+  "status": "FAIL"
+}

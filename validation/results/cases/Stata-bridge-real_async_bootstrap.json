@@ -1,0 +1,77 @@
+{
+  "id": "Stata-bridge-real_async_bootstrap",
+  "group": "interface_python",
+  "expectation": "real Python subprocess and bootstrap with simulated sfi transport",
+  "checks": [
+    {
+      "name": "async_subprocess_complete",
+      "passed": true,
+      "observed": null,
+      "expected": "completed result"
+    },
+    {
+      "name": "async_real_bootstrap_b",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          104
+        ],
+        "expected_shape": [
+          104
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "async_real_bootstrap_V",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          104,
+          104
+        ],
+        "expected_shape": [
+          104,
+          104
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "async_theta",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          30
+        ],
+        "expected_shape": [
+          30
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "async_bootstrap_counts",
+      "passed": true,
+      "observed": null,
+      "expected": null
+    }
+  ],
+  "warnings": [
+    "subprocess 1501 is still running"
+  ],
+  "elapsed_seconds": 5.485204173999591,
+  "status": "PASS"
+}

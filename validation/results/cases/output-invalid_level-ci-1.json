@@ -1,0 +1,16 @@
+{
+  "id": "output-invalid_level-ci-1",
+  "group": "outputs",
+  "expectation": "invalid confidence percentage is rejected explicitly",
+  "checks": [
+    {
+      "name": "invalid_confidence_level_rejected",
+      "passed": false,
+      "observed": 101,
+      "expected": "finite confidence percentage within 0 to 100"
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 9.83189997896261e-05,
+  "status": "FAIL"
+}

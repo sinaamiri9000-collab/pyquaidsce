@@ -1,0 +1,227 @@
+[
+  {
+    "id": "boot-positive_timeout",
+    "group": "bootstrap_supplemental",
+    "kwargs": {
+      "reps": 8,
+      "seed": 16001,
+      "n_jobs": 2,
+      "mp_context": "spawn",
+      "rep_timeout": 10
+    },
+    "fixture": "original",
+    "expectation": "generous watchdog preserves all ordinary draws"
+  },
+  {
+    "id": "boot-default_seed",
+    "group": "bootstrap_supplemental",
+    "kwargs": {
+      "reps": 2,
+      "seed": null
+    },
+    "fixture": "original",
+    "expectation": "seed=None supports a finite unseeded bootstrap; realized draws are archived"
+  },
+  {
+    "id": "boot-fork",
+    "group": "bootstrap_supplemental",
+    "kwargs": {
+      "reps": 2,
+      "seed": 16001,
+      "n_jobs": 2,
+      "mp_context": "fork"
+    },
+    "fixture": "original",
+    "expectation": "available fork context works with caller BLAS limited to one"
+  },
+  {
+    "id": "followup-tight-nls-gn-zero",
+    "group": "followup_tight",
+    "kwargs": {
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "zero",
+      "stop_rule": "tight"
+    },
+    "fixture": "original",
+    "expectation": "tighter stopping removes early-stop ambiguity; original cases remain unchanged"
+  },
+  {
+    "id": "followup-tight-nls-gn-linear",
+    "group": "followup_tight",
+    "kwargs": {
+      "method": "nls",
+      "algorithm": "gn",
+      "start": "linear",
+      "stop_rule": "tight"
+    },
+    "fixture": "original",
+    "expectation": "tighter stopping removes early-stop ambiguity; original cases remain unchanged"
+  },
+  {
+    "id": "followup-tight-nls-lm-zero",
+    "group": "followup_tight",
+    "kwargs": {
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "zero",
+      "stop_rule": "tight"
+    },
+    "fixture": "original",
+    "expectation": "tighter stopping removes early-stop ambiguity; original cases remain unchanged"
+  },
+  {
+    "id": "followup-tight-nls-lm-linear",
+    "group": "followup_tight",
+    "kwargs": {
+      "method": "nls",
+      "algorithm": "lm",
+      "start": "linear",
+      "stop_rule": "tight"
+    },
+    "fixture": "original",
+    "expectation": "tighter stopping removes early-stop ambiguity; original cases remain unchanged"
+  },
+  {
+    "id": "followup-tight-fgnls-gn-zero",
+    "group": "followup_tight",
+    "kwargs": {
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "zero",
+      "stop_rule": "tight"
+    },
+    "fixture": "original",
+    "expectation": "tighter stopping removes early-stop ambiguity; original cases remain unchanged"
+  },
+  {
+    "id": "followup-tight-fgnls-gn-linear",
+    "group": "followup_tight",
+    "kwargs": {
+      "method": "fgnls",
+      "algorithm": "gn",
+      "start": "linear",
+      "stop_rule": "tight"
+    },
+    "fixture": "original",
+    "expectation": "tighter stopping removes early-stop ambiguity; original cases remain unchanged"
+  },
+  {
+    "id": "followup-tight-fgnls-lm-zero",
+    "group": "followup_tight",
+    "kwargs": {
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "zero",
+      "stop_rule": "tight"
+    },
+    "fixture": "original",
+    "expectation": "tighter stopping removes early-stop ambiguity; original cases remain unchanged"
+  },
+  {
+    "id": "followup-tight-fgnls-lm-linear",
+    "group": "followup_tight",
+    "kwargs": {
+      "method": "fgnls",
+      "algorithm": "lm",
+      "start": "linear",
+      "stop_rule": "tight"
+    },
+    "fixture": "original",
+    "expectation": "tighter stopping removes early-stop ambiguity; original cases remain unchanged"
+  },
+  {
+    "id": "followup-tight-ifgnls-gn-zero",
+    "group": "followup_tight",
+    "kwargs": {
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "zero",
+      "stop_rule": "tight"
+    },
+    "fixture": "original",
+    "expectation": "tighter stopping removes early-stop ambiguity; original cases remain unchanged"
+  },
+  {
+    "id": "followup-tight-ifgnls-gn-linear",
+    "group": "followup_tight",
+    "kwargs": {
+      "method": "ifgnls",
+      "algorithm": "gn",
+      "start": "linear",
+      "stop_rule": "tight"
+    },
+    "fixture": "original",
+    "expectation": "tighter stopping removes early-stop ambiguity; original cases remain unchanged"
+  },
+  {
+    "id": "followup-tight-ifgnls-lm-zero",
+    "group": "followup_tight",
+    "kwargs": {
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "zero",
+      "stop_rule": "tight"
+    },
+    "fixture": "original",
+    "expectation": "tighter stopping removes early-stop ambiguity; original cases remain unchanged"
+  },
+  {
+    "id": "followup-tight-ifgnls-lm-linear",
+    "group": "followup_tight",
+    "kwargs": {
+      "method": "ifgnls",
+      "algorithm": "lm",
+      "start": "linear",
+      "stop_rule": "tight"
+    },
+    "fixture": "original",
+    "expectation": "tighter stopping removes early-stop ambiguity; original cases remain unchanged"
+  },
+  {
+    "id": "followup-linear-selection-no_prices",
+    "group": "followup_selection",
+    "kwargs": {
+      "selection_prices": [],
+      "start": "linear"
+    },
+    "fixture": "original",
+    "expectation": "diagnostic alternative start; not a replacement for the original failure"
+  },
+  {
+    "id": "followup-linear-selection-no_expenditure",
+    "group": "followup_selection",
+    "kwargs": {
+      "selection_expenditure": false,
+      "start": "linear"
+    },
+    "fixture": "original",
+    "expectation": "diagnostic alternative start; not a replacement for the original failure"
+  },
+  {
+    "id": "followup-linear-selection-intercept_only",
+    "group": "followup_selection",
+    "kwargs": {
+      "selection_prices": [],
+      "selection_covariates": [],
+      "selection_expenditure": false,
+      "start": "linear"
+    },
+    "fixture": "original",
+    "expectation": "diagnostic alternative start; not a replacement for the original failure"
+  },
+  {
+    "id": "followup-linear-selection-independent_no_exp",
+    "group": "followup_selection",
+    "kwargs": {
+      "selection_covariates": [
+        "s1",
+        "s2"
+      ],
+      "selection_expenditure": false,
+      "start": "linear"
+    },
+    "fixture": "derived",
+    "expectation": "diagnostic alternative start; not a replacement for the original failure"
+  }
+]

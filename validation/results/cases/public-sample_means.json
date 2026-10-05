@@ -1,0 +1,138 @@
+{
+  "id": "public-sample_means",
+  "group": "public_helpers",
+  "expectation": "public contract holds",
+  "checks": [
+    {
+      "name": "sample_mean_w",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          4
+        ],
+        "expected_shape": [
+          4
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "sample_mean_lnp",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          4
+        ],
+        "expected_shape": [
+          4
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "sample_mean_lnexp",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [],
+        "expected_shape": []
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "sample_mean_demo",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          2
+        ],
+        "expected_shape": [
+          2
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "sample_mean_cdf",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          4
+        ],
+        "expected_shape": [
+          4
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "sample_mean_pdf",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 1.1102230246251565e-16,
+        "actual_shape": [
+          4
+        ],
+        "expected_shape": [
+          4
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "sample_mean_du",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 2.220446049250313e-16,
+        "actual_shape": [
+          4
+        ],
+        "expected_shape": [
+          4
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "sample_mean_control_function",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [],
+        "expected_shape": []
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 0.0004895379997833516,
+  "status": "PASS"
+}

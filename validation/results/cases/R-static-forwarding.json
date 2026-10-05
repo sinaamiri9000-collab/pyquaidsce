@@ -1,0 +1,28 @@
+{
+  "id": "R-static-forwarding",
+  "group": "interface_static",
+  "expectation": "public contract holds",
+  "checks": [
+    {
+      "name": "R_default_method_ifgnls",
+      "passed": true,
+      "observed": null,
+      "expected": null
+    },
+    {
+      "name": "R_forwards_ivexp",
+      "passed": true,
+      "observed": null,
+      "expected": null
+    },
+    {
+      "name": "R_preserves_empty_selection",
+      "passed": true,
+      "observed": null,
+      "expected": null
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 1.83779998224054e-05,
+  "status": "PASS"
+}

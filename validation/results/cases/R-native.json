@@ -1,0 +1,8 @@
+{
+  "id": "R-native",
+  "group": "interface_native",
+  "status": "NOT_RUN",
+  "elapsed_seconds": 0,
+  "checks": [],
+  "reason": "native execution is supplemental and no native runtime was used"
+}

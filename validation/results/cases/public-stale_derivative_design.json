@@ -1,0 +1,16 @@
+{
+  "id": "public-stale_derivative_design",
+  "group": "public_helpers",
+  "expectation": "public contract holds",
+  "checks": [
+    {
+      "name": "stale_design_rejected",
+      "passed": true,
+      "observed": null,
+      "expected": null
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 0.0003184400002282928,
+  "status": "PASS"
+}

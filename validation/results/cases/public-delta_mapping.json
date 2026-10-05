@@ -1,0 +1,29 @@
+{
+  "id": "public-delta_mapping",
+  "group": "public_helpers",
+  "expectation": "public contract holds",
+  "checks": [
+    {
+      "name": "delta_finite_difference",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 8.22666379463044e-11,
+        "actual_shape": [
+          36,
+          30
+        ],
+        "expected_shape": [
+          36,
+          30
+        ]
+      },
+      "expected": {
+        "atol": 2e-08,
+        "rtol": 2e-08
+      }
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 0.0012941600002704945,
+  "status": "PASS"
+}

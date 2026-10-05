@@ -1,0 +1,74 @@
+{
+  "id": "invalid-seed-0",
+  "group": "invalid",
+  "expectation": "explicit rejection of invalid input",
+  "fixture": "original",
+  "kwargs": {
+    "shares": [
+      "sw1",
+      "sw2",
+      "sw4",
+      "sw9"
+    ],
+    "prices": [
+      "p1",
+      "p2",
+      "p4",
+      "p9"
+    ],
+    "expenditure": "total",
+    "demographics": [
+      "x1",
+      "x2"
+    ],
+    "anot": 10.0,
+    "verbose": false,
+    "seed": -1,
+    "reps": 2
+  },
+  "reference": "",
+  "checks": [
+    {
+      "name": "expected_exception_type",
+      "passed": true,
+      "observed": "ValueError",
+      "expected": [
+        "ValueError",
+        "TypeError"
+      ]
+    },
+    {
+      "name": "BLAS_state_restored",
+      "passed": true,
+      "observed": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ],
+      "expected": [
+        [
+          "libscipy_openblas",
+          1
+        ],
+        [
+          "libscipy_openblas",
+          1
+        ]
+      ]
+    }
+  ],
+  "warnings": [],
+  "audit_timeout_seconds": 90,
+  "exception": {
+    "type": "ValueError",
+    "message": "expected non-negative integer",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/pyquaidsce/validation/run.py\", line 219, in capture_fit\n    res = quaidsce(df, **kw, _deadline=time.perf_counter() + audit_timeout)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/_threads.py\", line 57, in wrapped\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/estimator.py\", line 696, in quaidsce\n    res.boot = bootstrap(\n               ^^^^^^^^^^\n  File \"/workspace/pyquaidsce/src/pyquaidsce/bootstrap.py\", line 344, in bootstrap\n    ss = np.random.SeedSequence(seed)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"numpy/random/bit_generator.pyx\", line 315, in numpy.random.bit_generator.SeedSequence.__init__\n  File \"numpy/random/bit_generator.pyx\", line 389, in numpy.random.bit_generator.SeedSequence.get_assembled_entropy\n  File \"numpy/random/bit_generator.pyx\", line 140, in numpy.random.bit_generator._coerce_to_uint32_array\n  File \"numpy/random/bit_generator.pyx\", line 70, in numpy.random.bit_generator._int_to_uint32_array\nValueError: expected non-negative integer\n"
+  },
+  "elapsed_seconds": 0.295256542000061,
+  "status": "EXPECTED_ERROR"
+}

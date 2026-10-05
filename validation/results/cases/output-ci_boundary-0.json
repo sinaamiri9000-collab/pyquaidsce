@@ -1,0 +1,78 @@
+{
+  "id": "output-ci_boundary-0",
+  "group": "outputs",
+  "expectation": "well-defined confidence endpoints are boundary probes, not forced rejection tests",
+  "checks": [
+    {
+      "name": "zero_percentile_lower",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 1.3877787807814457e-17,
+        "actual_shape": [
+          104
+        ],
+        "expected_shape": [
+          104
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "zero_percentile_upper",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          104
+        ],
+        "expected_shape": [
+          104
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "zero_normal_lower",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          104
+        ],
+        "expected_shape": [
+          104
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    },
+    {
+      "name": "zero_normal_upper",
+      "passed": true,
+      "observed": {
+        "max_abs_error": 0.0,
+        "actual_shape": [
+          104
+        ],
+        "expected_shape": [
+          104
+        ]
+      },
+      "expected": {
+        "atol": 1e-10,
+        "rtol": 1e-10
+      }
+    }
+  ],
+  "warnings": [],
+  "elapsed_seconds": 0.0004793020002580306,
+  "status": "PASS"
+}

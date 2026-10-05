@@ -107,3 +107,12 @@ a failure. The source estimator and `bench/small4.dta` remain unchanged.
 The broad suite checks functionality on small4; it does not prove parameter
 recovery, confidence-interval coverage, or economic validity of synthetic test
 instruments. Existing synthetic/theory tests provide complementary evidence.
+
+## Convergence architecture research
+
+The separate [convergence comparison](convergence/README.md) and
+[Persian report](convergence/REPORT.fa.md) examine native SciPy IFGNLS,
+concentrated Gaussian likelihood, and a Python reconstruction of the uploaded
+`nlsur.ado` logic. This study excludes linear initialization and contains 120
+primary fits, 24 shared-point probes, 760 passed numerical checks and a rerun of
+the 42 existing tests. Its scope is conditional stage-two point estimation.

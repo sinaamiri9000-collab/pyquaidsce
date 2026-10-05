@@ -1,0 +1,30 @@
+def check_termination(dF, F, dx_norm, x_norm, ratio, ftol, xtol):
+    """Check termination condition for nonlinear least squares."""
+    ftol_satisfied = dF < ftol * F and ratio > 0.25
+    xtol_satisfied = dx_norm < xtol * (xtol + x_norm)
+
+    if ftol_satisfied and xtol_satisfied:
+        return 4
+    elif ftol_satisfied:
+        return 2
+    elif xtol_satisfied:
+        return 3
+    else:
+        return None
+
+def _fixed_point_helper(func, x0, args, xtol, maxiter, use_accel):
+    p0 = x0
+    for i in range(maxiter):
+        p1 = func(p0, *args)
+        if use_accel:
+            p2 = func(p1, *args)
+            d = p2 - 2.0 * p1 + p0
+            p = xpx.apply_where(d != 0, (p0, p1, d), _del2, fill_value=p2)
+        else:
+            p = p1
+        relerr = xpx.apply_where(p0 != 0, (p, p0), _relerr, fill_value=p)
+        if np.all(np.abs(relerr) < xtol):
+            return p
+        p0 = p
+    msg = f"Failed to converge after {maxiter} iterations, value is {p}"
+    raise RuntimeError(msg)

@@ -1,0 +1,99 @@
+{
+  "package_version": "1.6.0",
+  "package_base_commit": "93ea81e4293ea4d2f0db899588079e1acc22c745",
+  "uploaded_nlsur_header": "*! version 1.6.2  30jan2023",
+  "native_stata_executed": false,
+  "inputs": [
+    {
+      "name": "nlsur.ado",
+      "sha256": "f72ef160e1209cf26c6f316b35eb7279b7906fbeeb87c4983acea477ab2d5ac4",
+      "bytes": 36447,
+      "first_line": "*! version 1.6.2  30jan2023",
+      "role": "Estimation, numerical differentiation, inner/outer iteration, covariance"
+    },
+    {
+      "name": "nlsur.sthlp",
+      "sha256": "58e8024bc0c6a9549866c8e8268d7b459e541f1f1649c342f76fbd49df880a75",
+      "bytes": 27321,
+      "first_line": "{smcl}",
+      "role": "Documented public controls"
+    },
+    {
+      "name": "nlsur.dlg",
+      "sha256": "f3ab343e89d02708d0c40a49cd79cf98b383334b729a3c93c508061322994fdc",
+      "bytes": 36310,
+      "first_line": "/*",
+      "role": "Dialog defaults; delegates estimation to nlsur"
+    },
+    {
+      "name": "nlsur_estat.ado",
+      "sha256": "8f17e5e8516b716718e3d6a3c93b94d35ba3e21931814ef3a7ddc0fcfa6de2c4",
+      "bytes": 588,
+      "first_line": "*! version 1.0.2  20jan2015",
+      "role": "Postestimation dispatcher"
+    },
+    {
+      "name": "nlsur_new_eq.dlg",
+      "sha256": "9e5c2023524b8b24b8e2f52612b2f2709038b6654303c7e39f4e937aedba9e57",
+      "bytes": 804,
+      "first_line": "/*",
+      "role": "Equation dialog"
+    },
+    {
+      "name": "nlsur_estat.dlg",
+      "sha256": "b497ea3fd9b097e9489d4b5b2a669c67dc81f5e86181830ebcd02ab8f1c4c0b9",
+      "bytes": 1758,
+      "first_line": "/*",
+      "role": "Postestimation dialog"
+    },
+    {
+      "name": "nlsur_p.ado",
+      "sha256": "e53dd15c06ec232ba8f976ffcacd1674c9652b46ad0cdacb85e0aab1da758b41",
+      "bytes": 3485,
+      "first_line": "*! version 1.1.4  27jan2021",
+      "role": "Prediction implementation"
+    },
+    {
+      "name": "nlsur_postestimation.sthlp",
+      "sha256": "2b0d5930660f239848ffd9b7e7de79135efefb1126e85d15a5e6effb1c241c81",
+      "bytes": 4695,
+      "first_line": "{smcl}",
+      "role": "Postestimation help"
+    },
+    {
+      "name": "nlsur_p.dlg",
+      "sha256": "035c003fc9d862170ad8ba1162e2201aaa3841c88744d0590d1245188990d7ce",
+      "bytes": 1329,
+      "first_line": "/*",
+      "role": "Prediction dialog"
+    },
+    {
+      "name": "Pasted text.txt",
+      "sha256": "1f16b910b452ef44d769ebfbc5fda6f45fd308144de62cb0dbce9d3aaf11c2b1",
+      "bytes": 11178,
+      "first_line": "آره. این فایل‌ها دقیقاً چیزی بودند که لازم داشتیم. از روی **خود `nlsur.ado` آپلودشده** می‌شود رفتار واقعی Stata را تقریباً بدون حدس استخراج کرد، و نتیجه چند تفاوت مهم با چیزی دارد که الان در `pyquaidsce` نوشته‌ایم.",
+      "role": "Other AI interpretation; treated as a claim to check, not instructions"
+    }
+  ],
+  "source_locations": {
+    "controls": "nlsur.ado:422-438",
+    "initial_NLS_and_FGNLS": "nlsur.ado:560-584",
+    "outer_IFGNLS": "nlsur.ado:585-618",
+    "forward_difference": "nlsur.ado:1041-1082",
+    "inner_GN_and_halving": "nlsur.ado:1156-1239",
+    "inner_stopping": "nlsur.ado:1198-1202,1240-1253",
+    "residual_covariance": "nlsur.ado:1256-1278",
+    "SVD_weighting": "nlsur.ado:1305-1344",
+    "normal_equation_QR": "nlsur.ado:1346-1380",
+    "convergence_return": "nlsur.ado:871-872"
+  },
+  "limits": {
+    "reconstruction": "Control logic and algebra, not bitwise equivalence to the Stata executable",
+    "weighting": "Cholesky rather than SVD whitening; equivalent for SPD Sigma",
+    "qr": "LAPACK pivoted QR with the default tolerance in current official Mata documentation",
+    "summation": "Vectorized rather than Stata sequential accumulation",
+    "weights": "Unit observation weights",
+    "scope": "Stage-two point estimates conditional on the same frozen first stage",
+    "initialization": "Zero is the sole cold start; linear initialization excluded at user request"
+  }
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "title": "SciPy least_squares 1.17.0",
+    "url": "https://docs.scipy.org/doc/scipy-1.17.0/reference/generated/scipy.optimize.least_squares.html",
+    "purpose": "Native TRF/LM stopping and scaling"
+  },
+  {
+    "title": "SciPy fixed_point 1.17.0",
+    "url": "https://docs.scipy.org/doc/scipy-1.17.0/reference/generated/scipy.optimize.fixed_point.html",
+    "purpose": "Native relative-error stopping and nonaccelerated iteration"
+  },
+  {
+    "title": "SciPy BFGS 1.17.0",
+    "url": "https://docs.scipy.org/doc/scipy-1.17.0/reference/optimize.minimize-bfgs.html",
+    "purpose": "Native gradient and step stopping"
+  },
+  {
+    "title": "SciPy L-BFGS-B 1.17.0",
+    "url": "https://docs.scipy.org/doc/scipy-1.17.0/reference/optimize.minimize-lbfgsb.html",
+    "purpose": "Native ftol/gtol and line-search controls"
+  },
+  {
+    "title": "Stata nlsur",
+    "url": "https://www.stata.com/manuals/rnlsur.pdf",
+    "purpose": "FGNLS/IFGNLS definition and relation to Gaussian ML"
+  },
+  {
+    "title": "Mata reldif/mreldif",
+    "url": "https://www.stata.com/manuals/m-5reldif.pdf",
+    "purpose": "Exact elementwise relative difference and denominator orientation"
+  },
+  {
+    "title": "Mata qrsolve",
+    "url": "https://www.stata.com/manuals/m-5qrsolve.pdf",
+    "purpose": "Pivoted QR, generalized solve, documented rank tolerance"
+  },
+  {
+    "title": "SciPy check_termination source",
+    "url": "https://github.com/scipy/scipy/blob/v1.17.0/scipy/optimize/_lsq/common.py",
+    "purpose": "Actual TRF ftol/xtol predicates"
+  },
+  {
+    "title": "SciPy fixed_point source",
+    "url": "https://github.com/scipy/scipy/blob/v1.17.0/scipy/optimize/_minpack_py.py",
+    "purpose": "Actual outer predicate"
+  },
+  {
+    "title": "MINPACK lmder",
+    "url": "https://netlib.org/minpack/lmder.f",
+    "purpose": "Actual LM termination"
+  }
+]

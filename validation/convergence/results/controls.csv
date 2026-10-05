@@ -1,0 +1,121 @@
+model,start,method,tightened,success,status,ftol,xtol,gtol,outer_xtol,eps,tau,delta,ifgnlseps,max_inner,max_outer,max_nfev,scaling_anchor,message,earlier_inner_failures,final_inner_success,final_inner_status,final_inner_message,final_inner_parameter_pass,final_inner_rss_pass,profile_gtol,profile_maxiter,profile_xrtol,profile_ftol,profile_maxls,profile_maxfun,profile_maxcor,final_outer_parameter_change,final_outer_covariance_change,final_outer_parameter_pass,final_outer_covariance_pass
+cq,zero,scipy-trf,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+cq,zero,scipy-lm,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,2.0,`ftol` termination condition is satisfied.,,,,,,,,,,,,,
+cq,zero,profile-BFGS,False,False,2,,,,,,,,,,,,common zero/identity-weight start,Desired error not necessarily achieved due to precision loss.,,,,,,,1e-05,1000.0,0.0,,,,,,,,
+cq,zero,profile-L-BFGS-B,False,False,1,,,,,,,,,,,,common zero/identity-weight start,STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT,,,,,,,1e-05,1000.0,,2.220446049250313e-09,20.0,15000.0,10.0,,,,
+cq,zero,nlsur-fd,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,2.58598092295673e-06,7.834721830901325e-08,True,False
+cq,zero,nlsur-analytic,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,2.6172820223161742e-06,8.02092298005439e-08,True,False
+cq,recorded,scipy-trf,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+cq,recorded,scipy-lm,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,1.0,`gtol` termination condition is satisfied.,,,,,,,,,,,,,
+cq,recorded,profile-BFGS,False,True,0,,,,,,,,,,,,common zero/identity-weight start,Optimization terminated successfully.,,,,,,,1e-05,1000.0,0.0,,,,,,,,
+cq,recorded,profile-L-BFGS-B,False,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL,,,,,,,1e-05,1000.0,,2.220446049250313e-09,20.0,15000.0,10.0,,,,
+cq,recorded,nlsur-fd,False,True,parameter_OR_covariance,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.6940529491266985e-21,0.0,True,True
+cq,recorded,nlsur-analytic,False,True,parameter_OR_covariance,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.2496859821515345e-17,1.0176682242867926e-17,True,True
+ca,zero,scipy-trf,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+ca,zero,scipy-lm,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,1.0,`gtol` termination condition is satisfied.,,,,,,,,,,,,,
+ca,zero,profile-BFGS,False,True,0,,,,,,,,,,,,common zero/identity-weight start,Optimization terminated successfully.,,,,,,,1e-05,1000.0,0.0,,,,,,,,
+ca,zero,profile-L-BFGS-B,False,False,1,,,,,,,,,,,,common zero/identity-weight start,STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT,,,,,,,1e-05,1000.0,,2.220446049250313e-09,20.0,15000.0,10.0,,,,
+ca,zero,nlsur-fd,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,7.363589718727707e-06,2.0179528935956202e-07,True,False
+ca,zero,nlsur-analytic,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,7.947667671734346e-06,2.0323530052885464e-07,True,False
+ca,recorded,scipy-trf,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+ca,recorded,scipy-lm,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,1.0,`gtol` termination condition is satisfied.,,,,,,,,,,,,,
+ca,recorded,profile-BFGS,False,True,0,,,,,,,,,,,,common zero/identity-weight start,Optimization terminated successfully.,,,,,,,1e-05,1000.0,0.0,,,,,,,,
+ca,recorded,profile-L-BFGS-B,False,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL,,,,,,,1e-05,1000.0,,2.220446049250313e-09,20.0,15000.0,10.0,,,,
+ca,recorded,nlsur-fd,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.6144210821207264e-07,5.330588355183234e-10,True,False
+ca,recorded,nlsur-analytic,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.8448619150741128e-07,5.586269674535539e-10,True,False
+uq,zero,scipy-trf,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+uq,zero,scipy-lm,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,2.0,`ftol` termination condition is satisfied.,,,,,,,,,,,,,
+uq,zero,profile-BFGS,False,True,0,,,,,,,,,,,,common zero/identity-weight start,Optimization terminated successfully.,,,,,,,1e-05,1000.0,0.0,,,,,,,,
+uq,zero,profile-L-BFGS-B,False,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH,,,,,,,1e-05,1000.0,,2.220446049250313e-09,20.0,15000.0,10.0,,,,
+uq,zero,nlsur-fd,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.2016326931069154e-06,2.9054479012207766e-09,True,False
+uq,zero,nlsur-analytic,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.2010904523268687e-06,2.9075166721844328e-09,True,False
+uq,recorded,scipy-trf,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+uq,recorded,scipy-lm,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,1.0,`gtol` termination condition is satisfied.,,,,,,,,,,,,,
+uq,recorded,profile-BFGS,False,True,0,,,,,,,,,,,,common zero/identity-weight start,Optimization terminated successfully.,,,,,,,1e-05,1000.0,0.0,,,,,,,,
+uq,recorded,profile-L-BFGS-B,False,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL,,,,,,,1e-05,1000.0,,2.220446049250313e-09,20.0,15000.0,10.0,,,,
+uq,recorded,nlsur-fd,False,True,parameter_OR_covariance,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,9.201605785341565e-08,3.842970581203879e-12,True,True
+uq,recorded,nlsur-analytic,False,True,parameter_OR_covariance,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.221628897752101e-07,6.1211288432278064e-12,True,True
+ua,zero,scipy-trf,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+ua,zero,scipy-lm,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,1.0,`gtol` termination condition is satisfied.,,,,,,,,,,,,,
+ua,zero,profile-BFGS,False,True,0,,,,,,,,,,,,common zero/identity-weight start,Optimization terminated successfully.,,,,,,,1e-05,1000.0,0.0,,,,,,,,
+ua,zero,profile-L-BFGS-B,False,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH,,,,,,,1e-05,1000.0,,2.220446049250313e-09,20.0,15000.0,10.0,,,,
+ua,zero,nlsur-fd,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,2.3997347196537726e-06,1.696602870648204e-09,True,False
+ua,zero,nlsur-analytic,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,3.3924620885813973e-06,1.7120779571238011e-09,True,False
+ua,recorded,scipy-trf,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+ua,recorded,scipy-lm,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,1.0,`gtol` termination condition is satisfied.,,,,,,,,,,,,,
+ua,recorded,profile-BFGS,False,True,0,,,,,,,,,,,,common zero/identity-weight start,Optimization terminated successfully.,,,,,,,1e-05,1000.0,0.0,,,,,,,,
+ua,recorded,profile-L-BFGS-B,False,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL,,,,,,,1e-05,1000.0,,2.220446049250313e-09,20.0,15000.0,10.0,,,,
+ua,recorded,nlsur-fd,False,True,parameter_OR_covariance,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.82818734809221e-07,1.1808337484928499e-11,True,True
+ua,recorded,nlsur-analytic,False,True,parameter_OR_covariance,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,2.2242077202250348e-08,2.3442794165407214e-12,True,True
+nq,zero,scipy-trf,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+nq,zero,scipy-lm,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,1.0,`gtol` termination condition is satisfied.,,,,,,,,,,,,,
+nq,zero,profile-BFGS,False,True,0,,,,,,,,,,,,common zero/identity-weight start,Optimization terminated successfully.,,,,,,,1e-05,1000.0,0.0,,,,,,,,
+nq,zero,profile-L-BFGS-B,False,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH,,,,,,,1e-05,1000.0,,2.220446049250313e-09,20.0,15000.0,10.0,,,,
+nq,zero,nlsur-fd,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.3941178517044398e-06,3.7653768143936394e-09,True,False
+nq,zero,nlsur-analytic,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.3961260794879023e-06,3.744382453973839e-09,True,False
+nq,recorded,scipy-trf,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+nq,recorded,scipy-lm,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,1.0,`gtol` termination condition is satisfied.,,,,,,,,,,,,,
+nq,recorded,profile-BFGS,False,True,0,,,,,,,,,,,,common zero/identity-weight start,Optimization terminated successfully.,,,,,,,1e-05,1000.0,0.0,,,,,,,,
+nq,recorded,profile-L-BFGS-B,False,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL,,,,,,,1e-05,1000.0,,2.220446049250313e-09,20.0,15000.0,10.0,,,,
+nq,recorded,nlsur-fd,False,True,parameter_OR_covariance,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,2.5833897450693197e-08,1.2491066853028322e-12,True,True
+nq,recorded,nlsur-analytic,False,True,parameter_OR_covariance,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.5133612081602026e-08,2.345897713721894e-12,True,True
+na,zero,scipy-trf,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+na,zero,scipy-lm,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,1.0,`gtol` termination condition is satisfied.,,,,,,,,,,,,,
+na,zero,profile-BFGS,False,True,0,,,,,,,,,,,,common zero/identity-weight start,Optimization terminated successfully.,,,,,,,1e-05,1000.0,0.0,,,,,,,,
+na,zero,profile-L-BFGS-B,False,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH,,,,,,,1e-05,1000.0,,2.220446049250313e-09,20.0,15000.0,10.0,,,,
+na,zero,nlsur-fd,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.036588983825744e-06,2.4960055488284043e-09,True,False
+na,zero,nlsur-analytic,False,True,parameter,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.0362999736956713e-06,2.5024955027078363e-09,True,False
+na,recorded,scipy-trf,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+na,recorded,scipy-lm,False,True,native_fixed_point,1e-08,1e-08,1e-08,1e-08,,,,,,200.0,400.0,,,,True,1.0,`gtol` termination condition is satisfied.,,,,,,,,,,,,,
+na,recorded,profile-BFGS,False,True,0,,,,,,,,,,,,common zero/identity-weight start,Optimization terminated successfully.,,,,,,,1e-05,1000.0,0.0,,,,,,,,
+na,recorded,profile-L-BFGS-B,False,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL,,,,,,,1e-05,1000.0,,2.220446049250313e-09,20.0,15000.0,10.0,,,,
+na,recorded,nlsur-fd,False,True,parameter_OR_covariance,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,6.653959640883715e-10,1.8113357075274508e-12,True,True
+na,recorded,nlsur-analytic,False,True,parameter_OR_covariance,,,,,1e-05,0.001,4e-07,1e-10,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,5.604790541485938e-09,1.3531397571161656e-11,True,True
+cq,zero,scipy-trf,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+cq,zero,scipy-lm,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,2.0,`ftol` termination condition is satisfied.,,,,,,,,,,,,,
+cq,zero,profile-BFGS,True,False,2,,,,,,,,,,,,common zero/identity-weight start,Desired error not necessarily achieved due to precision loss.,,,,,,,1e-08,1000.0,0.0,,,,,,,,
+cq,zero,profile-L-BFGS-B,True,False,1,,,,,,,,,,,,common zero/identity-weight start,STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT,,,,,,,1e-08,1000.0,,1e-12,20.0,15000.0,10.0,,,,
+cq,zero,nlsur-fd,True,True,parameter_OR_covariance,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,6.866349542617156e-18,6.6851507225726586e-18,True,True
+cq,zero,nlsur-analytic,True,True,parameter_OR_covariance,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,6.8663506623679624e-18,3.3922274163099226e-18,True,True
+cq,recorded,scipy-trf,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+cq,recorded,scipy-lm,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,2.0,`ftol` termination condition is satisfied.,,,,,,,,,,,,,
+cq,recorded,profile-BFGS,True,False,2,,,,,,,,,,,,common zero/identity-weight start,Desired error not necessarily achieved due to precision loss.,,,,,,,1e-08,1000.0,0.0,,,,,,,,
+cq,recorded,profile-L-BFGS-B,True,False,2,,,,,,,,,,,,common zero/identity-weight start,ABNORMAL: ,,,,,,,1e-08,1000.0,,1e-12,20.0,15000.0,10.0,,,,
+cq,recorded,nlsur-fd,True,True,parameter_OR_covariance,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.6940529491266985e-21,0.0,True,True
+cq,recorded,nlsur-analytic,True,True,parameter_OR_covariance,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.2496859821515345e-17,1.0176682242867926e-17,True,True
+ca,zero,scipy-trf,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+ca,zero,scipy-lm,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,2.0,`ftol` termination condition is satisfied.,,,,,,,,,,,,,
+ca,zero,profile-BFGS,True,False,2,,,,,,,,,,,,common zero/identity-weight start,Desired error not necessarily achieved due to precision loss.,,,,,,,1e-08,1000.0,0.0,,,,,,,,
+ca,zero,profile-L-BFGS-B,True,False,1,,,,,,,,,,,,common zero/identity-weight start,STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT,,,,,,,1e-08,1000.0,,1e-12,20.0,15000.0,10.0,,,,
+ca,zero,nlsur-fd,True,True,parameter_OR_covariance,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,6.155262751839396e-11,3.138738276140419e-13,True,True
+ca,zero,nlsur-analytic,True,True,parameter,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,8.321226213115016e-09,1.7738169864306634e-10,True,False
+ca,recorded,scipy-trf,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+ca,recorded,scipy-lm,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,2.0,`ftol` termination condition is satisfied.,,,,,,,,,,,,,
+ca,recorded,profile-BFGS,True,False,2,,,,,,,,,,,,common zero/identity-weight start,Desired error not necessarily achieved due to precision loss.,,,,,,,1e-08,1000.0,0.0,,,,,,,,
+ca,recorded,profile-L-BFGS-B,True,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH,,,,,,,1e-08,1000.0,,1e-12,20.0,15000.0,10.0,,,,
+ca,recorded,nlsur-fd,True,True,parameter_OR_covariance,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,2.6682472359327792e-17,1.3332835486445696e-17,True,True
+ca,recorded,nlsur-analytic,True,True,parameter,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,7.274452939073603e-09,3.592441858578486e-11,True,False
+uq,zero,scipy-trf,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+uq,zero,scipy-lm,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,2.0,`ftol` termination condition is satisfied.,,,,,,,,,,,,,
+uq,zero,profile-BFGS,True,False,2,,,,,,,,,,,,common zero/identity-weight start,Desired error not necessarily achieved due to precision loss.,,,,,,,1e-08,1000.0,0.0,,,,,,,,
+uq,zero,profile-L-BFGS-B,True,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH,,,,,,,1e-08,1000.0,,1e-12,20.0,15000.0,10.0,,,,
+uq,zero,nlsur-fd,True,True,parameter_OR_covariance,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,2.262130056064249e-12,1.1409385935992843e-16,True,True
+uq,zero,nlsur-analytic,True,True,parameter,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,7.695289137354707e-09,1.5951133426277233e-11,True,False
+uq,recorded,scipy-trf,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+uq,recorded,scipy-lm,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,2.0,`ftol` termination condition is satisfied.,,,,,,,,,,,,,
+uq,recorded,profile-BFGS,True,True,0,,,,,,,,,,,,common zero/identity-weight start,Optimization terminated successfully.,,,,,,,1e-08,1000.0,0.0,,,,,,,,
+uq,recorded,profile-L-BFGS-B,True,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL,,,,,,,1e-08,1000.0,,1e-12,20.0,15000.0,10.0,,,,
+uq,recorded,nlsur-fd,True,True,parameter_OR_covariance,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.7243195811717205e-18,0.0,True,True
+uq,recorded,nlsur-analytic,True,True,parameter_OR_covariance,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,1.0,True,,,True,True,,,,,,,,2.1814482167348596e-11,1.9463070126030387e-15,True,True
+ua,zero,scipy-trf,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+ua,zero,scipy-lm,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,2.0,`ftol` termination condition is satisfied.,,,,,,,,,,,,,
+ua,zero,profile-BFGS,True,False,2,,,,,,,,,,,,common zero/identity-weight start,Desired error not necessarily achieved due to precision loss.,,,,,,,1e-08,1000.0,0.0,,,,,,,,
+ua,zero,profile-L-BFGS-B,True,False,1,,,,,,,,,,,,common zero/identity-weight start,STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT,,,,,,,1e-08,1000.0,,1e-12,20.0,15000.0,10.0,,,,
+ua,zero,nlsur-fd,True,True,parameter_OR_covariance,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,5.0821024386108795e-20,0.0,True,True
+ua,zero,nlsur-analytic,True,True,parameter_OR_covariance,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,1.772413570339566e-09,2.0367599746402884e-13,True,True
+ua,recorded,scipy-trf,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,3.0,`xtol` termination condition is satisfied.,,,,,,,,,,,,,
+ua,recorded,scipy-lm,True,True,native_fixed_point,1e-10,1e-10,1e-10,1e-10,,,,,,200.0,400.0,,,,True,2.0,`ftol` termination condition is satisfied.,,,,,,,,,,,,,
+ua,recorded,profile-BFGS,True,True,0,,,,,,,,,,,,common zero/identity-weight start,Optimization terminated successfully.,,,,,,,1e-08,1000.0,0.0,,,,,,,,
+ua,recorded,profile-L-BFGS-B,True,True,0,,,,,,,,,,,,common zero/identity-weight start,CONVERGENCE: NORM OF PROJECTED GRADIENT <= PGTOL,,,,,,,1e-08,1000.0,,1e-12,20.0,15000.0,10.0,,,,
+ua,recorded,nlsur-fd,True,True,parameter_OR_covariance,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,4.5330673575213237e-10,2.805625205508818e-14,True,True
+ua,recorded,nlsur-analytic,True,True,parameter_OR_covariance,,,,,1e-08,0.001,4e-07,1e-12,400.0,200.0,,,,0.0,True,,,True,True,,,,,,,,2.794113231212579e-10,2.919559318866705e-14,True,True

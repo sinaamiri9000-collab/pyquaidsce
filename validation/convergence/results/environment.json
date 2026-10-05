@@ -1,0 +1,56 @@
+{
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "pandas": "2.2.3",
+  "source_and_data_unchanged": true,
+  "source_data_sha256": {
+    "src/pyquaidsce/__init__.py": "e196434ac99343a124f5ba02569af6f0158f5aa8d1653d4a4e6d9aed078450d4",
+    "src/pyquaidsce/_threads.py": "332bc0cdcc9ea6ac6d72debe402916289b7d5b0159f5743db39dac91d1ca5462",
+    "src/pyquaidsce/_timing.py": "3fd8b5235e2de2c4e08929fc58978b5a65c0498b0f2b178fac2d244a6c28cdef",
+    "src/pyquaidsce/bootstrap.py": "21fffa4e09ce0506074b8378ae752cbeaa7ad8147e537523ab258904cb9ac7bc",
+    "src/pyquaidsce/bootstrap_runner.py": "ea4073643df241d1379b97732f5ff8e7149afb8009e03e2a30d4c151f240ce08",
+    "src/pyquaidsce/elasticities.py": "6b53ff86295d84451e4b0746496624f54e309c919ce21126582e0c2befd620fe",
+    "src/pyquaidsce/estimator.py": "328e596d3e8f6b20f4cb7c1bdbbca8a2014904e38c2ad441b9a0f489b7a43822",
+    "src/pyquaidsce/jacfree.py": "f54741b631a299493c2edce432048ce7803de0bcd8a035769f926b2a96883dfc",
+    "src/pyquaidsce/model.py": "b49a50385a0bef3363c660547d884b8e86c00a56cb26e38d5c2dcda6f08c0e67",
+    "src/pyquaidsce/nlsur.py": "3439ca0c2c75fa5bbac159b21e8d8ad8f6f9422b0673baff3581db1dc6ae473e",
+    "src/pyquaidsce/params.py": "bdc875f4369b65e1c65a46392877ba594e11e708b0c1a35f881c47ec09ca4aad",
+    "src/pyquaidsce/probit.py": "469a4acfab294e844fb5d35f79aef16a2ecc118ab92259bbed7973d251902e66",
+    "src/pyquaidsce/reduced_form.py": "df81c9becbb417727a631542d12a7f1b4194afad557297233a36dea373fb744e",
+    "src/pyquaidsce/results.py": "d67b1b7bce4516961e07423def6ea0b1250e2157fb5a9a88421f8876cda9ce7c",
+    "src/pyquaidsce/selection.py": "16d8f285a6a50981b0b3dc6fca2598f47e966159cc05b51dc8f19f9416bc3c1f",
+    "src/pyquaidsce/start.py": "0943425c1121deff7513584ccc732d38474dc4b3d23b10c188865d12c0bdae7b",
+    "src/pyquaidsce/stata_bridge.py": "6c0981984872a0e9fa1dbc2c76c6b0ac7e57b76a3a9b212cd240a113ef204119",
+    "src/pyquaidsce/statafmt.py": "f27cd517f21a7482f304c08cfbda70223a159a702970652c7e77c215f19af2ae",
+    "bench/small4.dta": "20e2a2b15e7b55eebb07ea744b7f27ee294e78e24e8c4b2e6aa4fd9848ae37c1"
+  },
+  "scope": "Fixed first stage, small4, stage-two point-estimator comparison; no native Stata; no bootstrap or new inference implementation",
+  "command_arguments": {
+    "output": "/workspace/pyquaidsce/validation/convergence/results",
+    "models": [
+      "cq",
+      "ca",
+      "uq",
+      "ua",
+      "nq",
+      "na"
+    ],
+    "methods": [
+      "scipy-trf",
+      "scipy-lm",
+      "profile-BFGS",
+      "profile-L-BFGS-B",
+      "nlsur-fd",
+      "nlsur-analytic"
+    ],
+    "starts": [
+      "zero",
+      "recorded"
+    ],
+    "seconds": 45,
+    "skip_sensitivity": false
+  },
+  "blas_threads": 1,
+  "run_count": 120
+}

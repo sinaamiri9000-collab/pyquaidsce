@@ -1,0 +1,36 @@
+{
+  "method": "fgnls",
+  "reps_requested": 50,
+  "reps_ok": 50,
+  "failures": [],
+  "bootstrap_seconds": 16.84101396099868,
+  "elasticity_se_ratios": {
+    "all": {
+      "median": 0.7784847237111531,
+      "min": 0.4755477398333201,
+      "max": 1.3099569475043817
+    },
+    "income": {
+      "median": 0.8321462817217828,
+      "min": 0.5063008954793797,
+      "max": 1.3099569475043817
+    },
+    "uncompensated": {
+      "median": 0.8119339403540538,
+      "min": 0.5787639755509525,
+      "max": 1.29784355748249
+    },
+    "compensated": {
+      "median": 0.7684945316352916,
+      "min": 0.4755477398333201,
+      "max": 1.2468292327760258
+    }
+  },
+  "point_outer": 2,
+  "point_gn": 21,
+  "inference_seconds": 0.49500563699984923,
+  "score_diagnostic": 0.024994859019043657,
+  "bread_condition": 3411106.265677388,
+  "bootstrap_outer_median": 2.0,
+  "bootstrap_gn_median": 25.0
+}

@@ -1,0 +1,93 @@
+{
+  "method": "ifgnls",
+  "reps_requested": 50,
+  "reps_ok": 43,
+  "failures": [
+    {
+      "rep": 14,
+      "seed": 3199367780,
+      "nobs": 9755,
+      "converged": false,
+      "seconds": 0.4510309440011042,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 20,
+      "seed": 94237322,
+      "nobs": 9724,
+      "converged": false,
+      "seconds": 0.4364029619973735,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 23,
+      "seed": 586056106,
+      "nobs": 9675,
+      "converged": false,
+      "seconds": 0.829463346999546,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 34,
+      "seed": 2170164604,
+      "nobs": 9767,
+      "converged": false,
+      "seconds": 0.6741207559971372,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 38,
+      "seed": 472703130,
+      "nobs": 9743,
+      "converged": false,
+      "seconds": 0.42649044500285527,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 39,
+      "seed": 1826390872,
+      "nobs": 9803,
+      "converged": false,
+      "seconds": 0.7464046539971605,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 42,
+      "seed": 837072290,
+      "nobs": 9721,
+      "converged": false,
+      "seconds": 0.6238816770055564,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    }
+  ],
+  "bootstrap_seconds": 24.757403247000184,
+  "elasticity_se_ratios": {
+    "all": {
+      "median": 1.674163292758215,
+      "min": 0.8619525699884244,
+      "max": 2.329152647261171
+    },
+    "income": {
+      "median": 1.8649338989069064,
+      "min": 0.8619525699884244,
+      "max": 2.329152647261171
+    },
+    "uncompensated": {
+      "median": 1.6817606014474298,
+      "min": 1.1264826494097062,
+      "max": 2.2540898406474765
+    },
+    "compensated": {
+      "median": 1.6555174090604732,
+      "min": 1.1762191339700216,
+      "max": 2.268083602867972
+    }
+  },
+  "point_outer": 21,
+  "point_gn": 91,
+  "inference_seconds": 0.20845235099841375,
+  "score_diagnostic": 5.630554464827228e-06,
+  "bread_condition": 1222946123.7965956,
+  "bootstrap_outer_median": 22.0,
+  "bootstrap_gn_median": 37.0
+}

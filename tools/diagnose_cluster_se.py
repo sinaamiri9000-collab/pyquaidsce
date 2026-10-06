@@ -88,6 +88,8 @@ def main():
         stats['max_relative_se_error_numerical_bread']=float(np.max(np.abs(
             se_reference/fit.analytical.elasticity_se-1)))
         report[method]=stats
+        if method=='ifgnls':
+            point_ifgnls=fit
         print(method,json.dumps(stats),flush=True)
 
     # Examine all remaining Probit failures with the unchanged backend.
@@ -127,6 +129,8 @@ def main():
     from pyquaidsce.bootstrap import _one_rep,_WORK
     worker_kw=dict(kw,method='ifgnls')
     worker_kw.pop('verbose',None)
+    if settings.get('bootstrap_start','zero')=='warm':
+        worker_kw.update(initial=point_ifgnls.theta,sigma_initial=point_ifgnls.sigma)
     _WORK.update(df=frame,kw=worker_kw,rep_timeout=None,cluster_rows=groups)
     saved=np.load(ROOT/'ifgnls-100-draws.npz')
     confirmed=[]

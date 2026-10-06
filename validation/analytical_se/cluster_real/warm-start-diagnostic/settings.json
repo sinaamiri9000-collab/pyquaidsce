@@ -1,0 +1,78 @@
+{
+  "nobs": 9744,
+  "n_clusters": 1792,
+  "cluster": "source_psu_str",
+  "seed": 20261006,
+  "checkpoints": [
+    50,
+    100
+  ],
+  "input_sha256": "073dc7c24022f5cbf985dc47cbb5bff51696c86a9917d280f34fbbef3e68fa71",
+  "prices_fixed": true,
+  "ivexp": null,
+  "control_function": null,
+  "cluster_correction": "G/(G-1)",
+  "settings": {
+    "shares": [
+      "share4_g6",
+      "share4_g7",
+      "share4_g8",
+      "share4_g9"
+    ],
+    "prices": [
+      "p_g6",
+      "p_g7",
+      "p_g8",
+      "p_g9"
+    ],
+    "expenditure": "expenditure4",
+    "demographics": [
+      "age",
+      "scale",
+      "children"
+    ],
+    "anot": 11.0,
+    "censor": true,
+    "quadratic": true,
+    "start": "zero",
+    "algorithm": "gn",
+    "param_tol": 1e-05,
+    "objective_tol": 1e-07,
+    "gn_tol": 1e-05,
+    "outer_param_tol": 1e-05,
+    "max_outer": 400,
+    "max_iter": 400,
+    "chunk": 2000,
+    "blas_threads": 1,
+    "verbose": false
+  },
+  "workers": 2,
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "pandas": "2.2.3",
+  "source_sha256": {
+    "src/pyquaidsce/inference.py": "7e54a7b4be9516739b7bbc23f544d0568ea0cf62ec603116f4804c3bb23389b8",
+    "src/pyquaidsce/_clusters.py": "ddda109191445a421bb7c296f80267b8cf5718b6b22f81c56034db5647e04b3e",
+    "tools/validate_cluster_se.py": "2b654124c2b8a4d37353d9f51a84114c97d6b6c15268a498c27ce340873d5e6e"
+  },
+  "bootstrap_start": "warm",
+  "selected_groups": [
+    6,
+    7,
+    8,
+    9
+  ],
+  "source_raw_file": "cldenew.csv",
+  "source_raw_sha256": "9819184dc68b471247253c74c1f257b98dfc983d3cb6f45218390ea0b49e9fb1",
+  "urban_only": true,
+  "seasons": [
+    3,
+    4
+  ],
+  "region_dummies_in_demand": false,
+  "region_dummies_in_probits": false,
+  "source_price_preparation": "Supplied U11 full-sample preparation; prepared prices fixed before subsetting",
+  "prices_renormalized_after_subsetting": false,
+  "demand_weights": null,
+  "selection_weights": null
+}

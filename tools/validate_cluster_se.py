@@ -117,6 +117,7 @@ def main():
     parser.add_argument('--methods',nargs='+',default=['ifgnls','fgnls'],choices=['ifgnls','fgnls','nls'])
     parser.add_argument('--checkpoints',nargs='+',type=int,default=[50,100])
     parser.add_argument('--seed',type=int,default=20261006)
+    parser.add_argument('--bootstrap-start',choices=['zero','warm'],default='zero')
     parser.add_argument('--workers',type=int,default=2)
     args=parser.parse_args()
     checkpoints=sorted(set(args.checkpoints))
@@ -142,6 +143,7 @@ def main():
                   source_sha256={name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
                                  for name in ['src/pyquaidsce/inference.py','src/pyquaidsce/_clusters.py',
                                               'tools/validate_cluster_se.py']})
+    metadata['bootstrap_start']=args.bootstrap_start
     (args.output/'settings.json').write_text(json.dumps(metadata,indent=2)+'\n')
     for method in args.methods:
         kw=dict(settings,method=method)
@@ -156,8 +158,11 @@ def main():
                               outer=fit.n_outer,inner=fit.n_gn)),flush=True)
         records,estimates=[],{}
         bootstrap_started=time.perf_counter()
+        boot_kwargs=dict(kw)
+        if args.bootstrap_start=='warm':
+            boot_kwargs.update(initial=fit.theta,sigma_initial=fit.sigma)
         with ProcessPoolExecutor(max_workers=args.workers,mp_context=mp.get_context('spawn'),
-                initializer=_init,initargs=(frame,kw,groups)) as pool:
+                initializer=_init,initargs=(frame,boot_kwargs,groups)) as pool:
             previous=0
             for count in checkpoints:
                 tasks=[(i+1,int(seeds[i])) for i in range(previous,count)]

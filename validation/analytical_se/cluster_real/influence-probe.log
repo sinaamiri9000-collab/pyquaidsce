@@ -1,0 +1,21 @@
+{"code": 138, "predicted_income2": -0.10066030853562856, "actual_income2": -0.14243167069923357, "converged": true}
+{"code": 274, "predicted_income2": 0.08468148367217053, "actual_income2": 0.11375166528775893, "converged": true}
+{"code": 375, "predicted_income2": -0.0008170373723150783, "actual_income2": -0.0008201269011076651, "converged": true}
+{"code": 417, "predicted_income2": -0.0008108509506749876, "actual_income2": -0.000819503189597004, "converged": true}
+{"code": 429, "predicted_income2": -0.10004409665477838, "actual_income2": -0.09908513618892256, "converged": true}
+{"code": 596, "predicted_income2": 0.16774570994959426, "actual_income2": 0.1673344869455894, "converged": true}
+{"code": 650, "predicted_income2": -0.07585940300218176, "actual_income2": -0.08356841831845896, "converged": true}
+{"code": 665, "predicted_income2": -0.00021623934263484496, "actual_income2": -0.00022627508121464412, "converged": true}
+{"code": 739, "predicted_income2": -3.4056182904586314e-05, "actual_income2": -3.3652628951275076e-05, "converged": true}
+{"code": 818, "predicted_income2": 0.09769389974028093, "actual_income2": 0.1252741350356742, "converged": true}
+{"code": 824, "predicted_income2": 0.0005956756605855688, "actual_income2": 0.0005979846213463036, "converged": true}
+{"code": 956, "predicted_income2": -0.08946021896452017, "actual_income2": -0.0964779679173432, "converged": true}
+{"code": 1029, "predicted_income2": -0.0002055146598575607, "actual_income2": -0.00020536705454266002, "converged": true}
+{"code": 1067, "predicted_income2": -0.0046097311483882806, "actual_income2": -0.004645254517893993, "converged": true}
+{"code": 1131, "predicted_income2": 0.0006806895346424528, "actual_income2": 0.0006807709594468525, "converged": true}
+{"code": 1377, "predicted_income2": -0.0001612087289573768, "actual_income2": -0.00016105134707367075, "converged": true}
+{"code": 1410, "predicted_income2": 0.0001066964117654532, "actual_income2": 0.00010478194054219792, "converged": true}
+{"code": 1689, "predicted_income2": -0.0007511499295521876, "actual_income2": -0.0007616018054531493, "converged": true}
+{"code": 1697, "predicted_income2": 2.7904624362073753e-05, "actual_income2": 2.800495618171528e-05, "converged": true}
+{"code": 1701, "predicted_income2": -0.09449537970048365, "actual_income2": -0.10173309572924294, "converged": true}
+{"selection": "eight largest predicted income-2 changes plus twelve seed-721 random clusters", "income2_relative_rms_error": 0.2001280749309074, "total_relative_rms_error": 0.20244482735920033, "income2_correlation": 0.9906059168514363}

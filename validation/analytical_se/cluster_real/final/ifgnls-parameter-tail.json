@@ -1,0 +1,35 @@
+{
+  "all_draws_retained": true,
+  "parameters": [
+    {
+      "name": "rho:rho_age",
+      "point": 0.0102406625429755,
+      "analytical_cluster_se": 0.0132607384401886,
+      "bootstrap_se": 3.5677556725439943,
+      "bootstrap_median": 0.015223197202297678,
+      "bootstrap_min": -0.007644398190500167,
+      "bootstrap_max": 33.31276671793092,
+      "largest_absolute_draw_rep": 3
+    },
+    {
+      "name": "rho:rho_scale",
+      "point": -0.0878257716600927,
+      "analytical_cluster_se": 0.0952620860119585,
+      "bootstrap_se": 49.695616530989895,
+      "bootstrap_median": -0.041298724556059346,
+      "bootstrap_min": -0.8549304958560329,
+      "bootstrap_max": 462.0629508697837,
+      "largest_absolute_draw_rep": 3
+    },
+    {
+      "name": "rho:rho_children",
+      "point": 0.1260111352453233,
+      "analytical_cluster_se": 0.1427975534056364,
+      "bootstrap_se": 18.9549774841716,
+      "bootstrap_median": 0.11650505326912276,
+      "bootstrap_min": -176.27282483000067,
+      "bootstrap_max": 3.856297197400588,
+      "largest_absolute_draw_rep": 3
+    }
+  ]
+}

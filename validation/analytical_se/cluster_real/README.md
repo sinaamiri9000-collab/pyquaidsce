@@ -88,6 +88,13 @@ Using the 87 successful fits from 100 requested draws:
 
 The full coefficient range shows that agreement is also poor for some demand
 parameters; the elasticity median alone does not summarize the whole model.
+For example, `rho_scale` has point estimate -0.0878 and analytical SE 0.0953,
+versus bootstrap SE 49.70. Its bootstrap median is -0.0413, but draw 3 gives
+462.06 (and large age/children scaling coefficients). This draw is retained,
+including its convergence flag. The broad coefficient distribution shows a
+finite-sample tail that the local covariance does not capture; a convergence
+flag does not establish a unique optimum or an accurate local approximation.
+`ifgnls-parameter-tail.json` records these scaling parameters.
 `ifgnls-50-t-statistics.csv` and `ifgnls-100-t-statistics.csv` retain every
 coefficient and elasticity, both statistics, their percentage ratio and
 percentage change. Undefined zero/zero cases, if present, remain missing.

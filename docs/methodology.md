@@ -140,11 +140,22 @@ The optimization uses an **analytic Gauss-Newton algorithm** with step-halving (
 
 ### Convergence
 
-The inner solve stops when any one of three criteria passes: relative
-parameter change (`param_tol`), relative weighted-SSR change (`objective_tol`),
-or the scaled Gauss-Newton criterion (`gn_tol`). IFGNLS requires relative
-parameter change below `outer_param_tol` in two consecutive outer iterations
-and convergence of the final inner solve.
+Let $\theta$ and $\theta^+$ denote the parameters before and after an accepted
+inner step, and $Q$ and $Q^+$ their weighted SSR values. With residuals $u_t$
+and fitted-value Jacobians $J_t$, $g=\sum_t J_t'\Sigma^{-1}u_t$ and $d_{GN}$
+is the undamped Gauss-Newton direction computed at $\theta$.
+
+| Tolerance | Criterion (must be strictly below the tolerance) | Default |
+| --- | --- | --- |
+| `param_tol` | $C_\theta=\max_j\frac{\lvert\theta_j^+-\theta_j\rvert}{1+\lvert\theta_j\rvert}$ | `1e-5` |
+| `objective_tol` | $C_Q=\frac{Q-Q^+}{\max(\lvert Q\rvert,10^{-300})}$ | `1e-7` |
+| `gn_tol` | $C_{GN}=\frac{\lvert d_{GN}'g\rvert}{\max(\lvert Q\rvert,10^{-300})}$ | `1e-5` |
+| `outer_param_tol` | $R_k=\max_j\frac{\lvert\theta_j^{(k)}-\theta_j^{(k-1)}\rvert}{\lvert\theta_j^{(k-1)}\rvert+10^{-8}}$ | `1e-5` |
+
+After an accepted inner step, any one of the three inner criteria suffices.
+If no improving step is accepted, only the GN criterion can certify convergence.
+For IFGNLS, $R_k$ compares parameters between outer iterations and must pass
+in two consecutive iterations; the final inner solve must also converge.
 
 ---
 

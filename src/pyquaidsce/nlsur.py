@@ -231,7 +231,8 @@ def gauss_newton(
     stationary point. After an accepted step, convergence requires any one
     of the parameter-change, objective-change or scaled GN criteria to pass.
     If no improving step is found, only the scaled GN criterion can certify
-    convergence. See ``docs/user-guide.md`` for the exact formulas.
+    convergence. See the Convergence section of ``docs/methodology.md``
+    for the exact formulas.
     """
     _validate_tolerances(param_tol=param_tol, objective_tol=objective_tol,
                          gn_tol=gn_tol)

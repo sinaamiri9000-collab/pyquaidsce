@@ -6,7 +6,9 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 - Replaced named stopping modes with `param_tol`, `objective_tol`, `gn_tol`,
   and `outer_param_tol` across Python, R, and Stata.
-- Removed obsolete convergence controls and the separate bootstrap threshold.
+- Removed `stop_rule`, `tol`, `nrtol_stop`, `inner_nrtol_early`, `sigma_tol`,
+  and `boot_sigma_tol`; the new tolerance defaults preserve the effective
+  behavior of the former `standard` mode.
 - Corrected NLS analytical covariance.
 - Set the low-level inner iteration limit to 300, matching the public estimator.
 

@@ -67,6 +67,31 @@ These results do not establish confidence-interval coverage. With 43 and 87
 successful draws, bootstrap SEs are still imprecise; unsuccessful draws can
 also affect the comparison. No targets or replications are trimmed.
 
+For IFGNLS, define the requested statistic as estimate / SE (null value zero).
+The percentage ratio is bootstrap statistic / analytical statistic, times 100;
+the same ratio applies for any shared null with a nonzero numerator. Thus
+168% means a statistic 68% larger, while 80% means one 20% smaller.
+Using the 87 successful fits from 100 requested draws:
+
+| Reported block | Median percentage ratio | Range |
+|---|---:|---:|
+| Full demand coefficients (41 entries) | 84.4% | 0.192–204.9% |
+| Probit coefficients (36 entries) | 92.2% | 61.4–110.3% |
+| Elasticities (36 entries) | 167.7% | 80.1–237.5% |
+
+| Expenditure elasticity | Analytical statistic | Bootstrap statistic | Percentage ratio |
+|---|---:|---:|---:|
+| Group 6 | 10.793 | 15.305 | 141.8% |
+| Group 7 | 1.791 | 3.860 | 215.5% |
+| Group 8 | 41.322 | 33.110 | 80.1% |
+| Group 9 | 3.241 | 6.023 | 185.8% |
+
+The full coefficient range shows that agreement is also poor for some demand
+parameters; the elasticity median alone does not summarize the whole model.
+`ifgnls-50-t-statistics.csv` and `ifgnls-100-t-statistics.csv` retain every
+coefficient and elasticity, both statistics, their percentage ratio and
+percentage change. Undefined zero/zero cases, if present, remain missing.
+
 ## What the diagnostics establish
 
 Every remaining bootstrap failure is in the group-7 Probit. The final sample

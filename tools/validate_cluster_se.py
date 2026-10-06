@@ -67,6 +67,16 @@ def _snapshot(out, method, count, fit, iid, records, estimates, elapsed):
     table['cluster_to_bootstrap'] = np.divide(fit.analytic_se, boot_se,
         out=np.full_like(boot_se,np.nan), where=boot_se>0)
     table.to_csv(out/f'{method}-{count}-comparison.csv',index=False)
+    t_table=table.copy()
+    for label,se_name in [('bootstrap_t','bootstrap_se'),
+                          ('analytical_cluster_t','analytical_cluster_se')]:
+        se=t_table[se_name].to_numpy()
+        t_table[label]=np.divide(fit.b,se,out=np.full_like(se,np.nan),where=se>0)
+    valid=(fit.b!=0)&(t_table.bootstrap_se>0)&(t_table.analytical_cluster_se>0)
+    t_table['bootstrap_t_to_analytical_t_percent']=np.where(
+        valid,100*t_table.cluster_to_bootstrap,np.nan)
+    t_table['bootstrap_t_change_percent']=t_table.bootstrap_t_to_analytical_t_percent-100
+    t_table.to_csv(out/f'{method}-{count}-t-statistics.csv',index=False)
     pd.DataFrame(ordered).to_csv(out/f'{method}-{count}-replications.csv',index=False)
     np.savez_compressed(out/f'{method}-{count}-draws.npz',replications=good,b=vectors)
     n=fit.spec.neqn

@@ -11,9 +11,12 @@ sys.path.insert(0, str(ROOT/'src'))
 import numpy as np
 from scipy.stats import norm
 
-from pyquaidsce import DemandData, fitted_shares
+from pyquaidsce import DemandData, fitted_shares, quaidsce
+from pyquaidsce.inference import _EstimatingSystem, _central_jacobian
+from pyquaidsce.model import jacobian_full
+from pyquaidsce.params import delta_matrix
 from tools.simulate_separate_participation import (
-    ANOT, SHARES, SPEC, generate, indices, mean_model, realize, regressors,
+    ANOT, LOG_PRICES, OPTIONS, SHARES, SPEC, generate, indices, mean_model, realize, regressors,
     support_bounds, true_theta,
 )
 
@@ -57,6 +60,42 @@ class SeparateParticipationDGPTests(unittest.TestCase):
             event_correlations.append(np.corrcoef(events, rowvar=False)[0, 1])
         self.assertLess(abs(event_correlations[0]), .02)
         self.assertGreater(event_correlations[1], .25)
+
+    def test_complete_bread_with_distinct_probits_and_excluded_covariate(self):
+        frame = generate(2000, 2171542997, .5)
+        prices = frame[LOG_PRICES].to_numpy()
+        expenditure = frame.lm.to_numpy()
+        design = np.column_stack([prices, expenditure, frame[['z', 's']].to_numpy()])
+        initial = quaidsce(frame, **OPTIONS, method='nls').theta
+        for method in ['fgnls', 'ifgnls']:
+            with self.subTest(method=method):
+                fit = quaidsce(frame, **OPTIONS, method=method)
+                xb = np.column_stack([design, np.ones(len(frame))]) @ fit.tau.reshape(4, -1).T
+                data = DemandData(prices, expenditure, frame[SHARES].to_numpy(),
+                                  frame[['z']].to_numpy(), norm.cdf(xb), norm.pdf(xb), ANOT)
+                system = _EstimatingSystem(fit, data, design,
+                                           initial if method == 'fgnls' else None, 2000, None)
+                step = np.cbrt(np.finfo(float).eps)/4
+                small = _central_jacobian(system.mean_score, system.x, system.scales, step)
+                large = _central_jacobian(system.mean_score, system.x, system.scales, 2*step)
+                reference = (4*small-large)/3
+                _, theta, sigma = system.decode(system.x)
+                jac = jacobian_full(theta, data, fit.spec) @ delta_matrix(fit.spec)
+                u = data.shares-fitted_shares(theta, data, fit.spec)
+                # Complex perturbations avoid subtraction of almost equal
+                # demand scores in the covariance-weight derivative block.
+                for column, (a, b) in enumerate(zip(*system.tril)):
+                    h = 1e-20*system.scales[system.sigma_slice.start+column]
+                    perturbed = sigma.astype(complex)
+                    perturbed[a, b] += 1j*h
+                    if a != b:
+                        perturbed[b, a] += 1j*h
+                    score = np.einsum('tmi,tm->i', jac, u @ np.linalg.inv(perturbed))
+                    reference[system.theta_slice, system.sigma_slice.start+column] = (
+                        score.imag/h/data.nobs)
+                analytical = system.bread()
+                error = np.max(np.abs(analytical-reference)/np.maximum(1, np.abs(analytical)))
+                self.assertLess(float(error), 5e-6)
 
 
 if __name__ == '__main__':

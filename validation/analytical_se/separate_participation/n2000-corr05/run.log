@@ -1,0 +1,212 @@
+10/400 independent datasets completed; 4.1 seconds
+20/400 independent datasets completed; 6.2 seconds
+30/400 independent datasets completed; 8.3 seconds
+40/400 independent datasets completed; 10.6 seconds
+50/400 independent datasets completed; 13.1 seconds
+60/400 independent datasets completed; 15.6 seconds
+70/400 independent datasets completed; 18.3 seconds
+80/400 independent datasets completed; 21.3 seconds
+90/400 independent datasets completed; 23.2 seconds
+100/400 independent datasets completed; 25.4 seconds
+110/400 independent datasets completed; 27.3 seconds
+120/400 independent datasets completed; 29.5 seconds
+130/400 independent datasets completed; 31.7 seconds
+140/400 independent datasets completed; 33.8 seconds
+150/400 independent datasets completed; 37.1 seconds
+160/400 independent datasets completed; 39.1 seconds
+170/400 independent datasets completed; 41.6 seconds
+180/400 independent datasets completed; 44.3 seconds
+190/400 independent datasets completed; 46.7 seconds
+200/400 independent datasets completed; 48.9 seconds
+210/400 independent datasets completed; 50.6 seconds
+220/400 independent datasets completed; 52.4 seconds
+230/400 independent datasets completed; 54.5 seconds
+240/400 independent datasets completed; 56.1 seconds
+250/400 independent datasets completed; 58.4 seconds
+260/400 independent datasets completed; 60.5 seconds
+270/400 independent datasets completed; 62.2 seconds
+280/400 independent datasets completed; 64.7 seconds
+290/400 independent datasets completed; 66.5 seconds
+300/400 independent datasets completed; 69.2 seconds
+310/400 independent datasets completed; 71.2 seconds
+320/400 independent datasets completed; 73.1 seconds
+330/400 independent datasets completed; 75.3 seconds
+340/400 independent datasets completed; 78.0 seconds
+350/400 independent datasets completed; 80.8 seconds
+360/400 independent datasets completed; 82.5 seconds
+370/400 independent datasets completed; 84.6 seconds
+380/400 independent datasets completed; 86.5 seconds
+390/400 independent datasets completed; 88.4 seconds
+400/400 independent datasets completed; 91.1 seconds
+{
+  "observations": 2000,
+  "repetitions": 400,
+  "seed": 27043,
+  "participation_shock_correlation": 0.5,
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "pandas": "2.2.3",
+  "methods": {
+    "fgnls": {
+      "successful": 400,
+      "median_elasticity_se_ratio": 1.013855523836222,
+      "min_elasticity_se_ratio": 0.9338976655326174,
+      "max_elasticity_se_ratio": 1.1509550868517113,
+      "median_elasticity_coverage": 0.9525,
+      "min_elasticity_coverage": 0.925,
+      "max_elasticity_coverage": 0.97,
+      "median_contrast_se_ratio": 1.0299233104217482,
+      "min_contrast_coverage": 0.91,
+      "max_contrast_coverage": 0.98,
+      "covariance_normalized_rmse": 0.1215723295864393
+    },
+    "ifgnls": {
+      "successful": 388,
+      "median_elasticity_se_ratio": 1.0016749096824744,
+      "min_elasticity_se_ratio": 0.936611494661529,
+      "max_elasticity_se_ratio": 1.0721634737593349,
+      "median_elasticity_coverage": 0.9510309278350515,
+      "min_elasticity_coverage": 0.9149484536082474,
+      "max_elasticity_coverage": 0.9716494845360825,
+      "median_contrast_se_ratio": 1.005116315920431,
+      "min_contrast_coverage": 0.904639175257732,
+      "max_contrast_coverage": 0.979381443298969,
+      "covariance_normalized_rmse": 0.057514044124047765
+    }
+  },
+  "options": {
+    "shares": [
+      "w1",
+      "w2",
+      "w3",
+      "w4"
+    ],
+    "lnprices": [
+      "lp1",
+      "lp2",
+      "lp3",
+      "lp4"
+    ],
+    "lnexpenditure": "lm",
+    "demographics": [
+      "z"
+    ],
+    "selection_covariates": [
+      "z",
+      "s"
+    ],
+    "anot": 1.0,
+    "start": "zero",
+    "algorithm": "gn",
+    "blas_threads": 1,
+    "verbose": false
+  },
+  "timeout": 60,
+  "n_jobs": 2,
+  "tolerances": {
+    "param_tol": 1e-05,
+    "objective_tol": 1e-07,
+    "gn_tol": 1e-05,
+    "outer_param_tol": 1e-05,
+    "max_iter": 300,
+    "max_outer": 200
+  },
+  "elapsed_seconds": 91.39253186999849,
+  "true_free_parameters": [
+    0.15,
+    0.18,
+    0.2,
+    0.17,
+    0.02,
+    -0.014,
+    0.016,
+    -0.022,
+    -0.009000000000000001,
+    0.003,
+    0.003,
+    -0.009000000000000001,
+    0.003,
+    -0.009000000000000001,
+    0.003,
+    -0.001,
+    0.0015,
+    -0.0035,
+    0.0025,
+    -0.0015,
+    0.001,
+    -0.002,
+    0.008,
+    -0.015,
+    0.015,
+    0.35
+  ],
+  "true_tau": [
+    [
+      -0.5,
+      0.2,
+      -0.1,
+      0.05,
+      0.65,
+      0.35,
+      0.8,
+      -1.6
+    ],
+    [
+      0.1,
+      -0.4,
+      0.15,
+      -0.1,
+      0.45,
+      -0.3,
+      -0.6,
+      -0.65
+    ],
+    [
+      -0.2,
+      0.05,
+      -0.3,
+      0.2,
+      0.7,
+      0.15,
+      0.7,
+      -1.1
+    ],
+    [
+      0.15,
+      -0.1,
+      0.05,
+      -0.45,
+      0.55,
+      -0.25,
+      -0.5,
+      -1.35
+    ]
+  ],
+  "purchased_share_lower_bound": [
+    0.039558780830983895,
+    0.07751496643009556,
+    0.09195308084192025,
+    0.04696643816804637
+  ],
+  "outside_share_lower_bound": 0.243462022690823,
+  "population_mean_share": [
+    0.07095534306674095,
+    0.09757130321240327,
+    0.13226148123839876,
+    0.05724026567058728
+  ],
+  "population_purchase_probability": [
+    0.3985465030011183,
+    0.5900999717137011,
+    0.604806216218645,
+    0.4088402304436528
+  ],
+  "max_target_integration_difference": 2.418741271270619e-06,
+  "git_commit": "da34954fe82837dc94af0eedfeeb2bb714157d49",
+  "source_sha256": {
+    "src/pyquaidsce/inference.py": "7ed458cfc02b459444a5352a5596e4faa19389d09d08872d74b7b72b31291abc",
+    "tools/simulate_separate_participation.py": "77a99d4d7bda086cd1a4e4322ac6f73de6760c128b2ff98c8246d077c5138cf2",
+    "src/pyquaidsce/_elasticity_derivatives.py": "e4cb9704732e5d76fe25a91c6d768ab2b0dd7e8dd71d8571a55425be005af94e"
+  }
+}

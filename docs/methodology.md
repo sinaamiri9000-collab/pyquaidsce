@@ -194,6 +194,9 @@ This includes uncertainty in observed means and in the means of the Probit
 CDF, PDF, and linear index. Elasticity derivatives use analytical product,
 chain, and quotient rules, checked against independent central differences
 of the existing function.
+The delta approximation is local: strongly nonlinear elasticities, including
+those with a near-zero adjusted share in the denominator, can have S.E.s and
+confidence-interval coverage that differ materially from finite-sample results.
 
 `res.analytical` provides the covariance and all three elasticity S.E. arrays.
 Its `max_standardized_score` reports the largest absolute mean score divided

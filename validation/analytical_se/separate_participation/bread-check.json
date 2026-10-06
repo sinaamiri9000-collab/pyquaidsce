@@ -1,0 +1,25 @@
+{
+  "observations": 2000,
+  "participation_shock_correlation": 0.5,
+  "cases": [
+    {
+      "method": "fgnls",
+      "seed": 2171542997,
+      "max_scaled_bread_error": 8.392710261571207e-10,
+      "np_prob": 8,
+      "excluded_selection_covariate": "s"
+    },
+    {
+      "method": "ifgnls",
+      "seed": 2171542997,
+      "max_scaled_bread_error": 6.323634879623619e-10,
+      "np_prob": 8,
+      "excluded_selection_covariate": "s"
+    }
+  ],
+  "reproducible_test": "tests/test_separate_participation_dgp.py::test_complete_bread_with_distinct_probits_and_excluded_covariate",
+  "source_sha256": {
+    "tests/test_separate_participation_dgp.py": "c13eff1b11de1e6f6998b0eaed09496833d9e93d5411aeee9cb0b1cbac148019",
+    "src/pyquaidsce/inference.py": "7ed458cfc02b459444a5352a5596e4faa19389d09d08872d74b7b72b31291abc"
+  }
+}

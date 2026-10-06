@@ -1,0 +1,58 @@
+{
+  "dataset": "small4.dta",
+  "observations": 2000,
+  "options": {
+    "shares": [
+      "sw1",
+      "sw2",
+      "sw4",
+      "sw9"
+    ],
+    "prices": [
+      "p1",
+      "p2",
+      "p4",
+      "p9"
+    ],
+    "expenditure": "total",
+    "demographics": [
+      "x1",
+      "x2"
+    ],
+    "anot": 10.0,
+    "verbose": false,
+    "blas_threads": 1
+  },
+  "cases": [
+    {
+      "method": "fgnls",
+      "point_results_bitwise_equal": true,
+      "max_scaled_gradient_error": 3.358501361409888e-10,
+      "max_relative_elasticity_se_error": 1.6327043916852801e-07,
+      "max_covariance_error_in_se_units": 3.2654090466892453e-07,
+      "median_analytical_gradient_seconds": 0.0003328219972900115,
+      "median_numerical_gradient_seconds": 0.015565665999019984,
+      "repeats": 9,
+      "n_outer": 2,
+      "n_gn": 22
+    },
+    {
+      "method": "ifgnls",
+      "point_results_bitwise_equal": true,
+      "max_scaled_gradient_error": 2.26442051689751e-10,
+      "max_relative_elasticity_se_error": 9.025202289958401e-07,
+      "max_covariance_error_in_se_units": 1.8050412728689369e-06,
+      "median_analytical_gradient_seconds": 0.0003454909965512343,
+      "median_numerical_gradient_seconds": 0.015697264003392775,
+      "repeats": 9,
+      "n_outer": 38,
+      "n_gn": 71
+    }
+  ],
+  "source_sha256": {
+    "src/pyquaidsce/inference.py": "7ed458cfc02b459444a5352a5596e4faa19389d09d08872d74b7b72b31291abc",
+    "src/pyquaidsce/_elasticity_derivatives.py": "e4cb9704732e5d76fe25a91c6d768ab2b0dd7e8dd71d8571a55425be005af94e",
+    "src/pyquaidsce/elasticities.py": "47b0978810246d592b8ca4e1ce1102d1afcbe1e2c7cda0b8e87969aceab1aad8",
+    "tools/check_elasticity_derivatives.py": "e318da7b1cdaaf39dd2db16ab3f98e292965ef88886d30371434364048f10b2c"
+  }
+}

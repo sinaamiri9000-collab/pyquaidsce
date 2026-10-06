@@ -1,0 +1,47 @@
+scenario,replication,seed,method,converged,seconds,n_outer,n_gn,inference_seconds,bread_condition,max_standardized_score,min_adjusted_share,error
+n500-corr05,90,2022384210,fgnls,False,0.3081528900002013,,,,,,,ValueError: analytical inference requires a full-rank estimating system
+n500-corr05,283,3724048510,fgnls,False,0.3603669650037773,,,,,,,ValueError: analytical inference requires a full-rank estimating system
+n500-corr05,20,86425170,ifgnls,False,0.3583137430032366,,,,,,,ValueError: analytical inference requires a converged estimate
+n500-corr05,90,2022384210,ifgnls,False,2.878017875002115,,,,,,,ValueError: analytical inference requires a converged estimate
+n500-corr05,156,4205371964,ifgnls,False,0.3701121670019347,,,,,,,ValueError: analytical inference requires a converged estimate
+n500-corr05,157,2385718105,ifgnls,False,0.4076694600007613,,,,,,,ValueError: analytical inference requires a converged estimate
+n500-corr05,197,3913059062,ifgnls,False,0.3644232660008129,,,,,,,ValueError: analytical inference requires a converged estimate
+n500-corr05,202,4101049640,ifgnls,False,0.3617379249990335,,,,,,,ValueError: analytical inference requires a converged estimate
+n500-corr05,271,4259969695,ifgnls,False,0.414662365001277,,,,,,,ValueError: analytical inference requires a converged estimate
+n500-corr05,283,3724048510,ifgnls,False,2.8665558059947216,,,,,,,ValueError: analytical inference requires a full-rank estimating system
+n500-corr05,367,646626684,ifgnls,False,0.362647936999565,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr05,9,2797008684,ifgnls,False,1.130993443999614,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr05,32,2946309945,ifgnls,False,0.7928747319965623,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr05,73,2280763755,ifgnls,False,1.197253640006238,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr05,129,425952217,ifgnls,False,1.0130804979999084,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr05,149,3707268722,ifgnls,False,1.0735636069948669,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr05,173,435046596,ifgnls,False,1.093460434996814,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr05,176,45709533,ifgnls,False,1.0880122020025738,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr05,330,2006953670,ifgnls,False,1.102743918003398,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr05,333,561757649,ifgnls,False,0.9998437620015466,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr05,347,2365073022,ifgnls,False,1.016926529999182,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr05,348,4008992096,ifgnls,False,1.0162699049978985,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr05,396,690070517,ifgnls,False,1.0362447100051213,,,,,,,ValueError: analytical inference requires a converged estimate
+n8000-corr05,101,3780989463,ifgnls,False,2.764983369001129,,,,,,,ValueError: analytical inference requires a converged estimate
+n8000-corr05,199,3888718431,ifgnls,False,3.235700386001554,,,,,,,ValueError: analytical inference requires a converged estimate
+n8000-corr05,227,3128915097,ifgnls,False,3.242640055002994,,,,,,,ValueError: analytical inference requires a converged estimate
+n8000-corr05,245,1822550443,ifgnls,False,2.972994775002008,,,,,,,ValueError: analytical inference requires a converged estimate
+n8000-corr05,303,1979401997,ifgnls,False,3.279559522001364,,,,,,,ValueError: analytical inference requires a converged estimate
+n8000-corr05,312,3905007557,ifgnls,False,2.820559735002462,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,4,2726815539,ifgnls,False,1.7444869980026851,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,27,2527246116,ifgnls,False,1.1109256019990426,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,35,3429298048,ifgnls,False,1.344408860997646,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,46,779057910,ifgnls,False,1.1143492470000638,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,50,858084988,ifgnls,False,1.0238999990033335,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,57,824088516,ifgnls,False,1.0677401259963517,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,63,3165418906,ifgnls,False,1.0573713460034924,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,84,3534132946,ifgnls,False,1.0896233930034214,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,111,1751203735,ifgnls,False,1.1500089729961471,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,152,1815412144,ifgnls,False,1.0364381529943785,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,199,3888718431,ifgnls,False,1.0749715019992436,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,203,1077291376,ifgnls,False,1.0194584619966918,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,212,2346961303,ifgnls,False,1.1692082779991324,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,213,2708630264,ifgnls,False,1.0191554929988342,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,252,2043854022,ifgnls,False,1.1318491239944706,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,309,3827038737,ifgnls,False,1.0393773000032525,,,,,,,ValueError: analytical inference requires a converged estimate
+n2000-corr0,311,4059841706,ifgnls,False,1.020625751996704,,,,,,,ValueError: analytical inference requires a converged estimate

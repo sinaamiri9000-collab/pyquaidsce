@@ -1,0 +1,135 @@
+{
+  "diagnostic_only": true,
+  "package_defaults_changed": false,
+  "selection": "largest income4 SE in each specified scenario",
+  "extreme_cases": [
+    {
+      "observations": 8000,
+      "correlation": 0.5,
+      "replication": 93,
+      "seed": 3893167207,
+      "tolerances": {},
+      "initial_nls_converged": true,
+      "initial_nls_n_gn": 3,
+      "initial_rho": [
+        -0.03473064756084728
+      ],
+      "income4": 1.0047330542444768,
+      "income4_se": 1.6060284767348136,
+      "min_adjusted_share": 0.02131409520903666,
+      "min_eigenvalue_initial_nls_information": 2.280808425945751e-05,
+      "min_eigenvalue_final_demand_information": 0.00013028862967931232,
+      "bread_condition": 465264.13364754966,
+      "max_standardized_score": 0.07492105283905157,
+      "n_outer": 2,
+      "n_gn": 5,
+      "final_rho": [
+        -0.05185277209805163
+      ],
+      "numerical_gradient_income4_se": 1.6060284767837043
+    },
+    {
+      "observations": 2000,
+      "correlation": 0.0,
+      "replication": 133,
+      "seed": 3165758075,
+      "tolerances": {},
+      "initial_nls_converged": true,
+      "initial_nls_n_gn": 6,
+      "initial_rho": [
+        0.37597447372496334
+      ],
+      "income4": 1.0767500997822754,
+      "income4_se": 4.117452188034088,
+      "min_adjusted_share": 0.020226067787425243,
+      "min_eigenvalue_initial_nls_information": 2.7297603562610243e-05,
+      "min_eigenvalue_final_demand_information": -0.000218033557477489,
+      "bread_condition": 233297.50151452096,
+      "max_standardized_score": 0.0949103196998185,
+      "n_outer": 2,
+      "n_gn": 8,
+      "final_rho": [
+        0.4646873283057084
+      ],
+      "numerical_gradient_income4_se": 4.117452188062439
+    }
+  ],
+  "existing_tolerance_probe": [
+    {
+      "observations": 8000,
+      "correlation": 0.5,
+      "replication": 93,
+      "seed": 3893167207,
+      "tolerances": {},
+      "initial_nls_converged": true,
+      "initial_nls_n_gn": 3,
+      "initial_rho": [
+        -0.03473064756084728
+      ],
+      "income4": 1.0047330542444768,
+      "income4_se": 1.6060284767348136,
+      "min_adjusted_share": 0.02131409520903666,
+      "min_eigenvalue_initial_nls_information": 2.280808425945751e-05,
+      "min_eigenvalue_final_demand_information": 0.00013028862967931232,
+      "bread_condition": 465264.13364754966,
+      "max_standardized_score": 0.07492105283905157,
+      "n_outer": 2,
+      "n_gn": 5,
+      "final_rho": [
+        -0.05185277209805163
+      ],
+      "numerical_gradient_income4_se": 1.6060284767837043
+    },
+    {
+      "observations": 8000,
+      "correlation": 0.5,
+      "replication": 93,
+      "seed": 3893167207,
+      "tolerances": {
+        "param_tol": 1e-06,
+        "objective_tol": 1e-08,
+        "gn_tol": 1e-06
+      },
+      "initial_nls_converged": true,
+      "initial_nls_n_gn": 10,
+      "initial_rho": [
+        -0.081168664308282
+      ],
+      "income4": 1.0090719546584217,
+      "income4_se": 0.502933560689074,
+      "min_adjusted_share": 0.021331657921038874,
+      "min_eigenvalue_initial_nls_information": 2.2176686556853536e-05,
+      "min_eigenvalue_final_demand_information": 0.00037381076063507145,
+      "bread_condition": 149695.45714642396,
+      "max_standardized_score": 0.04938775369850876,
+      "n_outer": 2,
+      "n_gn": 12,
+      "final_rho": [
+        -0.08337365493732282
+      ]
+    },
+    {
+      "observations": 8000,
+      "correlation": 0.5,
+      "replication": 93,
+      "seed": 3893167207,
+      "tolerances": {
+        "param_tol": 1e-08,
+        "objective_tol": 1e-10,
+        "gn_tol": 1e-08
+      },
+      "initial_nls_converged": false,
+      "initial_nls_n_gn": 300,
+      "initial_rho": [
+        -0.07428930918604666
+      ],
+      "error": "ValueError: FGNLS analytical inference requires its initial NLS stage to converge"
+    }
+  ],
+  "source_sha256": {
+    "src/pyquaidsce/inference.py": "7ed458cfc02b459444a5352a5596e4faa19389d09d08872d74b7b72b31291abc",
+    "src/pyquaidsce/_elasticity_derivatives.py": "e4cb9704732e5d76fe25a91c6d768ab2b0dd7e8dd71d8571a55425be005af94e",
+    "tools/simulate_separate_participation.py": "77a99d4d7bda086cd1a4e4322ac6f73de6760c128b2ff98c8246d077c5138cf2",
+    "tools/diagnose_separate_participation.py": "8f2050f89f926e1bb4446c19e719fe08fdb4651e2c1a7a2f95a03f3e75b19251"
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "dataset": "bench/small4.dta",
+  "dataset_sha256": "20e2a2b15e7b55eebb07ea744b7f27ee294e78e24e8c4b2e6aa4fd9848ae37c1",
+  "source_commit": "cf4987e4f7744c38342e81930d5302aedc912f26",
+  "source_has_local_changes": false,
+  "source_sha256": {
+    "src/pyquaidsce/inference.py": "298b402f43e8ca1c3576db9abc51699d6b7a5856d6ae3777c66ee90c4b2de678",
+    "src/pyquaidsce/estimator.py": "617c06a6655aa4b7237fc5345ab86e9cf99bb4e58abb8d44544a31693e4cb3ef",
+    "src/pyquaidsce/nlsur.py": "47e334e75424d31394a64e3b767cb7b7bcea497b3f061ffc6a2d41d951728b9c",
+    "src/pyquaidsce/probit.py": "469a4acfab294e844fb5d35f79aef16a2ecc118ab92259bbed7973d251902e66",
+    "src/pyquaidsce/elasticities.py": "47b0978810246d592b8ca4e1ce1102d1afcbe1e2c7cda0b8e87969aceab1aad8"
+  },
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "pandas": "2.2.3",
+  "common_options": {
+    "shares": [
+      "sw1",
+      "sw2",
+      "sw4",
+      "sw9"
+    ],
+    "prices": [
+      "p1",
+      "p2",
+      "p4",
+      "p9"
+    ],
+    "expenditure": "total",
+    "demographics": [
+      "x1",
+      "x2"
+    ],
+    "anot": 10.0,
+    "start": "zero",
+    "algorithm": "gn",
+    "blas_threads": 1,
+    "verbose": false
+  },
+  "bootstrap_reps": 400,
+  "n_jobs": 2,
+  "rep_timeout": 60.0,
+  "mp_context": "fork",
+  "cases": [
+    {
+      "case": "quadratic-ifgnls",
+      "converged": true,
+      "nobs": 2000,
+      "n_outer": 38,
+      "n_gn": 71,
+      "point_seconds": 0.40972184899874264,
+      "analytical_fit_seconds": 0.47358642000108375,
+      "inference_seconds": 0.05728416399870184,
+      "point_estimates_bitwise_equal": true,
+      "bread_condition": 338101525.76515263,
+      "max_standardized_score": 2.2038545932884644e-08,
+      "notes": [
+        "Diagnostic: 41 fitted share values are negative; values were not clipped."
+      ],
+      "bootstrap_seconds": 182.45438415399985,
+      "bootstrap_requested": 400,
+      "bootstrap_successful": 388,
+      "bootstrap_failures": 12,
+      "bootstrap_failure_records": [
+        "rep 1: RuntimeError: second-stage estimator did not converge",
+        "rep 26: TimeoutError: bootstrap replication exceeded its time limit",
+        "rep 39: RuntimeError: second-stage estimator did not converge",
+        "rep 94: RuntimeError: second-stage estimator did not converge",
+        "rep 99: RuntimeError: second-stage estimator did not converge",
+        "rep 127: RuntimeError: second-stage estimator did not converge",
+        "rep 136: RuntimeError: second-stage estimator did not converge",
+        "rep 141: RuntimeError: second-stage estimator did not converge",
+        "rep 171: RuntimeError: second-stage estimator did not converge",
+        "rep 176: RuntimeError: second-stage estimator did not converge",
+        "rep 239: RuntimeError: second-stage estimator did not converge",
+        "rep 269: RuntimeError: second-stage estimator did not converge"
+      ],
+      "median_se_ratio": 0.9536392269551559,
+      "min_se_ratio": 0.14826559188032243,
+      "max_se_ratio": 1.3114863906735696
+    },
+    {
+      "case": "quadratic-nls",
+      "converged": true,
+      "nobs": 2000,
+      "n_outer": 1,
+      "n_gn": 15,
+      "point_seconds": 0.10521232500104816,
+      "analytical_fit_seconds": 0.1511157450004248,
+      "inference_seconds": 0.05053359899829957,
+      "point_estimates_bitwise_equal": true,
+      "bread_condition": 13323113.098264078,
+      "max_standardized_score": 0.04818836697329339,
+      "notes": [
+        "Diagnostic: 6 fitted share values are negative; values were not clipped."
+      ],
+      "bootstrap_seconds": 30.645141438999417,
+      "bootstrap_requested": 400,
+      "bootstrap_successful": 399,
+      "bootstrap_failures": 1,
+      "bootstrap_failure_records": [
+        "rep 235: RuntimeError: second-stage estimator did not converge"
+      ],
+      "median_se_ratio": 0.873003871583899,
+      "min_se_ratio": 0.5117562329467236,
+      "max_se_ratio": 1.0387589035416935
+    },
+    {
+      "case": "quadratic-fgnls",
+      "converged": true,
+      "nobs": 2000,
+      "n_outer": 2,
+      "n_gn": 22,
+      "point_seconds": 0.1498119569987466,
+      "analytical_fit_seconds": 0.3155160189999151,
+      "inference_seconds": 0.17176992100212374,
+      "point_estimates_bitwise_equal": true,
+      "bread_condition": 59632391.55654554,
+      "max_standardized_score": 0.17190990675755086,
+      "notes": [],
+      "bootstrap_seconds": 36.08277512700079,
+      "bootstrap_requested": 400,
+      "bootstrap_successful": 400,
+      "bootstrap_failures": 0,
+      "bootstrap_failure_records": [],
+      "median_se_ratio": 0.996900967852883,
+      "min_se_ratio": 0.35536231961770215,
+      "max_se_ratio": 1.1766427349127857
+    },
+    {
+      "case": "linear-ifgnls",
+      "converged": true,
+      "nobs": 2000,
+      "n_outer": 28,
+      "n_gn": 65,
+      "point_seconds": 0.23116358900006162,
+      "analytical_fit_seconds": 0.27143830800196156,
+      "inference_seconds": 0.03868212700035656,
+      "point_estimates_bitwise_equal": true,
+      "bread_condition": 5957330.252755473,
+      "max_standardized_score": 1.7899553792440735e-07,
+      "notes": [
+        "Diagnostic: 31 fitted share values are negative; values were not clipped."
+      ],
+      "bootstrap_seconds": 79.72624824499871,
+      "bootstrap_requested": 400,
+      "bootstrap_successful": 393,
+      "bootstrap_failures": 7,
+      "bootstrap_failure_records": [
+        "rep 71: RuntimeError: second-stage estimator did not converge",
+        "rep 256: RuntimeError: second-stage estimator did not converge",
+        "rep 258: RuntimeError: second-stage estimator did not converge",
+        "rep 273: RuntimeError: second-stage estimator did not converge",
+        "rep 293: RuntimeError: second-stage estimator did not converge",
+        "rep 363: RuntimeError: second-stage estimator did not converge",
+        "rep 379: RuntimeError: second-stage estimator did not converge"
+      ],
+      "median_se_ratio": 1.099549549461813,
+      "min_se_ratio": 0.6181137391242134,
+      "max_se_ratio": 1.248249581906357
+    },
+    {
+      "case": "uncensored-ifgnls",
+      "converged": true,
+      "nobs": 2000,
+      "n_outer": 15,
+      "n_gn": 23,
+      "point_seconds": 0.11216977599906386,
+      "analytical_fit_seconds": 0.13924485299867229,
+      "inference_seconds": 0.02573292300075991,
+      "point_estimates_bitwise_equal": true,
+      "bread_condition": 1160867.24042687,
+      "max_standardized_score": 1.214360712324797e-07,
+      "notes": [
+        "Diagnostic: 9 fitted share values are negative; values were not clipped."
+      ]
+    }
+  ]
+}

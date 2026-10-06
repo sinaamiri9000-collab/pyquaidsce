@@ -1,0 +1,36 @@
+[
+  {
+    "label": "default",
+    "replication": 385,
+    "seed": 489629232,
+    "converged": true,
+    "rho": 0.6614388170189699,
+    "income_4": 1.1931309555108753,
+    "income_4_se": 4.740492438275341,
+    "n_gn": 5,
+    "max_standardized_score": 0.07086509018619196,
+    "bread_condition": 1051550.2115005367,
+    "min_theta_information_eigenvalue": -2.3098667500033343e-07,
+    "seconds": 0.24583355600043433,
+    "options": {}
+  },
+  {
+    "label": "accuracy_probe",
+    "replication": 385,
+    "seed": 489629232,
+    "converged": true,
+    "rho": 1.0749674335074733,
+    "income_4": 1.2070937859423507,
+    "income_4_se": 0.07019062385987507,
+    "n_gn": 11,
+    "max_standardized_score": 0.00041038574957585325,
+    "bread_condition": 9364.201966657682,
+    "min_theta_information_eigenvalue": 2.2486372400998766e-05,
+    "seconds": 0.2005057759997726,
+    "options": {
+      "param_tol": 1e-08,
+      "objective_tol": 1e-10,
+      "gn_tol": 1e-08
+    }
+  }
+]

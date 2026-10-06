@@ -1,0 +1,39 @@
+{
+  "observations": 1000,
+  "repetitions": 500,
+  "seed": 17042,
+  "true_coefficient": 1.4,
+  "true_population_mean_target": 2.6549661008539784,
+  "coefficient": {
+    "empirical_sd": 0.09681832092282636,
+    "bias": -0.0021081117418870754,
+    "methods": {
+      "hardin": {
+        "mean_se": 0.10031177311024873,
+        "coverage_95": 0.938
+      },
+      "murphy_topel": {
+        "mean_se": 0.1002783067244264,
+        "coverage_95": 0.938
+      },
+      "conditional": {
+        "mean_se": 0.10639703289261601,
+        "coverage_95": 0.96
+      }
+    }
+  },
+  "mean_target": {
+    "empirical_sd": 0.19311692797242774,
+    "bias": -0.004078306661303266,
+    "methods": {
+      "hardin": {
+        "mean_se": 0.20558969598947158,
+        "coverage_95": 0.958
+      },
+      "murphy_topel": {
+        "mean_se": 0.20567320260328864,
+        "coverage_95": 0.96
+      }
+    }
+  }
+}

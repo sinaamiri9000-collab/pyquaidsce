@@ -1,0 +1,69 @@
+{
+  "seed": 17000,
+  "reps": 400,
+  "timeout": 60.0,
+  "n_jobs": 2,
+  "options": {
+    "shares": [
+      "sw1",
+      "sw2",
+      "sw4",
+      "sw9"
+    ],
+    "prices": [
+      "p1",
+      "p2",
+      "p4",
+      "p9"
+    ],
+    "expenditure": "total",
+    "demographics": [
+      "x1",
+      "x2"
+    ],
+    "anot": 10.0,
+    "method": "ifgnls",
+    "start": "zero",
+    "algorithm": "gn",
+    "blas_threads": 1,
+    "verbose": false
+  },
+  "inference_source_sha256": "298b402f43e8ca1c3576db9abc51699d6b7a5856d6ae3777c66ee90c4b2de678",
+  "point_adjusted_shares": [
+    0.06101749498922729,
+    0.3172574817634972,
+    0.35842508447331684,
+    0.2669134462383931
+  ],
+  "point_income_1": 1.0773105326341348,
+  "modes": {
+    "zero": {
+      "successful": 388,
+      "income_1_se": 1.7307513038375382,
+      "income_1_quantiles": [
+        -6.893766294944217,
+        -1.005922380043671,
+        1.097224728806073,
+        3.708021701670083,
+        30.29996790719555
+      ],
+      "median_se_ratio": 0.9536392269551559,
+      "min_se_ratio": 0.14826559188032243,
+      "max_se_ratio": 1.3114863906735696
+    },
+    "warm": {
+      "successful": 390,
+      "income_1_se": 1.722824038190664,
+      "income_1_quantiles": [
+        -6.893777197054104,
+        -0.9916057566554558,
+        1.083013461768435,
+        3.5090782448551234,
+        30.300499212694024
+      ],
+      "median_se_ratio": 0.9490296358565156,
+      "min_se_ratio": 0.14894780939474758,
+      "max_se_ratio": 1.3133715213589683
+    }
+  }
+}

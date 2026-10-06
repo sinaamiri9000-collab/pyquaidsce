@@ -1,0 +1,105 @@
+{
+  "observations": 2000,
+  "repetitions": 400,
+  "seed": 17043,
+  "methods": {
+    "nls": {
+      "successful": 400,
+      "requested": 400,
+      "median_elasticity_se_ratio": 1.0635976168601902,
+      "min_elasticity_se_ratio": 1.0082306795649765,
+      "max_elasticity_se_ratio": 1.2484111867949526,
+      "median_elasticity_coverage": 0.9525,
+      "min_elasticity_coverage": 0.9025,
+      "max_elasticity_coverage": 0.97
+    }
+  },
+  "options": {
+    "shares": [
+      "w1",
+      "w2",
+      "w3",
+      "w4"
+    ],
+    "lnprices": [
+      "lp1",
+      "lp2",
+      "lp3",
+      "lp4"
+    ],
+    "lnexpenditure": "lm",
+    "demographics": [
+      "z"
+    ],
+    "anot": 1.0,
+    "start": "zero",
+    "algorithm": "gn",
+    "blas_threads": 1,
+    "verbose": false,
+    "param_tol": 1e-08,
+    "objective_tol": 1e-10,
+    "gn_tol": 1e-08
+  },
+  "timeout": 60,
+  "n_jobs": 2,
+  "true_free_parameters": [
+    0.2,
+    0.25,
+    0.3,
+    0.25,
+    0.04,
+    -0.02,
+    0.01,
+    -0.03,
+    -0.018750000000000003,
+    0.00625,
+    0.00625,
+    -0.018750000000000003,
+    0.00625,
+    -0.018750000000000003,
+    0.006,
+    -0.002,
+    0.003,
+    -0.007,
+    0.01,
+    -0.005,
+    -0.003,
+    -0.002,
+    0.005,
+    -0.003,
+    0.002,
+    0.1
+  ],
+  "true_tau_per_good": [
+    -0.6,
+    0.5,
+    -0.3,
+    0.4,
+    0.8,
+    0.25,
+    -1.6
+  ],
+  "purchased_share_lower_bound": [
+    0.022155388527342286,
+    0.13151517679807279,
+    0.203936856899824,
+    0.08653202712066739
+  ],
+  "population_mean_share": [
+    0.1302779770896972,
+    0.11039954588425731,
+    0.1567106297805242,
+    0.10261160827073632
+  ],
+  "population_mean_phi": [
+    0.36650452594699007,
+    0.36650452594699007,
+    0.36650452594699007,
+    0.36650452594699007
+  ],
+  "max_target_integration_difference": 5.976757506687136e-07,
+  "source_sha256": {
+    "src/pyquaidsce/inference.py": "298b402f43e8ca1c3576db9abc51699d6b7a5856d6ae3777c66ee90c4b2de678",
+    "tools/simulate_analytical_quaids.py": "569834b99ae6b50c713d5e3bf40d5d653bed66992abc564396a8336dca336d8d"
+  }
+}

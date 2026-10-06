@@ -1,0 +1,93 @@
+[
+  {
+    "rep": 14,
+    "success": true,
+    "objective": 0.005981312791655108,
+    "min_margin": 0.0,
+    "max_margin": 0.06728869111442476
+  },
+  {
+    "rep": 20,
+    "success": true,
+    "objective": 0.0060570168045393355,
+    "min_margin": 0.0,
+    "max_margin": 0.058109798428665746
+  },
+  {
+    "rep": 23,
+    "success": true,
+    "objective": 0.006051331460828968,
+    "min_margin": 0.0,
+    "max_margin": 0.06885813805765394
+  },
+  {
+    "rep": 34,
+    "success": true,
+    "objective": 0.0059568944691507884,
+    "min_margin": 0.0,
+    "max_margin": 0.06757373783994859
+  },
+  {
+    "rep": 38,
+    "success": true,
+    "objective": 0.005977204950257142,
+    "min_margin": 0.0,
+    "max_margin": 0.0596766732268317
+  },
+  {
+    "rep": 39,
+    "success": true,
+    "objective": 0.0060231460368964556,
+    "min_margin": 0.0,
+    "max_margin": 0.06860700142303089
+  },
+  {
+    "rep": 42,
+    "success": true,
+    "objective": 0.006026641395997788,
+    "min_margin": 0.0,
+    "max_margin": 0.06750393894338988
+  },
+  {
+    "rep": 61,
+    "success": true,
+    "objective": 0.006006422209514115,
+    "min_margin": 0.0,
+    "max_margin": 0.06005100373640543
+  },
+  {
+    "rep": 66,
+    "success": true,
+    "objective": 0.006002824653890208,
+    "min_margin": 0.0,
+    "max_margin": 0.06798484956479177
+  },
+  {
+    "rep": 69,
+    "success": true,
+    "objective": 0.005999022577802867,
+    "min_margin": 0.0,
+    "max_margin": 0.06969180519919317
+  },
+  {
+    "rep": 70,
+    "success": true,
+    "objective": 0.006020033656218312,
+    "min_margin": 0.0,
+    "max_margin": 0.06633125210779055
+  },
+  {
+    "rep": 95,
+    "success": true,
+    "objective": 0.006007908157925915,
+    "min_margin": 0.0,
+    "max_margin": 0.06756891717021961
+  },
+  {
+    "rep": 96,
+    "success": true,
+    "objective": 0.006016540303220737,
+    "min_margin": 0.0,
+    "max_margin": 0.05857791861290061
+  }
+]

@@ -162,9 +162,10 @@ in two consecutive iterations; the final inner solve must also converge.
 The Python option `analytic=True` computes joint sandwich and delta-method
 inference after the point estimate. It uses the estimating-equation framework
 of [Hardin (2002)](https://www.stata-journal.com/article.html?article=st0018).
-Observations must be independent, parameters identified, and the estimating
-equations solved to adequate numerical accuracy. `ivexp`, control functions,
-and survey-design corrections are not yet supported.
+Observations, or clusters supplied through `cluster`, must be independent,
+parameters identified, and the estimating equations solved to adequate
+numerical accuracy. `ivexp`, control functions, survey weights, stratification,
+and finite-population corrections are not yet supported by analytical inference.
 
 For IFGNLS, the parameter vector $\zeta$ contains active Probit coefficients,
 free demand parameters, and the distinct entries of $\Sigma$. Its observation
@@ -194,6 +195,21 @@ This includes uncertainty in observed means and in the means of the Probit
 CDF, PDF, and linear index. Elasticity derivatives use analytical product,
 chain, and quotient rules, checked against independent central differences
 of the existing function.
+
+With `cluster="column"`, let $S_g=\sum_{t\in g}(\psi_t-\bar\psi)$ and
+$I_g=\sum_{t\in g}\varphi_t$, where $\varphi_t$ contains the joint parameter
+and elasticity influences above. The bread and point estimates are unchanged;
+the meat becomes $B_c=(c_G/N)\sum_g S_gS_g'$ and the reported covariance is
+$\widehat V_c=(c_G/N^2)\sum_g I_gI_g'$. By default $c_G=G/(G-1)$; use
+`cluster_correction=False` for $c_G=1$ (CR0). Clusters may have unequal sizes.
+Missing cluster labels in the estimation sample and fewer than two clusters
+raise an error. Inference uses the existing large-sample normal intervals.
+With `reps>0`, the same `cluster` option draws $G$ whole clusters with
+replacement; Probits, demand estimates and sample means are rebuilt each time.
+Prepared price inputs are resampled with their households, without rebuilding
+their generating equations. Neither method includes uncertainty from an
+external price-construction stage or represents a full survey-design correction.
+
 The delta approximation is local: strongly nonlinear elasticities, including
 those with a near-zero adjusted share in the denominator, can have S.E.s and
 confidence-interval coverage that differ materially from finite-sample results.
@@ -201,6 +217,8 @@ confidence-interval coverage that differ materially from finite-sample results.
 `res.analytical` provides the covariance and all three elasticity S.E. arrays.
 Its `max_standardized_score` reports the largest absolute mean score divided
 by its estimated sampling S.E.; it is a diagnostic, not a stopping rule.
+`n_clusters`, `covariance_type`, and `correction_factor` identify the covariance
+calculation used.
 
 ---
 

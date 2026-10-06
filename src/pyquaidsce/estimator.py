@@ -194,6 +194,8 @@ def quaidsce(
     mp_context: Optional[str] = None,
     rep_timeout: Optional[float] = None,
     analytic: bool = False,
+    cluster: Optional[str] = None,
+    cluster_correction: bool = True,
     log=None,
     _deadline: Optional[float] = None,
 ) -> QuaidsceResults:
@@ -223,8 +225,14 @@ def quaidsce(
     analytic : bool, default False
         Compute joint estimating-equation covariance and delta-method
         elasticity standard errors after estimation. Includes Probit and
-        sample-mean uncertainty. Requires independent observations; ivexp
+        sample-mean uncertainty. Requires independent observations or clusters; ivexp
         and control functions are not yet supported.
+    cluster : str or None, default None
+        Column identifying independent clusters. With ``analytic=True``, sum
+        joint influence functions within clusters. With ``reps>0``, resample
+        whole clusters. Point estimates are unchanged.
+    cluster_correction : bool, default True
+        Multiply analytical cluster covariance by G/(G-1); False uses CR0.
     control_function : column containing an externally generated reduced-form
         residual. It enters the latent share as ``cfcoef_i * residual``.
     ivexp : excluded instrument column(s) for endogenous log expenditure. The
@@ -271,6 +279,13 @@ def quaidsce(
                          gn_tol=gn_tol, outer_param_tol=outer_param_tol)
     if not isinstance(analytic, (bool, np.bool_)):
         raise ValueError("analytic must be True or False")
+    if not isinstance(cluster_correction, (bool, np.bool_)):
+        raise ValueError("cluster_correction must be True or False")
+    if cluster is not None:
+        if not isinstance(cluster, str) or cluster not in data:
+            raise ValueError("cluster must name an existing data column")
+        if not analytic and not (reps and reps > 0):
+            raise ValueError("cluster requires analytic=True or reps>0")
     if rep_timeout is not None:
         if not np.isfinite(rep_timeout) or float(rep_timeout) <= 0:
             raise ValueError("rep_timeout must be a finite positive number")
@@ -430,6 +445,11 @@ def quaidsce(
     W = _as_matrix(data, shares)[touse]
     if W.shape[0] == 0:
         raise ValueError("no complete observations remain in the estimation sample")
+    clusters, n_clusters = None, None
+    if cluster is not None:
+        from ._clusters import cluster_codes
+        clusters = np.asarray(data[cluster])[touse]
+        _, n_clusters = cluster_codes(clusters, len(W))
     if np.any(W < 0):
         raise ValueError("expenditure shares must be nonnegative")
     if prices is not None:
@@ -702,6 +722,7 @@ def quaidsce(
         reduced_form=reduced_form,
         n_outer=nl.n_outer, n_gn=nl.n_gn, converged=nl.converged,
         notes=notes,
+        cluster_name=cluster, n_clusters=n_clusters,
     )
 
     # Optional inference is computed after the unchanged point estimator.
@@ -730,6 +751,7 @@ def quaidsce(
             res, d, selection_design if censor else None,
             theta_nls=theta_nls, chunk=chunk, blas_threads=blas_threads,
             deadline=_deadline,
+            clusters=clusters, cluster_correction=cluster_correction,
         )
         res.analytical.elapsed_seconds = time.perf_counter() - inference_started
         res.V = res.analytical.covariance.copy()
@@ -760,6 +782,7 @@ def quaidsce(
             reps=int(reps), seed=seed, n_jobs=n_jobs,
             blas_threads=blas_threads, touse=touse, verbose=verbose,
             mp_context=mp_context, rep_timeout=rep_timeout,
+            cluster=cluster,
         )
         res.V_analytic = res.V.copy()
         res.V = res.boot.V.copy()

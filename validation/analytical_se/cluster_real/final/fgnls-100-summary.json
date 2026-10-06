@@ -1,0 +1,141 @@
+{
+  "method": "fgnls",
+  "reps_requested": 100,
+  "reps_ok": 87,
+  "failures": [
+    {
+      "rep": 14,
+      "seed": 3199367780,
+      "nobs": 9755,
+      "converged": false,
+      "seconds": 0.5955230019972078,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 20,
+      "seed": 94237322,
+      "nobs": 9724,
+      "converged": false,
+      "seconds": 0.43295212200609967,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 23,
+      "seed": 586056106,
+      "nobs": 9675,
+      "converged": false,
+      "seconds": 0.8210109690044192,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 34,
+      "seed": 2170164604,
+      "nobs": 9767,
+      "converged": false,
+      "seconds": 0.6849094149947632,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 38,
+      "seed": 472703130,
+      "nobs": 9743,
+      "converged": false,
+      "seconds": 0.4454262149956776,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 39,
+      "seed": 1826390872,
+      "nobs": 9803,
+      "converged": false,
+      "seconds": 0.7488643519973266,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 42,
+      "seed": 837072290,
+      "nobs": 9721,
+      "converged": false,
+      "seconds": 0.56698186200083,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 61,
+      "seed": 1616930488,
+      "nobs": 9735,
+      "converged": false,
+      "seconds": 0.41777002399612684,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 66,
+      "seed": 449734248,
+      "nobs": 9730,
+      "converged": false,
+      "seconds": 0.8367444089963101,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 69,
+      "seed": 1291280271,
+      "nobs": 9696,
+      "converged": false,
+      "seconds": 0.4331149829959031,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 70,
+      "seed": 1678116656,
+      "nobs": 9721,
+      "converged": false,
+      "seconds": 0.5664574559996254,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 95,
+      "seed": 2778985735,
+      "nobs": 9689,
+      "converged": false,
+      "seconds": 0.4454096679983195,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    },
+    {
+      "rep": 96,
+      "seed": 245703570,
+      "nobs": 9789,
+      "converged": false,
+      "seconds": 0.8001629889986361,
+      "error": "RuntimeError: first-stage probit 2 did not converge"
+    }
+  ],
+  "bootstrap_seconds": 39.723241649000556,
+  "elasticity_se_ratios": {
+    "all": {
+      "median": 1.0839117082952443,
+      "min": 0.8629465882101625,
+      "max": 1.3860804773013584
+    },
+    "income": {
+      "median": 1.1683725494990145,
+      "min": 0.8923921738343027,
+      "max": 1.3860804773013584
+    },
+    "uncompensated": {
+      "median": 1.0804314189576554,
+      "min": 0.8629465882101625,
+      "max": 1.2153118412525525
+    },
+    "compensated": {
+      "median": 1.077077173830253,
+      "min": 0.8634074829594732,
+      "max": 1.2106219712158182
+    }
+  },
+  "point_outer": 2,
+  "point_gn": 27,
+  "inference_seconds": 0.5864494249981362,
+  "score_diagnostic": 0.5097252239660565,
+  "bread_condition": 21849942.028328616,
+  "bootstrap_outer_median": 2.0,
+  "bootstrap_gn_median": 28.0
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "group": 6,
+    "converged": true,
+    "iterations": 11,
+    "max_abs_coefficient": 14.926680610391314,
+    "separation_objective": -0.0,
+    "min_margin": 0.0,
+    "max_margin": 0.0
+  },
+  {
+    "group": 7,
+    "converged": true,
+    "iterations": 11,
+    "max_abs_coefficient": 6.41511258775473,
+    "separation_objective": -0.0,
+    "min_margin": 0.0,
+    "max_margin": 0.0
+  },
+  {
+    "group": 8,
+    "converged": true,
+    "iterations": 9,
+    "max_abs_coefficient": 27.50944141391556,
+    "separation_objective": -0.0,
+    "min_margin": 0.0,
+    "max_margin": 0.0
+  },
+  {
+    "group": 9,
+    "converged": true,
+    "iterations": 11,
+    "max_abs_coefficient": 16.224076214914998,
+    "separation_objective": -0.0,
+    "min_margin": 0.0,
+    "max_margin": 0.0
+  }
+]

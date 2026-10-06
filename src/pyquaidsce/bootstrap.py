@@ -17,6 +17,9 @@ not converge, a singular residual covariance, or second-stage nonconvergence)
 are dropped, as Stata drops replications that error out. Python and Stata use
 different random-number generators, so equal seeds do not imply identical
 resamples.
+
+With ``cluster``, draw G complete clusters with replacement instead of N
+individual observations. Prepared price inputs travel with each household.
 """
 
 from __future__ import annotations
@@ -28,6 +31,8 @@ from typing import List, Optional
 
 import numpy as np
 
+from ._clusters import cluster_codes, cluster_rows, resample_indices
+
 
 @dataclass
 class BootResult:
@@ -36,6 +41,8 @@ class BootResult:
     b_star: np.ndarray  # (reps_ok, k)
     se: np.ndarray  # (k,)
     failures: List[str] = field(default_factory=list)
+    cluster_name: Optional[str] = None
+    n_clusters: Optional[int] = None
 
     @property
     def V(self) -> np.ndarray:
@@ -138,7 +145,7 @@ def _one_rep(task):
     rep_timeout = _WORK.get("rep_timeout")
     n = len(df)
     rng = np.random.default_rng(rep_seed)
-    idx = rng.integers(0, n, size=n)
+    idx = resample_indices(rng, n, _WORK.get("cluster_rows"))
     boot_df = df.iloc[idx].reset_index(drop=True)
     try:
         deadline = (
@@ -299,6 +306,7 @@ def bootstrap(
     verbose: bool = True,
     mp_context: Optional[str] = None,
     rep_timeout: Optional[float] = None,
+    cluster: Optional[str] = None,
 ) -> BootResult:
     df = data.loc[touse].reset_index(drop=True) if hasattr(data, "loc") else data
     kw = dict(
@@ -337,7 +345,12 @@ def bootstrap(
         chunk=chunk,
         blas_threads=blas_threads,
     )
-    payload = {"df": df, "kw": kw, "rep_timeout": rep_timeout}
+    groups, n_clusters = None, None
+    if cluster is not None:
+        codes, n_clusters = cluster_codes(np.asarray(df[cluster]), len(df))
+        groups = cluster_rows(codes, n_clusters)
+    payload = {"df": df, "kw": kw, "rep_timeout": rep_timeout,
+               "cluster_rows": groups}
 
     ss = np.random.SeedSequence(seed)
     seeds = [int(x) for x in ss.generate_state(reps, dtype=np.uint32)]
@@ -433,4 +446,5 @@ def bootstrap(
     fails = [f"rep {i}: {err}" for i, err in fail_records]
     se = B.std(axis=0, ddof=1)
     return BootResult(reps_requested=reps, reps_ok=B.shape[0], b_star=B,
-                      se=se, failures=fails)
+                      se=se, failures=fails, cluster_name=cluster,
+                      n_clusters=n_clusters)

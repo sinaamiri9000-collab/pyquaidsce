@@ -69,6 +69,8 @@ is unknown to the package.
 |---|---|---|---|
 | `vce_sigma` | `str` | `"objective"` | FGNLS/IFGNLS covariance convention: `"objective"` (used in the final minimization) or `"final"` (recomputed from final residuals). |
 | `analytic` | `bool` | `False` | Python: compute joint sandwich covariance and delta-method elasticity S.E.s, including Probit and sample-mean uncertainty. Supports NLS, FGNLS, and IFGNLS without `ivexp` or control functions. |
+| `cluster` | `str` or `None` | `None` | Python: cluster-ID column for analytical covariance (`analytic=True`) and whole-cluster bootstrap (`reps>0`). |
+| `cluster_correction` | `bool` | `True` | Multiply analytical cluster covariance by `G/(G-1)`; `False` uses CR0. |
 
 With `analytic=True`, the joint sandwich replaces the conditional covariance;
 `vce_sigma` still controls only the original conditional calculation. See
@@ -144,6 +146,7 @@ The object returned by `quaidsce(...)` contains all estimated parameters, standa
 | `res.probits` | `List[ProbitResult]` | `e()` from each probit | Individual Probit estimation result objects. |
 | `res.elas` | `Elasticities` | `e(elas_*)` | Demand elasticities evaluated at sample means. |
 | `res.analytical` | `AnalyticalInference` or `None` | — | Joint covariance and elasticity inference when `analytic=True`. Provides `income_se`, `uncompensated_se`, `compensated_se`, and `elasticity_covariance`, including in uncensored models. |
+| `res.cluster_name`, `res.n_clusters` | `str` / `int` or `None` | — | Cluster column and number of clusters in the estimation sample, when specified. |
 | `res.llf` | `float` | `e(ll)` | Gaussian log-likelihood value. |
 | `res.sigma` | `np.ndarray` | `e(Sigma)` | Residual covariance matrix ($(n \times n)$ or $(n-1 \times n-1)$). |
 | `res.nobs` | `int` | `e(N)` | Number of observations in the estimation sample. |

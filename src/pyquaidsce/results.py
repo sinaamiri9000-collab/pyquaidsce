@@ -62,6 +62,8 @@ class QuaidsceResults:
     ivexp_names: List[str] = field(default_factory=list)
     reduced_form: Optional["ExpenditureReducedForm"] = None
     analytical: Optional["AnalyticalInference"] = None
+    cluster_name: Optional[str] = None
+    n_clusters: Optional[int] = None
 
     # ------------------------------------------------------------------ #
     @property
@@ -124,6 +126,8 @@ class QuaidsceResults:
             f"Alpha_0                = {g(self.anot, 10):>10}",
             f"Log-likelihood         = {g(self.llf, 10):>10}",
         ]
+        if self.n_clusters is not None:
+            head.append(f"Number of clusters     = {g(self.n_clusters, 10):>10}")
         if self.boot is not None:
             head.append(
                 "Bootstrap replications = "

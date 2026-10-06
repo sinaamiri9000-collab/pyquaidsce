@@ -1,0 +1,54 @@
+{
+  "nobs": 9744,
+  "n_clusters": 1792,
+  "seed": 20261006,
+  "checkpoints": [
+    50,
+    100
+  ],
+  "input_sha256": "073dc7c24022f5cbf985dc47cbb5bff51696c86a9917d280f34fbbef3e68fa71",
+  "prices_fixed": true,
+  "ivexp": null,
+  "control_function": null,
+  "cluster_correction": "G/(G-1)",
+  "settings": {
+    "shares": [
+      "share4_g6",
+      "share4_g7",
+      "share4_g8",
+      "share4_g9"
+    ],
+    "prices": [
+      "p_g6",
+      "p_g7",
+      "p_g8",
+      "p_g9"
+    ],
+    "expenditure": "expenditure4",
+    "demographics": [
+      "age",
+      "scale",
+      "children",
+      "region_1",
+      "region_2",
+      "region_3",
+      "region_4",
+      "region_5"
+    ],
+    "anot": 11.0,
+    "censor": true,
+    "quadratic": true,
+    "start": "zero",
+    "algorithm": "gn",
+    "param_tol": 1e-05,
+    "objective_tol": 1e-07,
+    "gn_tol": 1e-05,
+    "outer_param_tol": 1e-05,
+    "max_outer": 400,
+    "max_iter": 400,
+    "chunk": 2000,
+    "blas_threads": 1,
+    "verbose": false
+  },
+  "workers": 2
+}

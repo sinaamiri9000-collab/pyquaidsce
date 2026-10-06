@@ -1,0 +1,101 @@
+rep,seed,nobs,converged,seconds,error,n_outer,n_gn
+1,3554085471,9648,False,0.9987255840023863,RuntimeError: first-stage probit 1 did not converge,,
+2,3091044763,9731,True,5.226380561995029,,51.0,122.0
+3,2476461071,9710,True,3.5740938229937456,,32.0,87.0
+4,4055253153,9712,False,0.5985958759993082,RuntimeError: first-stage probit 1 did not converge,,
+5,4069851885,9798,False,0.6075057329944684,RuntimeError: first-stage probit 1 did not converge,,
+6,4084612928,9751,True,2.542658158003178,,22.0,62.0
+7,2715698906,9707,True,5.970454200003587,,62.0,142.0
+8,1909078909,9702,True,4.009199335996527,,24.0,85.0
+9,416389881,9762,True,3.90946638299647,,30.0,74.0
+10,2054724542,9758,False,1.2625085369945737,RuntimeError: first-stage probit 1 did not converge,,
+11,720811778,9796,False,1.1956393199943705,RuntimeError: first-stage probit 1 did not converge,,
+12,307438532,9806,False,1.3469076109977323,RuntimeError: first-stage probit 1 did not converge,,
+13,2598067651,9778,False,1.0201560479981708,RuntimeError: first-stage probit 1 did not converge,,
+14,3199367780,9755,False,1.180517182998301,RuntimeError: first-stage probit 1 did not converge,,
+15,2582762133,9775,False,1.3260744049985078,RuntimeError: first-stage probit 1 did not converge,,
+16,2686055214,9767,False,1.592558917000133,RuntimeError: first-stage probit 1 did not converge,,
+17,1910292244,9731,False,1.3935387219971744,RuntimeError: first-stage probit 1 did not converge,,
+18,1713559108,9772,False,1.1910211419963161,RuntimeError: first-stage probit 1 did not converge,,
+19,2156373843,9693,False,1.3284002250002231,RuntimeError: first-stage probit 1 did not converge,,
+20,94237322,9724,False,0.7466510109952651,RuntimeError: first-stage probit 2 did not converge,,
+21,1407535197,9809,False,0.9156798529947991,RuntimeError: first-stage probit 1 did not converge,,
+22,1406536992,9728,False,0.8069736180041218,RuntimeError: first-stage probit 1 did not converge,,
+23,586056106,9675,False,0.7952502750049462,RuntimeError: first-stage probit 1 did not converge,,
+24,4087481109,9743,False,0.8883922750028432,RuntimeError: first-stage probit 1 did not converge,,
+25,777076537,9735,False,0.7326324739988195,RuntimeError: first-stage probit 1 did not converge,,
+26,1036072263,9788,False,0.5750704439997207,RuntimeError: first-stage probit 1 did not converge,,
+27,556474143,9733,True,3.3969575480005005,,31.0,97.0
+28,2331118949,9732,True,3.2705119050006033,,30.0,83.0
+29,1629711227,9756,True,3.2151018329968792,,35.0,93.0
+30,1166597918,9649,False,0.8799845640023705,RuntimeError: first-stage probit 1 did not converge,,
+31,3153552467,9756,False,0.9233424690028187,RuntimeError: first-stage probit 1 did not converge,,
+32,3391943451,9787,False,0.5278216959995916,RuntimeError: first-stage probit 1 did not converge,,
+33,985134271,9757,False,0.6541630459978478,RuntimeError: first-stage probit 1 did not converge,,
+34,2170164604,9767,False,0.9299971259970334,RuntimeError: first-stage probit 1 did not converge,,
+35,525168473,9696,False,0.8157481989983353,RuntimeError: first-stage probit 1 did not converge,,
+36,1415943282,9733,False,0.8782972609988065,RuntimeError: first-stage probit 1 did not converge,,
+37,2376235354,9712,False,0.5271781900009955,RuntimeError: first-stage probit 1 did not converge,,
+38,472703130,9743,False,0.5042637279984774,RuntimeError: first-stage probit 2 did not converge,,
+39,1826390872,9803,False,0.5056281669967575,RuntimeError: first-stage probit 1 did not converge,,
+40,1178582920,9771,False,0.682391516995267,RuntimeError: first-stage probit 1 did not converge,,
+41,1367580971,9700,True,2.7411555009966833,,27.0,72.0
+42,837072290,9721,False,0.6300886720055132,RuntimeError: first-stage probit 1 did not converge,,
+43,2051380273,9705,False,1.0045294169976842,RuntimeError: first-stage probit 1 did not converge,,
+44,1869291516,9747,False,0.9181313840017538,RuntimeError: first-stage probit 1 did not converge,,
+45,1897569410,9721,False,0.8246672329987632,RuntimeError: first-stage probit 1 did not converge,,
+46,528587479,9758,False,0.7661241059977328,RuntimeError: first-stage probit 1 did not converge,,
+47,3595949489,9747,False,0.6178499439993175,RuntimeError: first-stage probit 1 did not converge,,
+48,2844994468,9701,False,0.5051172960011172,RuntimeError: first-stage probit 2 did not converge,,
+49,3451525362,9694,True,2.5932531180005753,,19.0,74.0
+50,3558676219,9794,False,0.7416253459959989,RuntimeError: first-stage probit 1 did not converge,,
+51,1756639456,9782,False,1.0008393620009883,RuntimeError: first-stage probit 1 did not converge,,
+52,3348110215,9797,False,0.7408283480035607,RuntimeError: first-stage probit 1 did not converge,,
+53,1293972760,9707,True,3.8186535440036096,,27.0,109.0
+54,783385031,9820,False,0.6915166500039049,RuntimeError: first-stage probit 1 did not converge,,
+55,83218225,9712,False,0.8211337920001824,RuntimeError: first-stage probit 1 did not converge,,
+56,410762700,9771,True,3.4437475519953296,,22.0,79.0
+57,1085547868,9776,True,6.714514127001166,,45.0,113.0
+58,1857430960,9756,False,1.3871204380047857,RuntimeError: first-stage probit 1 did not converge,,
+59,3112150987,9747,False,0.8689193730024272,RuntimeError: first-stage probit 1 did not converge,,
+60,1657261648,9732,True,4.761076659000537,,23.0,75.0
+61,1616930488,9735,False,1.5531157229997916,RuntimeError: first-stage probit 1 did not converge,,
+62,2578802851,9720,False,1.7105625339972903,RuntimeError: first-stage probit 1 did not converge,,
+63,1391389386,9773,False,1.3897868229978485,RuntimeError: first-stage probit 1 did not converge,,
+64,3968897703,9775,False,1.568208954995498,RuntimeError: first-stage probit 1 did not converge,,
+65,254337952,9685,True,3.795671072002733,,24.0,62.0
+66,449734248,9730,False,1.5199177579997922,RuntimeError: first-stage probit 2 did not converge,,
+67,3776782729,9728,True,8.20838514299976,,113.0,148.0
+68,3490477339,9765,False,0.8121507609976106,RuntimeError: first-stage probit 1 did not converge,,
+69,1291280271,9696,False,1.126321158000792,RuntimeError: first-stage probit 2 did not converge,,
+70,1678116656,9721,False,0.89993823000259,RuntimeError: first-stage probit 1 did not converge,,
+71,4154052509,9670,False,1.1464153120032279,RuntimeError: first-stage probit 1 did not converge,,
+72,903236449,9744,False,1.3510846499993932,RuntimeError: first-stage probit 1 did not converge,,
+73,1289742839,9786,True,7.614919514002395,,52.0,120.0
+74,30891281,9768,False,1.6442505240047467,RuntimeError: first-stage probit 1 did not converge,,
+75,843734206,9762,False,1.3422580410042428,RuntimeError: first-stage probit 1 did not converge,,
+76,3944623753,9801,False,1.5587216570056626,RuntimeError: first-stage probit 1 did not converge,,
+77,1029687111,9736,True,7.1390609800000675,,62.0,130.0
+78,1258369239,9748,True,4.02687866800261,,22.0,69.0
+79,1207745432,9811,True,7.179593665001448,,70.0,124.0
+80,2624240477,9802,False,1.2804389480006648,RuntimeError: first-stage probit 1 did not converge,,
+81,3964581254,9773,False,1.71115063400066,RuntimeError: first-stage probit 4 did not converge,,
+82,18401918,9740,False,1.3694200329991872,RuntimeError: first-stage probit 1 did not converge,,
+83,521394119,9779,True,3.9215978479987825,,22.0,67.0
+84,3505175547,9708,False,1.130153871999937,RuntimeError: first-stage probit 1 did not converge,,
+85,1753646654,9798,False,1.064106673002243,RuntimeError: first-stage probit 1 did not converge,,
+86,659133119,9742,False,1.1174645069986582,RuntimeError: first-stage probit 1 did not converge,,
+87,2530189963,9759,True,6.366439735997119,,28.0,82.0
+88,2614378339,9735,False,0.797921112003678,RuntimeError: first-stage probit 1 did not converge,,
+89,962546999,9776,False,1.25773490100255,RuntimeError: first-stage probit 1 did not converge,,
+90,2202845386,9727,True,8.426346501997614,,63.0,139.0
+91,259469379,9752,False,1.6077527179950266,RuntimeError: first-stage probit 1 did not converge,,
+92,2808003785,9716,False,1.311920011001348,RuntimeError: first-stage probit 1 did not converge,,
+93,1685170473,9776,False,1.2259379450042616,RuntimeError: first-stage probit 1 did not converge,,
+94,875963808,9700,False,1.0875561950015253,RuntimeError: first-stage probit 1 did not converge,,
+95,2778985735,9689,False,1.1781602180053596,RuntimeError: first-stage probit 1 did not converge,,
+96,245703570,9789,False,1.655526579997968,RuntimeError: first-stage probit 1 did not converge,,
+97,3330398089,9787,False,0.7372204139974201,RuntimeError: first-stage probit 1 did not converge,,
+98,2115085623,9688,True,5.2961840749994735,,44.0,86.0
+99,2071374434,9715,False,1.2306474489960237,RuntimeError: first-stage probit 1 did not converge,,
+100,1543229420,9704,True,4.246203848000732,,29.0,76.0

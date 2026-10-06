@@ -7,6 +7,8 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 - Added optional Python `analytic=True` inference for NLS, FGNLS, and IFGNLS,
   with joint Probit/demand covariance and elasticity S.E.s at sample means.
   Internal IV and control-function inference remain unsupported.
+- Added Python `cluster` for joint analytical cluster covariance and
+  whole-cluster bootstrap. `cluster_correction=True` applies `G/(G-1)`.
 
 ## 1.7.0 — 2026-10-06
 

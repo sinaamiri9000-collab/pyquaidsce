@@ -17,6 +17,7 @@ from typing import Optional
 import numpy as np
 from scipy.stats import norm
 
+from ._clusters import cluster_codes
 from ._elasticity_derivatives import elasticity_jacobian
 from ._threads import with_blas_threads
 from ._timing import check_deadline
@@ -29,7 +30,7 @@ from .probit import _lambda_ratio
 
 @dataclass
 class AnalyticalInference:
-    """Unconditional, observation-level sandwich inference at sample means.
+    """Joint observation-level or cluster sandwich inference at sample means.
 
     ``covariance`` follows the existing result-vector order. Elasticity arrays
     use the natural [good, price] order, also used by ``result.elas``.
@@ -48,6 +49,9 @@ class AnalyticalInference:
     max_standardized_score: float
     elapsed_seconds: float
     neqn: int
+    n_clusters: Optional[int] = None
+    covariance_type: str = "iid"
+    correction_factor: float = 1.0
 
     @property
     def se(self) -> np.ndarray:
@@ -439,18 +443,24 @@ def compute_analytical_inference(
     chunk: int = 2000,
     blas_threads: Optional[int] = 1,
     deadline: Optional[float] = None,
+    clusters: Optional[np.ndarray] = None,
+    cluster_correction: bool = True,
     _relative_step: Optional[float] = None,
 ) -> AnalyticalInference:
     """Compute joint sandwich and delta-method covariance after fitting.
 
-    Observations must be independent. The estimators must be identified and
+    Observations, or supplied clusters, must be independent. The estimators must be identified and
     satisfy their estimating equations to adequate numerical accuracy. This
-    implementation excludes internal/external control functions and survey
-    designs. FGNLS additionally requires the original initial NLS estimates.
+    implementation excludes internal/external control functions and weighted
+    survey designs. FGNLS additionally requires the original initial NLS estimates.
     """
     started = time.perf_counter()
     if data.nobs != result.nobs or int(chunk) < 1:
         raise ValueError("use the estimation sample and a positive chunk size")
+    if not isinstance(cluster_correction, (bool, np.bool_)):
+        raise ValueError("cluster_correction must be True or False")
+    codes, n_clusters = (None, None) if clusters is None else cluster_codes(clusters, data.nobs)
+    factor = n_clusters/(n_clusters-1) if n_clusters is not None and cluster_correction else 1.0
     if result.spec.control_function or result.control_function_name is not None \
             or result.selection_control_function_name is not None \
             or result.reduced_form is not None:
@@ -492,28 +502,46 @@ def compute_analytical_inference(
     meat = np.zeros_like(bread)
     mean_values = _pack_means(result.means)
     score_mean = system.mean_score(system.x)
-    for _, scores, features in system.chunks(system.x, include_means=True):
+    if codes is not None:
+        sums = [np.zeros((n_clusters, width)) for width in
+                (len(reported), k+nt, ne, len(system.x))]
+    for sl, scores, features in system.chunks(system.x, include_means=True):
         centered = scores - score_mean
         means_residual = features - mean_values
         influence = centered @ transform.T + means_residual @ raw_mean_map.T
         joint_influence = centered @ joint_transform.T
         elasticity_influence = (centered @ elasticity_transform.T
                                 + means_residual @ mean_jac.T)
-        covariance += influence.T @ influence
-        joint_covariance += joint_influence.T @ joint_influence
-        elasticity_covariance += elasticity_influence.T @ elasticity_influence
-        meat += centered.T @ centered
+        if codes is None:
+            covariance += influence.T @ influence
+            joint_covariance += joint_influence.T @ joint_influence
+            elasticity_covariance += elasticity_influence.T @ elasticity_influence
+            meat += centered.T @ centered
+        else:
+            check_deadline(deadline)
+            for target, values in zip(sums, (influence, joint_influence,
+                                             elasticity_influence, centered)):
+                np.add.at(target, codes[sl], values)
+    if codes is not None:
+        covariance, joint_covariance, elasticity_covariance, meat = [s.T @ s for s in sums]
     meat /= nobs
+    if factor != 1.0:
+        meat *= factor
     standard = np.sqrt(np.diag(meat)/nobs)
     score_size = np.divide(np.abs(score_mean), standard,
                            out=np.zeros_like(score_mean), where=standard > 0)
     covariance /= nobs*nobs
     joint_covariance /= nobs*nobs
     elasticity_covariance /= nobs*nobs
+    if factor != 1.0:
+        covariance *= factor
+        joint_covariance *= factor
+        elasticity_covariance *= factor
     if covariance.shape != result.V.shape:
         raise ValueError("analytical covariance does not match the reported vector")
     return AnalyticalInference(
         covariance, joint_covariance, elasticity_covariance, bread, meat,
         system.x.copy(), score_mean, condition, float(np.max(score_size)),
         time.perf_counter()-started, spec.neqn,
+        n_clusters, "cluster" if codes is not None else "iid", factor,
     )

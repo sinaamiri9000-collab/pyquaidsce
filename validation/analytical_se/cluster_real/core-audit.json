@@ -1,0 +1,10 @@
+{
+  "src/pyquaidsce/nlsur.py": "47e334e75424d31394a64e3b767cb7b7bcea497b3f061ffc6a2d41d951728b9c",
+  "src/pyquaidsce/jacfree.py": "f54741b631a299493c2edce432048ce7803de0bcd8a035769f926b2a96883dfc",
+  "src/pyquaidsce/model.py": "e0b1dc51f48b2d81dd78f83ff8c7b6af9efe241ab7bc75894308794fb29ee2b0",
+  "src/pyquaidsce/probit.py": "469a4acfab294e844fb5d35f79aef16a2ecc118ab92259bbed7973d251902e66",
+  "src/pyquaidsce/params.py": "bdc875f4369b65e1c65a46392877ba594e11e708b0c1a35f881c47ec09ca4aad",
+  "src/pyquaidsce/elasticities.py": "47b0978810246d592b8ca4e1ce1102d1afcbe1e2c7cda0b8e87969aceab1aad8",
+  "CITATION.cff": "cccdfb019e5b6c1847d49fbf662fd300bb84074a93710820af5e2c08f0518175",
+  "README.md": "9d6212703eb9aba18feac9be23d59939e91256b56c3334941902456b7eab9588"
+}

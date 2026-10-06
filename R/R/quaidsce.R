@@ -38,8 +38,8 @@
 #' @param rep_timeout Optional numeric timeout per bootstrap replication in seconds.
 #' @param param_tol Inner relative parameter-change threshold (default = 1e-5).
 #' @param objective_tol Inner relative weighted-SSR-change threshold (default = 1e-7).
-#' @param gn_tol Inner scaled Gauss-Newton threshold (default = 1e-5). Any one inner criterion may pass.
-#' @param outer_param_tol IFGNLS relative parameter-change threshold (default = 1e-5), required in two consecutive rounds. Bootstrap draws share all four thresholds with the point estimate.
+#' @param gn_tol Inner scaled Gauss-Newton threshold (default = 1e-5).
+#' @param outer_param_tol IFGNLS relative parameter-change threshold (default = 1e-5).
 #' @param max_outer Maximum numbered estimation stage, including initial NLS and FGNLS (default = 200).
 #' @param max_iter Maximum inner iterations (default = 300).
 #' @param chunk Chunk size for memory management (default = 2000).

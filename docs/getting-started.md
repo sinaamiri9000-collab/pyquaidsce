@@ -76,7 +76,7 @@ print(res.elasticity_tables())
 
 ## 4. Understanding the Estimation Methods
 
-- **`method="nls"`**: Nonlinear Least Squares with identity objective weights. Its sandwich parameter covariance uses the estimated residual covariance, allowing correlation between equations.
+- **`method="nls"`**: Nonlinear Least Squares with identity objective weights.
 - **`method="fgnls"`**: Feasible Generalized NLS (two-step estimation using the residual covariance from NLS).
 - **`method="ifgnls"`** *(Recommended)*: Iterated FGNLS. Continuously updates the residual covariance matrix $\Sigma$ and parameter estimates until convergence. This corresponds to Maximum Likelihood under joint normality.
 

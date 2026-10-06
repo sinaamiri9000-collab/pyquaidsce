@@ -52,11 +52,11 @@
 {synopt :{opt start(type)}}starting values: {cmd:zero} (default, matches Stata) or {cmd:linear} (linearized AIDS start){p_end}
 {synopt :{opt initial(matname)}}row vector (matrix name) of initial free parameters for warm-starting; e.g. {cmd:e(b_est)} from a prior run{p_end}
 {synopt :{opt sigma_initial(matname)}}initial residual covariance matrix (matrix name), used with {opt initial()} for warm-starting; e.g. {cmd:e(Sigma)} from a prior run{p_end}
-{synopt :{opt vce_sigma(type)}}GLS covariance convention: {cmd:objective} (default) or {cmd:final}; NLS always uses its identity-weighted sandwich{p_end}
+{synopt :{opt vce_sigma(type)}}FGNLS/IFGNLS covariance convention: {cmd:objective} (default) or {cmd:final}{p_end}
 {synopt :{opt param_tol(#)}}inner relative parameter-change threshold; default is {cmd:param_tol(1e-5)}{p_end}
 {synopt :{opt objective_tol(#)}}inner relative weighted-SSR-change threshold; default is {cmd:objective_tol(1e-7)}{p_end}
 {synopt :{opt gn_tol(#)}}inner scaled Gauss-Newton threshold; default is {cmd:gn_tol(1e-5)}{p_end}
-{synopt :{opt outer_param_tol(#)}}IFGNLS relative parameter-change threshold, required in two consecutive rounds; default is {cmd:outer_param_tol(1e-5)}{p_end}
+{synopt :{opt outer_param_tol(#)}}IFGNLS relative parameter-change threshold; default is {cmd:outer_param_tol(1e-5)}{p_end}
 {synopt :{opt max_iter(#)}}maximum inner Gauss-Newton iterations per stage; default is {cmd:max_iter(300)}{p_end}
 {synopt :{opt max_outer(#)}}maximum numbered IFGNLS estimation stage, including initial NLS and FGNLS; default is {cmd:max_outer(200)}{p_end}
 {synopt :{opt chunk(#)}}observation block size for accumulating normal equations; default is {cmd:chunk(2000)}{p_end}
@@ -73,32 +73,6 @@
 {synopt :{opt gnlog}}print detailed step-by-step Gauss-Newton optimization logs{p_end}
 {synopt :{opt level(#)}}set confidence level; default is {cmd:level(95)}{p_end}
 {synoptline}
-{pstd}
-The inner solve stops when any one of its parameter-change, objective-change,
-or scaled Gauss-Newton criteria passes. Parameter change uses the maximum
-absolute step divided by 1 plus the absolute old parameter. Objective change
-uses the weighted SSR decrease divided by the absolute old weighted SSR
-(with denominator floor 1e-300). The GN criterion uses the absolute inner
-product of the undamped GN direction and score, divided by that same SSR
-scale. If no improving step is accepted, only the GN criterion can certify
-convergence.{p_end}
-
-{pstd}
-The outer IFGNLS criterion is the maximum absolute parameter change divided
-by the absolute old parameter plus 1e-8. It must be below {opt outer_param_tol()}
-in two consecutive rounds, and the final inner solve must converge. The four
-thresholds must be finite and positive. They stay constant during the fit and
-are shared by every bootstrap replication, whether started from zero or warm
-estimates. These are pyquaidsce's criteria, without a claim of exact equivalence
-to Stata's native {cmd:nlsur} stopping rules.{p_end}
-
-{pstd}
-NLS parameter covariance uses A^-1 B A^-1, with A=sum J'J and
-B=sum J'Sigma_hat J; Sigma_hat is the final residual covariance divided by N.
-It assumes a common covariance across independent observations. FGNLS and
-IFGNLS retain their existing GLS covariance convention.{p_end}
-
-
 
 {marker description}{...}
 {title:Description}

@@ -86,23 +86,6 @@ fit_iv$reduced_form$excluded.f
 
 ---
 
-## Convergence controls
-
-| Argument | Default | Criterion |
-|---|---|---|
-| `param_tol` | `1e-5` | Relative inner parameter change |
-| `objective_tol` | `1e-7` | Relative inner weighted-SSR change |
-| `gn_tol` | `1e-5` | Scaled Gauss-Newton criterion |
-| `outer_param_tol` | `1e-5` | Relative IFGNLS parameter change in two consecutive rounds |
-
-Point estimation and every bootstrap draw use these same four thresholds.
-Any one inner criterion may stop the inner solve; IFGNLS requires two
-consecutive small outer parameter changes and final inner convergence.
-The iteration limits default to `max_iter=300` and `max_outer=200`.
-See the [user guide](../docs/user-guide.md#convergence-and-numerical-tolerance)
-for the exact formulas. In R, pass the same
-argument names, for example `param_tol = 1e-5`.
-
 ## Citation & Author
 - **Author:** Sina Amiri (Department of Economics, Shiraz University)
 - **Email:** sinaamiri9000@gmail.com

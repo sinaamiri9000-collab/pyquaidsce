@@ -16,9 +16,7 @@ Several computational strategies make `pyquaidsce` significantly faster than con
    Accumulation of normal equations ($J' \Sigma^{-1} J$) is accelerated using low-level symmetric rank-k updates from BLAS.
 3. **Memory Chunking**:
    The Jacobian is processed in chunks of observations rather than building the entire matrix in RAM simultaneously, keeping memory usage minimal.
-4. **Inner and Outer IFGNLS Stopping**:
-   Each inner solve uses the same parameter-change, objective-change and GN thresholds. The outer loop updates the residual covariance and confirms a small parameter change in two consecutive rounds. Inner thresholds are not tightened automatically during later rounds.
-5. **Controlled BLAS Parallelism**:
+4. **Controlled BLAS Parallelism**:
    Point estimation and each bootstrap worker use one BLAS thread by default (`blas_threads=1`). The limit is temporary in Python and the previous BLAS setting is restored after estimation.
 
 ---

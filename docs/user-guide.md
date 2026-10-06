@@ -67,16 +67,7 @@ is unknown to the package.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `vce_sigma` | `str` | `"objective"` | Residual covariance used in the second-stage standard error formula: `"objective"` (used in the final minimization) or `"final"` (recomputed from final residuals). |
-
-For NLS, the parameter covariance is the identity-weighted sandwich
-$A^{-1}BA^{-1}$, with $A=\sum_t J_t'J_t$ and
-$B=\sum_t J_t'\hat\Sigma J_t$. The final residual covariance
-$\hat\Sigma=N^{-1}\sum_t u_tu_t'$ supplies $B$; `vce_sigma` does not change
-NLS covariance. This allows cross-equation correlation while retaining the
-identity-weighted NLS estimates. It assumes independent observations with
-a common residual covariance and is not a heteroskedasticity-robust formula.
-FGNLS and IFGNLS retain their existing GLS covariance formulas.
+| `vce_sigma` | `str` | `"objective"` | FGNLS/IFGNLS covariance convention: `"objective"` (used in the final minimization) or `"final"` (recomputed from final residuals). |
 
 The Shonkwiler–Yen correction is fixed to the textbook Probit linear-index construction, and elasticity formulas are fixed to their corrected theoretical forms in v1.6.0 and later.
 
@@ -89,44 +80,10 @@ The Shonkwiler–Yen correction is fixed to the textbook Probit linear-index con
 | `param_tol` | `float` | `1e-5` | Inner relative parameter-change threshold. |
 | `objective_tol` | `float` | `1e-7` | Inner relative change of weighted SSR. |
 | `gn_tol` | `float` | `1e-5` | Inner scaled Gauss-Newton criterion threshold. |
-| `outer_param_tol` | `float` | `1e-5` | IFGNLS relative parameter-change threshold, required in two consecutive rounds. |
+| `outer_param_tol` | `float` | `1e-5` | IFGNLS relative parameter-change threshold. |
 | `max_iter` | `int` | `300` | Maximum number of inner Gauss-Newton iterations per stage. |
 | `max_outer` | `int` | `200` | Maximum numbered estimation stage for IFGNLS, including initial NLS and FGNLS stages. |
 | `chunk` | `int` | `2000` | Observation block size for accumulating normal equations ($J'\Sigma^{-1}J$) without materializing the full Jacobian in RAM. |
-
-
-All four tolerances must be finite and positive. Let $\theta$ be the parameter
-vector before an accepted inner step, $\theta^+$ the candidate, and
-$Q=\sum_t u_t'\Sigma^{-1}u_t$ the weighted SSR at the old vector. The existing
-inner criteria are
-
-$$C_\theta=\max_j\frac{|\theta_j^+-\theta_j|}{1+|\theta_j|},\qquad
-C_Q=\frac{Q-Q^+}{\max(|Q|,10^{-300})},\qquad
-C_{GN}=\frac{|d_{GN}'g|}{\max(|Q|,10^{-300})}.$$
-
-Here $g=\sum_t J_t'\Sigma^{-1}u_t$ and $d_{GN}$ is the undamped GN direction
-computed by the existing scaled normal-equation solver at the old vector.
-The same criterion is used with both `algorithm="gn"` and `algorithm="lm"`.
-An accepted step stops when **any one** of
-`C_theta < param_tol`, `C_Q < objective_tol`, or `C_GN < gn_tol` holds.
-If no improving step can be accepted, only `C_GN < gn_tol` can certify
-convergence; a failed step is not treated as zero parameter/objective change.
-
-For IFGNLS, each outer iteration uses
-
-$$R_k=\max_j\frac{|\theta_j^{(k)}-\theta_j^{(k-1)}|}
-{|\theta_j^{(k-1)}|+10^{-8}}.$$
-
-`R_k < outer_param_tol` must hold in **two consecutive** outer iterations;
-a larger change resets the confirmation. The final inner solve must also
-report convergence. This outer criterion measures parameters, not changes
-in $\Sigma$. The inner thresholds remain constant throughout the fit.
-
-Bootstrap replications use **exactly the same four tolerances** as the point
-estimate, for both zero and warm starts. There is no separate bootstrap
-convergence threshold. These are pyquaidsce's stopping rules; they do not
-claim exact equivalence to Stata's `nlsur`. A convergence flag certifies these
-conditions, not a global optimum.
 
 ---
 

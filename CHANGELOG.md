@@ -4,20 +4,11 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 ## Unreleased
 
-- Replaced named stopping modes with four explicit thresholds: `param_tol=1e-5`,
-  `objective_tol=1e-7`, `gn_tol=1e-5`, and `outer_param_tol=1e-5`. The three
-  existing inner conditions retain their OR combination, and IFGNLS retains
-  two consecutive small outer parameter changes plus final inner convergence.
-- Removed obsolete convergence switches and the separate bootstrap threshold.
-  Every bootstrap draw now receives the same four tolerances as the point fit.
-- Preserved analytic Jacobians, normal equations, scaling, step halving,
-  damping, and the sequence of residual-covariance updates. Low-level inner
-  iteration limits now default to 300, matching the public estimator.
-- Corrected NLS parameter covariance to the identity-weighted sandwich
-  `A^-1 B A^-1`, with `A=sum J'J` and `B=sum J'Sigma_hat J`. NLS coefficients
-  are unchanged; FGNLS and IFGNLS covariance formulas are unchanged.
-- Updated Python, bootstrap, asynchronous Stata, R, CLI checks, tests and
-  documentation to use the same convergence controls.
+- Replaced named stopping modes with `param_tol`, `objective_tol`, `gn_tol`,
+  and `outer_param_tol` across Python, R, and Stata.
+- Removed obsolete convergence controls and the separate bootstrap threshold.
+- Corrected NLS analytical covariance.
+- Set the low-level inner iteration limit to 300, matching the public estimator.
 
 - Unified the main estimator name across interfaces: Python and R use `quaidsce()`, and Stata now uses the `quaidsce` command.
 - Renamed the R package from `rquaidsce` to `pyquaidsce`. The Python package name remains `pyquaidsce`.

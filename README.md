@@ -115,28 +115,6 @@ For a step-by-step tutorial, see [Getting Started](docs/getting-started.md). For
 
 ---
 
-## Convergence controls
-
-| Argument | Default | Criterion |
-|---|---|---|
-| `param_tol` | `1e-5` | Relative inner parameter change |
-| `objective_tol` | `1e-7` | Relative inner weighted-SSR change |
-| `gn_tol` | `1e-5` | Scaled Gauss-Newton criterion |
-| `outer_param_tol` | `1e-5` | Relative IFGNLS parameter change in two consecutive rounds |
-
-The inner solve stops when any one of its three criteria passes. IFGNLS also
-requires its outer parameter criterion to pass twice consecutively and the
-final inner solve to converge. `max_iter=300` and `max_outer=200` are the
-iteration limits. Point estimates and all bootstrap replications share the
-same four tolerances. The analytic Jacobian, normal-equation solver, damping,
-step-halving, and covariance-update sequence are preserved.
-
-See [the user guide](docs/user-guide.md#convergence-and-numerical-tolerance)
-for the exact formulas and [methodology](docs/methodology.md#4-estimation-methods)
-for the NLS sandwich covariance and GLS covariance conventions.
-
----
-
 ## Using pyquaidsce in Stata
 
 Prefer working in Stata? `pyquaidsce` includes an official Stata package (`quaidsce.ado`) that lets you estimate censored QUAIDS models directly inside Stata while harnessing Python's **up to 44.6x speedup**:

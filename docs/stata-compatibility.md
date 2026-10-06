@@ -37,14 +37,6 @@ When comparing results, check the following before attributing a difference to t
 | `start` | `"zero"` |
 | `algorithm` | `"gn"` |
 | `vce_sigma` | `"objective"` |
-| `param_tol` | `1e-5` |
-| `objective_tol` | `1e-7` |
-| `gn_tol` | `1e-5` |
-| `outer_param_tol` | `1e-5` |
-
-The convergence formulas belong to pyquaidsce and are not an exact
-replication of Stata `nlsur` stopping logic. Bootstrap draws use the same
-four tolerances as the point estimate. See the [user guide](user-guide.md#convergence-and-numerical-tolerance).
 
 ## R example
 

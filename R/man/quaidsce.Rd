@@ -109,8 +109,8 @@ both the participation Probits and latent demand equations.}
 
 \item{param_tol}{Inner relative parameter-change threshold (default = 1e-5).}
 \item{objective_tol}{Inner relative weighted-SSR-change threshold (default = 1e-7).}
-\item{gn_tol}{Inner scaled Gauss-Newton threshold (default = 1e-5). Any one inner criterion may pass.}
-\item{outer_param_tol}{IFGNLS relative parameter-change threshold (default = 1e-5), required in two consecutive rounds. Bootstrap draws share all four thresholds with the point estimate.}
+\item{gn_tol}{Inner scaled Gauss-Newton threshold (default = 1e-5).}
+\item{outer_param_tol}{IFGNLS relative parameter-change threshold (default = 1e-5).}
 
 \item{max_outer}{Maximum numbered estimation stage, including initial NLS and FGNLS (default = 200).}
 

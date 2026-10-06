@@ -157,6 +157,47 @@ If no improving step is accepted, only the GN criterion can certify convergence.
 For IFGNLS, $R_k$ compares parameters between outer iterations and must pass
 in two consecutive iterations; the final inner solve must also converge.
 
+### Analytical inference
+
+The Python option `analytic=True` computes joint sandwich and delta-method
+inference after the point estimate. It uses the estimating-equation framework
+of [Hardin (2002)](https://www.stata-journal.com/article.html?article=st0018).
+Observations must be independent, parameters identified, and the estimating
+equations solved to adequate numerical accuracy. `ivexp`, control functions,
+and survey-design corrections are not yet supported.
+
+For IFGNLS, the parameter vector $\zeta$ contains active Probit coefficients,
+free demand parameters, and the distinct entries of $\Sigma$. Its observation
+scores are
+
+$$\psi_t(\zeta)=\begin{pmatrix}s_{\tau,t}\\J_t'\Sigma^{-1}u_t\\\operatorname{vech}(u_tu_t'-\Sigma)\end{pmatrix}.$$
+
+NLS uses identity weights and omits the covariance moments. FGNLS adds the
+initial NLS equations and builds the weight moments from their residuals.
+For this optional calculation, that initial NLS stage is replayed with the
+original settings; the point estimate and solver remain unchanged.
+
+With $\bar\psi=N^{-1}\sum_t\psi_t$, define
+$A=N^{-1}\sum_t\partial\psi_t/\partial\zeta'$ and
+$B=N^{-1}\sum_t(\psi_t-\bar\psi)(\psi_t-\bar\psi)'$.
+The joint covariance is $N^{-1}A^{-1}BA^{-T}$, including cross-Probit and
+cross-stage terms. Estimating-equation derivatives include the residual
+Hessian terms and are calculated analytically in free coordinates.
+
+For a sample mean $m=N^{-1}\sum_t h_t(\tau)$, its influence is
+$\varphi_{m,t}=h_t-m+(\partial m/\partial\tau')\varphi_{\tau,t}$,
+where $\varphi_{\zeta,t}=-A^{-1}(\psi_t-\bar\psi)$.
+For the existing elasticity function $e(\zeta,m)$,
+$\varphi_{e,t}=e_\zeta\varphi_{\zeta,t}+e_m\varphi_{m,t}$ and
+$\widehat V_e=N^{-2}\sum_t\varphi_{e,t}\varphi_{e,t}'$.
+This includes uncertainty in observed means and in the means of the Probit
+CDF, PDF, and linear index. Elasticity derivatives use central numerical
+differences of the existing function, with step-size checks.
+
+`res.analytical` provides the covariance and all three elasticity S.E. arrays.
+Its `max_standardized_score` reports the largest absolute mean score divided
+by its estimated sampling S.E.; it is a diagnostic, not a stopping rule.
+
 ---
 
 ## 5. Demand Elasticities

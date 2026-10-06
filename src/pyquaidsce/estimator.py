@@ -193,6 +193,7 @@ def quaidsce(
     gn_verbose: bool = False,
     mp_context: Optional[str] = None,
     rep_timeout: Optional[float] = None,
+    analytic: bool = False,
     log=None,
     _deadline: Optional[float] = None,
 ) -> QuaidsceResults:
@@ -219,6 +220,11 @@ def quaidsce(
         threshold in two consecutive outer iterations.
         Bootstrap draws use the same four thresholds as the point estimate.
     reps : bootstrap replications; 0 disables the bootstrap.
+    analytic : bool, default False
+        Compute joint estimating-equation covariance and delta-method
+        elasticity standard errors after estimation. Includes Probit and
+        sample-mean uncertainty. Requires independent observations; ivexp
+        and control functions are not yet supported.
     control_function : column containing an externally generated reduced-form
         residual. It enters the latent share as ``cfcoef_i * residual``.
     ivexp : excluded instrument column(s) for endogenous log expenditure. The
@@ -263,6 +269,8 @@ def quaidsce(
     from .nlsur import _validate_tolerances
     _validate_tolerances(param_tol=param_tol, objective_tol=objective_tol,
                          gn_tol=gn_tol, outer_param_tol=outer_param_tol)
+    if not isinstance(analytic, (bool, np.bool_)):
+        raise ValueError("analytic must be True or False")
     if rep_timeout is not None:
         if not np.isfinite(rep_timeout) or float(rep_timeout) <= 0:
             raise ValueError("rep_timeout must be a finite positive number")
@@ -282,6 +290,11 @@ def quaidsce(
     if len(ivexp_names) != len(set(ivexp_names)):
         raise ValueError("ivexp must not contain duplicate column names")
     ivexp_active = bool(ivexp_names)
+    if analytic and (ivexp_active or control_function is not None
+                     or selection_control_function is not None):
+        raise NotImplementedError(
+            "analytical inference for ivexp/control functions is not implemented"
+        )
     if ivexp_active and (
         control_function is not None or selection_control_function is not None
     ):
@@ -623,9 +636,8 @@ def quaidsce(
         ev = el.as_stata_vector()
         b = np.concatenate([b, ev])
         k1, k2 = V.shape[0], ev.size
-        # The legacy/Stata-compatible result vector contains elasticities, but
-        # this release does not claim an analytical delta-method covariance for
-        # them. Keep e(V) finite/usable and mask only analytic_se below.
+        # Start with the conditional coefficient covariance. Optional joint
+        # inference below supplies the elasticity covariance after fitting.
         Vx = np.zeros((k1 + k2, k1 + k2))
         Vx[:k1, :k1] = V
         V = Vx
@@ -657,7 +669,7 @@ def quaidsce(
             "externally generated residual; final inference must rebuild the "
             "reduced form in a design-appropriate bootstrap."
         )
-    if censor and not (reps and int(reps) > 0):
+    if censor and not analytic and not (reps and int(reps) > 0):
         notes.append(
             "Analytical elasticity standard errors are not computed. The "
             "reported structural/first-stage analytical covariance is a "
@@ -692,6 +704,38 @@ def quaidsce(
         notes=notes,
     )
 
+    # Optional inference is computed after the unchanged point estimator.
+    if analytic:
+        import time
+        from .inference import compute_analytical_inference
+
+        inference_started = time.perf_counter()
+        theta_nls = None
+        if method == "fgnls":
+            # Reconstruct the original weight-estimation stage without changing
+            # the solver or the point estimate. The solver does not retain it.
+            initial_fit = nlsur(
+                d, spec, theta0=theta0, start=start, method="nls",
+                param_tol=param_tol, objective_tol=objective_tol, gn_tol=gn_tol,
+                outer_param_tol=outer_param_tol, max_iter=max_iter,
+                max_outer=max_outer, chunk=chunk, algorithm=algorithm,
+                blas_threads=blas_threads, deadline=_deadline,
+            )
+            if not initial_fit.converged:
+                raise ValueError(
+                    "FGNLS analytical inference requires its initial NLS stage to converge"
+                )
+            theta_nls = initial_fit.theta
+        res.analytical = compute_analytical_inference(
+            res, d, selection_design if censor else None,
+            theta_nls=theta_nls, chunk=chunk, blas_threads=blas_threads,
+            deadline=_deadline,
+        )
+        res.analytical.elapsed_seconds = time.perf_counter() - inference_started
+        res.V = res.analytical.covariance.copy()
+        res.V_est = res.analytical.joint_covariance[:spec.n_free, :spec.n_free].copy()
+        if censor:
+            res.setau = res.analytical.joint_covariance[spec.n_free:, spec.n_free:].copy()
     # ---- 7. bootstrap ----------------------------------------------------- #
     if reps and reps > 0:
         from .bootstrap import bootstrap
@@ -719,9 +763,10 @@ def quaidsce(
         )
         res.V_analytic = res.V.copy()
         res.V = res.boot.V.copy()
+        reference = "joint sandwich" if analytic else "conditional analytical"
         res.notes.append(
             "res.V and res.se contain the successful-replication bootstrap "
             "covariance; res.V_analytic and res.analytic_se retain the "
-            "conditional analytical reference."
+            f"{reference} reference."
         )
     return res

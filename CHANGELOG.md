@@ -2,6 +2,12 @@
 
 All notable user-visible changes to `pyquaidsce` are documented here.
 
+## Unreleased
+
+- Added optional Python `analytic=True` inference for NLS, FGNLS, and IFGNLS,
+  with joint Probit/demand covariance and elasticity S.E.s at sample means.
+  Internal IV and control-function inference remain unsupported.
+
 ## 1.7.0 — 2026-10-06
 
 - Updated Python, R, Stata, and release tooling to version 1.7.0.

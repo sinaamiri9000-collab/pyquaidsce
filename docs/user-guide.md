@@ -68,6 +68,11 @@ is unknown to the package.
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `vce_sigma` | `str` | `"objective"` | FGNLS/IFGNLS covariance convention: `"objective"` (used in the final minimization) or `"final"` (recomputed from final residuals). |
+| `analytic` | `bool` | `False` | Python: compute joint sandwich covariance and delta-method elasticity S.E.s, including Probit and sample-mean uncertainty. Supports NLS, FGNLS, and IFGNLS without `ivexp` or control functions. |
+
+With `analytic=True`, the joint sandwich replaces the conditional covariance;
+`vce_sigma` still controls only the original conditional calculation. See
+[Methodology](methodology.md#analytical-inference) for the definition and assumptions.
 
 The Shonkwiler–Yen correction is fixed to the textbook Probit linear-index construction, and elasticity formulas are fixed to their corrected theoretical forms in v1.7.0 and later.
 
@@ -125,19 +130,20 @@ The object returned by `quaidsce(...)` contains all estimated parameters, standa
 
 | Attribute / Property | Python Type | Stata Equivalent | Description |
 |---|---|---|---|
-| `res.b` | `np.ndarray` | `e(b)` | Full parameter vector: structural parameters, Probit parameters ($\tau$), and elasticity estimates. |
-| `res.V` | `np.ndarray` | `e(V)` | Active covariance matrix of `res.b`: bootstrap covariance when `reps>0`, otherwise the finite conditional analytical matrix. |
-| `res.se` | `np.ndarray` | standard errors | Bootstrap S.E.s when available; otherwise conditional analytical S.E.s with unsupported elasticity entries explicitly set to `NaN`. |
-| `res.V_analytic` | `np.ndarray` or `None` | — | Conditional analytical reference retained after bootstrap. |
-| `res.analytic_se` | `np.ndarray` | — | Conditional analytical standard errors. Elasticity entries are `NaN` because their analytical delta-method covariance is not implemented. |
+| `res.b` | `np.ndarray` | `e(b)` | Full structural parameters; with censoring, also Probit parameters ($\tau$) and elasticity estimates. |
+| `res.V` | `np.ndarray` | `e(V)` | Active covariance of `res.b`: bootstrap when available, joint sandwich with `analytic=True`, otherwise conditional. |
+| `res.se` | `np.ndarray` | standard errors | Standard errors from the active inference method. |
+| `res.V_analytic` | `np.ndarray` or `None` | — | Analytical reference retained after bootstrap. |
+| `res.analytic_se` | `np.ndarray` | — | Joint standard errors with `analytic=True`; otherwise conditional, with elasticity entries set to `NaN`. |
 | `res.names` | `List[str]` | `colnames e(b)` | Parameter labels in `"equation:name"` format. |
 | `res.theta` (or `res.b_est`) | `np.ndarray` | `e(best)` | The vector of estimated free structural parameters. |
 | `res.V_est` | `np.ndarray` | `e(Vest)` | Covariance matrix of the free parameters. |
 | `res.coefs` | `Coefs` dataclass | `e(alpha)` … `e(rho)` | Unpacked structural parameters ($\alpha, \beta, \gamma, \lambda, \delta, \eta, \rho$). |
 | `res.tau` | `np.ndarray` | `e(tau)` | Stacked first-stage Probit coefficients. |
-| `res.setau` | `np.ndarray` | `e(V_tau)` | Block-diagonal covariance matrix of first-stage Probits. |
+| `res.setau` | `np.ndarray` | `e(V_tau)` | Joint Probit covariance with `analytic=True`; otherwise the conditional block-diagonal matrix. |
 | `res.probits` | `List[ProbitResult]` | `e()` from each probit | Individual Probit estimation result objects. |
 | `res.elas` | `Elasticities` | `e(elas_*)` | Demand elasticities evaluated at sample means. |
+| `res.analytical` | `AnalyticalInference` or `None` | — | Joint covariance and elasticity inference when `analytic=True`. Provides `income_se`, `uncompensated_se`, `compensated_se`, and `elasticity_covariance`, including in uncensored models. |
 | `res.llf` | `float` | `e(ll)` | Gaussian log-likelihood value. |
 | `res.sigma` | `np.ndarray` | `e(Sigma)` | Residual covariance matrix ($(n \times n)$ or $(n-1 \times n-1)$). |
 | `res.nobs` | `int` | `e(N)` | Number of observations in the estimation sample. |

@@ -24,6 +24,7 @@ Quick start
 from .elasticities import (Elasticities, elasticities,
                            fitted_share_derivatives, sample_means)
 from .estimator import first_stage, quaidsce
+from .inference import AnalyticalInference
 from .model import (DemandData, augmented_latent_shares, fitted_shares,
                     jacobian_full, latent_shares)
 from .nlsur import nlsur
@@ -47,6 +48,7 @@ __all__ = [
     "ExpenditureReducedForm",
     "fit_expenditure_reduced_form",
     "QuaidsceResults",
+    "AnalyticalInference",
     "Elasticities",
     "elasticities",
     "fitted_share_derivatives",

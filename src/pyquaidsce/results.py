@@ -13,6 +13,7 @@ from .selection import FirstStageLayout
 from .statafmt import coef_table, g
 
 if TYPE_CHECKING:  # pragma: no cover
+    from .inference import AnalyticalInference
     from .reduced_form import ExpenditureReducedForm
 
 
@@ -60,17 +61,16 @@ class QuaidsceResults:
     V_analytic: Optional[np.ndarray] = None
     ivexp_names: List[str] = field(default_factory=list)
     reduced_form: Optional["ExpenditureReducedForm"] = None
+    analytical: Optional["AnalyticalInference"] = None
 
     # ------------------------------------------------------------------ #
     @property
     def se(self) -> np.ndarray:
         """Public standard errors for the active inference method.
 
-        Bootstrap S.E.s cover the complete reported vector.  Without a
-        bootstrap, the analytical covariance is only implemented for the
-        structural and first-stage coefficients, so unsupported elasticity
-        entries deliberately remain ``NaN`` rather than looking like exact
-        zero-uncertainty estimates.
+        Bootstrap S.E.s cover the complete reported vector. With
+        ``analytic=True``, joint sandwich inference also covers elasticities.
+        Otherwise elasticity entries remain ``NaN``.
         """
         if self.boot is not None:
             return np.asarray(self.boot.se, dtype=float).copy()
@@ -78,18 +78,12 @@ class QuaidsceResults:
 
     @property
     def analytic_se(self) -> np.ndarray:
-        """Conditional analytical S.E.s, with elasticity entries undefined.
-
-        Elasticities are appended to the Stata-compatible coefficient vector,
-        but their analytical delta-method covariance is not implemented.  The
-        corresponding entries are therefore explicitly ``NaN`` without
-        contaminating the otherwise usable covariance matrix.
-        """
+        """Joint S.E.s with ``analytic=True``; conditional S.E.s otherwise."""
         source = self.V if self.V_analytic is None else self.V_analytic
         d = np.diag(source).copy()
         d[d < 0] = np.nan
         out = np.sqrt(d)
-        if self.spec.censor:
+        if self.spec.censor and self.analytical is None:
             n = self.spec.neqn
             n_elasticities = n + 2 * n * n
             if out.size >= n_elasticities:

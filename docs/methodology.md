@@ -191,8 +191,9 @@ For the existing elasticity function $e(\zeta,m)$,
 $\varphi_{e,t}=e_\zeta\varphi_{\zeta,t}+e_m\varphi_{m,t}$ and
 $\widehat V_e=N^{-2}\sum_t\varphi_{e,t}\varphi_{e,t}'$.
 This includes uncertainty in observed means and in the means of the Probit
-CDF, PDF, and linear index. Elasticity derivatives use central numerical
-differences of the existing function, with step-size checks.
+CDF, PDF, and linear index. Elasticity derivatives use analytical product,
+chain, and quotient rules, checked against independent central differences
+of the existing function.
 
 `res.analytical` provides the covariance and all three elasticity S.E. arrays.
 Its `max_standardized_score` reports the largest absolute mean score divided

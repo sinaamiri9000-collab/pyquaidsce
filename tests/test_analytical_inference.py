@@ -13,9 +13,11 @@ import pandas as pd
 from scipy.stats import norm
 
 from pyquaidsce import DemandData, quaidsce
+from pyquaidsce._elasticity_derivatives import elasticity_jacobian
 from pyquaidsce.elasticities import elasticities, sample_means
 from pyquaidsce.inference import (_EstimatingSystem, _bread_inverse,
-                                  _central_jacobian, compute_analytical_inference)
+                                  _central_jacobian, _pack_means, _unpack_means,
+                                  compute_analytical_inference)
 from pyquaidsce.model import fitted_shares, jacobian_full
 from pyquaidsce.params import delta_matrix, unpack
 from tools.validate_small4 import BENCH, DEMOS, PRICES, SHARES
@@ -129,6 +131,43 @@ class AnalyticalInferenceTests(unittest.TestCase):
         np.testing.assert_allclose(other.elasticity_se,
                                    self.fit.analytical.elasticity_se,
                                    rtol=2e-4, atol=2e-7)
+
+    def test_complete_elasticity_gradient_against_independent_differences(self):
+        frame = self.frame.copy()
+        frame['excluded_selection'] = np.random.default_rng(27043).normal(size=len(frame))
+        for options in [dict(), dict(quadratic=False), dict(censor=False),
+                        dict(censor=False, demographics=[]),
+                        dict(selection_prices=[PRICES[0], PRICES[2]],
+                             selection_expenditure=False),
+                        dict(selection_covariates=DEMOS+['excluded_selection'])]:
+            with self.subTest(options=options):
+                kwargs = dict(self.kw, **options)
+                fit = self.fit if not options else quaidsce(frame, **kwargs)
+                n, r = fit.spec.neqn, fit.spec.ndemo
+                tau = fit.tau if fit.spec.censor else np.zeros(0)
+                active = np.asarray([i*fit.np_prob+j
+                                     for i, pr in enumerate(fit.probits)
+                                     for j in range(fit.np_prob) if j not in pr.dropped],
+                                    dtype=int)
+                nt, k = len(active), len(fit.theta)
+                x = np.concatenate([tau[active], fit.theta, _pack_means(fit.means)])
+
+                def existing_function(values):
+                    t = tau.copy()
+                    t[active] = values[:nt]
+                    c = unpack(values[nt:nt+k], fit.spec)
+                    m = _unpack_means(values[nt+k:], n, r)
+                    return elasticities(c, fit.spec, m, fit.anot,
+                                        tau=t if fit.spec.censor else None,
+                                        np_prob=fit.np_prob,
+                                        layout=fit.selection_layout).as_stata_vector()
+
+                reference = _central_jacobian(existing_function, x, relative_step=1e-6)
+                analytic = elasticity_jacobian(
+                    fit.theta, fit.spec, fit.means, fit.anot, tau,
+                    fit.np_prob, fit.selection_layout, active)
+                scaled_error = np.abs(analytic-reference)/(1+np.abs(reference))
+                self.assertLess(float(scaled_error.max()), 3e-6)
 
     def test_analytical_bread_matches_independent_numerical_derivative(self):
         for method in ['ifgnls', 'nls', 'fgnls']:

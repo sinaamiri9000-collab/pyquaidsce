@@ -3,9 +3,9 @@
 The construction follows Hardin (2002), Stata Journal 2(3), 253--266.
 First-stage scores, demand scores and estimated GLS-weight moments are stacked.
 Sample-mean influence functions include their dependence on Probit parameters.
-The estimating-equation derivatives are analytical. Elasticity derivatives use
-central numerical differences. The covariance is an asymptotic sandwich,
-without resampling.
+Estimating-equation and elasticity derivatives are analytical. Independent
+central numerical differences are retained as a verification path. The
+covariance is an asymptotic sandwich, without resampling.
 """
 
 from __future__ import annotations
@@ -17,6 +17,7 @@ from typing import Optional
 import numpy as np
 from scipy.stats import norm
 
+from ._elasticity_derivatives import elasticity_jacobian
 from ._threads import with_blas_threads
 from ._timing import check_deadline
 from .elasticities import Means, elasticities
@@ -412,7 +413,16 @@ class _EstimatingSystem:
                                 np_prob=self.result.np_prob,
                                 layout=self.result.selection_layout).as_stata_vector()
 
-        jac = _central_jacobian(function, x, relative_step=relative_step)
+        if relative_step is None:
+            check_deadline(self.deadline)
+            jac = elasticity_jacobian(
+                theta, self.spec, self.result.means, self.result.anot,
+                self.tau, self.result.np_prob, self.result.selection_layout,
+                self.active,
+            )
+        else:
+            # Private independent numerical reference; never used by fitting.
+            jac = _central_jacobian(function, x, relative_step=relative_step)
         core = np.zeros((jac.shape[0], self.x.size))
         core[:, self.tau_slice] = jac[:, :nt]
         core[:, self.theta_slice] = jac[:, nt:nt+theta.size]

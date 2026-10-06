@@ -133,18 +133,26 @@ def truth(means):
     return np.concatenate([full_vector(theta, SPEC), tau, e]), names
 
 
+def functional_names(names):
+    """Identify elasticities by the actual row-major (good, price) order."""
+    return (list(names[:-36])+[f'income:{i+1}' for i in range(4)]
+            +[f'uncompensated:{i+1},{j+1}' for i in range(4) for j in range(4)]
+            +[f'compensated:{i+1},{j+1}' for i in range(4) for j in range(4)])
+
+
 def _one(task):
-    number, seed, observations, methods, timeout = task
+    number, seed, observations, methods, timeout, tolerances = task
     frame = generate(observations, seed)
     output = []
     for method in methods:
         begin = time.perf_counter()
         record = dict(replication=number, seed=int(seed), method=method)
         try:
-            fit = quaidsce(frame, **OPTIONS, method=method, analytic=True,
+            fit = quaidsce(frame, **OPTIONS, **tolerances, method=method, analytic=True,
                            _deadline=begin+timeout)
             record.update(converged=True, seconds=time.perf_counter()-begin,
                           n_outer=fit.n_outer, n_gn=fit.n_gn,
+                          bread_condition=fit.analytical.bread_condition,
                           max_standardized_score=fit.analytical.max_standardized_score)
             output.append((record, fit.b, fit.analytic_se))
         except Exception as exc:
@@ -163,9 +171,16 @@ def main():
                         default=['nls', 'fgnls', 'ifgnls'])
     parser.add_argument('--n-jobs', type=int, default=2)
     parser.add_argument('--timeout', type=float, default=60)
+    parser.add_argument('--param-tol', type=float)
+    parser.add_argument('--objective-tol', type=float)
+    parser.add_argument('--gn-tol', type=float)
+    parser.add_argument('--outer-param-tol', type=float)
     parser.add_argument('--output', type=Path,
                         default=ROOT/'validation/analytical_se/quaids_dgp')
     args = parser.parse_args()
+    tolerances = {key: getattr(args, key) for key in
+                  ['param_tol', 'objective_tol', 'gn_tol', 'outer_param_tol']
+                  if getattr(args, key) is not None}
     assert np.all(positivity_bound() > 0), 'DGP must guarantee positive purchased shares'
     args.output.mkdir(parents=True, exist_ok=True)
     with threadpool_limits(limits=1, user_api='blas'):
@@ -173,7 +188,7 @@ def main():
         target, names = truth(means)
         coarse, _ = truth(population_means(18))
     seeds = np.random.SeedSequence(args.seed).generate_state(args.repetitions, dtype=np.uint32)
-    tasks = [(i+1, int(seed), args.observations, args.methods, args.timeout)
+    tasks = [(i+1, int(seed), args.observations, args.methods, args.timeout, tolerances)
              for i, seed in enumerate(seeds)]
     records, draws = [], {method: [] for method in args.methods}
     with mp.get_context('spawn').Pool(args.n_jobs) as pool:
@@ -193,13 +208,14 @@ def main():
         sd = point.std(axis=0, ddof=1)
         coverage = np.mean(np.abs(point-target) <= norm.ppf(.975)*se, axis=0)
         ratio = np.divide(se.mean(axis=0), sd, out=np.full_like(sd, np.nan), where=sd > 0)
-        pd.DataFrame(dict(name=names, truth=target, mean_estimate=point.mean(axis=0),
+        pd.DataFrame(dict(name=names, functional_name=functional_names(names),
+                          truth=target, mean_estimate=point.mean(axis=0),
                           bias=point.mean(axis=0)-target, empirical_sd=sd,
                           mean_analytical_se=se.mean(axis=0),
                           mean_se_over_empirical_sd=ratio, coverage_95=coverage)).to_csv(
             args.output/f'{method}.csv', index=False, float_format='%.17g')
         np.savez_compressed(args.output/f'{method}-draws.npz', point=point, se=se,
-                            truth=target, names=names,
+                            truth=target, names=names, functional_names=functional_names(names),
                             replication=np.asarray([i for i, _, _ in entries]))
         reports[method] = dict(successful=len(entries), requested=args.repetitions,
                                median_elasticity_se_ratio=float(np.median(ratio[-36:])),
@@ -211,7 +227,7 @@ def main():
     pd.DataFrame(records).sort_values(['method', 'replication']).to_csv(
         args.output/'replications.csv', index=False)
     report = dict(observations=args.observations, repetitions=args.repetitions,
-                  seed=args.seed, methods=reports, options=OPTIONS,
+                  seed=args.seed, methods=reports, options=dict(OPTIONS, **tolerances),
                   timeout=args.timeout, n_jobs=args.n_jobs,
                   true_free_parameters=true_theta().tolist(), true_tau_per_good=TAU.tolist(),
                   purchased_share_lower_bound=positivity_bound().tolist(),

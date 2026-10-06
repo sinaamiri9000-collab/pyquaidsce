@@ -132,7 +132,7 @@ residual because the package does not know that residual's generating equation.
 
 The system of $n$ equations is estimated using **Nonlinear Seemingly Unrelated Regression (NLSUR)**:
 
-- **NLS**: Minimizes $\sum_t u_t' u_t$ assuming an identity error covariance ($\Sigma = I$).
+- **NLS**: Minimizes $\sum_t u_t' u_t$ with identity objective weights. Its sandwich covariance uses the estimated residual covariance, allowing correlation between equations.
 - **FGNLS**: Calculates $\hat{\Sigma} = \frac{1}{N} \sum_t \hat{u}_t \hat{u}_t'$ from NLS residuals and minimizes $\sum_t u_t' \hat{\Sigma}^{-1} u_t$.
 - **IFGNLS**: Iterates the FGNLS estimation and updates $\hat{\Sigma}$ until relative parameter change is below `outer_param_tol` in two consecutive outer rounds and the final inner solve reports convergence.
 

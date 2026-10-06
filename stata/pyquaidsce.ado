@@ -15,13 +15,12 @@ program define pyquaidsce, eclass
           selection_covariates(varlist numeric) selection_nocovariates ///
           selection_noexpenditure ///
           method(string) algorithm(string) start(string) reps(integer 0) ///
-          stop_rule(string) bootstrap_start(string) ///
+          bootstrap_start(string) ///
           vce_sigma(string) ///
           initial(string) sigma_initial(string) ///
-          tol(real 1e-13) max_outer(integer 200) max_iter(integer 300) ///
-          chunk(integer 2000) nrtol_stop(real 1e-12) ///
-          inner_nrtol_early(real 1e-8) sigma_tol(real 1e-5) ///
-          boot_sigma_tol(real 1e-5) ///
+          param_tol(real 1e-5) objective_tol(real 1e-7) gn_tol(real 1e-5) ///
+          outer_param_tol(real 1e-5) ///
+          max_outer(integer 200) max_iter(integer 300) chunk(integer 2000) ///
           seed(integer -1) n_jobs(integer 1) blas_threads(integer 1) mp_context(string) ///
           rep_timeout(real 0) noquadratic nocensor nolog gnlog level(cilevel) ]
 
@@ -88,13 +87,6 @@ program define pyquaidsce, eclass
         exit 198
     }
 
-    if "`stop_rule'" == "" local stop_rule "standard"
-    local stop_rule = lower("`stop_rule'")
-    if !inlist("`stop_rule'", "standard", "tight") {
-        display as error "stop_rule must be 'standard' or 'tight'"
-        exit 198
-    }
-
     if "`bootstrap_start'" == "" local bootstrap_start "zero"
     local bootstrap_start = lower("`bootstrap_start'")
     if !inlist("`bootstrap_start'", "zero", "warm") {
@@ -139,20 +131,16 @@ program define pyquaidsce, eclass
             exit 198
         }
     }
-    if `tol' <= 0 | `nrtol_stop' <= 0 | `sigma_tol' <= 0 ///
-        | `boot_sigma_tol' <= 0 | `blas_threads' <= 0 {
-        display as error "convergence tolerances and blas_threads() must be positive"
+    if missing(`param_tol', `objective_tol', `gn_tol', `outer_param_tol') ///
+        | `param_tol' <= 0 | `objective_tol' <= 0 | `gn_tol' <= 0 ///
+        | `outer_param_tol' <= 0 | `blas_threads' <= 0 {
+        display as error "convergence tolerances must be finite and positive; blas_threads() must be positive"
         exit 198
     }
     if `max_outer' < 2 | `max_iter' < 1 | `chunk' < 1 {
         display as error "max_outer must be >= 2; max_iter and chunk must be >= 1"
         exit 198
     }
-    if `inner_nrtol_early' <= 0 {
-        display as error "inner_nrtol_early must be positive"
-        exit 198
-    }
-
     local is_quad = ("`quadratic'" == "")
     local is_censor = ("`censor'" == "")
     local is_verbose = ("`log'" == "")
@@ -199,7 +187,7 @@ program define pyquaidsce, eclass
     }
 
     // 6. Launch the complete estimation outside Stata's GUI process
-    python: from pyquaidsce.stata_bridge import launch_from_stata, poll_bootstrap, load_stata_results, kill_bootstrap; import sfi; _rt=float(sfi.Macro.getLocal("rep_timeout")); launch_from_stata(shares_str=sfi.Macro.getLocal("varlist"), prices_str=sfi.Macro.getLocal("p_vars"), expenditure_str=sfi.Macro.getLocal("exp_var"), demographics_str=sfi.Macro.getLocal("demographics"), anot=float(sfi.Macro.getLocal("anot")), method=sfi.Macro.getLocal("method"), algorithm=sfi.Macro.getLocal("algorithm"), start=sfi.Macro.getLocal("start"), reps=int(sfi.Macro.getLocal("reps")), stop_rule=sfi.Macro.getLocal("stop_rule"), bootstrap_start=sfi.Macro.getLocal("bootstrap_start"), seed=int(sfi.Macro.getLocal("seed")), n_jobs=int(sfi.Macro.getLocal("n_jobs")), blas_threads=int(sfi.Macro.getLocal("blas_threads")), mp_context=sfi.Macro.getLocal("mp_context") or None, rep_timeout=_rt if _rt > 0 else None, quadratic=bool(int(sfi.Macro.getLocal("is_quad"))), censor=bool(int(sfi.Macro.getLocal("is_censor"))), is_lnprices=bool(int(sfi.Macro.getLocal("is_lnp"))), is_lnexp=bool(int(sfi.Macro.getLocal("is_lnexp"))), ivexp_str=sfi.Macro.getLocal("ivexp"), control_function=sfi.Macro.getLocal("control_function"), selection_control_function=sfi.Macro.getLocal("selection_control_function"), selection_prices_str=sfi.Macro.getLocal("selection_prices"), selection_prices_specified=bool(int(sfi.Macro.getLocal("selection_prices_specified"))), selection_covariates_str=sfi.Macro.getLocal("selection_covariates"), selection_covariates_specified=bool(int(sfi.Macro.getLocal("selection_covariates_specified"))), selection_expenditure=bool(int(sfi.Macro.getLocal("selection_expenditure_on"))), verbose=bool(int(sfi.Macro.getLocal("is_verbose"))), vce_sigma=sfi.Macro.getLocal("vce_sigma"), initial_mat_name=sfi.Macro.getLocal("initial"), sigma_initial_mat_name=sfi.Macro.getLocal("sigma_initial"), tol=float(sfi.Macro.getLocal("tol")), max_outer=int(float(sfi.Macro.getLocal("max_outer"))), max_iter=int(float(sfi.Macro.getLocal("max_iter"))), chunk=int(float(sfi.Macro.getLocal("chunk"))), nrtol_stop=float(sfi.Macro.getLocal("nrtol_stop")), inner_nrtol_early=float(sfi.Macro.getLocal("inner_nrtol_early")), sigma_tol=float(sfi.Macro.getLocal("sigma_tol")), boot_sigma_tol=float(sfi.Macro.getLocal("boot_sigma_tol")), gn_verbose=bool(int(sfi.Macro.getLocal("is_gn_verbose"))), touse_var=sfi.Macro.getLocal("touse"))
+    python: from pyquaidsce.stata_bridge import launch_from_stata, poll_bootstrap, load_stata_results, kill_bootstrap; import sfi; _rt=float(sfi.Macro.getLocal("rep_timeout")); launch_from_stata(shares_str=sfi.Macro.getLocal("varlist"), prices_str=sfi.Macro.getLocal("p_vars"), expenditure_str=sfi.Macro.getLocal("exp_var"), demographics_str=sfi.Macro.getLocal("demographics"), anot=float(sfi.Macro.getLocal("anot")), method=sfi.Macro.getLocal("method"), algorithm=sfi.Macro.getLocal("algorithm"), start=sfi.Macro.getLocal("start"), reps=int(sfi.Macro.getLocal("reps")), bootstrap_start=sfi.Macro.getLocal("bootstrap_start"), seed=int(sfi.Macro.getLocal("seed")), n_jobs=int(sfi.Macro.getLocal("n_jobs")), blas_threads=int(sfi.Macro.getLocal("blas_threads")), mp_context=sfi.Macro.getLocal("mp_context") or None, rep_timeout=_rt if _rt > 0 else None, quadratic=bool(int(sfi.Macro.getLocal("is_quad"))), censor=bool(int(sfi.Macro.getLocal("is_censor"))), is_lnprices=bool(int(sfi.Macro.getLocal("is_lnp"))), is_lnexp=bool(int(sfi.Macro.getLocal("is_lnexp"))), ivexp_str=sfi.Macro.getLocal("ivexp"), control_function=sfi.Macro.getLocal("control_function"), selection_control_function=sfi.Macro.getLocal("selection_control_function"), selection_prices_str=sfi.Macro.getLocal("selection_prices"), selection_prices_specified=bool(int(sfi.Macro.getLocal("selection_prices_specified"))), selection_covariates_str=sfi.Macro.getLocal("selection_covariates"), selection_covariates_specified=bool(int(sfi.Macro.getLocal("selection_covariates_specified"))), selection_expenditure=bool(int(sfi.Macro.getLocal("selection_expenditure_on"))), verbose=bool(int(sfi.Macro.getLocal("is_verbose"))), vce_sigma=sfi.Macro.getLocal("vce_sigma"), initial_mat_name=sfi.Macro.getLocal("initial"), sigma_initial_mat_name=sfi.Macro.getLocal("sigma_initial"), param_tol=float(sfi.Macro.getLocal("param_tol")), objective_tol=float(sfi.Macro.getLocal("objective_tol")), gn_tol=float(sfi.Macro.getLocal("gn_tol")), outer_param_tol=float(sfi.Macro.getLocal("outer_param_tol")), max_outer=int(float(sfi.Macro.getLocal("max_outer"))), max_iter=int(float(sfi.Macro.getLocal("max_iter"))), chunk=int(float(sfi.Macro.getLocal("chunk"))), gn_verbose=bool(int(sfi.Macro.getLocal("is_gn_verbose"))), touse_var=sfi.Macro.getLocal("touse"))
 
     local _pyq_boot_done = 0
     local _pyq_boot_err = 0

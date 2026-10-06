@@ -4,6 +4,21 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 ## Unreleased
 
+- Replaced named stopping modes with four explicit thresholds: `param_tol=1e-5`,
+  `objective_tol=1e-7`, `gn_tol=1e-5`, and `outer_param_tol=1e-5`. The three
+  existing inner conditions retain their OR combination, and IFGNLS retains
+  two consecutive small outer parameter changes plus final inner convergence.
+- Removed obsolete convergence switches and the separate bootstrap threshold.
+  Every bootstrap draw now receives the same four tolerances as the point fit.
+- Preserved analytic Jacobians, normal equations, scaling, step halving,
+  damping, and the sequence of residual-covariance updates. Low-level inner
+  iteration limits now default to 300, matching the public estimator.
+- Corrected NLS parameter covariance to the identity-weighted sandwich
+  `A^-1 B A^-1`, with `A=sum J'J` and `B=sum J'Sigma_hat J`. NLS coefficients
+  are unchanged; FGNLS and IFGNLS covariance formulas are unchanged.
+- Updated Python, bootstrap, asynchronous Stata, R, CLI checks, tests and
+  documentation to use the same convergence controls.
+
 - Unified the main estimator name across interfaces: Python and R use `quaidsce()`, and Stata now uses the `quaidsce` command.
 - Renamed the R package from `rquaidsce` to `pyquaidsce`. The Python package name remains `pyquaidsce`.
 - Stata accepts both `quaidsce` and `pyquaidsce`. Both run the same estimator; `pyquaidsce` can be used to avoid a name conflict with an older installed `quaidsce` command.
@@ -17,7 +32,7 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 - Bumped Python, R, Stata, citation, and release metadata to 1.6.0 and updated the GitHub release workflow default tag.
 - Reframed the archived Stata benchmark as historical compatibility/timing evidence so it is not mistaken for a fresh v1.6.0 exact-replication claim.
 - Updated the master Python/R/Stata scenario suites so the former legacy-predictor scenario now verifies the implicit IFGNLS default.
-- Changed the default IFGNLS outer tolerance to `sigma_tol=1e-5` and the bootstrap default to `boot_sigma_tol=1e-5`.
+- Changed the default IFGNLS outer parameter tolerance and the then-separate bootstrap tolerance to `1e-5`.
 - Added `blas_threads`; the default is one BLAS thread per estimation process.
 
 ## 1.5.0 — 2026-08-25
@@ -50,19 +65,17 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 - **Default Predictor Documentation Alignment**: Verified and aligned all documentation and tutorials to reflect `first_stage_predict="xb"` (theoretical textbook Shonkwiler & Yen linear index) as the primary default, while preserving `first_stage_predict="pr"` for legacy Stata compatibility.
 - **Author Metadata & Contact**: Updated official author contact to `sinaamiri9000@gmail.com` across all packages, documentation, and metadata files.
 
-- Renamed the `stop_rule` value `"stata"` to `"standard"` and made `"standard"`
-  the default in both the Python API and the Stata command (previously
-  `"tight"` in Python). The disjunctive Stata-matching behavior itself is
-  unchanged; only the label and default moved.
+- Renamed the historical stopping-policy label from "stata" to "standard" and
+  made that policy the default across Python and Stata; its formulas were
+  unchanged in that release.
 - Changed `strict_stata` to default to `False` (corrected textbook formulas)
   in the Python API, the Stata bridge, and `pyquaidsce.ado`. Pass
   `strict_stata=True` (or `strict_stata(true)` in Stata) for exact replication
   of the original ado's elasticity calculations.
 - Ported all remaining Python-only options into `pyquaidsce.ado`:
   `start()`, `initial()`, `sigma_initial()` (Stata matrix names),
-  `vce_sigma()`, `tol()`, `nrtol_stop()`, `sigma_tol()`,
-  `inner_nrtol_early()`, `max_iter()`, `max_outer()`, `chunk()`,
-  `boot_sigma_tol()`, and a new `gnlog` switch mirroring `gn_verbose`.
+  `vce_sigma()`, the then-current convergence controls, `max_iter()`,
+  `max_outer()`, `chunk()`, and a new `gnlog` switch mirroring `gn_verbose`.
 - Updated `pyquaidsce.sthlp` with the new options and revised defaults.
 
 ## 1.3.0 — 2026-08-15

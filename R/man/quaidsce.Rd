@@ -21,7 +21,6 @@ quaidsce(
   start = "zero",
   initial = NULL,
   sigma_initial = NULL,
-  stop_rule = "standard",
   bootstrap_start = "zero",
   vce_sigma = "objective",
   control_function = NULL,
@@ -35,7 +34,10 @@ quaidsce(
   blas_threads = 1L,
   mp_context = "spawn",
   rep_timeout = NULL,
-  tol = NULL,
+  param_tol = 1e-5,
+  objective_tol = 1e-7,
+  gn_tol = 1e-5,
+  outer_param_tol = 1e-5,
   max_outer = 200L,
   max_iter = 300L,
   chunk = 2000L,
@@ -78,7 +80,6 @@ both the participation Probits and latent demand equations.}
 
 \item{sigma_initial}{Optional numeric matrix of custom starting residual covariance Sigma (dimension (n_goods - 1) x (n_goods - 1)).}
 
-\item{stop_rule}{Convergence rule: 'standard' (default) or 'tight'.}
 
 \item{bootstrap_start}{Bootstrap starting scheme: 'zero' (default) or 'warm'.}
 
@@ -106,9 +107,12 @@ both the participation Probits and latent demand equations.}
 
 \item{rep_timeout}{Optional numeric timeout per bootstrap replication in seconds.}
 
-\item{tol}{Optional outer convergence tolerance (default = 1e-13). If NULL, default tolerance is used.}
+\item{param_tol}{Inner relative parameter-change threshold (default = 1e-5).}
+\item{objective_tol}{Inner relative weighted-SSR-change threshold (default = 1e-7).}
+\item{gn_tol}{Inner scaled Gauss-Newton threshold (default = 1e-5). Any one inner criterion may pass.}
+\item{outer_param_tol}{IFGNLS relative parameter-change threshold (default = 1e-5), required in two consecutive rounds. Bootstrap draws share all four thresholds with the point estimate.}
 
-\item{max_outer}{Maximum outer iterations (default = 200).}
+\item{max_outer}{Maximum numbered estimation stage, including initial NLS and FGNLS (default = 200).}
 
 \item{max_iter}{Maximum inner iterations (default = 300).}
 

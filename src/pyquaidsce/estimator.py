@@ -174,21 +174,19 @@ def quaidsce(
     method: str = "ifgnls",
     initial: Optional[ArrayLike] = None,
     sigma_initial: Optional[np.ndarray] = None,
-    boot_sigma_tol: float = 1e-5,
     start: str = "zero",
     reps: int = 0,
     seed: Optional[int] = None,
     bootstrap_start: str = "zero",
     vce_sigma: str = "objective",
     algorithm: str = "gn",
-    tol: float = 1e-13,
+    param_tol: float = 1e-5,
+    objective_tol: float = 1e-7,
+    gn_tol: float = 1e-5,
+    outer_param_tol: float = 1e-5,
     max_outer: int = 200,
     max_iter: int = 300,
     chunk: int = 2000,
-    nrtol_stop: float = 1e-12,
-    inner_nrtol_early: float = 1e-8,
-    sigma_tol: float = 1e-5,
-    stop_rule: str = "standard",
     n_jobs: int = 1,
     blas_threads: Optional[int] = 1,
     verbose: bool = True,
@@ -213,6 +211,13 @@ def quaidsce(
     quadratic : ``False`` reproduces ``noquadratic`` (i.e. plain AIDS).
     censor : ``False`` reproduces ``nocensor`` (i.e. Poi's ``quaids``).
     method : ``"nls"``, ``"fgnls"`` or ``"ifgnls"`` (the package default).
+    param_tol, objective_tol, gn_tol : positive finite float
+        Inner parameter-change, weighted-SSR-change and scaled GN thresholds,
+        default 1e-5, 1e-7 and 1e-5. An accepted step stops if any one passes.
+    outer_param_tol : positive finite float
+        Default 1e-5. IFGNLS requires relative parameter change below this
+        threshold in two consecutive outer iterations.
+        Bootstrap draws use the same four thresholds as the point estimate.
     reps : bootstrap replications; 0 disables the bootstrap.
     control_function : column containing an externally generated reduced-form
         residual. It enters the latent share as ``cfcoef_i * residual``.
@@ -240,7 +245,6 @@ def quaidsce(
     algorithm = str(algorithm).lower()
     start = str(start).lower()
     vce_sigma = str(vce_sigma).lower()
-    stop_rule = str(stop_rule).lower()
     bootstrap_start = str(bootstrap_start).lower()
     if method not in {"nls", "fgnls", "ifgnls"}:
         raise ValueError("method must be 'nls', 'fgnls', or 'ifgnls'")
@@ -250,16 +254,15 @@ def quaidsce(
         raise ValueError("start must be 'zero' or 'linear'")
     if vce_sigma not in {"objective", "final"}:
         raise ValueError("vce_sigma must be 'objective' or 'final'")
-    if stop_rule not in {"tight", "standard"}:
-        raise ValueError("stop_rule must be 'tight' or 'standard'")
     if bootstrap_start not in {"zero", "warm"}:
         raise ValueError("bootstrap_start must be 'zero' or 'warm'")
     if not np.isfinite(anot):
         raise ValueError("anot must be finite")
     if int(max_outer) < 2 or int(max_iter) < 1 or int(chunk) < 1:
         raise ValueError("max_outer must be >= 2; max_iter and chunk must be >= 1")
-    if tol <= 0 or nrtol_stop <= 0 or sigma_tol <= 0:
-        raise ValueError("convergence tolerances must be positive")
+    from .nlsur import _validate_tolerances
+    _validate_tolerances(param_tol=param_tol, objective_tol=objective_tol,
+                         gn_tol=gn_tol, outer_param_tol=outer_param_tol)
     if rep_timeout is not None:
         if not np.isfinite(rep_timeout) or float(rep_timeout) <= 0:
             raise ValueError("rep_timeout must be a finite positive number")
@@ -579,10 +582,10 @@ def quaidsce(
             raise ValueError("sigma_initial must contain only finite values")
     nl = nlsur(
         d, spec, theta0=theta0, sigma0=sigma_initial, start=start,
-        method=method, tol=tol,
+        method=method, param_tol=param_tol, objective_tol=objective_tol,
+        gn_tol=gn_tol, outer_param_tol=outer_param_tol,
         max_outer=max_outer,
-        max_iter=max_iter, chunk=chunk, nrtol_stop=nrtol_stop, sigma_tol=sigma_tol,
-        inner_nrtol_early=inner_nrtol_early, stop_rule=stop_rule,
+        max_iter=max_iter, chunk=chunk,
         vce_sigma=vce_sigma,
         algorithm=algorithm, blas_threads=blas_threads,
         verbose=False, log=say, gn_log=(print if gn_verbose else None),
@@ -630,8 +633,8 @@ def quaidsce(
 
     if not nl.converged:
         notes.append(
-            "The nonlinear estimator did not satisfy all requested convergence "
-            "criteria. Inspect n_outer/n_gn and refit with larger iteration limits "
+            "The nonlinear estimator did not meet its convergence "
+            "conditions. Inspect n_outer/n_gn and refit with larger iteration limits "
             "or different starting values before using the estimates."
         )
     if ivexp_active:
@@ -705,10 +708,10 @@ def quaidsce(
             anot=anot, quadratic=quadratic,
             censor=censor, method=method, initial=nl.theta,
             sigma_initial=nl.sigma,
-            vce_sigma=vce_sigma, sigma_tol=boot_sigma_tol,
-            algorithm=algorithm, stop_rule=stop_rule, tol=tol,
+            vce_sigma=vce_sigma, outer_param_tol=outer_param_tol,
+            algorithm=algorithm, param_tol=param_tol,
+            objective_tol=objective_tol, gn_tol=gn_tol,
             max_outer=max_outer, max_iter=max_iter, chunk=chunk,
-            nrtol_stop=nrtol_stop, inner_nrtol_early=inner_nrtol_early,
             bootstrap_start=bootstrap_start,
             reps=int(reps), seed=seed, n_jobs=n_jobs,
             blas_threads=blas_threads, touse=touse, verbose=verbose,

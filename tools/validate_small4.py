@@ -114,7 +114,10 @@ def main():
     ap.add_argument("--algorithm", default="gn", choices=["gn", "lm"])
     ap.add_argument("--start", default="zero", choices=["zero", "linear"])
     ap.add_argument("--vce", default="objective", choices=["objective", "final"])
-    ap.add_argument("--stop-rule", default="standard", choices=["standard", "tight"])
+    ap.add_argument("--param-tol", type=float, default=1e-5)
+    ap.add_argument("--objective-tol", type=float, default=1e-7)
+    ap.add_argument("--gn-tol", type=float, default=1e-5)
+    ap.add_argument("--outer-param-tol", type=float, default=1e-5)
     ap.add_argument("--out", default="out")
     a = ap.parse_args()
 
@@ -135,7 +138,8 @@ def main():
             method=cfg["method"], quadratic=cfg["quadratic"],
             censor=cfg["censor"],
             algorithm=a.algorithm, start=a.start, vce_sigma=a.vce,
-            stop_rule=a.stop_rule,
+            param_tol=a.param_tol, objective_tol=a.objective_tol,
+            gn_tol=a.gn_tol, outer_param_tol=a.outer_param_tol,
             verbose=False,
         )
         lab = (f"method={cfg['method']}"

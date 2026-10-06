@@ -157,9 +157,10 @@ record_test(10, "Levenberg-Marquardt Optimizer (algorithm='lm')", function() {
            demographics = demographics, anot = anot_val, algorithm = "lm", method = "ifgnls")
 })
 
-record_test(11, "Strict Gradient Stopping Rule (stop_rule='tight')", function() {
+record_test(11, "Explicit Convergence Tolerances", function() {
   quaidsce(data = df, shares = shares_14, prices = prices_14, expenditure = "gasto_total",
-           demographics = demographics, anot = anot_val, stop_rule = "tight", method = "ifgnls")
+           demographics = demographics, anot = anot_val, param_tol = 1e-5, objective_tol = 1e-7,
+           gn_tol = 1e-5, outer_param_tol = 1e-5, method = "ifgnls")
 })
 
 record_test(12, "Alternative VCE Sigma Formula (vce_sigma='final')", function() {

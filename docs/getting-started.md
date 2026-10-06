@@ -101,6 +101,10 @@ print(res.elasticity_tables())
 | `initial(b_init)` | `initial=b_init` |
 | `sigma_initial(sigma_init)` | `sigma_initial=sigma_init` |
 | `reps(200)` | `reps=200` |
+| `param_tol(1e-5)` | `param_tol=1e-5` |
+| `objective_tol(1e-7)` | `objective_tol=1e-7` |
+| `gn_tol(1e-5)` | `gn_tol=1e-5` |
+| `outer_param_tol(1e-5)` | `outer_param_tol=1e-5` |
 
 ---
 

@@ -53,7 +53,10 @@ class MergeIntegrityTests(unittest.TestCase):
         for name in (
             "mp_context",
             "rep_timeout",
-            "stop_rule",
+            "param_tol",
+            "objective_tol",
+            "gn_tol",
+            "outer_param_tol",
             "bootstrap_start",
             "control_function",
             "selection_control_function",
@@ -210,7 +213,8 @@ class MergeIntegrityTests(unittest.TestCase):
                 expenditure_str="m",
                 demographics_str="z",
                 anot=10.0,
-                stop_rule="standard",
+                param_tol=2e-5, objective_tol=3e-7, gn_tol=4e-5,
+                outer_param_tol=5e-5,
                 bootstrap_start="warm",
                 n_jobs=2,
                 mp_context="spawn",
@@ -218,7 +222,9 @@ class MergeIntegrityTests(unittest.TestCase):
                 ivexp_str="iv",
                 verbose=False,
             )
-        self.assertEqual(captured["stop_rule"], "standard")
+        for name, value in dict(param_tol=2e-5, objective_tol=3e-7, gn_tol=4e-5,
+                                outer_param_tol=5e-5).items():
+            self.assertEqual(captured[name], value)
         self.assertEqual(captured["bootstrap_start"], "warm")
         self.assertEqual(captured["mp_context"], "spawn")
         self.assertEqual(captured["rep_timeout"], 15.0)
@@ -399,7 +405,8 @@ class MergeIntegrityTests(unittest.TestCase):
             launch_from_stata(
                 shares_str="w1 w2 w3", prices_str="p1 p2 p3",
                 expenditure_str="m", demographics_str="", anot=10.0,
-                reps=7, seed=42, n_jobs=2, stop_rule="standard",
+                reps=7, seed=42, n_jobs=2, param_tol=2e-5, objective_tol=3e-7,
+                gn_tol=4e-5, outer_param_tol=5e-5,
                 bootstrap_start="warm", verbose=False,
             )
 
@@ -408,7 +415,9 @@ class MergeIntegrityTests(unittest.TestCase):
         self.assertEqual(len(frame), 2)
         self.assertEqual(kwargs["reps"], 7)
         self.assertEqual(kwargs["seed"], 42)
-        self.assertEqual(kwargs["stop_rule"], "standard")
+        for name, value in dict(param_tol=2e-5, objective_tol=3e-7, gn_tol=4e-5,
+                                outer_param_tol=5e-5).items():
+            self.assertEqual(kwargs[name], value)
         self.assertEqual(kwargs["bootstrap_start"], "warm")
 
     def test_load_stata_results_restores_all_outputs(self):

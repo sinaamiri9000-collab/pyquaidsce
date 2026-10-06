@@ -134,9 +134,35 @@ The system of $n$ equations is estimated using **Nonlinear Seemingly Unrelated R
 
 - **NLS**: Minimizes $\sum_t u_t' u_t$ assuming an identity error covariance ($\Sigma = I$).
 - **FGNLS**: Calculates $\hat{\Sigma} = \frac{1}{N} \sum_t \hat{u}_t \hat{u}_t'$ from NLS residuals and minimizes $\sum_t u_t' \hat{\Sigma}^{-1} u_t$.
-- **IFGNLS**: Iterates the FGNLS estimation and updates $\hat{\Sigma}$ until both parameter estimates and covariance matrix converge.
+- **IFGNLS**: Iterates the FGNLS estimation and updates $\hat{\Sigma}$ until relative parameter change is below `outer_param_tol` in two consecutive outer rounds and the final inner solve reports convergence.
 
 The optimization uses an **analytic Gauss-Newton algorithm** with step-halving (or Levenberg-Marquardt damping), evaluated efficiently via block-diagonal delta transformations.
+
+---
+
+### Stopping controls and parameter covariance
+
+The defaults are `param_tol=1e-5`, `objective_tol=1e-7`, `gn_tol=1e-5`,
+`outer_param_tol=1e-5`, `max_iter=300`, and `max_outer=200`. The three inner
+criteria are combined with OR. All thresholds are shared by point estimation
+and bootstrap draws. The [user guide](user-guide.md#convergence-and-numerical-tolerance)
+specifies their exact formulas and treatment of failed steps.
+
+With $J_t=\partial f_t/\partial\theta'$ and final residual covariance
+$\hat\Sigma=N^{-1}\sum_t u_tu_t'$, NLS uses
+
+$$\widehat{\operatorname{Var}}(\hat\theta_{NLS})=A^{-1}BA^{-1},\quad
+A=\sum_t J_t'J_t,\quad B=\sum_t J_t'\hat\Sigma J_t.$$
+
+This identity-weighted sandwich allows cross-equation correlation under a
+common covariance across independent observations. It is conditional on the
+first-stage correction and any generated residual. It does not provide
+heteroskedasticity-robust or cluster-robust inference.
+
+FGNLS and IFGNLS retain $(\sum_t J_t'\Sigma_V^{-1}J_t)^{-1}$, where
+`vce_sigma="objective"` uses the covariance in the final minimization and
+`vce_sigma="final"` uses final residuals. NLS always uses final residuals for
+its sandwich, so its covariance is independent of `vce_sigma`.
 
 ---
 

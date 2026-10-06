@@ -69,6 +69,15 @@ is unknown to the package.
 |---|---|---|---|
 | `vce_sigma` | `str` | `"objective"` | Residual covariance used in the second-stage standard error formula: `"objective"` (used in the final minimization) or `"final"` (recomputed from final residuals). |
 
+For NLS, the parameter covariance is the identity-weighted sandwich
+$A^{-1}BA^{-1}$, with $A=\sum_t J_t'J_t$ and
+$B=\sum_t J_t'\hat\Sigma J_t$. The final residual covariance
+$\hat\Sigma=N^{-1}\sum_t u_tu_t'$ supplies $B$; `vce_sigma` does not change
+NLS covariance. This allows cross-equation correlation while retaining the
+identity-weighted NLS estimates. It assumes independent observations with
+a common residual covariance and is not a heteroskedasticity-robust formula.
+FGNLS and IFGNLS retain their existing GLS covariance formulas.
+
 The Shonkwiler–Yen correction is fixed to the textbook Probit linear-index construction, and elasticity formulas are fixed to their corrected theoretical forms in v1.6.0 and later.
 
 ---
@@ -77,14 +86,47 @@ The Shonkwiler–Yen correction is fixed to the textbook Probit linear-index con
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `tol` | `float` | `1e-13` | Objective relative change tolerance. |
-| `nrtol_stop` | `float` | `1e-12` | Scaled relative gradient stopping tolerance (Gauss-Newton stationarity). |
-| `sigma_tol` | `float` | `1e-5` | Outer fixed-point parameter tolerance for IFGNLS iterations. |
-| `inner_nrtol_early` | `float` | `1e-8` | Early-stage inner Gauss-Newton tolerance used during inexact-outer IFGNLS. |
-| `stop_rule` | `str` | `"standard"` | Stopping criterion: `"standard"` (disjunctive rule matching Stata's `tolerance` / `ltolerance` / `nrtolerance`) or `"tight"` (stops only on the scaled gradient). |
+| `param_tol` | `float` | `1e-5` | Inner relative parameter-change threshold. |
+| `objective_tol` | `float` | `1e-7` | Inner relative change of weighted SSR. |
+| `gn_tol` | `float` | `1e-5` | Inner scaled Gauss-Newton criterion threshold. |
+| `outer_param_tol` | `float` | `1e-5` | IFGNLS relative parameter-change threshold, required in two consecutive rounds. |
 | `max_iter` | `int` | `300` | Maximum number of inner Gauss-Newton iterations per stage. |
-| `max_outer` | `int` | `200` | Maximum number of outer covariance updates for IFGNLS. |
+| `max_outer` | `int` | `200` | Maximum numbered estimation stage for IFGNLS, including initial NLS and FGNLS stages. |
 | `chunk` | `int` | `2000` | Observation block size for accumulating normal equations ($J'\Sigma^{-1}J$) without materializing the full Jacobian in RAM. |
+
+
+All four tolerances must be finite and positive. Let $\theta$ be the parameter
+vector before an accepted inner step, $\theta^+$ the candidate, and
+$Q=\sum_t u_t'\Sigma^{-1}u_t$ the weighted SSR at the old vector. The existing
+inner criteria are
+
+$$C_\theta=\max_j\frac{|\theta_j^+-\theta_j|}{1+|\theta_j|},\qquad
+C_Q=\frac{Q-Q^+}{\max(|Q|,10^{-300})},\qquad
+C_{GN}=\frac{|d_{GN}'g|}{\max(|Q|,10^{-300})}.$$
+
+Here $g=\sum_t J_t'\Sigma^{-1}u_t$ and $d_{GN}$ is the undamped GN direction
+computed by the existing scaled normal-equation solver at the old vector.
+The same criterion is used with both `algorithm="gn"` and `algorithm="lm"`.
+An accepted step stops when **any one** of
+`C_theta < param_tol`, `C_Q < objective_tol`, or `C_GN < gn_tol` holds.
+If no improving step can be accepted, only `C_GN < gn_tol` can certify
+convergence; a failed step is not treated as zero parameter/objective change.
+
+For IFGNLS, each outer iteration uses
+
+$$R_k=\max_j\frac{|\theta_j^{(k)}-\theta_j^{(k-1)}|}
+{|\theta_j^{(k-1)}|+10^{-8}}.$$
+
+`R_k < outer_param_tol` must hold in **two consecutive** outer iterations;
+a larger change resets the confirmation. The final inner solve must also
+report convergence. This outer criterion measures parameters, not changes
+in $\Sigma$. The inner thresholds remain constant throughout the fit.
+
+Bootstrap replications use **exactly the same four tolerances** as the point
+estimate, for both zero and warm starts. There is no separate bootstrap
+convergence threshold. These are pyquaidsce's stopping rules; they do not
+claim exact equivalence to Stata's `nlsur`. A convergence flag certifies these
+conditions, not a global optimum.
 
 ---
 
@@ -97,7 +139,6 @@ The Shonkwiler–Yen correction is fixed to the textbook Probit linear-index con
 | `n_jobs` | `int` | `1` | Number of parallel worker processes for bootstrap replications. |
 | `blas_threads` | `int` or `None` | `1` | Number of BLAS threads used by each estimation process. Use `None` to keep the existing BLAS setting. |
 | `bootstrap_start` | `str` | `"zero"` | Starting values for each bootstrap draw: `"zero"` (starts each draw from zero) or `"warm"` (starts each draw from full-sample estimates). |
-| `boot_sigma_tol` | `float` | `1e-5` | Outer covariance tolerance used inside bootstrap replications. |
 | `mp_context` | `str` or `None` | `None` | Multiprocessing start method. `None` selects the BLAS-safe cross-platform `"spawn"` default; an available method such as `"forkserver"` can be requested explicitly. |
 | `rep_timeout` | `float` or `None` | `None` | Per-replication wall-clock limit. Cooperative Probit/optimizer checks are backed by a parent watchdog that terminates the disposable child process if necessary. Adds process-start overhead when enabled. |
 

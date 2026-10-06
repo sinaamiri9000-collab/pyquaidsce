@@ -197,10 +197,11 @@ def run_tests():
     )
 
     record_test(
-        11, "Strict Gradient Stopping Rule (stop_rule='tight')",
+        11, "Explicit Convergence Tolerances",
         lambda: quaidsce(
             data=df, shares=shares_14, prices=prices_14, expenditure="gasto_total",
-            demographics=demographics, anot=anot_val, stop_rule="tight", method="ifgnls"
+            demographics=demographics, anot=anot_val, param_tol=1e-5, objective_tol=1e-7,
+            gn_tol=1e-5, outer_param_tol=1e-5, method="ifgnls"
         )
     )
 

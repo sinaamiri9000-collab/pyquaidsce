@@ -6,6 +6,23 @@ This package can be called with either `quaidsce` or `pyquaidsce`. Both commands
 
 ---
 
+## Convergence controls
+
+| Argument | Default | Criterion |
+|---|---|---|
+| `param_tol` | `1e-5` | Relative inner parameter change |
+| `objective_tol` | `1e-7` | Relative inner weighted-SSR change |
+| `gn_tol` | `1e-5` | Scaled Gauss-Newton criterion |
+| `outer_param_tol` | `1e-5` | Relative IFGNLS parameter change in two consecutive rounds |
+
+Point estimation and every bootstrap draw use these same four thresholds.
+Any one inner criterion may stop the inner solve; IFGNLS requires two
+consecutive small outer parameter changes and final inner convergence.
+The iteration limits default to `max_iter=300` and `max_outer=200`.
+See the [user guide](../docs/user-guide.md#convergence-and-numerical-tolerance)
+for the exact formulas. In Stata, pass these as `param_tol(#)`,
+`objective_tol(#)`, `gn_tol(#)` and `outer_param_tol(#)`.
+
 ## Prerequisites
 
 1. **Stata 16.0 or newer** (Stata 16, 17, 18, 19 with Python integration).

@@ -7,13 +7,12 @@ from pyquaidsce._threads import blas_thread_limit
 
 
 class ThreadAndDefaultTests(unittest.TestCase):
-    def test_160_numerical_defaults(self):
+    def test_explicit_numerical_defaults(self):
         qsig = inspect.signature(quaidsce)
         nsig = inspect.signature(nlsur)
-        self.assertEqual(qsig.parameters["sigma_tol"].default, 1e-5)
-        self.assertEqual(qsig.parameters["boot_sigma_tol"].default, 1e-5)
+        self.assertEqual(qsig.parameters["outer_param_tol"].default, 1e-5)
         self.assertEqual(qsig.parameters["blas_threads"].default, 1)
-        self.assertEqual(nsig.parameters["sigma_tol"].default, 1e-5)
+        self.assertEqual(nsig.parameters["outer_param_tol"].default, 1e-5)
         self.assertEqual(nsig.parameters["blas_threads"].default, 1)
 
     def test_blas_limit_is_scoped_and_none_is_unmanaged(self):

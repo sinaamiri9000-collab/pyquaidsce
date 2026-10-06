@@ -119,10 +119,11 @@ quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
     demographics(`demo_list') anot(`anot_val') algorithm(lm) method(ifgnls) nolog
 display as result "       --> [PASS] LM LL = " %10.4f e(ll) ", Converged = " e(converged)
 
-display as text _n "[11/24] RUNNING: Strict Gradient Stopping Rule (stop_rule=tight)..."
+display as text _n "[11/24] RUNNING: Explicit Convergence Tolerances..."
 quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///
-    demographics(`demo_list') anot(`anot_val') stop_rule(tight) method(ifgnls) nolog
-display as result "       --> [PASS] Tight rule LL = " %10.4f e(ll) ", Converged = " e(converged)
+    demographics(`demo_list') anot(`anot_val') param_tol(1e-5) objective_tol(1e-7) ///
+    gn_tol(1e-5) outer_param_tol(1e-5) method(ifgnls) nolog
+display as result "       --> [PASS] Explicit tolerances LL = " %10.4f e(ll) ", Converged = " e(converged)
 
 display as text _n "[12/24] RUNNING: Alternative VCE Sigma Formula (vce_sigma=final)..."
 quaidsce w1_red-w14_red, prices(`price_list') expenditure(gasto_total) ///

@@ -1,6 +1,5 @@
 """
-Nonlinear seemingly-unrelated-regression estimator, replicating Stata's
-``nlsur`` for the three estimators the package can use.
+Nonlinear system estimator with NLS, FGNLS and IFGNLS methods.
 
 Given residuals ``u_t(theta)`` (an ``m``-vector per observation):
 
@@ -10,9 +9,11 @@ Given residuals ``u_t(theta)`` (an ``m``-vector per observation):
 * **ifgnls** iterate the FGNLS step until the parameters stop moving; this is
              the maximum-likelihood estimator under joint normality
 
-Reported quantities, matching ``e()`` after ``nlsur``:
+Reported quantities:
 
-    e(V)  = ( sum_t X_t' Sigma_hat^-1 X_t )^-1 ,  X_t = d f(x_t, theta)/d theta'
+    FGNLS/IFGNLS V = ( sum_t X_t' Sigma_hat^-1 X_t )^-1
+    NLS V = A^-1 B A^-1, A = sum_t X_t' X_t, B = sum_t X_t' Sigma_hat X_t
+    X_t = d f(x_t, theta)/d theta'
     e(ll) = -(N m / 2) (1 + ln 2*pi) - (N/2) ln |Sigma_hat|
 
 ``Sigma_hat`` uses divisor ``N`` (Stata's default; ``dfk`` is not implemented
@@ -192,19 +193,30 @@ def _solve_scaled(G: np.ndarray, g: np.ndarray, mu: float = 0.0,
     return ds * sc
 
 
+def _validate_tolerances(**tolerances) -> None:
+    """Reject invalid stopping thresholds before numerical work starts."""
+    for name, value in tolerances.items():
+        try:
+            valid = bool(np.isfinite(value) and value > 0)
+        except (TypeError, ValueError):
+            valid = False
+        if not valid:
+            raise ValueError(f"{name} must be a finite positive number")
+
+
 def gauss_newton(
     theta0: np.ndarray,
     d: DemandData,
     spec: Spec,
     sigma: np.ndarray,
-    tol: float = 1e-13,
-    max_iter: int = 200,
+    param_tol: float = 1e-5,
+    objective_tol: float = 1e-7,
+    gn_tol: float = 1e-5,
+    max_iter: int = 300,
     chunk: int = 2000,
     verbose: bool = False,
     say=None,
     algorithm: str = "gn",
-    nrtol_stop: float = 1e-12,
-    stop_rule: str = "standard",
     deadline: Optional[float] = None,
 ) -> Tuple[np.ndarray, float, int, bool]:
     """Minimise ``sum_t u_t' sigma^-1 u_t``.
@@ -216,8 +228,13 @@ def gauss_newton(
     step halving, i.e. the scheme Stata's ``nl``/``nlsur`` use; it is kept as the
     reference behaviour, but on a large censored system it creeps along the flat
     valley of the criterion while LM turns the corner.  Both target the same
-    stationary point.
+    stationary point. After an accepted step, convergence requires any one
+    of the parameter-change, objective-change or scaled GN criteria to pass.
+    If no improving step is found, only the scaled GN criterion can certify
+    convergence. See ``docs/user-guide.md`` for the exact formulas.
     """
+    _validate_tolerances(param_tol=param_tol, objective_tol=objective_tol,
+                         gn_tol=gn_tol)
     cache = make_cache(spec)
     P = _whitener(sigma)
     theta = np.asarray(theta0, dtype=float).copy()
@@ -255,8 +272,7 @@ def gauss_newton(
                         break
                     m2 *= 10.0
             if best is None:
-                cutoff = 1e-5 if stop_rule == "standard" else nrtol_stop
-                converged = bool(nrtol < cutoff)
+                converged = bool(nrtol < gn_tol)
                 break
             cand, oc, t, m2 = best
         else:
@@ -281,37 +297,20 @@ def gauss_newton(
                 mu = min(mu * nu, 1e14)
                 nu *= 2.0
             if not accepted:
-                cutoff = 1e-5 if stop_rule == "standard" else nrtol_stop
-                converged = bool(nrtol < cutoff)
+                converged = bool(nrtol < gn_tol)
                 break
             t, m2 = 1.0, mu
 
         rel = (obj - oc) / max(abs(obj), 1e-300)
         smax = float(np.max(np.abs(cand - theta) / (np.abs(theta) + 1e-6)))
-        # Stata's mreldif(): the denominator is |b_old| + 1, not |b_old|, which
-        # makes the criterion far looser for small coefficients.
+        # Parameter change is measured at the old, pre-step parameter vector.
         mreldif = float(np.max(np.abs(cand - theta) / (np.abs(theta) + 1.0)))
         theta, obj = cand, oc
         if say is not None:
             say(f"    GN {it:3d}  obj={obj:.12g}  rel={rel:.3e} "
                 f"step={smax:.2e} t={t:g} mu={m2:.2e} nrtol={nrtol:.2e}")
-        # Stationarity is judged by the scale-free relative gradient (Stata's
-        # nrtolerance, whose default is a much looser 1e-5).  The parameter-step
-        # test alone never fires on a censored system: the criterion has nearly
-        # flat directions, so theta keeps drifting long after the objective has
-        # stopped moving.
-        if stop_rule == "standard":
-            # Stata's nl/nlsur declare convergence when ANY of three criteria is
-            # met: tolerance() on the coefficient vector, ltolerance() on the
-            # objective, or nrtolerance() on the scaled gradient.  Because the
-            # test is a disjunction, the coefficient criterion routinely fires
-            # while the gradient is still O(1e-4) -- the criterion of a censored
-            # demand system has very flat directions.  That is why Stata's
-            # -method(nls)- and -method(fgnls)- results are not fully converged.
-            if (mreldif < 1e-5) or (rel < 1e-7) or (nrtol < 1e-5):
-                converged = True
-                break
-        elif nrtol < nrtol_stop or (rel < tol and smax < 1e-9):
+        # The existing disjunctive policy, with explicit configurable thresholds.
+        if (mreldif < param_tol) or (rel < objective_tol) or (nrtol < gn_tol):
             converged = True
             break
     return theta, obj, it, converged
@@ -326,14 +325,13 @@ def nlsur(
     sigma0: Optional[np.ndarray] = None,
     start: str = "zero",
     method: str = "ifgnls",
-    tol: float = 1e-13,
-    sigma_tol: float = 1e-5,
+    param_tol: float = 1e-5,
+    objective_tol: float = 1e-7,
+    gn_tol: float = 1e-5,
+    outer_param_tol: float = 1e-5,
     max_outer: int = 200,
-    max_iter: int = 200,
+    max_iter: int = 300,
     chunk: int = 2000,
-    nrtol_stop: float = 1e-12,
-    inner_nrtol_early: float = 1e-8,
-    stop_rule: str = "standard",
     vce_sigma: str = "objective",
     algorithm: str = "gn",
     blas_threads: Optional[int] = 1,
@@ -355,7 +353,14 @@ def nlsur(
         Which ``Sigma_hat`` enters ``e(V)``.  ``"objective"`` is the one used in
         the last minimisation (textbook FGNLS, and what Stata reports);
         ``"final"`` recomputes it from the final residuals.  The two coincide
-        for ``ifgnls`` at convergence.
+        for ``ifgnls`` at convergence. NLS always uses its identity-weighted
+        sandwich covariance and the final residual covariance.
+    param_tol, objective_tol, gn_tol : positive finite float
+        Inner stopping thresholds, default 1e-5, 1e-7 and 1e-5. Any one may
+        certify an accepted step; the formulas retain the existing policy.
+    outer_param_tol : positive finite float
+        Default 1e-5. IFGNLS requires relative parameter change below this
+        threshold in two consecutive outer iterations.
     """
     method = method.lower()
     if method not in ("nls", "fgnls", "ifgnls"):
@@ -364,8 +369,8 @@ def nlsur(
         raise ValueError(f"unknown algorithm {algorithm!r}")
     if start not in ("zero", "linear"):
         raise ValueError(f"unknown start {start!r}")
-    if stop_rule not in ("tight", "standard"):
-        raise ValueError(f"unknown stop_rule {stop_rule!r}")
+    _validate_tolerances(param_tol=param_tol, objective_tol=objective_tol,
+                         gn_tol=gn_tol, outer_param_tol=outer_param_tol)
     if vce_sigma not in ("objective", "final"):
         raise ValueError(f"unknown vce_sigma {vce_sigma!r}")
     say = log or (print if verbose else (lambda *_: None))
@@ -399,7 +404,7 @@ def nlsur(
         sigma_obj = np.asarray(sigma0, dtype=float)
         history.append(_objective(theta, d, spec, _whitener(sigma_obj)))
         n_outer = 2
-        tight = False
+        outer_small_previous = False
         outer_converged = False
         ok = False
         obj = history[-1]
@@ -409,11 +414,9 @@ def nlsur(
             sigma_new = sigma_from(theta)
             theta_prev = theta.copy()
             theta, obj, ngn, ok = gauss_newton(
-                theta, d, spec, sigma_new, tol=tol, max_iter=max_iter,
+                theta, d, spec, sigma_new, param_tol=param_tol,
+                objective_tol=objective_tol, gn_tol=gn_tol, max_iter=max_iter,
                 chunk=chunk, say=gn_log, algorithm=algorithm,
-                nrtol_stop=(nrtol_stop if tight
-                            else max(nrtol_stop, inner_nrtol_early)),
-                stop_rule=stop_rule,
                 deadline=deadline,
             )
             total_gn += ngn
@@ -422,13 +425,13 @@ def nlsur(
             n_outer = outer
             rel = float(np.max(np.abs(theta - theta_prev)
                                / (np.abs(theta_prev) + 1e-8)))
-            if rel < sigma_tol:
-                if tight:
+            if rel < outer_param_tol:
+                if outer_small_previous:
                     outer_converged = True
                     break
-                tight = True
+                outer_small_previous = True
             else:
-                tight = False
+                outer_small_previous = False
         return _finish(theta, d, spec, sigma_obj, sigma_from, method,
                        vce_sigma, chunk, n_outer, total_gn,
                        bool(ok and outer_converged), obj, history,
@@ -438,9 +441,9 @@ def nlsur(
     say("Calculating NLS estimates...")
     I_m = np.eye(m)
     theta, obj, ngn, ok = gauss_newton(
-        theta, d, spec, I_m, tol=tol, max_iter=max_iter, chunk=chunk,
-        say=gn_log, algorithm=algorithm, nrtol_stop=nrtol_stop,
-        stop_rule=stop_rule,
+        theta, d, spec, I_m, param_tol=param_tol,
+        objective_tol=objective_tol, gn_tol=gn_tol, max_iter=max_iter, chunk=chunk,
+        say=gn_log, algorithm=algorithm,
         deadline=deadline,
     )
     total_gn += ngn
@@ -454,9 +457,9 @@ def nlsur(
         sigma = sigma_from(theta)
         theta_prev = theta.copy()
         theta, obj, ngn, ok = gauss_newton(
-            theta, d, spec, sigma, tol=tol, max_iter=max_iter, chunk=chunk,
-            say=gn_log, algorithm=algorithm, nrtol_stop=nrtol_stop,
-            stop_rule=stop_rule,
+            theta, d, spec, sigma, param_tol=param_tol,
+            objective_tol=objective_tol, gn_tol=gn_tol, max_iter=max_iter, chunk=chunk,
+            say=gn_log, algorithm=algorithm,
             deadline=deadline,
         )
         total_gn += ngn
@@ -465,16 +468,9 @@ def nlsur(
         n_outer = 2
 
         if method == "ifgnls":
-            # Inexact-outer strategy.  IFGNLS is a fixed-point iteration on
-            # Sigma_hat, so there is nothing to gain from solving the early
-            # inner problems to machine precision -- their solutions are thrown
-            # away by the next Sigma update anyway.  We therefore solve the
-            # inner problems loosely (`inner_nrtol_early`) while the outer
-            # iteration is still moving, and only tighten to `nrtol_stop` once
-            # the outer loop has essentially converged, confirming convergence
-            # with a final fully-tight pass.  The fixed point is unchanged; the
-            # number of Gauss-Newton steps drops by a large factor.
-            tight = False
+            # Keep the same inner thresholds throughout. Confirm a small
+            # outer parameter change in two consecutive iterations.
+            outer_small_previous = False
             outer_converged = False
             for outer in range(3, max_outer + 1):
                 check_deadline(deadline)
@@ -482,11 +478,9 @@ def nlsur(
                 sigma_new = sigma_from(theta)
                 theta_prev = theta.copy()
                 theta, obj, ngn, ok = gauss_newton(
-                    theta, d, spec, sigma_new, tol=tol, max_iter=max_iter,
+                    theta, d, spec, sigma_new, param_tol=param_tol,
+                    objective_tol=objective_tol, gn_tol=gn_tol, max_iter=max_iter,
                     chunk=chunk, say=gn_log, algorithm=algorithm,
-                    nrtol_stop=(nrtol_stop if tight else
-                                max(nrtol_stop, inner_nrtol_early)),
-                    stop_rule=stop_rule,
                     deadline=deadline,
                 )
                 total_gn += ngn
@@ -496,13 +490,13 @@ def nlsur(
                 rel = float(
                     np.max(np.abs(theta - theta_prev) / (np.abs(theta_prev) + 1e-8))
                 )
-                if rel < sigma_tol:
-                    if tight:
+                if rel < outer_param_tol:
+                    if outer_small_previous:
                         outer_converged = True
                         break
-                    tight = True  # one more pass, solved to full precision
+                    outer_small_previous = True
                 else:
-                    tight = False
+                    outer_small_previous = False
 
     overall_converged = bool(ok)
     if method == "ifgnls":
@@ -520,15 +514,26 @@ def _finish(theta, d, spec, sigma_obj, sigma_from, method, vce_sigma, chunk,
     N, m = d.nobs, spec.n_eq_estimated
     sigma_final = sigma_from(theta)
     sigma_V = sigma_final if vce_sigma == "final" else sigma_obj
-    if method == "nls":
-        sigma_V = sigma_final
-
     cache = make_cache(spec)
-    P = _whitener(sigma_V)
-    G, _, _ = _normal_equations(
-        theta, d, spec, cache, P, chunk, deadline=deadline
-    )
-    V = np.linalg.inv(G)
+    if method == "nls":
+        # NLS was fitted with identity weights. Its covariance is A^-1 B A^-1,
+        # not the inverse GLS information evaluated at the NLS coefficients.
+        A, _, _ = _normal_equations(
+            theta, d, spec, cache, np.eye(m), chunk, deadline=deadline
+        )
+        # P'P = Sigma_final here, so the same block accumulator forms B.
+        P = np.linalg.cholesky(sigma_final).T
+        B, _, _ = _normal_equations(
+            theta, d, spec, cache, P, chunk, deadline=deadline
+        )
+        A_inv = np.linalg.inv(A)
+        V = A_inv @ B @ A_inv
+    else:
+        P = _whitener(sigma_V)
+        G, _, _ = _normal_equations(
+            theta, d, spec, cache, P, chunk, deadline=deadline
+        )
+        V = np.linalg.inv(G)
 
     _, logdet = np.linalg.slogdet(sigma_final)
     llf = -(N * m / 2.0) * (1.0 + LOG2PI) - (N / 2.0) * logdet

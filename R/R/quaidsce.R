@@ -23,7 +23,6 @@
 #' @param start Starting values: 'zero' (default) or 'linear'.
 #' @param initial Optional numeric vector of custom starting free parameters (or a previous \code{quaidsce} object).
 #' @param sigma_initial Optional numeric matrix of custom starting residual covariance Sigma (dimension (n_goods - 1) x (n_goods - 1)).
-#' @param stop_rule Convergence rule: 'standard' (default) or 'tight'.
 #' @param bootstrap_start Bootstrap starting scheme: 'zero' (default) or 'warm'.
 #' @param vce_sigma Residual covariance for analytical VCE: 'objective' (default) or 'final'.
 #' @param control_function Optional character name of endogeneity control function residual.
@@ -37,8 +36,11 @@
 #' @param blas_threads Integer number of BLAS threads used by each estimation process (default = 1).
 #' @param mp_context Multiprocessing context method (default = "spawn").
 #' @param rep_timeout Optional numeric timeout per bootstrap replication in seconds.
-#' @param tol Optional outer convergence tolerance (default = 1e-13). If NULL, default tolerance is used.
-#' @param max_outer Maximum outer iterations (default = 200).
+#' @param param_tol Inner relative parameter-change threshold (default = 1e-5).
+#' @param objective_tol Inner relative weighted-SSR-change threshold (default = 1e-7).
+#' @param gn_tol Inner scaled Gauss-Newton threshold (default = 1e-5). Any one inner criterion may pass.
+#' @param outer_param_tol IFGNLS relative parameter-change threshold (default = 1e-5), required in two consecutive rounds. Bootstrap draws share all four thresholds with the point estimate.
+#' @param max_outer Maximum numbered estimation stage, including initial NLS and FGNLS (default = 200).
 #' @param max_iter Maximum inner iterations (default = 300).
 #' @param chunk Chunk size for memory management (default = 2000).
 #' @param verbose Logical, whether to print progress (default = FALSE).
@@ -74,7 +76,6 @@ quaidsce <- function(data,
                      start = "zero",
                      initial = NULL,
                      sigma_initial = NULL,
-                     stop_rule = "standard",
                      bootstrap_start = "zero",
                      vce_sigma = "objective",
                      control_function = NULL,
@@ -88,7 +89,10 @@ quaidsce <- function(data,
                      blas_threads = 1L,
                      mp_context = "spawn",
                      rep_timeout = NULL,
-                     tol = NULL,
+                     param_tol = 1e-5,
+                     objective_tol = 1e-7,
+                     gn_tol = 1e-5,
+                     outer_param_tol = 1e-5,
                      max_outer = 200L,
                      max_iter = 300L,
                      chunk = 2000L,
@@ -176,7 +180,6 @@ quaidsce <- function(data,
     start = as.character(start),
     initial = init_vec,
     sigma_initial = if (!is.null(sigma_initial)) as.matrix(sigma_initial) else NULL,
-    stop_rule = as.character(stop_rule),
     bootstrap_start = as.character(bootstrap_start),
     vce_sigma = as.character(vce_sigma),
     control_function = control_function,
@@ -190,7 +193,10 @@ quaidsce <- function(data,
     blas_threads = as.integer(blas_threads),
     mp_context = if (!is.null(mp_context)) as.character(mp_context) else NULL,
     rep_timeout = if (!is.null(rep_timeout)) as.numeric(rep_timeout) else NULL,
-    tol = if (!is.null(tol)) as.numeric(tol) else 1e-13,
+    param_tol = as.numeric(param_tol),
+    objective_tol = as.numeric(objective_tol),
+    gn_tol = as.numeric(gn_tol),
+    outer_param_tol = as.numeric(outer_param_tol),
     max_outer = as.integer(max_outer),
     max_iter = as.integer(max_iter),
     chunk = as.integer(chunk),

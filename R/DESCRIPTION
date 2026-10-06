@@ -1,7 +1,7 @@
 Package: pyquaidsce
 Type: Package
 Title: Censored Quadratic Almost Ideal Demand System (QUAIDS) Estimation
-Version: 1.6.0
+Version: 1.7.0
 Author: Sina Amiri [aut, cre]
 Maintainer: Sina Amiri <sinaamiri9000@gmail.com>
 Authors@R: person("Sina", "Amiri", email = "sinaamiri9000@gmail.com", role = c("aut", "cre"))
@@ -20,5 +20,5 @@ Suggests:
 Config/testthat/edition: 3
 URL: https://github.com/sinaamiri9000-collab/pyquaidsce
 BugReports: https://github.com/sinaamiri9000-collab/pyquaidsce/issues
-SystemRequirements: Python (>= 3.9), NumPy (>= 1.22), SciPy (>= 1.8), Pandas (>= 1.4), pyquaidsce (>= 1.6.0)
+SystemRequirements: Python (>= 3.9), NumPy (>= 1.22), SciPy (>= 1.8), Pandas (>= 1.4), pyquaidsce (>= 1.7.0)
 Config/roxygen2/version: 8.1.0

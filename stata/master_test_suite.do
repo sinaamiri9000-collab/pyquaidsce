@@ -1,5 +1,5 @@
 * ==============================================================================
-* STATA MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE FOR PYQUAIDSCE 1.6.0
+* STATA MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE FOR PYQUAIDSCE 1.7.0
 * ==============================================================================
 * Dataset: bd_uruguay.csv (14 food groups, 6,848 observations)
 * ==============================================================================
@@ -9,7 +9,7 @@ set more off
 discard
 
 display as text _n "=============================================================================="
-display as text "PYQUAIDSCE 1.6.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE"
+display as text "PYQUAIDSCE 1.7.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE"
 display as text "=============================================================================="
 
 * ---- STEP 0: Load dataset & feature prep -------------------------------------

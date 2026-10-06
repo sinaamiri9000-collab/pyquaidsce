@@ -33,7 +33,7 @@ from .reduced_form import ExpenditureReducedForm, fit_expenditure_reduced_form
 from .results import QuaidsceResults
 from .selection import FirstStageLayout
 
-__version__ = "1.6.0"
+__version__ = "1.7.0"
 
 __all__ = [
     "quaidsce",

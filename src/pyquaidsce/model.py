@@ -23,8 +23,8 @@ where ``Phi_i``/``phi_i`` come from the first-stage probit.
 IMPORTANT — the ``pdf``/``cdf`` inputs
 -------------------------------------
 pyquaidsce uses the textbook Shonkwiler-Yen construction from the Probit
-linear index: ``Phi_i = Phi(x'tau)`` and ``phi_i = phi(x'tau)``. Since
-version 1.6.0 this behavior is fixed and is not user-selectable.
+linear index: ``Phi_i = Phi(x'tau)`` and ``phi_i = phi(x'tau)``. In
+version 1.7.0 this behavior is fixed and is not user-selectable.
 
 The Jacobian below is analytic and exact; it is checked against a
 finite-difference Jacobian in the test suite.

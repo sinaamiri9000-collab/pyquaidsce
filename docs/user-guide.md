@@ -69,7 +69,7 @@ is unknown to the package.
 |---|---|---|---|
 | `vce_sigma` | `str` | `"objective"` | FGNLS/IFGNLS covariance convention: `"objective"` (used in the final minimization) or `"final"` (recomputed from final residuals). |
 
-The Shonkwiler–Yen correction is fixed to the textbook Probit linear-index construction, and elasticity formulas are fixed to their corrected theoretical forms in v1.6.0 and later.
+The Shonkwiler–Yen correction is fixed to the textbook Probit linear-index construction, and elasticity formulas are fixed to their corrected theoretical forms in v1.7.0 and later.
 
 ---
 

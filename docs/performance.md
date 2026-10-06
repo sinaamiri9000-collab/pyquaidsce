@@ -23,14 +23,14 @@ Several computational strategies make `pyquaidsce` significantly faster than con
 
 ## 2. Archived Controlled Benchmark Results
 
-The stored timing run was recorded during an earlier compatibility-capable release. It remains useful as same-machine performance evidence, but it is not presented as a fresh v1.6.0 timing run. The benchmark setup consists of **20,000 observations, 4 goods, 3 demographics, and IFGNLS estimation** evaluated on the exact same hardware:
+The stored timing run was recorded during an earlier compatibility-capable release. It remains useful as same-machine performance evidence, but it is not presented as a fresh v1.7.0 timing run. The benchmark setup consists of **20,000 observations, 4 goods, 3 demographics, and IFGNLS estimation** evaluated on the exact same hardware:
 
 | Platform / Software | Point Estimation Runtime | Speedup |
 |---|---:|---:|
 | **Stata 19.5** | 1,161.2 seconds (~19 min 21 s) | 1.0x (Baseline) |
 | **pyquaidsce (Python 3.14)** | **26.0 seconds** | **~44.6x Faster** |
 
-*Note: Timings measure point-estimation computation time (excluding disk I/O). A paper that labels this number specifically as a v1.6.0 benchmark should rerun both implementations with the final release.*
+*Note: Timings measure point-estimation computation time (excluding disk I/O). A paper that labels this number specifically as a v1.7.0 benchmark should rerun both implementations with the final release.*
 
 ---
 

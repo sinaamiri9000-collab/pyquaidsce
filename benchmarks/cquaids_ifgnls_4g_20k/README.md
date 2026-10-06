@@ -2,8 +2,8 @@
 
 This directory preserves the public numerical-agreement and runtime benchmark
 originally recorded during the early `pyquaidsce` releases. The stored files under
-`results/` are historical outputs and should not be interpreted as a fresh v1.6.0
-exact-replication claim. The current `run_python.py` uses the canonical v1.6.0+
+`results/` are historical outputs and should not be interpreted as a fresh v1.7.0
+exact-replication claim. The current `run_python.py` uses the canonical v1.7.0+
 Shonkwiler-Yen linear-index implementation.
 
 ## Design
@@ -87,7 +87,7 @@ cquaids_ifgnls_4g_20k/
     └── comparison_summary.json
 ```
 
-The files under `results/` are the archived outputs used for the historical headline comparison. The raw logs are intentionally retained unchanged for auditability, including references to compatibility settings that no longer exist in v1.6.0.
+The files under `results/` are the archived outputs used for the historical headline comparison. The raw logs are intentionally retained unchanged for auditability, including references to compatibility settings that no longer exist in v1.7.0.
 
 ## Reproduce the benchmark
 

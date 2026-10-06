@@ -1,5 +1,5 @@
 # ==============================================================================
-# RQUAIDSCE 1.6.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE
+# RQUAIDSCE 1.7.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE
 # ==============================================================================
 # Dataset: bd_uruguay.csv (14 food groups, 6,848 observations)
 # ==============================================================================
@@ -12,7 +12,7 @@ suppressPackageStartupMessages({
 })
 
 cat("\n================================================================================\n")
-cat("RQUAIDSCE 1.6.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE\n")
+cat("RQUAIDSCE 1.7.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE\n")
 cat("================================================================================\n\n")
 
 # ---- STEP 0: Load dataset ----------------------------------------------------
@@ -263,7 +263,7 @@ record_test(24, "Complete S3 Methods (summary, coef, vcov, residuals, fitted, el
 # Final Scorecard
 # ------------------------------------------------------------------------------
 cat("\n================================================================================\n")
-cat("RQUAIDSCE 1.6.0 MASTER TEST SUITE SCORECARD\n")
+cat("RQUAIDSCE 1.7.0 MASTER TEST SUITE SCORECARD\n")
 cat("================================================================================\n")
 cat(sprintf("%-3s %-52s %-8s %-10s %s\n", "#", "Test Scenario Title", "Status", "Time (s)", "Details"))
 cat(paste(rep("-", 80), collapse = ""), "\n")

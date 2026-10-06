@@ -1,8 +1,8 @@
 # Validation and Numerical Evidence
 
-`pyquaidsce` v1.6.0 is validated against econometric identities, numerical derivatives, cross-interface contracts, and archived Stata comparisons. Exact reproduction of known mistakes in the original Stata ado is **not** a v1.6.0 objective.
+`pyquaidsce` v1.7.0 is validated against econometric identities, numerical derivatives, cross-interface contracts, and archived Stata comparisons. Exact reproduction of known mistakes in the original Stata ado is **not** a v1.7.0 objective.
 
-## 1. Current v1.6.0 validation policy
+## 1. Current v1.7.0 validation policy
 
 The current implementation uses two corrected behaviors:
 
@@ -45,11 +45,11 @@ For that historical recorded comparison, the maximum reported differences were:
 | Non-elasticity standard errors | `7.25e-06` |
 | Log-likelihood, relative difference | `4.99e-08` |
 
-These numbers document the historical compatibility implementation; they should not be presented as a fresh v1.6.0 exact-replication result. The current benchmark script uses the v1.6.0 canonical first-stage definition.
+These numbers document the historical compatibility implementation; they should not be presented as a fresh v1.7.0 exact-replication result. The current benchmark script uses the v1.7.0 canonical first-stage definition.
 
 ## 4. Historical same-machine timing
 
-The archived same-machine wall-clock timings were 1,161.171 seconds for Stata 19.5 and 26.033 seconds for Python, a 44.60x ratio. This is retained as historical performance evidence. A publication that labels the number specifically as a v1.6.0 benchmark should rerun both sides with the final release and report the new measurements.
+The archived same-machine wall-clock timings were 1,161.171 seconds for Stata 19.5 and 26.033 seconds for Python, a 44.60x ratio. This is retained as historical performance evidence. A publication that labels the number specifically as a v1.7.0 benchmark should rerun both sides with the final release and report the new measurements.
 
 ## 5. Reproducing the benchmark
 
@@ -62,4 +62,4 @@ python run_python.py
 python compare_results.py --same-machine
 ```
 
-When comparing current v1.6.0 output with the original ado, interpret discrepancies using the documented methodological differences rather than forcing legacy error replication.
+When comparing current v1.7.0 output with the original ado, interpret discrepancies using the documented methodological differences rather than forcing legacy error replication.

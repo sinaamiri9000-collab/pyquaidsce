@@ -187,7 +187,7 @@ See the [R Package Documentation](R/README.md) for full details.
 
 ## Canonical Econometric Behavior
 
-Starting with **v1.6.0**, `pyquaidsce` has one canonical implementation for the two areas where the original Stata `quaidsce` ado contains known deviations from the published formulas:
+In **v1.7.0**, `pyquaidsce` has one canonical implementation for the two areas where the original Stata `quaidsce` ado contains known deviations from the published formulas:
 
 - The Shonkwiler–Yen first stage always uses the Probit **linear index** $X'\tau$, so the correction uses $\Phi(X'\tau)$ and $\phi(X'\tau)$.
 - Elasticities always use the corrected theoretical formulas, including the no-demographics quadratic term and the demographics + linear-AIDS censoring branch.
@@ -198,7 +198,7 @@ See [Stata Compatibility](docs/stata-compatibility.md) for details about compari
 
 ## Validation & Historical Performance Benchmark
 
-The repository preserves a deterministic 20,000-observation benchmark against Stata 19.5 (4 goods, 3 demographics, censoring, IFGNLS). The stored comparison was produced during an earlier compatibility-capable release and is retained as historical validation and timing evidence. Because v1.6.0 intentionally removes the legacy error-replication paths, exact agreement with the original ado is no longer a release goal in specifications affected by those known deviations.
+The repository preserves a deterministic 20,000-observation benchmark against Stata 19.5 (4 goods, 3 demographics, censoring, IFGNLS). The stored comparison was produced during an earlier compatibility-capable release and is retained as historical validation and timing evidence. Because v1.7.0 excludes the legacy error-replication paths, exact agreement with the original ado is no longer a release goal in specifications affected by those known deviations.
 
 - **Numerical Agreement**:
   - Structural parameters ($\alpha, \beta, \gamma, \lambda, \delta, \eta, \rho$): Maximum difference $< 1.68 \times 10^{-5}$
@@ -211,7 +211,7 @@ The repository preserves a deterministic 20,000-observation benchmark against St
   - **pyquaidsce**: 26.0 seconds
   - **Speedup**: **~44.6x faster**
 
-All raw data, archived logs, scripts, and comparison tables are available in [`benchmarks/cquaids_ifgnls_4g_20k/`](benchmarks/cquaids_ifgnls_4g_20k/). For current v1.6.0 validation policy and the historical timing evidence, see [Validation](docs/validation.md) and [Performance](docs/performance.md).
+All raw data, archived logs, scripts, and comparison tables are available in [`benchmarks/cquaids_ifgnls_4g_20k/`](benchmarks/cquaids_ifgnls_4g_20k/). For current v1.7.0 validation policy and the historical timing evidence, see [Validation](docs/validation.md) and [Performance](docs/performance.md).
 
 ---
 
@@ -236,7 +236,7 @@ tools/            Diagnostic scripts and Stata log comparison utilities
 - [Stata Package Guide](stata/README.md): How to install and run `pyquaidsce` directly within Stata.
 - [Methodology & Model Equations](docs/methodology.md): QUAIDS model specification, Shonkwiler-Yen censoring, and elasticity derivations.
 - [Stata Compatibility Guide](docs/stata-compatibility.md): Numerical-comparison guidance and the documented differences from the original Stata ado.
-- [Validation Evidence](docs/validation.md): Current v1.6.0 test policy plus archived Stata comparison evidence across 113 reported values.
+- [Validation Evidence](docs/validation.md): Current v1.7.0 test policy plus archived Stata comparison evidence across 113 reported values.
 - [Performance & Benchmarking](docs/performance.md): Benchmark methodology, timing details, and optimization notes.
 - [Contributing](CONTRIBUTING.md): Guidelines for bug reports and contributions.
 

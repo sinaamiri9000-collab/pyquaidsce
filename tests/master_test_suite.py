@@ -1,5 +1,5 @@
 """
-Master Comprehensive Test Suite for pyquaidsce 1.6.0
+Master Comprehensive Test Suite for pyquaidsce 1.7.0
 =====================================================
 Executes 24 real-world empirical test scenarios on Uruguayan household
 demand data (bd_uruguay.csv, 14 food groups, 6,848 observations).
@@ -94,7 +94,7 @@ def run_tests():
             return None
 
     print("=" * 80)
-    print("PYQUAIDSCE 1.6.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE")
+    print("PYQUAIDSCE 1.7.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE")
     print("=" * 80)
 
     # -------------------------------------------------------------------------
@@ -348,7 +348,7 @@ def run_tests():
     # Final Scorecard
     # -------------------------------------------------------------------------
     print("\n" + "=" * 80)
-    print("PYQUAIDSCE 1.6.0 MASTER TEST SUITE SCORECARD")
+    print("PYQUAIDSCE 1.7.0 MASTER TEST SUITE SCORECARD")
     print("=" * 80)
     print(f"{'#':<3} {'Test Scenario Title':<52} {'Status':<8} {'Time (s)':<10} {'Details'}")
     print("-" * 80)

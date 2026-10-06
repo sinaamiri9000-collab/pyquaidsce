@@ -1,6 +1,6 @@
 # Stata Compatibility and Validation Guide
 
-`pyquaidsce` retains a Stata-facing interface, coefficient ordering, and output layout so results can be compared conveniently with the original `quaidsce` command. Starting with **v1.6.0**, however, the package no longer offers switches that intentionally reproduce known econometric mistakes in the original ado-file. Python, R, and Stata interfaces now use one canonical implementation.
+`pyquaidsce` retains a Stata-facing interface, coefficient ordering, and output layout so results can be compared conveniently with the original `quaidsce` command. In **v1.7.0**, however, the package no longer offers switches that intentionally reproduce known econometric mistakes in the original ado-file. Python, R, and Stata interfaces now use one canonical implementation.
 
 ## Canonical first-stage censoring correction
 
@@ -14,7 +14,7 @@ The original Stata ado calls `predict` after `probit` without requesting `xb`; b
 
 `pyquaidsce` also uses the published/theoretically intended elasticity formulas in all specifications. In particular, it does not reproduce two identified ado-file edge-case errors: the no-demographics quadratic Marshallian term that uses the wrong beta index, and the demographics + linear-AIDS censoring branch where a global/local macro mismatch can zero the latent expenditure elasticity.
 
-These choices are fixed behavior in v1.6.0+. There is no compatibility switch in any public interface.
+These choices are fixed behavior in v1.7.0+. There is no compatibility switch in any public interface.
 
 ## Comparing pyquaidsce with Stata
 

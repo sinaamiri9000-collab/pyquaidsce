@@ -26,7 +26,7 @@ Shonkwiler-Yen correction used by pyquaidsce
 
 Implementation policy
 ---------------------
-pyquaidsce >= 1.6.0 uses the published/theoretically intended formulas only.
+pyquaidsce >= 1.7.0 uses the published/theoretically intended formulas only.
 Legacy switches that reproduced known mistakes in the original Stata implementation
 were removed from the public API. The reported elasticity matrices use the natural
 ``[good, price]`` convention; ``as_stata_vector()`` retains the historical storage

@@ -75,7 +75,7 @@ def first_stage(
 
     The censoring correction always uses the Probit linear index ``X' tau``:
     ``cdf = Phi(X' tau)`` and ``pdf = phi(X' tau)``. This is the textbook
-    Shonkwiler-Yen transformation used throughout pyquaidsce >= 1.6.0.
+    Shonkwiler-Yen transformation used throughout pyquaidsce >= 1.7.0.
 
     ``include_lnexp=False`` reproduces the behaviour of the ado when the user
     supplies ``lnexpenditure()`` instead of ``expenditure()``: the local macro

@@ -2,8 +2,9 @@
 
 All notable user-visible changes to `pyquaidsce` are documented here.
 
-## Unreleased
+## 1.7.0 — 2026-10-06
 
+- Updated Python, R, Stata, and release tooling to version 1.7.0.
 - Replaced named stopping modes with `param_tol`, `objective_tol`, `gn_tol`,
   and `outer_param_tol` across Python, R, and Stata.
 - Removed `stop_rule`, `tol`, `nrtol_stop`, `inner_nrtol_early`, `sigma_tol`,

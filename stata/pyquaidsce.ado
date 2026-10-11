@@ -173,17 +173,14 @@ program define pyquaidsce, eclass
     // 4. Temporary matrices for ereturn
     tempname b V elas_i elas_u elas_c b_est Sigma rf_b rf_V
 
-    // 5. Check Python package
+    // 5. Check Python package. Automatic pip install is deliberately disabled:
+    //    sys.executable may refer to the hosting Stata executable.
     capture python: import pyquaidsce
     if _rc != 0 {
-        display as error "The 'pyquaidsce' Python package is not found in Stata's Python environment."
-        display as text  "Attempting automatic installation via pip..."
-        capture python: import subprocess, sys; subprocess.check_call([sys.executable, "-m", "pip", "install", "pyquaidsce"])
-        if _rc != 0 {
-            display as error "Automatic installation failed. Please install pyquaidsce manually by running:"
-            display as text  "   pip install pyquaidsce"
-            exit 198
-        }
+        display as error "The 'pyquaidsce' Python package is not available in Stata's selected Python environment."
+        display as text "Check the selected environment with: python query"
+        display as text "Use that Python executable to run: python -m pip install --upgrade pyquaidsce"
+        exit 198
     }
 
     // 6. Launch the complete estimation outside Stata's GUI process

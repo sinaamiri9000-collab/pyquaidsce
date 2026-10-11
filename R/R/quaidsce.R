@@ -133,12 +133,18 @@ quaidsce <- function(data,
     stop(sprintf("The following specified variables were not found in data: %s", paste(missing_cols, collapse = ", ")), call. = FALSE)
   }
 
-  # Coerce factors/characters to numeric if necessary in the required subset
+  # Estimation variables must already be numeric. In particular, coercing
+  # a factor with as.numeric() would silently replace its values by level codes.
   clean_data <- data[, all_vars, drop = FALSE]
-  for (col in names(clean_data)) {
-    if (is.factor(clean_data[[col]]) || is.character(clean_data[[col]])) {
-      clean_data[[col]] <- as.numeric(clean_data[[col]])
-    }
+  non_numeric <- names(clean_data)[!vapply(clean_data, is.numeric, logical(1))]
+  if (length(non_numeric) > 0) {
+    stop(
+      sprintf(
+        "All estimation variables must be numeric. Recode categorical variables as numeric dummy columns (e.g., 0/1) before estimation. Non-numeric columns: %s",
+        paste(non_numeric, collapse = ", ")
+      ),
+      call. = FALSE
+    )
   }
 
   # Handle initial argument if passed as a quaidsce object, list, or numeric vector

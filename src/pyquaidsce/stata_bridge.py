@@ -713,7 +713,7 @@ def poll_bootstrap() -> None:
         if stderr_path and os.path.isfile(stderr_path):
             try:
                 with open(stderr_path, "r", encoding="utf-8", errors="replace") as fh:
-                    detail = fh.read()[-900:].strip().replace("\\n", " ")
+                    detail = fh.read()[-900:].strip().replace("\n", " ")
             except OSError:
                 pass
         message = (

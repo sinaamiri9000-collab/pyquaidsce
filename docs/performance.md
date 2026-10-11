@@ -21,16 +21,20 @@ Several computational strategies make `pyquaidsce` significantly faster than con
 
 ---
 
-## 2. Archived Controlled Benchmark Results
+## 2. pyquaidsce vs quaidsce
 
-The stored timing run was recorded during an earlier compatibility-capable release. It remains useful as same-machine performance evidence, but it is not presented as a fresh v1.7.0 timing run. The benchmark setup consists of **20,000 observations, 4 goods, 3 demographics, and IFGNLS estimation** evaluated on the exact same hardware:
+We estimated the same six-good censored QUAIDS model using both programs. The data come from the Iranian Household Income and Expenditure Survey (2023–2024).
 
-| Platform / Software | Point Estimation Runtime | Speedup |
+Both models used IFGNLS, 37,656 observations, eight demographic variables, and the same starting values. Each program was run once without bootstrap.
+
+| Program | Time (seconds) | Log-likelihood |
 |---|---:|---:|
-| **Stata 19.5** | 1,161.2 seconds (~19 min 21 s) | 1.0x (Baseline) |
-| **pyquaidsce (Python 3.14)** | **26.0 seconds** | **~44.6x Faster** |
+| pyquaidsce | 119.685 | 379314.2335272935 |
+| quaidsce_c | 21,052.243 | 379314.2334614899 |
 
-*Note: Timings measure point-estimation computation time (excluding disk I/O). A paper that labels this number specifically as a v1.7.0 benchmark should rerun both implementations with the final release.*
+In this run, pyquaidsce was about **176 times faster**. The original Stata command did not report a convergence flag, so we do not claim that its convergence was independently confirmed.
+
+The files for this comparison are described in [benchmark/pyquaidsce vs quaidsce/](../benchmark/pyquaidsce%20vs%20quaidsce/). The original timing log was recorded on 10 October 2026. A later run can be made with the updated Stata connection in the publication branch.
 
 ---
 

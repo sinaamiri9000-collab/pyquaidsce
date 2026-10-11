@@ -1,7 +1,7 @@
 """
 Optimiser-independent validation of the elasticity code and of ``e(V)``.
 
-For each of the four Stata runs in ``bench/small4.log`` we take Stata's *own*
+For each of the four Stata runs in ``tests/data/small4.log`` we take Stata's *own*
 17-digit parameter vector, feed it into our elasticity routine and our
 delta-method covariance, and compare against the ``ELAS_INC`` / ``ELAS_UNCOMP``
 / ``ELAS_COMP`` blocks and the standard errors Stata reported for that very

@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-BENCH = PROJECT_ROOT / "bench"
+BENCH = PROJECT_ROOT / "tests" / "data"
 
 
 def find_stata_repo() -> Path:

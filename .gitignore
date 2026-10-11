@@ -33,8 +33,7 @@ out/
 *.csv
 *.dta
 *.log
-!bench/
-!bench/**
-!benchmarks/cquaids_ifgnls_4g_20k/data/benchmark_cquaids_4g_20k.dta
-!benchmarks/cquaids_ifgnls_4g_20k/results/python_results.csv
-!benchmarks/cquaids_ifgnls_4g_20k/results/stata_python_comparison.csv
+!tests/data/*.dta
+!tests/data/*.log
+!benchmark/pyquaidsce vs quaidsce/*.dta
+!benchmark/pyquaidsce vs quaidsce/*.log

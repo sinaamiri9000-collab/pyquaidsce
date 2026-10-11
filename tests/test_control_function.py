@@ -547,7 +547,7 @@ class SyntheticAndGateTests(unittest.TestCase):
         from pathlib import Path
 
         root = Path(__file__).resolve().parents[1]
-        frame = pd.read_stata(root / "bench" / "small4.dta")
+        frame = pd.read_stata(root / "tests" / "data" / "small4.dta")
         lnp = np.log(frame[["p1", "p2", "p4", "p9"]].to_numpy(float))
         lnm = np.log(frame["total"].to_numpy(float))
         x1 = frame["x1"].to_numpy(float)

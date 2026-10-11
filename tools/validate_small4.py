@@ -1,5 +1,5 @@
 """
-Full-precision validation against ``bench/small4.log``.
+Full-precision validation against ``tests/data/small4.log``.
 
 The user ran ``deliverables/benchmark_small.do`` in Stata: 4 goods, 2000
 observations, 2 demographics, censoring in all four shares, with every

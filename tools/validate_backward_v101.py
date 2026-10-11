@@ -40,7 +40,7 @@ def main() -> None:
     parser.add_argument("--json-out", type=Path)
     args = parser.parse_args()
 
-    df = pd.read_stata(ROOT / "bench" / "small4.dta")
+    df = pd.read_stata(ROOT / "tests" / "data" / "small4.dta")
     res = quaidsce(
         df,
         shares=SHARES,
@@ -83,7 +83,7 @@ def main() -> None:
     report = {
         "baseline_version": "1.0.1",
         "current_version": __import__("pyquaidsce").__version__,
-        "dataset": "bench/small4.dta",
+        "dataset": "tests/data/small4.dta",
         "specification": metadata["specification"],
         "parameter_names_and_order_equal": names_equal,
         "max_absolute_differences": differences,

@@ -32,7 +32,7 @@ if _rc {
 
 display as text _newline "=== DOWNLOAD small4.dta ==="
 tempfile small4
-capture noisily copy "https://raw.githubusercontent.com/sinaamiri9000-collab/pyquaidsce/publication/bench/small4.dta" "`small4'", replace
+capture noisily copy "https://raw.githubusercontent.com/sinaamiri9000-collab/pyquaidsce/publication/tests/data/small4.dta" "`small4'", replace
 if _rc {
     display as error "Could not download small4.dta; check GitHub access."
     log close pub_smoke

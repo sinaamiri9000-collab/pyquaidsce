@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def _small4_with_instrument() -> pd.DataFrame:
-    frame = pd.read_stata(ROOT / "bench" / "small4.dta")
+    frame = pd.read_stata(ROOT / "tests" / "data" / "small4.dta")
     x1 = frame["x1"].to_numpy(float)
     x2 = frame["x2"].to_numpy(float)
     frame["iv_income"] = x1 * x1 + 0.35 * x2 * x2

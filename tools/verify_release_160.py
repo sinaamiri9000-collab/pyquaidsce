@@ -17,8 +17,8 @@ import pandas as pd
 
 from pyquaidsce import quaidsce
 
-DATA = ROOT / "benchmarks/cquaids_ifgnls_4g_20k/data/benchmark_cquaids_4g_20k.dta"
-OUTPUT = ROOT / "benchmarks/release_170/results/bootstrap_smoke.json"
+DATA = ROOT / "tests/data/benchmark_cquaids_4g_20k.dta"
+OUTPUT = ROOT / "out/release_170/bootstrap_smoke.json"
 
 
 def fit_mode(frame: pd.DataFrame) -> dict:

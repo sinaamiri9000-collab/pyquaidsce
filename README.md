@@ -25,7 +25,7 @@ At the same time, Python offered a much more flexible and convenient environment
 Estimating censored demand systems in empirical research often requires extensive model exploration, sensitivity checks, and bootstrap replications. In Stata, estimating large censored QUAIDS models under Iterated FGNLS (IFGNLS) can take significant computing time (often 20+ minutes for a single run on moderately sized datasets). 
 
 `pyquaidsce` was developed to solve this practical bottleneck:
-- **Fast Execution**: Written with optimized analytic Jacobians and vectorized linear algebra (`numpy`/`scipy`), achieving a **44.6x wall-clock speedup** on the controlled benchmark reported below.
+- **Fast Execution**: Written with optimized analytic Jacobians and vectorized linear algebra (`numpy`/`scipy`), achieving a **about 176x lower runtime in the recorded six-good comparison** on the controlled benchmark reported below.
 - **Pure Python & Lightweight**: Uses `numpy`, `scipy`, `pandas`, and `threadpoolctl`. No complex compilation or heavy external dependencies.
 - **Research Workflow Integration**: Easily run demand models in Jupyter notebooks, script automated sensitivity pipelines, and run on cloud servers/clusters.
 - **Validated Numerics**: Tested against econometric identities and numerical derivatives; the repository also preserves high-precision historical Stata comparison evidence from earlier compatibility-capable releases.
@@ -117,7 +117,7 @@ For a step-by-step tutorial, see [Getting Started](docs/getting-started.md). For
 
 ## Using pyquaidsce in Stata
 
-Prefer working in Stata? `pyquaidsce` includes an official Stata package (`quaidsce.ado`) that lets you estimate censored QUAIDS models directly inside Stata while harnessing Python's **up to 44.6x speedup**:
+Prefer working in Stata? `pyquaidsce` includes an official Stata package (`quaidsce.ado`) that lets you estimate censored QUAIDS models directly inside Stata while harnessing Python's **shorter run time in the six-good comparison**:
 
 ```stata
 // 1. Install the Stata package directly from GitHub
@@ -196,22 +196,18 @@ See [Stata Compatibility](docs/stata-compatibility.md) for details about compari
 
 ---
 
-## Validation & Historical Performance Benchmark
+## Benchmark
 
-The repository preserves a deterministic 20,000-observation benchmark against Stata 19.5 (4 goods, 3 demographics, censoring, IFGNLS). The stored comparison was produced during an earlier compatibility-capable release and is retained as historical validation and timing evidence. Because v1.7.0 excludes the legacy error-replication paths, exact agreement with the original ado is no longer a release goal in specifications affected by those known deviations.
+We compared **pyquaidsce** with the original Stata **quaidsce_c** command using data from the Iranian Household Income and Expenditure Survey (2023–2024). Both programs estimated the same six-good censored QUAIDS model using IFGNLS, with 37,656 observations and eight demographic variables.
 
-- **Numerical Agreement**:
-  - Structural parameters ($\alpha, \beta, \gamma, \lambda, \delta, \eta, \rho$): Maximum difference $< 1.68 \times 10^{-5}$
-  - First-stage Probit parameters ($\tau$): Maximum difference $< 1.21 \times 10^{-7}$
-  - Expenditure and price elasticities: Maximum difference $< 7.34 \times 10^{-7}$
-  - Log-likelihood: Relative difference $< 4.99 \times 10^{-8}$
+| Measure | pyquaidsce | quaidsce_c |
+|---|---:|---:|
+| Time | 119.685 seconds | 21,052.243 seconds |
+| Log-likelihood | 379314.233527 | 379314.233461 |
 
-- **Speed Comparison (Same-Machine Wall Clock)**:
-  - **Stata 19.5**: 1,161.2 seconds (~19 minutes, 21 seconds)
-  - **pyquaidsce**: 26.0 seconds
-  - **Speedup**: **~44.6x faster**
+In this run, pyquaidsce took about **176 times less time**. Each program was run once; no bootstrap was used. The original Stata command completed, but did not report a convergence flag.
 
-All raw data, archived logs, scripts, and comparison tables are available in [`benchmarks/cquaids_ifgnls_4g_20k/`](benchmarks/cquaids_ifgnls_4g_20k/). For current v1.7.0 validation policy and the historical timing evidence, see [Validation](docs/validation.md) and [Performance](docs/performance.md).
+The run code and details are in [benchmark/pyquaidsce vs quaidsce/](benchmark/pyquaidsce%20vs%20quaidsce/). The data and original log are kept in the prepared publication files and will be added after the data-sharing permission is checked.
 
 ---
 
@@ -222,7 +218,7 @@ src/pyquaidsce/   Core Python package source code and Stata bridge
 stata/            Official Stata package (quaidsce command; pyquaidsce distribution)
 tests/            Mathematical unit tests, theory checks, and Stata regression tests
 examples/         Ready-to-run Python and Stata sample scripts
-benchmarks/       Reproducible benchmark data, scripts, and logs
+benchmark/        Comparisons of model results and estimation time
 docs/             Methodology, getting started, Stata compatibility, and validation guides
 tools/            Diagnostic scripts and Stata log comparison utilities
 ```

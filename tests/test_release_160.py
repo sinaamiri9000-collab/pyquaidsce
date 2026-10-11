@@ -104,7 +104,7 @@ class MergeIntegrityTests(unittest.TestCase):
         with self.assertRaises(TimeoutError):
             quaidsce(**common, _deadline=time.perf_counter() - 1.0)
 
-        watchdog_frame = pd.read_stata(ROOT / "bench" / "small4.dta")
+        watchdog_frame = pd.read_stata(ROOT / "tests" / "data" / "small4.dta")
         started = time.perf_counter()
         with self.assertRaisesRegex(RuntimeError, "TimeoutError"):
             quaidsce(

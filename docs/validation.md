@@ -13,7 +13,7 @@ Therefore, differences from the original ado are expected in specifications affe
 
 ## 2. Automated Python tests
 
-The repository contains **38 Python tests** covering:
+The repository contains automatic Python tests covering:
 
 - analytic Jacobians against finite differences;
 - adding-up, homogeneity, symmetry, and elasticity identities at model-consistent shares;
@@ -31,35 +31,17 @@ Run them with:
 python -m unittest discover -s tests -v
 ```
 
-## 3. Archived Stata benchmark
+## 3. Comparison with Stata
 
-The directory [`benchmarks/cquaids_ifgnls_4g_20k/`](../benchmarks/cquaids_ifgnls_4g_20k/) contains the deterministic 20,000-observation, 4-good, 3-demographic IFGNLS benchmark used during earlier releases. Its stored `results/` files are preserved unchanged for auditability.
+A six-good IFGNLS comparison used 37,656 observations from the Iranian Household Income and Expenditure Survey (2023–2024).
 
-For that historical recorded comparison, the maximum reported differences were:
+| Measure | pyquaidsce | quaidsce_c |
+|---|---:|---:|
+| Time (seconds) | 119.685 | 21,052.243 |
+| Log-likelihood | 379314.2335272935 | 379314.2334614899 |
 
-| Quantity | Archived maximum/relative difference |
-|---|---:|
-| Structural parameters | `1.68e-05` |
-| First-stage Probit parameters | `1.21e-07` |
-| Expenditure/Marshallian/Hicksian elasticities | `7.34e-07` |
-| Non-elasticity standard errors | `7.25e-06` |
-| Log-likelihood, relative difference | `4.99e-08` |
+Both commands completed. pyquaidsce reported convergence, but the original Stata command did not provide a convergence flag.
 
-These numbers document the historical compatibility implementation; they should not be presented as a fresh v1.7.0 exact-replication result. The current benchmark script uses the v1.7.0 canonical first-stage definition.
+Each command was run once without bootstrap. This is a comparison of these two runs, not an average over repeated runs. The details and code are described in [benchmark/pyquaidsce vs quaidsce](../benchmark/pyquaidsce%20vs%20quaidsce/).
 
-## 4. Historical same-machine timing
-
-The archived same-machine wall-clock timings were 1,161.171 seconds for Stata 19.5 and 26.033 seconds for Python, a 44.60x ratio. This is retained as historical performance evidence. A publication that labels the number specifically as a v1.7.0 benchmark should rerun both sides with the final release and report the new measurements.
-
-## 5. Reproducing the benchmark
-
-```bash
-cd benchmarks/cquaids_ifgnls_4g_20k/
-python generate_data.py
-python run_python.py
-# optional, when Stata is installed:
-# stata -b do run_stata.do
-python compare_results.py --same-machine
-```
-
-When comparing current v1.7.0 output with the original ado, interpret discrepancies using the documented methodological differences rather than forcing legacy error replication.
+The earlier four-good timing comparison is available in the Git history, rather than in the current benchmark folder.

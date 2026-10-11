@@ -358,6 +358,71 @@ def run_from_stata(
 
 
 # --------------------------------------------------------------------------- #
+#  Stata-selected interpreter for the out-of-process estimator
+# --------------------------------------------------------------------------- #
+
+def _get_stata_python_executable() -> str:
+    """Return the actual Python selected by Stata, not its hosting process."""
+    from sfi import Macro
+
+    python_exe = Macro.getGlobal("c(python_exec)").strip().strip('"')
+    if not python_exe or not os.path.isfile(python_exe):
+        raise RuntimeError(
+            "Stata has no valid Python executable configured. "
+            "Use 'python set exec' to select Python, and verify 'python query'."
+        )
+    return python_exe
+
+
+def _verify_child_python(python_exe: str) -> None:
+    """Check that the child can import the same pyquaidsce as embedded Stata."""
+    import subprocess
+    import pyquaidsce
+
+    probe = (
+        "import os, pyquaidsce; "
+        "print(os.path.realpath(pyquaidsce.__file__)); "
+        "print(pyquaidsce.__version__)"
+    )
+    try:
+        result = subprocess.run(
+            [python_exe, "-c", probe],
+            capture_output=True,
+            text=True,
+            timeout=30,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise RuntimeError(
+            f"Could not start Stata-selected Python ({python_exe}): {exc}"
+        ) from exc
+
+    if result.returncode != 0:
+        detail = (result.stderr or result.stdout).strip()[-700:]
+        raise RuntimeError(
+            "Stata-selected Python cannot import pyquaidsce. "
+            f"Executable: {python_exe}. {detail}"
+        )
+
+    lines = result.stdout.strip().splitlines()
+    if len(lines) < 2:
+        raise RuntimeError(
+            "Stata-selected Python returned no usable pyquaidsce identity."
+        )
+    child_path, child_version = lines[-2:]
+    embedded_path = os.path.normcase(os.path.realpath(pyquaidsce.__file__))
+    spawned_path = os.path.normcase(os.path.realpath(child_path))
+    if child_version != pyquaidsce.__version__ or spawned_path != embedded_path:
+        raise RuntimeError(
+            "Stata and the selected child Python import different pyquaidsce "
+            "installations. Configure Stata to use the matching Python "
+            f"environment. Embedded: {embedded_path} "
+            f"(v{pyquaidsce.__version__}); child: {spawned_path} "
+            f"(v{child_version})."
+        )
+
+
+# --------------------------------------------------------------------------- #
 #  Out-of-process estimation helpers (called from the Stata pyquaidsce/quaidsce front ends)
 # --------------------------------------------------------------------------- #
 
@@ -503,6 +568,9 @@ def _launch_job(data: Any, kwargs: dict[str, Any]) -> None:
     import subprocess
     import tempfile
 
+    python_exe = _get_stata_python_executable()
+    _verify_child_python(python_exe)
+
     previous = _BOOT_STATE.get("proc")
     if previous is not None and previous.poll() is None:
         previous.terminate()
@@ -517,6 +585,7 @@ def _launch_job(data: Any, kwargs: dict[str, Any]) -> None:
     job_path = os.path.join(tmpdir, f"pyq_job_{pid}.pkl")
     result_path = os.path.join(tmpdir, f"pyq_result_{pid}.pkl")
     status_path = os.path.join(tmpdir, f"pyq_status_{pid}.txt")
+    stderr_path = os.path.join(tmpdir, f"pyq_stderr_{pid}.txt")
 
     for path in (
         job_path,
@@ -524,6 +593,7 @@ def _launch_job(data: Any, kwargs: dict[str, Any]) -> None:
         status_path,
         result_path + ".tmp",
         result_path + ".error",
+        stderr_path,
     ):
         if os.path.exists(path):
             try:
@@ -542,16 +612,30 @@ def _launch_job(data: Any, kwargs: dict[str, Any]) -> None:
             file_handle,
         )
 
-    proc = subprocess.Popen(
-        [sys.executable, "-m", "pyquaidsce.bootstrap_runner", "--input", job_path],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
+    # A Python embedded in Stata can have sys.executable == StataMP-64.exe.
+    # Always launch the interpreter configured in Stata's python set exec.
+    try:
+        with open(stderr_path, "w", encoding="utf-8") as stderr_file:
+            proc = subprocess.Popen(
+                [python_exe, "-m", "pyquaidsce.bootstrap_runner", "--input", job_path],
+                stdout=subprocess.DEVNULL,
+                stderr=stderr_file,
+            )
+    except OSError as exc:
+        for path in (job_path, stderr_path):
+            try:
+                os.unlink(path)
+            except OSError:
+                pass
+        raise RuntimeError(
+            f"Failed to launch Stata-selected Python ({python_exe}): {exc}"
+        ) from exc
     _BOOT_STATE.update(
         proc=proc,
         result_path=result_path,
         status_path=status_path,
         job_path=job_path,
+        stderr_path=stderr_path,
     )
 
 
@@ -624,12 +708,22 @@ def poll_bootstrap() -> None:
     # ---- subprocess exited without output? -------------------------------- #
     proc = _BOOT_STATE.get("proc")
     if proc is not None and proc.poll() is not None:
+        stderr_path = _BOOT_STATE.get("stderr_path", "")
+        detail = ""
+        if stderr_path and os.path.isfile(stderr_path):
+            try:
+                with open(stderr_path, "r", encoding="utf-8", errors="replace") as fh:
+                    detail = fh.read()[-900:].strip().replace("\\n", " ")
+            except OSError:
+                pass
+        message = (
+            f"Estimation process exited without a result (code {proc.returncode})."
+        )
+        if detail:
+            message += f" Python error: {detail}"
         sfi.Scalar.setValue("_pyq_boot_done", 0)
         sfi.Scalar.setValue("_pyq_boot_err", 1)
-        sfi.Macro.setLocal(
-            "_pyq_boot_errmsg",
-            f"Estimation process exited with code {proc.returncode}",
-        )
+        sfi.Macro.setLocal("_pyq_boot_errmsg", message)
         return
 
     # ---- still running — relay progress ----------------------------------- #
@@ -799,7 +893,7 @@ def kill_bootstrap() -> None:
 
 def _cleanup_boot_files() -> None:
     """Remove temporary IPC files created by a background estimation job."""
-    for key in ("job_path", "result_path", "status_path"):
+    for key in ("job_path", "result_path", "status_path", "stderr_path"):
         path = _BOOT_STATE.get(key, "")
         if path:
             for suffix in ("", ".tmp", ".error"):
@@ -813,3 +907,4 @@ def _cleanup_boot_files() -> None:
     _BOOT_STATE.pop("result_path", None)
     _BOOT_STATE.pop("status_path", None)
     _BOOT_STATE.pop("job_path", None)
+    _BOOT_STATE.pop("stderr_path", None)

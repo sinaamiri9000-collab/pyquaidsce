@@ -116,3 +116,35 @@ test_that("ivexp is forwarded and reduced-form diagnostics are returned", {
   expect_gt(fit$reduced_form$excluded.f, 10)
   expect_equal(length(fit$reduced_form$residuals), N)
 })
+
+
+test_that("factor and character regressors are rejected rather than silently recoded", {
+  df <- data.frame(
+    w1 = c(0.2, 0.3, 0.4, 0.3),
+    w2 = c(0.3, 0.2, 0.2, 0.3),
+    w3 = c(0.5, 0.5, 0.4, 0.4),
+    p1 = c(1, 2, 1, 2),
+    p2 = c(2, 1, 2, 1),
+    p3 = c(3, 2, 3, 2),
+    exp_total = c(10, 12, 11, 13),
+    dummy = factor(c(0, 1, 0, 1))
+  )
+
+  args <- list(
+    data = df,
+    shares = c("w1", "w2", "w3"),
+    prices = c("p1", "p2", "p3"),
+    expenditure = "exp_total",
+    demographics = "dummy"
+  )
+
+  expect_error(do.call(quaidsce, args), "Non-numeric columns: dummy")
+
+  args$data$dummy <- as.character(args$data$dummy)
+  expect_error(do.call(quaidsce, args), "Non-numeric columns: dummy")
+
+  # The explicit 0/1 encoding remains a valid numeric input.
+  args$data$dummy <- as.integer(as.character(df$dummy))
+  expect_true(is.numeric(args$data$dummy))
+  expect_identical(args$data$dummy, c(0L, 1L, 0L, 1L))
+})

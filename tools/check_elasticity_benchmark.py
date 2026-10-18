@@ -99,6 +99,7 @@ def run(args):
         print("Input:", path.name, "sha256:", hashlib.sha256(path.read_bytes()).hexdigest())
     print("Bootstrap requested/completed: exactly 1 resampled fit, separately from the original fit.")
     print("Bootstrap SE, covariance, z tests and confidence intervals: NOT ESTIMABLE WITH ONE DRAW.")
+    print("Standard summary tables below use conditional analytical SE where implemented; elasticity inference is shown as '.'.")
     print("No Stata process is run. Reference values are rounded observed coefficients in the supplied log.")
     frame = pd.read_stata(args.data)
     kwargs = dict(shares=["w1", "w2", "w3", "w4"], prices=["p1", "p2", "p3", "p4"],
@@ -125,6 +126,8 @@ def run(args):
             for name, value in current.items():
                 np.testing.assert_array_equal(value, before[name])
         print("Before/after numeric invariance: PASS (b, theta, V, all elasticities, Sigma, llf exactly unchanged).")
+    print("\n=== STANDARD PACKAGE COEFFICIENT TABLE: ORIGINAL FIT ===")
+    print(result.summary())
     print(result.elasticity_tables())
     print("\n=== EXACTLY ONE BOOTSTRAP REPLICATION ===")
     # Identical seed derivation and row sampling to bootstrap.py's _one_rep.
@@ -143,6 +146,8 @@ def run(args):
     print("Converged:", replica.converged, "outer:", replica.n_outer, "inner:", replica.n_gn)
     print("Log-likelihood:", format(replica.llf, ".15g"), "seconds:", replica_seconds)
     print("Name/matrix assertions passed:", replica_checks)
+    print("\n=== STANDARD PACKAGE COEFFICIENT TABLE: SINGLE RESAMPLED FIT ===")
+    print(replica.summary())
     print(replica.elasticity_tables())
     reference = read_stata_observed(args.stata_log)
     assert set(result.names) == set(reference)

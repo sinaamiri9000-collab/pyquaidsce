@@ -1,6 +1,6 @@
 """
-Economic-theory checks on the elasticity formulas, and a smoke test of the two
-code paths Stata v2.0 cannot run at all.
+Manual diagnostics for demand-theory identities, uncensored QUAIDS,
+censored AIDS, and bootstrap inference.
 
 The demand-theory identities below must hold *exactly* when the elasticities are
 evaluated at shares that are consistent with the model, i.e. at the shares the
@@ -35,7 +35,7 @@ from pyquaidsce.params import Spec, unpack
 
 def _small4(path=None):
     if path is None:
-        path = Path(__file__).resolve().parents[1] / "bench" / "small4.dta"
+        path = ROOT / "tests" / "data" / "small4.dta"
     return pd.read_stata(path)
 
 

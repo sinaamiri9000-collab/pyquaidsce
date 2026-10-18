@@ -1,4 +1,4 @@
-test_that("R wrapper produces exact numerical match with direct Python estimator", {
+test_that("R wrapper matches the direct Python estimator within tolerance", {
   set.seed(99)
   N <- 300
   p1 <- exp(rnorm(N, 0, 0.1))

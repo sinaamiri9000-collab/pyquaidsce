@@ -2,6 +2,8 @@
 * STATA MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE FOR PYQUAIDSCE 1.7.0
 * ==============================================================================
 * Dataset: bd_uruguay.csv (14 food groups, 6,848 observations)
+* Set PYQUAIDSCE_TEST_DATA to the CSV path, or place bd_uruguay.csv in the
+* working directory. The CSV is supplied separately.
 * ==============================================================================
 
 clear all
@@ -13,7 +15,9 @@ display as text "PYQUAIDSCE 1.7.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE"
 display as text "=============================================================================="
 
 * ---- STEP 0: Load dataset & feature prep -------------------------------------
-import delimited "C:\Users\sina\Downloads\bd_uruguay.csv", clear case(preserve)
+local data_file : environment PYQUAIDSCE_TEST_DATA
+if `"`data_file'"' == "" local data_file "bd_uruguay.csv"
+import delimited `"`data_file'"', clear case(preserve)
 
 * Clean negative shares
 foreach v of varlist w1_red-w14_red {

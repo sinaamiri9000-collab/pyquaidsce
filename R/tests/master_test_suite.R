@@ -1,10 +1,11 @@
 # ==============================================================================
-# RQUAIDSCE 1.7.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE
+# PYQUAIDSCE 1.7.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE
 # ==============================================================================
 # Dataset: bd_uruguay.csv (14 food groups, 6,848 observations)
 # ==============================================================================
 # Instructions:
-# Open in RStudio and press Ctrl+A (Select All) then Ctrl+Enter (Run).
+# Set PYQUAIDSCE_TEST_DATA to the CSV path, or place bd_uruguay.csv in the
+# working directory. The CSV is supplied separately.
 # ==============================================================================
 
 suppressPackageStartupMessages({
@@ -12,28 +13,18 @@ suppressPackageStartupMessages({
 })
 
 cat("\n================================================================================\n")
-cat("RQUAIDSCE 1.7.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE\n")
+cat("PYQUAIDSCE 1.7.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE\n")
 cat("================================================================================\n\n")
 
 # ---- STEP 0: Load dataset ----------------------------------------------------
-data_candidates <- c(
-  "C:/Users/sina/Downloads/bd_uruguay.csv",
-  "bd_uruguay.csv",
-  "../benchmarks/bd_uruguay.csv"
-)
-
-df <- NULL
-for (p in data_candidates) {
-  if (file.exists(p)) {
-    df <- read.csv(p)
-    cat(sprintf("Loaded dataset from: %s (N = %d observations)\n", p, nrow(df)))
-    break
-  }
+data_path <- Sys.getenv("PYQUAIDSCE_TEST_DATA", unset = "bd_uruguay.csv")
+if (!nzchar(data_path)) data_path <- "bd_uruguay.csv"
+data_path <- path.expand(data_path)
+if (!file.exists(data_path)) {
+  stop("Set PYQUAIDSCE_TEST_DATA to the CSV path or place bd_uruguay.csv in the working directory.")
 }
-
-if (is.null(df)) {
-  stop("Could not find bd_uruguay.csv in candidate paths.")
-}
+df <- read.csv(data_path)
+cat(sprintf("Loaded dataset from: %s (N = %d observations)\n", data_path, nrow(df)))
 
 # Clean shares & build log variables
 for (i in 1:14) {
@@ -113,7 +104,7 @@ record_test(3, "Linear AIDS Model (quadratic=FALSE)", function() {
   }
   df_3g$sub_exp <- pmax(df_3g$gasto1 + df_3g$gasto2 + df_3g$gasto3, 1.0)
 
-  # Positive consumption subset (N = 3,297) for uncensored QUAIDS
+  # Positive consumption subset for uncensored QUAIDS
   pos_mask <- apply(df_3g[, sub_shares] > 0, 1, all)
   df_3g_pos <- df_3g[pos_mask, ]
 
@@ -244,7 +235,7 @@ record_test(23, "Parallel Bootstrap Standard Errors (reps=10, n_jobs=4, seed=123
            seed = 123456L, mp_context = "spawn", method = "ifgnls")
 })
 
-record_test(24, "Complete S3 Methods (summary, coef, vcov, residuals, fitted, elasticities)", function() {
+record_test(24, "Core S3 methods and elasticity fields", function() {
   if (is.null(t1_fit)) stop("Base fit t1_fit is missing.")
   sm <- summary(t1_fit)
   cf <- coef(t1_fit)
@@ -263,7 +254,7 @@ record_test(24, "Complete S3 Methods (summary, coef, vcov, residuals, fitted, el
 # Final Scorecard
 # ------------------------------------------------------------------------------
 cat("\n================================================================================\n")
-cat("RQUAIDSCE 1.7.0 MASTER TEST SUITE SCORECARD\n")
+cat("PYQUAIDSCE 1.7.0 MASTER TEST SUITE SCORECARD\n")
 cat("================================================================================\n")
 cat(sprintf("%-3s %-52s %-8s %-10s %s\n", "#", "Test Scenario Title", "Status", "Time (s)", "Details"))
 cat(paste(rep("-", 80), collapse = ""), "\n")

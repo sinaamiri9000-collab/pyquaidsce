@@ -84,7 +84,7 @@ You can use either {cmd:pyquaidsce} or {cmd:quaidsce}. Both commands run the sam
 {cmd:pyquaidsce} estimates the Quadratic Almost Ideal Demand System (QUAIDS) of Banks, Blundell, and Lewbel (1997) with Ray (1983) demographic scaling and the Shonkwiler & Yen (1999) two-step correction for zero budget shares.
 
 {pstd}
-It provides a fast Stata front end powered by the {cmd:pyquaidsce} Python computation engine, achieving up to a {bf:44.6x speedup} under IFGNLS in benchmark tests. Point estimation and optional bootstrap replications run in a background Python process while Stata polls for progress, so the Stata GUI remains responsive.
+It provides a Stata front end powered by the {cmd:pyquaidsce} Python engine. In the four-good IFGNLS benchmark with 200 bootstrap replications, it was {bf:88.6 times faster} than the Stata {cmd:quaidsce} implementation. Point estimation and optional bootstrap replications run in a background Python process while Stata polls for progress, so the Stata GUI remains responsive.
 
 {pstd}
 The Shonkwiler-Yen correction always uses the Probit linear index. With

@@ -1,7 +1,7 @@
 """
 The (censored) quadratic almost-ideal demand system.
 
-Share equations, exactly as coded in ``_quaidsce__expshrs`` (Mata):
+Base share equations, following ``_quaidsce__expshrs`` (Mata):
 
     ln a(p)   = a0 + sum_i alpha_i ln p_i
                    + 1/2 sum_i sum_j gamma_ij ln p_i ln p_j
@@ -16,9 +16,10 @@ Share equations, exactly as coded in ``_quaidsce__expshrs`` (Mata):
 
 and the Shonkwiler-Yen (1999) two-step censoring transformation
 
-    w_i       = Phi_i * w*_i + delta_i * phi_i
+    w_i       = Phi_i * (w*_i + cfcoef_i * v) + delta_i * phi_i
 
-where ``Phi_i``/``phi_i`` come from the first-stage probit.
+where ``Phi_i``/``phi_i`` come from the first-stage probit. The optional control
+residual is ``v``; ``cfcoef_i`` is zero when no control function is used.
 
 IMPORTANT — the ``pdf``/``cdf`` inputs
 -------------------------------------
@@ -195,7 +196,7 @@ def jacobian_full(
     """d(fitted)/d(FULL parameter vector), shape (N, n_eq, n_full).
 
     The full vector is ordered
-    ``alpha, beta, vech(gamma), [lambda], [delta], [vec(eta')], [rho]``,
+    ``alpha, beta, vech(gamma), [lambda], [delta], [cfcoef], [vec(eta')], [rho]``,
     matching :func:`pyquaidsce.params.full_vector`.  Chain-rule to the free
     parameters is a right-multiplication by the (constant) delta matrix.
     """

@@ -1,10 +1,9 @@
 """
-Realistic timing for Sina's own problem size: 11 goods, ~37000 observations,
-3 demographics, method(ifgnls).
+Time an 11-good IFGNLS model with 37,000 resampled observations and
+3 demographic variables.
 
-Rather than guess, build a system of exactly that shape out of the repository's
-own household data (so the conditioning is realistic, not synthetic), resample
-it to 37000 rows, and run the estimator end to end.
+Build a conditional system from household data in the external Stata source
+repository, resample its rows, and run the estimator end to end.
 
 Also exercises `initial=`, both round-tripping our own estimates and the
 warm-start path the bootstrap uses.

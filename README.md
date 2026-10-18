@@ -117,7 +117,7 @@ For a step-by-step tutorial, see [Getting Started](docs/getting-started.md). For
 
 ## Using pyquaidsce in Stata
 
-Prefer working in Stata? `pyquaidsce` includes an official Stata package (`quaidsce.ado`) that lets you estimate censored QUAIDS models directly inside Stata while harnessing Python's **shorter run time in the six-good comparison**:
+`pyquaidsce` includes a Stata interface (`quaidsce.ado`) for fitting censored QUAIDS models with the Python engine:
 
 ```stata
 // 1. Install the Stata package directly from GitHub

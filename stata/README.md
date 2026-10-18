@@ -16,11 +16,11 @@ To verify your Stata Python setup, type in Stata:
 python query
 ```
 
-If you have not installed the Python core yet, install it from your terminal or command prompt:
+If you have not installed the Python core yet, use the Python environment
+shown by `python query` to install it from your terminal or command prompt:
 ```bash
 pip install pyquaidsce
 ```
-*(Note: If `pyquaidsce` is missing when you run the Stata command, `quaidsce.ado` will automatically attempt to install it for you via pip).*
 
 ---
 
@@ -160,4 +160,4 @@ matrix list e(elas_u), format(%10.4f)
 ## Troubleshooting
 
 - **Python not found error (`r(7102)`):** Ensure Stata knows where Python is installed. Run `python query` and set your Python path if needed using `set python_exec "C:\path\to\python.exe", permanently`.
-- **Package missing:** Run `pip install pyquaidsce` in your command line or run `python: import subprocess, sys; subprocess.check_call([sys.executable, "-m", "pip", "install", "pyquaidsce"])` directly inside Stata.
+- **Package missing:** Run `python query` in Stata, then use that Python executable to run `python -m pip install --upgrade pyquaidsce` from your terminal or command prompt.

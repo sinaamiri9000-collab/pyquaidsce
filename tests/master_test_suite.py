@@ -6,6 +6,9 @@ demand data (bd_uruguay.csv, 14 food groups, 6,848 observations).
 
 Usage:
     python tests/master_test_suite.py
+
+Set PYQUAIDSCE_TEST_DATA to the CSV path, or place bd_uruguay.csv in the
+working directory. The CSV is supplied separately.
 """
 
 from __future__ import annotations
@@ -21,20 +24,14 @@ from pyquaidsce import quaidsce
 
 
 def load_dataset() -> pd.DataFrame:
-    data_candidates = [
-        r"C:\Users\sina\Downloads\bd_uruguay.csv",
-        os.path.join(os.path.dirname(__file__), "..", "benchmarks", "bd_uruguay.csv"),
-        "bd_uruguay.csv",
-    ]
-    df = None
-    for path in data_candidates:
-        if os.path.exists(path):
-            df = pd.read_csv(path)
-            print(f"Loaded dataset from: {path} (N = {len(df):,} observations)")
-            break
-
-    if df is None:
-        raise FileNotFoundError("Could not find bd_uruguay.csv in candidate paths.")
+    path = os.path.expanduser(os.environ.get("PYQUAIDSCE_TEST_DATA") or "bd_uruguay.csv")
+    if not os.path.isfile(path):
+        raise FileNotFoundError(
+            "Set PYQUAIDSCE_TEST_DATA to the CSV path or place bd_uruguay.csv "
+            "in the working directory."
+        )
+    df = pd.read_csv(path)
+    print(f"Loaded dataset from: {path} (N = {len(df):,} observations)")
 
     # Clean negative shares if any
     for i in range(1, 15):
@@ -83,7 +80,7 @@ def run_tests():
             status = "PASS" if converged else "WARN(Not Converged)"
             msg = f"LLF = {llf:.4f}, Time = {elapsed:.2f}s" if llf is not None else f"Time = {elapsed:.2f}s"
             print(f"       --> [{status}] {msg}")
-            results.append((test_id, title, "PASS", elapsed, msg))
+            results.append((test_id, title, status, elapsed, msg))
             return res_obj
         except Exception as exc:
             elapsed = time.time() - t0

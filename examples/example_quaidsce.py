@@ -1,12 +1,12 @@
 """
-The Python counterpart of the package's own ``example.do``.
+Python example for the QUAIDS model in the upstream Stata ``example.do``.
 
 Because ``example.do`` builds its data with Stata's random-number generator
 (``set seed 123456`` + ``runiform()``/``rnormal()``), which cannot be reproduced
 bit for bit outside Stata, this script works on whatever data you point it at.
 Two ways to run it:
 
-    # 1. on the repository's own data (a 4-good conditional system)
+    # 1. on data from the external Stata repository (a 4-good conditional system)
     python examples/example_quaidsce.py --repo-data ../src/quaidsce-master
 
     # 2. on your own file

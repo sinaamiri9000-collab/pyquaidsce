@@ -1,18 +1,16 @@
 """
 Parameter mapping for the (censored) QUAIDS model.
 
-This is a line-by-line port of the Mata routines in ``utils__quaidsce.mata``:
+The base mapping follows the Mata routines in ``utils__quaidsce.mata``:
 
     _quaidsce__getcoefs_wrk   ->  unpack()
     _quaidsce__getcoefs       ->  unpack() + Coefs
     _quaidsce__fullvector     ->  full_vector()
     _quaidsce__delta          ->  delta_matrix()
 
-Everything here is deliberately *literal*: the ordering of the free parameter
-vector, the way the last good's parameters are recovered from the adding-up /
-homogeneity / symmetry restrictions, and the ordering of the reported "full"
-parameter vector all follow the Stata/Mata source exactly, because that is what
-makes ``e(b)`` comparable element by element.
+The base model retains the Stata parameter order and adding-up, homogeneity,
+and symmetry restrictions. The optional control-function extension adds a
+``cfcoef`` block after ``delta`` in the reported parameter vector.
 
 Notation
 --------
@@ -273,7 +271,7 @@ def vech(a: np.ndarray) -> np.ndarray:
 def full_vector(theta: np.ndarray, spec: Spec) -> np.ndarray:
     """Free vector -> reported vector, i.e. ``_quaidsce__fullvector``.
 
-    Order: alpha, beta, vech(gamma), [lambda], [delta], [vec(eta')], [rho].
+    Order: alpha, beta, vech(gamma), [lambda], [delta], [cfcoef], [vec(eta')], [rho].
     """
     c = unpack(theta, spec)
     parts = [c.alpha, c.beta, vech(c.gamma)]

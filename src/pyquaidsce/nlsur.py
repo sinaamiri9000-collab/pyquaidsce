@@ -19,9 +19,9 @@ Reported quantities:
 ``Sigma_hat`` uses divisor ``N`` (Stata's default; ``dfk`` is not implemented
 because ``quaidsce`` never requests it).
 
-The minimiser is a Levenberg-Marquardt-damped Gauss-Newton method using the
-exact analytic Jacobian, accumulating the normal equations in observation
-blocks so that the ``(N*m) x K`` Jacobian is never materialised in full.
+The default solver uses Gauss-Newton with step halving; Levenberg-Marquardt is
+also available. Both use the analytic Jacobian and accumulate the normal
+equations in observation blocks, without building the full ``(N*m) x K`` matrix.
 """
 
 from __future__ import annotations
@@ -225,10 +225,9 @@ def gauss_newton(
     with Nielsen's damping update, working in coordinates scaled by
     ``diag(J'J)^-1/2``.  ``algorithm="gn"`` (the default) is plain
     Gauss-Newton with Hartley
-    step halving, i.e. the scheme Stata's ``nl``/``nlsur`` use; it is kept as the
-    reference behaviour, but on a large censored system it creeps along the flat
-    valley of the criterion while LM turns the corner.  Both target the same
-    stationary point. After an accepted step, convergence requires any one
+    step halving, the scheme used by Stata's ``nl``/``nlsur``. Both minimize
+    the same weighted residual sum of squares. After an accepted step,
+    convergence requires any one
     of the parameter-change, objective-change or scaled GN criteria to pass.
     If no improving step is found, only the scaled GN criterion can certify
     convergence. See the Convergence section of ``docs/methodology.md``

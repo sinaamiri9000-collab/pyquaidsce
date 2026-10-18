@@ -1,18 +1,15 @@
 *==============================================================================
 * validate_my_model.do
 *
-* Reproduce YOUR paper's model in Python, exactly.
+* Save a Stata reference model and its estimation sample.
 *
-* This runs quaidsce_c ONCE on your own data with method(ifgnls) -- no
-* bootstrap, so it costs one estimation, not reps() of them -- and writes out
-* everything I need to check the Python port against the numbers you will
-* actually publish.
+* Run quaidsce_c with method(ifgnls) and save full-precision coefficients,
+* standard errors, and model statistics for comparison with Python.
 *
 * EDIT THE FOUR LOCALS BELOW, then:  do validate_my_model.do
-* Send me back:  mymodel.dta  and  mymodel.log
+* Output files: mymodel.dta and mymodel.log
 *
-* mymodel.dta is the *exact estimation sample* after your own cleaning, so
-* there is no ambiguity at all about which observations went in.
+* mymodel.dta contains the complete, positive-price sample used below.
 *==============================================================================
 
 clear all
@@ -21,10 +18,10 @@ capture log close _all
 set linesize 250
 
 *------------------------------------------------------------------ EDIT THESE
-* your data file (already cleaned, exactly as you feed it to quaidsce)
+* Input data file, after any project-specific cleaning
 local DATA      "mydata.dta"
 
-* the variables, in the same order you use them
+* Variables in matching share and price order
 local SHARES    "w1 w2 w3 w4 w5 w6 w7 w8 w9 w10 w11"
 local PRICES    "p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11"
 local EXPVAR    "total"
@@ -45,16 +42,15 @@ foreach v of varlist `PRICES' `EXPVAR' {
     drop if `v' <= 0
 }
 
-* --- do your shares sum to one? -------------------------------------------- *
+* --- Check whether shares sum to one -------------------------------------- *
 tempvar swsum
 egen double `swsum' = rowtotal(`SHARES')
 summarize `swsum'
 display "SHARESUM_MEAN " %21.17g r(mean)
 display "SHARESUM_MIN  " %21.17g r(min)
 display "SHARESUM_MAX  " %21.17g r(max)
-* If the mean is not ~1, your system is conditional and the shares should be
-* rescaled (w_i/sum_j w_j, with expenditure rescaled to match).  That change
-* dramatically improves the numerical conditioning -- see the note I sent.
+* For a conditional system, rescale shares within the selected goods and use
+* their total expenditure as the system expenditure.
 
 count
 display "NOBS " r(N)
@@ -86,4 +82,4 @@ display "NGOODS " e(ngoods)
 display "NDEMOS " e(ndemos)
 
 log close
-display "DONE -- send me mymodel.dta and mymodel.log"
+display "Saved mymodel.dta and mymodel.log"

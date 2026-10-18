@@ -77,10 +77,9 @@ def first_stage(
     ``cdf = Phi(X' tau)`` and ``pdf = phi(X' tau)``. This is the textbook
     Shonkwiler-Yen transformation used throughout pyquaidsce >= 1.7.0.
 
-    ``include_lnexp=False`` reproduces the behaviour of the ado when the user
-    supplies ``lnexpenditure()`` instead of ``expenditure()``: the local macro
-    holding the log-expenditure temp variable is empty in that branch, so log
-    expenditure silently drops out of the first-stage probits.
+    With the default design, ``include_lnexp=False`` excludes log expenditure
+    from the first-stage regressors. A supplied ``design`` sets the regressors
+    directly.
     """
     check_deadline(deadline)
     N, n = shares.shape

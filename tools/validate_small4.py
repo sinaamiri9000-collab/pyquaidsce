@@ -1,10 +1,9 @@
 """
 Full-precision validation against ``tests/data/small4.log``.
 
-The user ran ``deliverables/benchmark_small.do`` in Stata: 4 goods, 2000
-observations, 2 demographics, censoring in all four shares, with every
-coefficient dumped from Mata at 17 significant digits.  Four specifications
-came back:
+The captured Stata reference run uses 4 goods, 2000 observations,
+2 demographics, and censoring in all four shares. Coefficients were saved
+from Mata at 17 significant digits for the following specifications:
 
     RUN 1  original Stata quaidsce_c ... (its recorded default, i.e. fgnls)
     RUN 2  quaidsce_c ... method(nls)
@@ -12,9 +11,8 @@ came back:
     RUN 4  quaidsce_c ... noquadratic
     RUN 5  quaidsce_c ... nocensor          -> errored out in Stata, see below
 
-Unlike ``log/censor_v2.log`` this benchmark also contains the ``ELAS_INC`` /
-``ELAS_UNCOMP`` / ``ELAS_COMP`` blocks, so it validates the elasticity code of
-v2.0 as well as the estimator.
+The reference includes ``ELAS_INC``, ``ELAS_UNCOMP`` and ``ELAS_COMP`` blocks
+for comparing elasticities as well as model coefficients.
 """
 
 from __future__ import annotations

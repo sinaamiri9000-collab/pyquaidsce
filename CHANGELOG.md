@@ -4,6 +4,8 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 ## Unreleased
 
+- Updated examples and technical descriptions, removed personal instructions
+  and local paths, and fixed manual-test data loading and convergence reporting.
 - Fixed cross-price elasticity names in Python, Stata, and R output.
   `e_i_j` means demand for good i with respect to price j. Numerical results
   are unchanged.

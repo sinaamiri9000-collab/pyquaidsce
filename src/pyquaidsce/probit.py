@@ -9,7 +9,7 @@ Reproduces ``probit y x1 ... xk`` as called in ``quaidsce_c.ado``:
   (this matters, because ``quaidsce_c.ado`` indexes into ``tau`` positionally);
 * ``e(V)`` = inverse of the *observed* information matrix, which is Stata's
   default ``vce(oim)`` for ``probit``;
-* collinear regressors are dropped the way Stata's ``_rmcoll`` does, and the
+* collinear regressors are dropped using a left-to-right rank check, and the
   corresponding coefficients/variances are reported as 0.
 
 No external dependency beyond numpy/scipy.

@@ -1,10 +1,9 @@
 """
-At-means expenditure and price elasticities, ported from the ``***Elasticities***``
-block of ``quaidsce_c.ado``.
+At-means expenditure and price elasticities for QUAIDS.
 
 Everything is evaluated at the sample means of the observed shares, log prices,
-log expenditure, demographics and -- when censoring is used -- of the
-first-stage ``cdf``, ``pdf`` and ``du`` variables, exactly as the ado does.
+log expenditure, demographics, and the control residual. When censoring is
+used, the first-stage ``cdf``, ``pdf`` and ``du`` are also averaged.
 
 Latent (uncensored) formulas, Poi (2012) with Ray (1983) scaling
 ----------------------------------------------------------------
@@ -17,12 +16,15 @@ Latent (uncensored) formulas, Poi (2012) with Ray (1983) scaling
 
 Shonkwiler-Yen correction used by pyquaidsce
 ---------------------------------------------------------
-    we_i     = wbar_i * cdfbar_i + delta_i * pdfbar_i
+    waug_i   = wbar_i + cfcoef_i * vbar
+    we_i     = waug_i * cdfbar_i + delta_i * pdfbar_i
     e_i     <- 1 + (1/we_i) [ cdfbar_i (e_i - 1) wbar_i
-                              + tau_{i,M} pdfbar_i ( wbar_i - delta_i dubar_i ) ]
+                              + tau_{i,M} pdfbar_i ( waug_i - delta_i dubar_i ) ]
     eu_ij   <- -kron_ij + (1/we_i) [ cdfbar_i (eu_ij + kron_ij) wbar_i
-                              + tau_{i,j} pdfbar_i ( wbar_i - delta_i dubar_i ) ]
+                              + tau_{i,j} pdfbar_i ( waug_i - delta_i dubar_i ) ]
     ec_ij    = eu_ij + e_i * wbar_j                              (Slutsky)
+
+The control-function coefficient ``cfcoef_i`` is zero in the base model.
 
 Implementation policy
 ---------------------

@@ -1,12 +1,8 @@
 """
 Starting values for the nonlinear system.
 
-Stata's ``nlsur`` starts every parameter at zero unless ``initial()`` is given.
-That works, but on a 17-good censored system the Gauss-Newton path from the
-origin is long and runs along a very flat valley.  We therefore build a cheap
-consistent starting point from a *linearised* AIDS fit and then let the
-optimiser take over; the optimum it converges to is unchanged, only the number
-of iterations is.
+The default start is zero. An optional linearised AIDS fit provides starting
+values for the nonlinear estimator without changing its objective function.
 
 Linearisation
 -------------
@@ -16,9 +12,12 @@ share equations then become linear,
 
     w_i / Phi_i  ~  alpha_i + sum_j gamma_ij ln p_j + beta_i * D
                     + sum_r eta_ri z_r * D + lambda_i * D^2
-                    + delta_i * phi_i / Phi_i ,      D = ln m - ln P*
+                    + cfcoef_i * v + delta_i * phi_i / Phi_i,
+                                                    D = ln m - ln P*
 
-so each equation can be fitted by OLS.  The resulting ``gamma`` is then made
+The control residual ``v`` is included only when a control function is used.
+
+Each equation can be fitted by OLS. The resulting ``gamma`` is then made
 symmetric and homogeneous, and the whole thing is mapped into the free
 parameter vector with the same restrictions the model imposes.
 """

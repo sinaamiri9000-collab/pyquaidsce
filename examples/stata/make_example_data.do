@@ -1,19 +1,17 @@
 *==============================================================================
 * make_example_data.do
 *
-* Reproduce the dataset behind the package's own example.log.
+* Generate the reference dataset used by the original Stata example.
 *
-* example.do builds its data with Stata's random-number generator, which cannot
-* be reproduced outside Stata, so the only way to check the Python port against
-* example.log is to have you generate the file and send it over.
+* The upstream example.do uses Stata's random-number generator. Run this file
+* in Stata to obtain the same random-number stream for reference comparisons.
 *
-* Takes a few seconds.  Send me back:  foodcomp_censored_table1.dta
+* Output: foodcomp_censored_table1.dta
 *
-* NOTE the two differences between the repo's example.do and the run that
-* actually produced example.log (27 Nov 2024):
+* The upstream example.log (27 Nov 2024) differs from example.do in two ways:
 *   - the log uses  aux*aux*aux > 20000 , example.do says 10000
 *   - the log's -set seed- comes BEFORE -use-
-* This file follows the LOG, so that the numbers can be compared to it.
+* This file uses the settings recorded in that reference log.
 *==============================================================================
 
 clear all
@@ -37,10 +35,10 @@ drop aux
 
 * the log reports, in order: 1083 / 1139 / 1035 / 996 changes.
 * If your numbers differ, your Stata version's RNG stream differs and the
-* comparison against example.log will not be exact -- tell me either way.
+* comparison against the reference log will not be exact.
 
 * Table 1 of the paper: rescale within the group and drop the outliers, exactly
-* as example.do does, so the file I get is the estimation sample.
+* as the upstream example.do does, to save the estimation sample.
 foreach var in w_proteins w_fruitveg w_dairy w_flours {
     replace `var' = `var'/total
     drop if `var' > .75
@@ -54,4 +52,4 @@ summarize w* dw*
 
 count
 save foodcomp_censored_table1.dta, replace
-display "DONE -- send me foodcomp_censored_table1.dta"
+display "Saved foodcomp_censored_table1.dta"

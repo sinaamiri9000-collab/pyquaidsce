@@ -18,38 +18,6 @@ These choices are fixed behavior in v1.7.0+. There is no compatibility switch in
 
 ## Comparing pyquaidsce with Stata
 
-### Cross-price names on the publication branch
-
-`ELAS_UNCOMP:e_i_j` and `ELAS_COMP:e_i_j` identify demand for good **i**
-with respect to price **j**, matching matrix element `[i-1, j-1]` in Python
-and `[i, j]` in R / Stata. Price matrices are flattened row by row.
-
-Before this fix, the same numeric vector used transposed cross-price labels.
-The fix changes names only: numerical coefficients, covariance positions,
-bootstrap draws, and standalone elasticity matrices are unchanged. Code that
-looks up a cross-price elasticity by name now receives the correct direction.
-
-Updating the package does not rewrite stored results. For a verified affected
-censored Python result with the standard final elasticity block, rebuild only
-that block's names using the corrected package:
-
-```python
-n = res.spec.neqn
-k = n + 2 * n * n
-assert res.spec.censor and len(res.names) == len(res.b)
-res.names = list(res.names[:-k]) + res.spec.elas_names()
-```
-
-For saved R / Stata output, update coefficient names and both covariance axes
-together; also update names attached to bootstrap standard errors. Do not
-transpose numeric matrices or reorder bootstrap columns. Archived validation
-logs remain unchanged; their readers explicitly normalize known legacy names.
-
-One bootstrap replication can check a fitted result and its labels, but cannot
-estimate bootstrap standard errors. The public bootstrap requires at least two
-successful replications. `tools/check_elasticity_benchmark.py` performs the
-original fit and exactly one resample separately for this diagnostic.
-
 When comparing results, check the following before attributing a difference to the implementation:
 
 1. **Estimation sample** — missing values and positivity filters must select the same observations.

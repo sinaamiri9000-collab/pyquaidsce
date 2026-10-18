@@ -53,11 +53,7 @@ _L = re.compile(r"^LL(\d)\s+(\S+)\s*$")
 
 
 def parse(path: str, *, legacy_elasticity_labels: bool = True):
-    """Read archived PARM dumps, explicitly correcting their legacy labels.
-
-    Set legacy_elasticity_labels=False only for a dump already using the
-    canonical [good, price] names. The archived log itself remains unchanged.
-    """
+    """Read PARM dumps using [good, price] elasticity names."""
     coefs: Dict[int, Dict[str, Tuple[float, float]]] = {}
     lls: Dict[int, float] = {}
     with open(path, errors="replace") as fh:

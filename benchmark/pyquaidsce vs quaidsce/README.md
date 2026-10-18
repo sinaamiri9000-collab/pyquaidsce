@@ -1,23 +1,32 @@
 # pyquaidsce vs quaidsce
 
-This comparison uses the Iranian Household Income and Expenditure Survey (2023–2024): 37,656 households, 6 food groups, and 8 demographic variables. Both commands estimate censored QUAIDS with IFGNLS and the same starting values. Each model was run once, without bootstrap.
+This benchmark compares pyquaidsce with Stata's quaidsce_c on the same computer.
+Both programs fit the same censored QUAIDS model using IFGNLS, with 2,665
+households, 4 goods, 2 demographic variables (`age` and `scale`), and `anot(11)`.
+Each program completes 200 bootstrap replications using 8 workers.
 
 | Measure | pyquaidsce | quaidsce_c |
 |---|---:|---:|
-| Time (seconds) | 119.685 | 21,052.243 |
-| Log-likelihood | 379314.2335272935 | 379314.2334614899 |
+| Time (seconds) | 122.05 | 10,810.18 |
+| Time (minutes) | 2.03 | 180.17 |
+| Bootstrap replications | 200 | 200 |
 
-pyquaidsce took about **176 times less time** in the recorded run. The Stata command completed but did not report a convergence flag.
+pyquaidsce was about **88.6 times faster** in this run.
 
-The files for this comparison are:
-- `benchmark.do`: Stata commands for running both models.
-- `benchmark_2026-10-10.log`: the original Stata results (to be added).
-- `six_commodity_input.dta`: the prepared data (to be added after permission to share it is confirmed).
+## Files
 
-Run from the root of the repository:
+| File | Contents |
+|---|---|
+| `benchmark_speed_200reps.do` | Stata code that runs both programs and records their times. |
+| `benchmark_speed_200reps.log` | Results, bootstrap output, and the timing summary. |
+| `food_demand_benchmark_4goods.dta` | Input data used by both programs. |
+| `stata_bootstrap_reps_200.dta` | The 200 bootstrap results saved by Stata. |
+
+## Run
+
+Install pyquaidsce, quaidsce_c, and Stata's parallel package. Set Stata's
+working directory to this folder, then run:
 
 ```stata
-do "benchmark/pyquaidsce vs quaidsce/benchmark.do"
+do benchmark_speed_200reps.do
 ```
-
-The original log was produced with a temporary fix for the Python executable inside Stata. The new `benchmark.do` does **not** use that fix: the `publication` version of pyquaidsce reads the correct Python setting automatically. The times shown above have not yet been reproduced with this new script.

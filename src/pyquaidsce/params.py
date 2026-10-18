@@ -134,7 +134,6 @@ class Spec:
         return out
 
     def elas_names(self) -> List[str]:
-        """Names matching as_stata_vector's row-major [good, price] order."""
         n = self.neqn
         out = [f"ELAS_INC:e_{i + 1}" for i in range(n)]
         for i in range(1, n + 1):

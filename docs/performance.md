@@ -23,18 +23,18 @@ Several computational strategies make `pyquaidsce` significantly faster than con
 
 ## 2. pyquaidsce vs quaidsce
 
-We estimated the same six-good censored QUAIDS model using both programs. The data come from the Iranian Household Income and Expenditure Survey (2023–2024).
+Both programs fit the same four-good censored QUAIDS model using IFGNLS on
+2,665 households, with 2 demographic variables and 200 bootstrap replications
+using 8 workers on the same computer.
 
-Both models used IFGNLS, 37,656 observations, eight demographic variables, and the same starting values. Each program was run once without bootstrap.
+| Program | Time (seconds) |
+|---|---:|
+| pyquaidsce | 122.05 |
+| quaidsce_c | 10,810.18 |
 
-| Program | Time (seconds) | Log-likelihood |
-|---|---:|---:|
-| pyquaidsce | 119.685 | 379314.2335272935 |
-| quaidsce_c | 21,052.243 | 379314.2334614899 |
+pyquaidsce was about **88.6 times faster** in this run.
 
-In this run, pyquaidsce was about **176 times faster**. The original Stata command did not report a convergence flag, so we do not claim that its convergence was independently confirmed.
-
-The files for this comparison are described in [benchmark/pyquaidsce vs quaidsce/](../benchmark/pyquaidsce%20vs%20quaidsce/). The original timing log was recorded on 10 October 2026. A later run can be made with the updated Stata connection in the publication branch.
+The code, data, and results are in [benchmark/pyquaidsce vs quaidsce/](../benchmark/pyquaidsce%20vs%20quaidsce/).
 
 ---
 

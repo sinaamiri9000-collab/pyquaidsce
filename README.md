@@ -25,7 +25,7 @@ At the same time, Python offered a much more flexible and convenient environment
 Estimating censored demand systems in empirical research often requires extensive model exploration, sensitivity checks, and bootstrap replications. In Stata, estimating large censored QUAIDS models under Iterated FGNLS (IFGNLS) can take significant computing time (often 20+ minutes for a single run on moderately sized datasets). 
 
 `pyquaidsce` was developed to solve this practical bottleneck:
-- **Fast Execution**: Written with optimized analytic Jacobians and vectorized linear algebra (`numpy`/`scipy`), achieving a **about 176x lower runtime in the recorded six-good comparison** on the controlled benchmark reported below.
+- **Fast Execution**: Uses analytic Jacobians and NumPy/SciPy linear algebra. In the four-good benchmark below, pyquaidsce was about **88.6 times faster** with 200 bootstrap replications.
 - **Pure Python & Lightweight**: Uses `numpy`, `scipy`, `pandas`, and `threadpoolctl`. No complex compilation or heavy external dependencies.
 - **Research Workflow Integration**: Easily run demand models in Jupyter notebooks, script automated sensitivity pipelines, and run on cloud servers/clusters.
 - **Validated Numerics**: Tested against econometric identities and numerical derivatives; the repository also preserves high-precision historical Stata comparison evidence from earlier compatibility-capable releases.
@@ -198,16 +198,19 @@ See [Stata Compatibility](docs/stata-compatibility.md) for details about compari
 
 ## Benchmark
 
-We compared **pyquaidsce** with the original Stata **quaidsce_c** command using data from the Iranian Household Income and Expenditure Survey (2023–2024). Both programs estimated the same six-good censored QUAIDS model using IFGNLS, with 37,656 observations and eight demographic variables.
+We compared **pyquaidsce** with Stata's **quaidsce_c** on the same computer.
+Both programs fit the same censored QUAIDS model using IFGNLS, with 2,665
+households, 4 goods, 2 demographic variables, and 200 bootstrap replications
+using 8 workers.
 
 | Measure | pyquaidsce | quaidsce_c |
 |---|---:|---:|
-| Time | 119.685 seconds | 21,052.243 seconds |
-| Log-likelihood | 379314.233527 | 379314.233461 |
+| Time | 122.05 seconds | 10,810.18 seconds |
+| Bootstrap replications | 200 | 200 |
 
-In this run, pyquaidsce took about **176 times less time**. Each program was run once; no bootstrap was used. The original Stata command completed, but did not report a convergence flag.
+pyquaidsce was about **88.6 times faster** in this run.
 
-The run code and details are in [benchmark/pyquaidsce vs quaidsce/](benchmark/pyquaidsce%20vs%20quaidsce/). The data and original log are kept in the prepared publication files and will be added after the data-sharing permission is checked.
+The code, data, results, and file descriptions are in [benchmark/pyquaidsce vs quaidsce/](benchmark/pyquaidsce%20vs%20quaidsce/).
 
 ---
 

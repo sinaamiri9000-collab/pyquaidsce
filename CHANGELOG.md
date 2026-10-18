@@ -4,13 +4,11 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 ## Unreleased
 
-- Fixed cross-price elasticity names in Python named results, Stata `e(b)` /
-  `e(V)`, and R coefficient / covariance output. `e_i_j` now consistently means
-  demand for good i with respect to price j. Numerical values, their storage
-  order, elasticity matrices, and bootstrap calculations are unchanged.
-- Added name-to-matrix regression checks and explicit normalization of archived
-  legacy labels in validation tools. Existing saved results retain their old
-  labels until explicitly migrated; see `docs/stata-compatibility.md`.
+- Fixed cross-price elasticity names in Python, Stata, and R output.
+  `e_i_j` means demand for good i with respect to price j. Numerical results
+  are unchanged.
+- Added tests for named elasticity results and the Stata and R interfaces.
+- Added the four-good speed benchmark with 200 bootstrap replications.
 
 ## 1.7.0 — 2026-10-06
 

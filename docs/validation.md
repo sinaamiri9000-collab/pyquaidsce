@@ -23,8 +23,6 @@ The repository contains automatic Python tests covering:
 - integrated `ivexp` reduced forms, excluded-instrument F tests, and bootstrap rebuilding;
 - bootstrap covariance synchronization and timeout behavior;
 - Stata bridge argument/matrix forwarding;
-- cross-price name-to-matrix agreement, including asymmetric matrices,
-  bootstrap column labels, and explicitly normalized historical fixtures;
 - verification that the public default estimation method is IFGNLS.
 
 Run them with:
@@ -35,15 +33,13 @@ python -m unittest discover -s tests -v
 
 ## 3. Comparison with Stata
 
-A six-good IFGNLS comparison used 37,656 observations from the Iranian Household Income and Expenditure Survey (2023–2024).
+A four-good censored QUAIDS comparison used 2,665 households, IFGNLS, and
+200 bootstrap replications with 8 workers in each program.
 
 | Measure | pyquaidsce | quaidsce_c |
 |---|---:|---:|
-| Time (seconds) | 119.685 | 21,052.243 |
-| Log-likelihood | 379314.2335272935 | 379314.2334614899 |
+| Time (seconds) | 122.05 | 10,810.18 |
+| Bootstrap replications | 200 | 200 |
 
-Both commands completed. pyquaidsce reported convergence, but the original Stata command did not provide a convergence flag.
-
-Each command was run once without bootstrap. This is a comparison of these two runs, not an average over repeated runs. The details and code are described in [benchmark/pyquaidsce vs quaidsce](../benchmark/pyquaidsce%20vs%20quaidsce/).
-
-The earlier four-good timing comparison is available in the Git history, rather than in the current benchmark folder.
+pyquaidsce was about **88.6 times faster**. The code, data, and results are in
+[benchmark/pyquaidsce vs quaidsce](../benchmark/pyquaidsce%20vs%20quaidsce/).

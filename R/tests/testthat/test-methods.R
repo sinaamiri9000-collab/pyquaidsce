@@ -53,6 +53,20 @@ test_that("S3 methods work as expected", {
   expect_true(is.matrix(s$coefficients))
   expect_equal(colnames(s$coefficients), c("Estimate", "Std. Error", "z value", "Pr(>|z|)"))
 
+  # Independently connect named coefficients to [good, price] matrix cells.
+  for (i in seq_len(3)) {
+    for (j in seq_len(3)) {
+      for (block in c("ELAS_UNCOMP", "ELAS_COMP")) {
+        type <- if (block == "ELAS_UNCOMP") "uncompensated" else "compensated"
+        key <- sprintf("%s:e_%d_%d", block, i, j)
+        expected <- elasticities(fit, type = type)[i, j]
+        expect_equal(unname(cf[key]), unname(expected), tolerance = 1e-12)
+        expect_equal(unname(s$coefficients[key, "Estimate"]),
+                     unname(expected), tolerance = 1e-12)
+      }
+    }
+  }
+
   # print methods should not fail
   expect_output(print(fit))
   expect_output(print(s))

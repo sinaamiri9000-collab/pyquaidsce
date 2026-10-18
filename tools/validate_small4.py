@@ -33,6 +33,7 @@ sys.path.insert(0, ROOT)
 sys.path.insert(0, os.path.join(ROOT, "src"))
 from pyquaidsce import quaidsce  # noqa: E402
 from tools.paths import BENCH as BENCH_PATH  # noqa: E402
+from tools.legacy_names import canonical_legacy_name  # noqa: E402
 
 BENCH = str(BENCH_PATH)
 SHARES = ["sw1", "sw2", "sw4", "sw9"]
@@ -51,7 +52,12 @@ _P = re.compile(r"^PARM(\d) (\S+)\s+(\S+)(?:\s+(\S+))?\s*$")
 _L = re.compile(r"^LL(\d)\s+(\S+)\s*$")
 
 
-def parse(path: str):
+def parse(path: str, *, legacy_elasticity_labels: bool = True):
+    """Read archived PARM dumps, explicitly correcting their legacy labels.
+
+    Set legacy_elasticity_labels=False only for a dump already using the
+    canonical [good, price] names. The archived log itself remains unchanged.
+    """
     coefs: Dict[int, Dict[str, Tuple[float, float]]] = {}
     lls: Dict[int, float] = {}
     with open(path, errors="replace") as fh:
@@ -61,7 +67,10 @@ def parse(path: str):
             if m:
                 r = int(m.group(1))
                 se = float(m.group(4)) if m.group(4) is not None else np.nan
-                coefs.setdefault(r, {})[m.group(2)] = (float(m.group(3)), se)
+                name = m.group(2)
+                if legacy_elasticity_labels:
+                    name = canonical_legacy_name(name)
+                coefs.setdefault(r, {})[name] = (float(m.group(3)), se)
                 continue
             m = _L.match(line)
             if m:

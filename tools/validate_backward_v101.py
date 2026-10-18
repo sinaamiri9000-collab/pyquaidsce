@@ -19,6 +19,7 @@ sys.path.insert(0, str(SRC))
 from pyquaidsce import quaidsce  # noqa: E402
 from pyquaidsce.estimator import first_stage  # noqa: E402
 from pyquaidsce.model import DemandData, fitted_shares, jacobian_full  # noqa: E402
+from tools.legacy_names import canonical_legacy_name  # noqa: E402
 
 
 SHARES = ["sw1", "sw2", "sw4", "sw9"]
@@ -79,13 +80,18 @@ def main() -> None:
     metadata = json.loads((args.baseline / "metadata.json").read_text())
     differences["llf"] = abs(float(res.llf) - float(metadata["llf"]))
     names_equal = res.names == metadata["parameter_names"]
-    passed = names_equal and max(differences.values()) <= 1e-10
+    canonical_names_equal = res.names == [
+        canonical_legacy_name(name) for name in metadata["parameter_names"]
+    ]
+    passed = canonical_names_equal and max(differences.values()) <= 1e-10
     report = {
         "baseline_version": "1.0.1",
         "current_version": __import__("pyquaidsce").__version__,
         "dataset": "tests/data/small4.dta",
         "specification": metadata["specification"],
         "parameter_names_and_order_equal": names_equal,
+        "legacy_price_elasticity_labels_normalized": True,
+        "canonical_parameter_names_and_order_equal": canonical_names_equal,
         "max_absolute_differences": differences,
         "algebraic_tolerance": 1e-10,
         "full_estimation_tolerance": 1e-8,

@@ -23,6 +23,8 @@ The repository contains automatic Python tests covering:
 - integrated `ivexp` reduced forms, excluded-instrument F tests, and bootstrap rebuilding;
 - bootstrap covariance synchronization and timeout behavior;
 - Stata bridge argument/matrix forwarding;
+- cross-price name-to-matrix agreement, including asymmetric matrices,
+  bootstrap column labels, and explicitly normalized historical fixtures;
 - verification that the public default estimation method is IFGNLS.
 
 Run them with:

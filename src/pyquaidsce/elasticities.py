@@ -29,8 +29,8 @@ Implementation policy
 pyquaidsce >= 1.7.0 uses the published/theoretically intended formulas only.
 Legacy switches that reproduced known mistakes in the original Stata implementation
 were removed from the public API. The reported elasticity matrices use the natural
-``[good, price]`` convention; ``as_stata_vector()`` retains the historical storage
-order needed by the Stata-facing result layout.
+``[good, price]`` convention; ``as_stata_vector()`` stores price elasticities
+row by row, with matching ``e_i_j`` names in every interface.
 """
 
 from __future__ import annotations

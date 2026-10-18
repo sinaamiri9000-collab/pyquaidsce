@@ -62,6 +62,17 @@ display as result "PASS: Stata launched the publication Python worker and receiv
 display as result "N = " e(N) "  Log-likelihood = " %16.6f e(ll)
 timer list 1
 
+tempname EU EC
+matrix `EU' = e(elas_u)
+matrix `EC' = e(elas_c)
+forvalues i = 1/4 {
+    forvalues j = 1/4 {
+        assert abs(_b[ELAS_UNCOMP:e_`i'_`j'] - el(`EU', `i', `j')) < 1e-12
+        assert abs(_b[ELAS_COMP:e_`i'_`j'] - el(`EC', `i', `j')) < 1e-12
+    }
+}
+display as result "PASS: every named price elasticity matches its [good, price] matrix cell."
+
 if `test_bootstrap' {
     display as text _newline "=== OPTIONAL BOOTSTRAP SMOKE TEST: reps(4) ==="
     capture noisily pyquaidsce sw1 sw2 sw4 sw9, ///

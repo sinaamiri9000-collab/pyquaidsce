@@ -38,8 +38,6 @@ out/
 !benchmark/pyquaidsce vs quaidsce/*.dta
 !benchmark/pyquaidsce vs quaidsce/*.log
 
-# Published Iran demand-system benchmark data and results
-!benchmark/censored_vs_uncensored_iran/data/*.csv
-!benchmark/censored_vs_uncensored_iran/results/*.csv
-!benchmark/censored_vs_uncensored_iran/results/raw/*.csv
-!benchmark/censored_vs_uncensored_iran/results/logs/*.log
+# Published Iran demand-system benchmark data and log
+!benchmark/censored_vs_uncensored_iran/iran_food_demand.csv
+!benchmark/censored_vs_uncensored_iran/benchmark.log

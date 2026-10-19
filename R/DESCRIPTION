@@ -8,9 +8,12 @@ Maintainer: Sina Amiri <sinaamiri9000@gmail.com>
 Authors@R: c(
     person("Sina", "Amiri", email = "sinaamiri9000@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0003-9340-2497")),
-    person("José Alberto", "Molina", role = "aut"),
-    person("Juan Carlos", "Salgado", role = "aut"),
-    person("Juan Carlos", "Caro", role = "aut"))
+    person("José Alberto", "Molina", role = "aut",
+           comment = c(ORCID = "0000-0002-9437-4606")),
+    person("Juan Carlos", "Salgado", role = "aut",
+           comment = c(ORCID = "0000-0003-2449-866X")),
+    person("Juan Carlos", "Caro", role = "aut",
+           comment = c(ORCID = "0000-0002-1124-2617")))
 Description: High-performance estimation of Censored Quadratic Almost Ideal Demand Systems (QUAIDS)
     with Ray (1983) demographic scaling and Shonkwiler-Yen (1999) two-step censoring correction,
     powered by the 'pyquaidsce' backend via 'reticulate'. Supports Iterated Feasible Generalized

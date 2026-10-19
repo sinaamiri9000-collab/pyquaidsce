@@ -240,9 +240,12 @@ If you use `pyquaidsce` in your research, please cite the software:
   title = {pyquaidsce: Estimation of censored {AIDS} and {QUAIDS} demand systems in {Python}, {Stata}, and {R}},
   year = {2026},
   version = {1.8.0},
+  doi = {10.5281/zenodo.23463166},
   url = {https://github.com/sinaamiri9000-collab/pyquaidsce/releases/tag/v1.8.0}
 }
 ```
+
+The DOI for all versions is [10.5281/zenodo.22990015](https://doi.org/10.5281/zenodo.22990015).
 
 ---
 

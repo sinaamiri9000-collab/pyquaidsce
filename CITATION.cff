@@ -3,6 +3,7 @@ message: "If you use pyquaidsce in your research, please cite this software."
 title: "pyquaidsce: Estimation of censored AIDS and QUAIDS demand systems in Python, Stata, and R"
 type: software
 version: 1.8.0
+doi: "10.5281/zenodo.23463166"
 date-released: "2026-10-19"
 repository-code: "https://github.com/sinaamiri9000-collab/pyquaidsce"
 url: "https://github.com/sinaamiri9000-collab/pyquaidsce/releases/tag/v1.8.0"
@@ -14,12 +15,15 @@ authors:
     orcid: "https://orcid.org/0009-0003-9340-2497"
   - given-names: "José Alberto"
     family-names: "Molina"
+    orcid: "https://orcid.org/0000-0002-9437-4606"
     affiliation: "Department of Economic Analysis, University of Zaragoza, Zaragoza, Spain; IZA – Institute of Labor Economics, Bonn, Germany"
   - given-names: "Juan Carlos"
     family-names: "Salgado"
+    orcid: "https://orcid.org/0000-0003-2449-866X"
     affiliation: "Instituto Nacional de Salud Pública, Cuernavaca, Mexico; Ministry of Science, Humanities, Technology, and Innovation, Mexico"
   - given-names: "Juan Carlos"
     family-names: "Caro"
+    orcid: "https://orcid.org/0000-0002-1124-2617"
     affiliation: "Departamento de Economía, Universidad de Concepción, Concepción, Chile"
 license: GPL-3.0-only
 keywords:

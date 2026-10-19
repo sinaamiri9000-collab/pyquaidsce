@@ -238,7 +238,7 @@ tools/            Diagnostic scripts and Stata log comparison utilities
 
 If you use `pyquaidsce` in your research, please cite the software:
 
-Amiri, S., Molina Chueca, J. A., Salgado, J. C., & Caro, J. C. (2026). pyquaidsce: Estimation of censored AIDS and QUAIDS demand systems in Python, Stata, and R (Version 1.8.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23463166
+Amiri, S., Molina Chueca, J. A., Salgado, J. C., & Caro, J. C. (2026). pyquaidsce: Estimation of censored AIDS and QUAIDS demand systems in Python, Stata, and R (Version 1.9.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23484895
 
 BibTeX:
 
@@ -247,10 +247,10 @@ BibTeX:
   author = {Amiri, Sina and Molina Chueca, José Alberto and Salgado, Juan Carlos and Caro, Juan Carlos},
   title = {pyquaidsce: Estimation of censored {AIDS} and {QUAIDS} demand systems in {Python}, {Stata}, and {R}},
   year = {2026},
-  version = {1.8.0},
+  version = {1.9.0},
   publisher = {Zenodo},
-  doi = {10.5281/zenodo.23463166},
-  url = {https://github.com/sinaamiri9000-collab/pyquaidsce/releases/tag/v1.8.0}
+  doi = {10.5281/zenodo.23484895},
+  url = {https://github.com/sinaamiri9000-collab/pyquaidsce/releases/tag/v1.9.0}
 }
 ```
 

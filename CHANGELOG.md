@@ -4,6 +4,7 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 ## Unreleased
 
+- Added the formatted Zenodo citation and used Molina Chueca consistently in author metadata.
 - Added the Zenodo DOI for version 1.8.0 and ORCID identifiers for all authors.
 - Updated author names and citation details across Python, R, Stata, and the documentation.
 - Removed the request to cite the original quaidsce work alongside this software.

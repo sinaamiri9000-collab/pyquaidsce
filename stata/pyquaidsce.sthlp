@@ -161,7 +161,7 @@ rebuild those residuals during bootstrap.{p_end}
 {title:Authors}
 
 {pstd}
-Sina Amiri, José Alberto Molina, Juan Carlos Salgado, and Juan Carlos Caro{break}
+Sina Amiri, José Alberto Molina Chueca, Juan Carlos Salgado, and Juan Carlos Caro{break}
 Maintainer: Sina Amiri (Department of Economics, Shiraz University){break}
 Email: {browse "mailto:sinaamiri9000@gmail.com":sinaamiri9000@gmail.com}{break}
 GitHub: {browse "https://github.com/sinaamiri9000-collab/pyquaidsce"}

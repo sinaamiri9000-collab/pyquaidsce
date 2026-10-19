@@ -234,12 +234,17 @@ tools/            Diagnostic scripts and Stata log comparison utilities
 
 If you use `pyquaidsce` in your research, please cite the software:
 
+Amiri, S., Molina Chueca, J. A., Salgado, J. C., & Caro, J. C. (2026). pyquaidsce: Estimation of censored AIDS and QUAIDS demand systems in Python, Stata, and R (Version 1.8.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.23463166
+
+BibTeX:
+
 ```bibtex
 @software{amiri2026pyquaidsce,
-  author = {Amiri, Sina and Molina, José Alberto and Salgado, Juan Carlos and Caro, Juan Carlos},
+  author = {Amiri, Sina and Molina Chueca, José Alberto and Salgado, Juan Carlos and Caro, Juan Carlos},
   title = {pyquaidsce: Estimation of censored {AIDS} and {QUAIDS} demand systems in {Python}, {Stata}, and {R}},
   year = {2026},
   version = {1.8.0},
+  publisher = {Zenodo},
   doi = {10.5281/zenodo.23463166},
   url = {https://github.com/sinaamiri9000-collab/pyquaidsce/releases/tag/v1.8.0}
 }
@@ -252,7 +257,7 @@ The DOI for all versions is [10.5281/zenodo.22990015](https://doi.org/10.5281/ze
 ## Authors
 
 - **Sina Amiri:** Department of Economics, Shiraz University, Shiraz, Iran.
-- **José Alberto Molina:** Department of Economic Analysis, University of Zaragoza, Zaragoza, Spain; IZA – Institute of Labor Economics, Bonn, Germany.
+- **José Alberto Molina Chueca:** Department of Economic Analysis, University of Zaragoza, Zaragoza, Spain; IZA – Institute of Labor Economics, Bonn, Germany.
 - **Juan Carlos Salgado:** Instituto Nacional de Salud Pública, Cuernavaca, Mexico; Ministry of Science, Humanities, Technology, and Innovation, Mexico.
 - **Juan Carlos Caro:** Departamento de Economía, Universidad de Concepción, Concepción, Chile.
 

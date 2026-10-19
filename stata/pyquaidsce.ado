@@ -1,6 +1,6 @@
 *! version 1.8.0  19oct2026
 *! pyquaidsce: direct Stata command for the pyquaidsce package
-*! Authors: Sina Amiri, José Alberto Molina, Juan Carlos Salgado, Juan Carlos Caro
+*! Authors: Sina Amiri, José Alberto Molina Chueca, Juan Carlos Salgado, Juan Carlos Caro
 *! Maintainer: Sina Amiri (Department of Economics, Shiraz University)
 
 program define pyquaidsce, eclass

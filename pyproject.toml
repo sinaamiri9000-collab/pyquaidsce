@@ -8,7 +8,7 @@ version = "1.8.0"
 description = "Censored QUAIDS estimation with internal IV control functions, robust bootstrap, and Stata integration"
 authors = [
     {name = "Sina Amiri", email = "sinaamiri9000@gmail.com"},
-    {name = "José Alberto Molina"},
+    {name = "José Alberto Molina Chueca"},
     {name = "Juan Carlos Salgado"},
     {name = "Juan Carlos Caro"},
 ]

@@ -8,7 +8,7 @@
 - **Elasticities**: Expenditure (income), Marshallian (uncompensated), and Hicksian (compensated) price elasticities.
 - **Control functions**: Supports integrated expenditure endogeneity correction via `ivexp`, plus externally generated residuals.
 - **Parallel bootstrap**: Multi-core bootstrap with progress tracking and runtime safeguards for valid standard errors.
-- **Stata integration**: matched coefficient ordering and native Stata-facing output tables, while using the corrected textbook econometric formulas.
+- **Stata integration**: run the Python estimator from Stata and read results in Stata tables and matrices.
 
 ---
 
@@ -185,17 +185,6 @@ See the [R Package Documentation](R/README.md) for full details.
 
 ---
 
-## Canonical Econometric Behavior
-
-In **v1.7.0**, `pyquaidsce` has one canonical implementation for the two areas where the original Stata `quaidsce` ado contains known deviations from the published formulas:
-
-- The Shonkwiler–Yen first stage always uses the Probit **linear index** $X'\tau$, so the correction uses $\Phi(X'\tau)$ and $\phi(X'\tau)$.
-- Elasticities always use the corrected theoretical formulas, including the no-demographics quadratic term and the demographics + linear-AIDS censoring branch.
-
-See [Stata Compatibility](docs/stata-compatibility.md) for details about comparisons with the original Stata command.
-
----
-
 ## Benchmark
 
 We compared **pyquaidsce** with Stata's **quaidsce_c** on the same computer.
@@ -219,10 +208,11 @@ The code, data, results, and file descriptions are in [benchmark/pyquaidsce vs q
 ```text
 src/pyquaidsce/   Core Python package source code and Stata bridge
 stata/            Official Stata package (quaidsce command; pyquaidsce distribution)
+R/                R interface to the Python estimator
 tests/            Mathematical unit tests, theory checks, and Stata regression tests
-examples/         Ready-to-run Python and Stata sample scripts
+examples/         Python, Stata, and R examples with a shared practice dataset
 benchmark/        Comparisons of model results and estimation time
-docs/             Methodology, getting started, Stata compatibility, and validation guides
+docs/             Methodology, getting started, user guide, and validation
 tools/            Diagnostic scripts and Stata log comparison utilities
 ```
 
@@ -234,8 +224,8 @@ tools/            Diagnostic scripts and Stata log comparison utilities
 - [User Guide & API Reference](docs/user-guide.md): Complete reference for all input parameters, the result object, and code examples.
 - [Stata Package Guide](stata/README.md): How to install and run `pyquaidsce` directly within Stata.
 - [Methodology & Model Equations](docs/methodology.md): QUAIDS model specification, Shonkwiler-Yen censoring, and elasticity derivations.
-- [Stata Compatibility Guide](docs/stata-compatibility.md): Numerical-comparison guidance and the documented differences from the original Stata ado.
-- [Validation Evidence](docs/validation.md): Current v1.7.0 test policy plus archived Stata comparison evidence across 113 reported values.
+- [Examples](examples/README.md): Complete Python, Stata, and R scripts using the same practice dataset.
+- [Validation Evidence](docs/validation.md): Automated tests and the comparison with Stata.
 - [Performance & Benchmarking](docs/performance.md): Benchmark methodology, timing details, and optimization notes.
 - [Contributing](CONTRIBUTING.md): Guidelines for bug reports and contributions.
 

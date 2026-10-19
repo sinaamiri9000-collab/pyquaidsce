@@ -92,13 +92,16 @@ pyquaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(
 quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) anot(10) reps(200) n_jobs(4) mp_context(spawn) rep_timeout(900) seed(12345)
 ```
 
-`rep_timeout()` combines cooperative checks between numerical work units with a
-parent-side process watchdog. When a timeout is set, each replication runs in a
-disposable child process so a stuck native call can be terminated without
-killing unrelated replications.
+`rep_timeout()` sets the maximum seconds allowed for each bootstrap replication.
+If a replication takes longer, it is counted as unsuccessful and the program
+moves on to the next one. For example, `rep_timeout(900)` allows 15 minutes.
+The default, `rep_timeout(0)`, sets no time limit.
 
-Advanced control-function and custom-selection options are available from
-Stata. The Shonkwiler-Yen correction always uses the Probit linear index. Precomputed residuals require `reps(0)`:
+If you have already calculated a residual, pass its column name to
+`control_function()` for the demand equations and to
+`selection_control_function()` for the participation equations. Use `reps(0)`
+with these options because the package cannot rebuild an external residual
+during bootstrap:
 
 ```stata
 quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
@@ -107,17 +110,20 @@ quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
     selection_covariates(urban) selection_noexpenditure reps(0)
 ```
 
-For endogenous total expenditure, `ivexp()` is the preferred integrated path.
-It estimates log expenditure on log prices, Ray demographics, the excluded
-instruments, and a constant; the residual enters both participation Probits and
-latent demand equations. Its bootstrap rebuilds the reduced form in every
-replication:
+To account for endogenous expenditure, give your instrument variables to
+`ivexp()`. For example, use `ivexp(income)` if household income is your chosen
+instrument. The package estimates the expenditure equation and adds its
+residual to both the participation and demand equations. With bootstrap, it
+repeats these steps in every replication:
 
 ```stata
 quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
-    demographics(hh_size urban) ivexp(log_income employment) ///
+    demographics(hh_size urban) ivexp(income) ///
     reps(200) seed(12345)
 ```
+
+For complete examples with a practice dataset, see
+[examples/example_quaidsce.do](../examples/example_quaidsce.do).
 
 ---
 

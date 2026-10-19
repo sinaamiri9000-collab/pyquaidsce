@@ -1,17 +1,8 @@
 # Validation and Numerical Evidence
 
-`pyquaidsce` v1.7.0 is validated against econometric identities, numerical derivatives, cross-interface contracts, and archived Stata comparisons. Exact reproduction of known mistakes in the original Stata ado is **not** a v1.7.0 objective.
+This page describes the automated tests and the comparison with Stata.
 
-## 1. Current v1.7.0 validation policy
-
-The current implementation uses two corrected behaviors:
-
-- the Shonkwiler-Yen first stage always uses the Probit linear index, $\Phi(X'\tau)$ and $\phi(X'\tau)$;
-- elasticities always use the corrected theoretical formulas.
-
-Therefore, differences from the original ado are expected in specifications affected by its nested-Probit transformation or documented elasticity indexing/macro mistakes. See [Stata Compatibility](stata-compatibility.md).
-
-## 2. Automated Python tests
+## 1. Automated Python tests
 
 The repository contains automatic Python tests covering:
 
@@ -31,12 +22,12 @@ Run them with:
 python -m unittest discover -s tests -v
 ```
 
-## 3. Comparison with Stata
+## 2. Comparison with Stata
 
 A four-good censored QUAIDS comparison used 2,665 households, IFGNLS, and
 200 bootstrap replications with 8 workers in each program.
 
-| Measure | pyquaidsce | quaidsce_c |
+| Measure | pyquaidsce | quaidsce |
 |---|---:|---:|
 | Time (seconds) | 122.05 | 10,810.18 |
 | Bootstrap replications | 200 | 200 |

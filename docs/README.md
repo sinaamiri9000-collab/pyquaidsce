@@ -2,8 +2,8 @@
 
 - [Getting started](getting-started.md)
 - [User guide & API reference](user-guide.md)
+- [Examples in Python, Stata, and R](../examples/README.md)
 - [Stata package guide](../stata/README.md)
 - [Methodology and estimator](methodology.md)
-- [Stata compatibility](stata-compatibility.md)
 - [Validation](validation.md)
 - [Performance](performance.md)

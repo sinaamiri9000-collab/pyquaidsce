@@ -4,6 +4,10 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 ## Unreleased
 
+- Simplified argument descriptions and bootstrap guidance, fixed equation
+  formatting, and added Python, Stata, and R examples with shared simulated data.
+- Removed the separate Stata compatibility page and moved reference-comparison
+  scripts to `tools`.
 - Updated examples and technical descriptions, removed personal instructions
   and local paths, and fixed manual-test data loading and convergence reporting.
 - Fixed cross-price elasticity names in Python, Stata, and R output.

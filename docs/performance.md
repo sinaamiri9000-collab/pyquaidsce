@@ -52,10 +52,9 @@ When running large bootstrap routines (`reps=500+`):
       main()
   ```
 - **Warm-start Option**: Setting `bootstrap_start="warm"` reuses the full-sample parameter estimates as starting values for each bootstrap draw, further accelerating bootstrap convergence.
-- **Per-replication deadline**: `rep_timeout=900` drops a replication that passes
-  the 15-minute deadline. Cooperative checks normally stop the optimizer first;
-  a parent-side watchdog terminates the disposable child process if native code
-  remains stuck. Enabling this hard backstop adds process-start overhead.
+- **Time limit per replication**: `rep_timeout=900` allows each bootstrap
+  replication to run for up to 900 seconds. If it takes longer, it is counted
+  as unsuccessful and the program moves on to the next one.
 - **Start method**: leave `mp_context=None` for the safe `spawn` default. An
   explicit context should be used only after testing it on the target operating
   system and BLAS build.

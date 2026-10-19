@@ -11,10 +11,10 @@
 #' @param expenditure Character name of total expenditure variable.
 #' @param lnexpenditure Character name of log-expenditure variable.
 #' @param demographics Optional character vector of demographic variable names.
-#' @param ivexp Optional character vector of excluded instruments for endogenous
-#'   expenditure. The Python backend regresses log expenditure on log prices,
-#'   demographics, these instruments, and a constant; the generated residual
-#'   enters both the participation Probits and latent demand equations.
+#' @param ivexp Instrument column names for endogenous expenditure, for example
+#'   \code{c("income")}. The package estimates the expenditure equation and adds
+#'   its residual to both participation and demand equations. With bootstrap,
+#'   it repeats these steps in every replication. \code{NULL} skips this correction.
 #' @param anot Numeric scalar normalization for alpha_0 (default = 10.0).
 #' @param quadratic Logical, whether to include quadratic expenditure term (default = TRUE).
 #' @param censor Logical, whether to apply Shonkwiler-Yen censoring correction (default = TRUE).
@@ -22,7 +22,9 @@
 #' @param algorithm Numerical optimizer: 'gn' (Gauss-Newton, default) or 'lm' (Levenberg-Marquardt).
 #' @param start Starting values: 'zero' (default) or 'linear'.
 #' @param initial Optional numeric vector of custom starting free parameters (or a previous \code{quaidsce} object).
-#' @param sigma_initial Optional numeric matrix of custom starting residual covariance Sigma (dimension (n_goods - 1) x (n_goods - 1)).
+#' @param sigma_initial Starting error covariance matrix for IFGNLS. Use the
+#'   previous fit's \code{sigma} together with \code{initial}. Its dimensions are
+#'   n_goods by n_goods with censoring, or (n_goods - 1) by (n_goods - 1) without it.
 #' @param bootstrap_start Bootstrap starting scheme: 'zero' (default) or 'warm'.
 #' @param vce_sigma Residual covariance for analytical VCE: 'objective' (default) or 'final'.
 #' @param control_function Optional character name of endogeneity control function residual.
@@ -35,7 +37,9 @@
 #' @param n_jobs Integer, number of parallel bootstrap workers (default = 1).
 #' @param blas_threads Integer number of BLAS threads used by each estimation process (default = 1).
 #' @param mp_context Multiprocessing context method (default = "spawn").
-#' @param rep_timeout Optional numeric timeout per bootstrap replication in seconds.
+#' @param rep_timeout Maximum seconds allowed for each bootstrap replication.
+#'   If it takes longer, it is counted as unsuccessful and the program moves on
+#'   to the next one. \code{NULL} sets no time limit.
 #' @param param_tol Inner relative parameter-change threshold (default = 1e-5).
 #' @param objective_tol Inner relative weighted-SSR-change threshold (default = 1e-7).
 #' @param gn_tol Inner scaled Gauss-Newton threshold (default = 1e-5).

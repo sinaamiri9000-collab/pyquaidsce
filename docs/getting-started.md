@@ -126,7 +126,7 @@ if __name__ == "__main__":
         n_jobs=4,          # Parallel execution across 4 CPU cores
         seed=123456,       # Reproducible random seed
         mp_context="spawn", # BLAS-safe cross-platform worker start
-        rep_timeout=900,   # Cooperative + hard 15-minute limit per replication
+        rep_timeout=900,   # Maximum seconds for each bootstrap replication
     )
 
     # Summary table will now include bootstrap standard errors
@@ -141,9 +141,14 @@ and standard errors. The conditional analytical reference is retained in
 `res.V_analytic` and `res.analytic_se`. Without bootstrap, analytical elasticity
 S.E.s are deliberately `NaN`; the rest of `res.V` remains finite.
 
-`rep_timeout` is checked cooperatively at Probit, nonlinear-iteration, and
-chunk boundaries. A parent-side watchdog also terminates the disposable child
-process if a native call remains stuck. External control-function models require
-an outer bootstrap that rebuilds the reduced form and cannot use the internal
-`reps` option. Models using `ivexp` can use internal `reps`, because the package
-knows and re-estimates that reduced form in every replication.
+`rep_timeout` sets the maximum seconds allowed for each bootstrap replication.
+If a replication takes longer, it is counted as unsuccessful and the program
+moves on to the next one. Leave it as `None` to run without a time limit.
+
+If you use `ivexp` to account for endogenous expenditure, the package also
+re-estimates the expenditure equation in every bootstrap replication. If you
+supply a residual calculated outside the package, use `reps=0` and write your
+own bootstrap that rebuilds the residual each time.
+
+For more examples and complete scripts in Python, Stata, and R, see
+[Examples](../examples/README.md). All three scripts use the same practice dataset.

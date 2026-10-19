@@ -10,24 +10,49 @@ Let $n$ denote the number of goods, $p = (p_1, \dots, p_n)'$ the price vector, $
 
 ### Price Indices and Scaling Functions
 
-1. **Translog Price Index $\ln a(p)$**:
-   $$\ln a(p) = \alpha_0 + \sum_{i=1}^n \alpha_i \ln p_i + \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n \gamma_{ij} \ln p_i \ln p_j$$
-   where $\alpha_0$ is set by the user (`anot`).
+**Translog price index:**
 
-2. **Cobb-Douglas Price Aggregator $b(p)$**:
-   $$b(p) = \prod_{i=1}^n p_i^{\beta_i} = \exp\left(\sum_{i=1}^n \beta_i \ln p_i\right)$$
+```math
+\ln a(p) = \alpha_0 + \sum_{i=1}^n \alpha_i \ln p_i
++ \frac{1}{2} \sum_{i=1}^n \sum_{j=1}^n \gamma_{ij} \ln p_i \ln p_j.
+```
 
-3. **Ray (1983) Demographic Scaling Factors**:
-   $$\bar{m}(z) = 1 + \sum_{r=1}^R \rho_r z_r$$
-   $$c(p, z) = \exp\left(\sum_{i=1}^n \sum_{r=1}^R \eta_{ri} z_r \ln p_i\right)$$
+The user sets $\alpha_0$ through `anot`.
 
-4. **Deflated Real Expenditure Term $D$**:
-   $$D = \ln m - \ln a(p) - \ln \bar{m}(z)$$
+**Cobb-Douglas price aggregator:**
+
+```math
+b(p) = \prod_{i=1}^n p_i^{\beta_i}
+= \exp\left(\sum_{i=1}^n \beta_i \ln p_i\right).
+```
+
+**Ray (1983) demographic scaling factors:**
+
+```math
+\bar{m}(z) = 1 + \sum_{r=1}^R \rho_r z_r.
+```
+
+```math
+c(p, z) = \exp\left(\sum_{i=1}^n \sum_{r=1}^R \eta_{ri} z_r \ln p_i\right).
+```
+
+**Real expenditure term:**
+
+```math
+D = \ln m - \ln a(p) - \ln \bar{m}(z).
+```
 
 ### Latent (Uncensored) Budget Share Equations
 
-The latent budget share for good $i$, denoted $w_i^*$, is given by:
-$$w_i^* = \alpha_i + \sum_{j=1}^n \gamma_{ij} \ln p_j + \left(\beta_i + \sum_{r=1}^R \eta_{ri} z_r\right) D + \frac{\lambda_i}{b(p) c(p, z)} D^2$$
+The latent budget share for good $i$, denoted $w_i^{*}$, is:
+
+```math
+\begin{aligned}
+w_i^{*} ={}& \alpha_i + \sum_{j=1}^n \gamma_{ij} \ln p_j \\
+&+ \left(\beta_i + \sum_{r=1}^R \eta_{ri} z_r\right) D
++ \frac{\lambda_i}{b(p) c(p, z)} D^2.
+\end{aligned}
+```
 
 ---
 
@@ -36,95 +61,127 @@ $$w_i^* = \alpha_i + \sum_{j=1}^n \gamma_{ij} \ln p_j + \left(\beta_i + \sum_{r=
 To be consistent with utility maximization, the following restrictions are imposed during estimation:
 
 1. **Homogeneity of Degree Zero in Prices**:
-   $$\sum_{j=1}^n \gamma_{ij} = 0 \quad \forall i$$
+
+   ```math
+   \sum_{j=1}^n \gamma_{ij} = 0 \quad \forall i
+   ```
 
 2. **Slutsky Symmetry**:
-   $$\gamma_{ij} = \gamma_{ji} \quad \forall i, j$$
+
+   ```math
+   \gamma_{ij} = \gamma_{ji} \quad \forall i, j
+   ```
 
 3. **Demographic Adding-Up**:
-   $$\sum_{i=1}^n \eta_{ri} = 0 \quad \forall r$$
+
+   ```math
+   \sum_{i=1}^n \eta_{ri} = 0 \quad \forall r
+   ```
 
 4. **Adding-up for Uncensored Models** (`censor=False`):
-   $$\sum_{i=1}^n \alpha_i = 1, \quad \sum_{i=1}^n \beta_i = 0, \quad \sum_{i=1}^n \lambda_i = 0$$
 
-*(In censored models, adding-up does not hold on observed shares because of the Shonkwiler–Yen transformation, so all $n$ equations are estimated).*
+   ```math
+   \sum_{i=1}^n \alpha_i = 1, \quad \sum_{i=1}^n \beta_i = 0, \quad \sum_{i=1}^n \lambda_i = 0
+   ```
+
+For censored models, all $n$ equations are estimated. The adding-up restrictions
+on $\alpha$, $\beta$, and $\lambda$ above are not imposed, and the transformed
+fitted shares are not constrained to sum to one.
 
 ---
 
 ## 3. Shonkwiler & Yen (1999) Censoring Correction
 
-When households report zero consumption for some goods ($w_i = 0$), estimating $w_i^*$ directly leads to selection bias. The Shonkwiler–Yen two-step approach addresses this:
+When some households report zero consumption ($w_i = 0$), the Shonkwiler-Yen approach models participation before fitting the demand equations:
 
 ### Step 1: Participation Probits
 For each good $i$, estimate a Probit model on the binary participation indicator $d_i = \mathbb{I}(w_i > 0)$:
-$$d_i = \mathbb{I}(X_i' \tau_i + v_i > 0)$$
-where $X_i = [\ln p_1, \dots, \ln p_n, \ln m, z_1, \dots, z_R, 1]'$.
+
+```math
+d_i = \mathbb{I}(X_i' \tau_i + u_i > 0).
+```
+
+Here $X_i = [\ln p_1, \dots, \ln p_n, \ln m, z_1, \dots, z_R, 1]'$.
 
 From this, compute the standard normal cumulative distribution $\Phi_i$ and probability density $\phi_i$.
 
 ### Step 2: System Estimation on Transformed Shares
 The observed budget share equation becomes:
-$$w_i = \Phi_i \cdot w_i^* + \delta_i \cdot \phi_i + \varepsilon_i$$
-where $\delta_i$ is an additional structural parameter to be estimated for each equation.
+
+```math
+w_i = \Phi_i \cdot w_i^{*} + \delta_i \cdot \phi_i + \varepsilon_i.
+```
+
+Here $\delta_i$ is an additional structural parameter to be estimated for each equation.
 
 ### Endogenous expenditure: integrated `ivexp` control function
 
-When total expenditure is endogenous and excluded instruments $q_h$ are
-available, the package estimates the auxiliary OLS equation
+To account for endogenous expenditure, supply instrument columns through
+`ivexp`, for example `ivexp=["income"]` in Python or `ivexp(income)` in Stata.
+For household $h$, the package first uses ordinary least squares to estimate
+log expenditure from log prices, demographics, the instruments $q_h$, and a
+constant:
 
-$$
+```math
 \ln m_h = \pi_0 + \pi_p'\ln p_h + \pi_z'z_h + \pi_q'q_h + v_h.
-$$
+```
 
-This follows the augmented-regression construction for almost-ideal demand
-systems: all exogenous variables in the demand system enter the reduced form,
-along with the identifying instruments. For each good, the same generated
-residual enters the participation equation with coefficient $\psi_i$,
+The residual $v_h$ is the difference between observed and predicted log
+expenditure. The package adds it to both model stages. Each participation
+Probit estimates a coefficient $\psi_i$ on this residual:
 
-$$
+```math
 d_{ih}=\mathbb{I}(X_{ih}'\tau_i + \psi_i v_h + u_{ih}>0),
-$$
+```
 
-and the latent demand share with a distinct coefficient $\kappa_i$,
+Each demand equation estimates a separate coefficient $\kappa_i$:
 
-$$
-\mu_{ih}=\Phi_{ih}\left(w^Q_{ih}+\kappa_i v_h\right)
+```math
+\mu_{ih}=\Phi_{ih}\left(w_{ih}^{*}+\kappa_i v_h\right)
 +\delta_i\phi_{ih}.
-$$
+```
 
-The package reports the reduced-form coefficients and covariance, $R^2$, and
-the classical joint F statistic for the excluded instruments. The F statistic
-is a relevance diagnostic, not a test of the instruments' exclusion validity.
-The instruments must be substantively defensible and excluded from both
-structural stages. As with other residual-inclusion estimators, consistency
-also depends on a correctly specified triangular reduced form and the
-distributional conditions used to justify residual inclusion in the Probit
-(Rivers and Vuong 1988). Bootstrapping accounts for the generated regressor;
-it cannot repair weak or invalid instruments.
+The package reports the expenditure regression coefficients, their covariance
+matrix, $R^2$, and a joint F test for the instruments. The F test shows how much
+the instruments help explain expenditure after accounting for prices and
+demographics. It does not establish that the instruments are valid. Their
+choice also needs an economic reason for excluding them from the participation
+and demand equations.
+
+The correction assumes that the expenditure equation is correctly specified
+and that its residual captures the unobserved link with the two model stages.
+For Probit, this also relies on assumptions about the joint distribution of
+the expenditure and participation errors (Rivers and Vuong 1988).
+
+With `ivexp`, bootstrap re-estimates the expenditure equation and both model
+stages in every replication, so standard errors account for estimating the
+residual. Bootstrap does not make a weak or invalid instrument suitable.
 
 ### Optional external control function
 
-With an externally estimated reduced-form residual $v_h$, the package can
-augment the latent demand share as
+If you have already estimated an expenditure equation, you can pass its
+residual column through `control_function`. The package then adds that residual
+to each demand equation:
 
-$$
-\mu_{ih}=\Phi_{ih}\left(w^Q_{ih}+\kappa_i v_h\right)
+```math
+\mu_{ih}=\Phi_{ih}\left(w_{ih}^{*}+\kappa_i v_h\right)
 +\delta_i\phi_{ih}.
-$$
+```
 
-Each equation has its own unrestricted $\kappa_i$ (`cfcoef_i`). A residual may
-also enter the participation Probits through
-`selection_control_function`; those Probit coefficients are distinct from
-$\kappa_i$. For price or expenditure perturbations the residual is held fixed,
-so the package reports a structural derivative conditional on the supplied
-residual. If the reduced form itself changes under the perturbation, its
-additional $dv/dt$ term must be handled by the empirical design outside the
-generic package.
+Each good has its own coefficient $\kappa_i$, reported as `cfcoef_i`. Use
+`selection_control_function` to add a residual to the participation Probits
+as well. Their residual coefficients are estimated separately from the demand
+coefficients.
 
-Because the residual is generated, valid final inference must re-estimate its
-reduced form inside every bootstrap replication. The internal bootstrap does
-this automatically for `ivexp`. It remains disabled for an externally supplied
-residual because the package does not know that residual's generating equation.
+When calculating price and expenditure elasticities, the package holds the
+residual fixed. If your application also allows the residual to change, you
+need to calculate that additional effect separately.
+
+For bootstrap inference with an external residual, your own bootstrap code
+must re-estimate the expenditure equation and rebuild the residual in every
+replication. Use `reps=0` inside each call to this package. Automatic bootstrap
+is available with `ivexp`, where the package knows how to estimate the
+expenditure equation.
 
 ---
 
@@ -164,15 +221,25 @@ in two consecutive iterations; the final inner solve must also converge.
 Elasticities are evaluated at sample means ($\bar{w}, \bar{\ln p}, \bar{\ln m}, \bar{z}$):
 
 ### 1. Expenditure (Income) Elasticity:
-$$e_i = \frac{\partial \ln q_i}{\partial \ln m} = 1 + \frac{1}{w_i} \frac{\partial w_i}{\partial \ln m}$$
+
+```math
+e_i = \frac{\partial \ln q_i}{\partial \ln m} = 1 + \frac{1}{w_i} \frac{\partial w_i}{\partial \ln m}
+```
 
 ### 2. Uncompensated (Marshallian) Price Elasticity:
-$$e_{ij}^u = \frac{\partial \ln q_i}{\partial \ln p_j} = -\delta_{ij} + \frac{1}{w_i} \frac{\partial w_i}{\partial \ln p_j}$$
+
+```math
+e_{ij}^u = \frac{\partial \ln q_i}{\partial \ln p_j} = -\delta_{ij} + \frac{1}{w_i} \frac{\partial w_i}{\partial \ln p_j}
+```
+
 where $\delta_{ij}$ is the Kronecker delta ($\delta_{ij}=1$ if $i=j$, else $0$).
 
 ### 3. Compensated (Hicksian) Price Elasticity:
 Computed using the Slutsky equation:
-$$e_{ij}^c = e_{ij}^u + e_i \cdot w_j$$
+
+```math
+e_{ij}^c = e_{ij}^u + e_i \cdot w_j
+```
 
 ---
 

@@ -68,7 +68,7 @@
 {synopt :{opt n_jobs(#)}}number of parallel CPU cores for bootstrap; default is {cmd:n_jobs(1)}{p_end}
 {synopt :{opt blas_threads(#)}}BLAS threads used by each estimation process; default is {cmd:blas_threads(1)}{p_end}
 {synopt :{opt mp_context(method)}}Python multiprocessing start method; safe default is {cmd:spawn}{p_end}
-{synopt :{opt rep_timeout(#)}}cooperative plus parent-watchdog time limit in seconds for each bootstrap replication; 0 disables it{p_end}
+{synopt :{opt rep_timeout(#)}}maximum seconds per bootstrap replication; a longer replication counts as unsuccessful and the program moves on; 0 sets no limit{p_end}
 {synopt :{opt nolog}}suppress estimation iteration log{p_end}
 {synopt :{opt gnlog}}print detailed step-by-step Gauss-Newton optimization logs{p_end}
 {synopt :{opt level(#)}}set confidence level; default is {cmd:level(95)}{p_end}
@@ -87,15 +87,14 @@ You can use either {cmd:quaidsce} or {cmd:pyquaidsce}. Both commands run the sam
 It provides a Stata front end powered by the {cmd:pyquaidsce} Python engine. In the four-good IFGNLS benchmark with 200 bootstrap replications, it was {bf:88.6 times faster} than the Stata {cmd:quaidsce} implementation. Point estimation and optional bootstrap replications run in a background Python process while Stata polls for progress, so the Stata GUI remains responsive.
 
 {pstd}
-The Shonkwiler-Yen correction always uses the Probit linear index. With
-{cmd:ivexp()}, log expenditure is regressed
-on log prices, Ray demographics, the excluded instruments, and a constant. The
-generated residual enters both the participation Probits and latent demand
-equations, with equation-specific coefficients. The internal bootstrap
-re-estimates this reduced form in every replication. Bootstrap remains disabled
-for residuals supplied through {cmd:control_function()} or
-{cmd:selection_control_function()}, because those residuals cannot be rebuilt
-from the information supplied to the command.
+To account for endogenous expenditure, give instrument variables to
+{cmd:ivexp()}; for example, use {cmd:ivexp(income)} if household income is your
+chosen instrument. The package estimates the expenditure equation and adds its
+residual to both participation and demand equations. With bootstrap, it repeats
+these steps in every replication. For residuals calculated outside the package
+and supplied through {cmd:control_function()} or
+{cmd:selection_control_function()}, use {cmd:reps(0)} because the package cannot
+rebuild those residuals during bootstrap.{p_end}
 
 
 {marker examples}{...}
@@ -114,9 +113,9 @@ from the information supplied to the command.
 
 {phang2}{cmd:. quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) control_function(vhat) selection_control_function(vhat_sel) selection_prices(p3 p1) selection_covariates(urban) selection_noexpenditure reps(0)}{p_end}
 
-{pstd}Instrument endogenous expenditure internally and use a full bootstrap:{p_end}
+{pstd}Account for endogenous expenditure and run bootstrap:{p_end}
 
-{phang2}{cmd:. quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) ivexp(log_income employment) reps(200) seed(12345)}{p_end}
+{phang2}{cmd:. quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) demographics(hh_size urban) ivexp(income) reps(200) seed(12345)}{p_end}
 
 
 {marker results}{...}

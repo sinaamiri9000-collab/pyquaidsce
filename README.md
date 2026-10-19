@@ -1,6 +1,6 @@
 # pyquaidsce
 
-`pyquaidsce` is a Python package for estimating **Censored Quadratic Almost Ideal Demand Systems (QUAIDS)**. It provides a fast, native Python alternative to the original Stata `quaidsce` command developed by Dr. Juan Carlos Caro and colleagues, incorporating:
+`pyquaidsce` is a Python package for estimating **Censored Quadratic Almost Ideal Demand Systems (QUAIDS)**, incorporating:
 
 - **Ray (1983) demographic scaling** for household characteristics.
 - **Shonkwiler & Yen (1999) two-step correction** for zero expenditure shares (censoring).

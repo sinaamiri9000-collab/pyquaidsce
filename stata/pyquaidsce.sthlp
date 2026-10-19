@@ -6,7 +6,7 @@
 {viewerjumpto "Options" "pyquaidsce##options"}{...}
 {viewerjumpto "Examples" "pyquaidsce##examples"}{...}
 {viewerjumpto "Stored results" "pyquaidsce##results"}{...}
-{viewerjumpto "Author" "pyquaidsce##author"}{...}
+{viewerjumpto "Authors" "pyquaidsce##author"}{...}
 {title:Title}
 
 {p2colset 5 20 22 2}{...}
@@ -158,10 +158,10 @@ rebuild those residuals during bootstrap.{p_end}
 
 
 {marker author}{...}
-{title:Author}
+{title:Authors}
 
 {pstd}
-{bf:Sina Amiri}{break}
-Department of Economics, Shiraz University, Shiraz, Iran{break}
+Sina Amiri, José Alberto Molina, Juan Carlos Salgado, and Juan Carlos Caro{break}
+Maintainer: Sina Amiri (Department of Economics, Shiraz University){break}
 Email: {browse "mailto:sinaamiri9000@gmail.com":sinaamiri9000@gmail.com}{break}
 GitHub: {browse "https://github.com/sinaamiri9000-collab/pyquaidsce"}

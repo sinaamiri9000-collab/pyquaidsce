@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: "If you use pyquaidsce, please cite this software release and the original quaidsce work."
-title: "pyquaidsce: Censored QUAIDS Estimation in Python"
+message: "If you use pyquaidsce in your research, please cite this software."
+title: "pyquaidsce: Estimation of censored AIDS and QUAIDS demand systems in Python, Stata, and R"
 type: software
 version: 1.8.0
 date-released: "2026-10-19"
@@ -12,10 +12,15 @@ authors:
     email: "sinaamiri9000@gmail.com"
     affiliation: "Department of Economics, Shiraz University, Shiraz, Iran"
     orcid: "https://orcid.org/0009-0003-9340-2497"
+  - given-names: "José Alberto"
+    family-names: "Molina"
+    affiliation: "Department of Economic Analysis, University of Zaragoza, Zaragoza, Spain; IZA – Institute of Labor Economics, Bonn, Germany"
   - given-names: "Juan Carlos"
     family-names: "Salgado"
+    affiliation: "Instituto Nacional de Salud Pública, Cuernavaca, Mexico; Ministry of Science, Humanities, Technology, and Innovation, Mexico"
   - given-names: "Juan Carlos"
     family-names: "Caro"
+    affiliation: "Departamento de Economía, Universidad de Concepción, Concepción, Chile"
 license: GPL-3.0-only
 keywords:
   - QUAIDS
@@ -24,19 +29,3 @@ keywords:
   - censored demand
   - Shonkwiler-Yen
   - Python
-references:
-  - type: report
-    title: "Censored QUAIDS estimation with quaidsce"
-    authors:
-      - family-names: "Caro"
-        given-names: "Juan Carlos"
-      - family-names: "Melo"
-        given-names: "Grace"
-      - family-names: "Molina"
-        given-names: "José Alberto"
-      - family-names: "Salgado"
-        given-names: "Juan Carlos"
-    year: 2021
-    number: "1045"
-    institution:
-      name: "Boston College Department of Economics"

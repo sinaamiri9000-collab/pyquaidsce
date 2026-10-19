@@ -2,9 +2,15 @@ Package: pyquaidsce
 Type: Package
 Title: Censored Quadratic Almost Ideal Demand System (QUAIDS) Estimation
 Version: 1.8.0
-Author: Sina Amiri [aut, cre]
+Author: Sina Amiri [aut, cre], José Alberto Molina [aut],
+    Juan Carlos Salgado [aut], Juan Carlos Caro [aut]
 Maintainer: Sina Amiri <sinaamiri9000@gmail.com>
-Authors@R: person("Sina", "Amiri", email = "sinaamiri9000@gmail.com", role = c("aut", "cre"))
+Authors@R: c(
+    person("Sina", "Amiri", email = "sinaamiri9000@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0003-9340-2497")),
+    person("José Alberto", "Molina", role = "aut"),
+    person("Juan Carlos", "Salgado", role = "aut"),
+    person("Juan Carlos", "Caro", role = "aut"))
 Description: High-performance estimation of Censored Quadratic Almost Ideal Demand Systems (QUAIDS)
     with Ray (1983) demographic scaling and Shonkwiler-Yen (1999) two-step censoring correction,
     powered by the 'pyquaidsce' backend via 'reticulate'. Supports Iterated Feasible Generalized

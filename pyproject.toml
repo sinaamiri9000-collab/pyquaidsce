@@ -6,7 +6,12 @@ build-backend = "setuptools.build_meta"
 name = "pyquaidsce"
 version = "1.8.0"
 description = "Censored QUAIDS estimation with internal IV control functions, robust bootstrap, and Stata integration"
-authors = [{name = "Sina Amiri", email = "sinaamiri9000@gmail.com"}]
+authors = [
+    {name = "Sina Amiri", email = "sinaamiri9000@gmail.com"},
+    {name = "José Alberto Molina"},
+    {name = "Juan Carlos Salgado"},
+    {name = "Juan Carlos Caro"},
+]
 maintainers = [{name = "Sina Amiri", email = "sinaamiri9000@gmail.com"}]
 readme = "README.md"
 requires-python = ">=3.9"

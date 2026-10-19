@@ -4,6 +4,9 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 ## Unreleased
 
+- Updated author names and citation details across Python, R, Stata, and the documentation.
+- Removed the request to cite the original quaidsce work alongside this software.
+
 ## 1.8.0 — 2026-10-19
 
 - Improved the Stata subprocess launcher and setup errors.

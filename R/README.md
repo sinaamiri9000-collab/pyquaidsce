@@ -86,7 +86,11 @@ fit_iv$reduced_form$excluded.f
 
 ---
 
-## Citation & Author
-- **Author:** Sina Amiri (Department of Economics, Shiraz University)
-- **Email:** sinaamiri9000@gmail.com
+## Citation & Authors
+
+If you use `pyquaidsce` in your research, please cite the software as shown in the
+[main README](../README.md#citation).
+
+- **Authors:** Sina Amiri, José Alberto Molina, Juan Carlos Salgado, and Juan Carlos Caro.
+- **Maintainer:** Sina Amiri (sinaamiri9000@gmail.com).
 - **Repository:** [https://github.com/sinaamiri9000-collab/pyquaidsce](https://github.com/sinaamiri9000-collab/pyquaidsce)

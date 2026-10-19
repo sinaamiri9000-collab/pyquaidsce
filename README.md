@@ -232,33 +232,28 @@ tools/            Diagnostic scripts and Stata log comparison utilities
 
 ## Citation
 
-If you use `pyquaidsce` in your research, please cite both this package and the original Stata `quaidsce` command:
+If you use `pyquaidsce` in your research, please cite the software:
 
 ```bibtex
 @software{amiri2026pyquaidsce,
-  author = {Amiri, Sina},
-  title = {pyquaidsce: Fast Censored QUAIDS Demand System Estimation in Python},
+  author = {Amiri, Sina and Molina, José Alberto and Salgado, Juan Carlos and Caro, Juan Carlos},
+  title = {pyquaidsce: Estimation of censored {AIDS} and {QUAIDS} demand systems in {Python}, {Stata}, and {R}},
   year = {2026},
-  url = {https://github.com/sinaamiri9000-collab/pyquaidsce}
-}
-
-@techreport{caro2021quaidsce,
-  author = {Caro, Juan Carlos and Melo, Grace and Molina, J. A. and Salgado, J. C.},
-  title = {Censored QUAIDS estimation with quaidsce},
-  institution = {Boston College Department of Economics},
-  type = {Boston College Working Papers in Economics},
-  number = {1045},
-  year = {2021},
-  url = {https://ideas.repec.org/p/boc/bocoec/1045.html}
+  version = {1.8.0},
+  url = {https://github.com/sinaamiri9000-collab/pyquaidsce/releases/tag/v1.8.0}
 }
 ```
 
 ---
 
-## Author
+## Authors
 
-**Sina Amiri**  
-Department of Economics, Shiraz University, Shiraz, Iran.
+- **Sina Amiri:** Department of Economics, Shiraz University, Shiraz, Iran.
+- **José Alberto Molina:** Department of Economic Analysis, University of Zaragoza, Zaragoza, Spain; IZA – Institute of Labor Economics, Bonn, Germany.
+- **Juan Carlos Salgado:** Instituto Nacional de Salud Pública, Cuernavaca, Mexico; Ministry of Science, Humanities, Technology, and Innovation, Mexico.
+- **Juan Carlos Caro:** Departamento de Economía, Universidad de Concepción, Concepción, Chile.
+
+Maintainer: Sina Amiri ([sinaamiri9000@gmail.com](mailto:sinaamiri9000@gmail.com)).
 
 ---
 

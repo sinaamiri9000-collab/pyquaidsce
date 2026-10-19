@@ -200,6 +200,10 @@ pyquaidsce was about **88.6 times faster** in this run.
 
 The code, data, results, and file descriptions are in [benchmark/pyquaidsce vs quaidsce/](benchmark/pyquaidsce%20vs%20quaidsce/).
 
+A separate [censored vs uncensored comparison](benchmark/censored_vs_uncensored_iran/)
+uses 37,656 Iranian households and ten food groups, with 200 bootstrap
+replications per model. It includes prepared data, code, and elasticity intervals.
+
 ---
 
 ## Repository Structure

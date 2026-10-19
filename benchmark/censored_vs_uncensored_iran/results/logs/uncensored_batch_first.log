@@ -1,0 +1,132 @@
+pyquaidsce=1.8.0; model=uncensored; n=37656; groups=[1, 2, 4, 5, 6, 7, 8, 9, 10, 11]; reps=50; n_jobs=4; iid_household_resampling; seed=20261019
+Calculating NLS estimates...
+Calculating FGNLS estimates...
+FGNLS iteration 3...
+FGNLS iteration 4...
+FGNLS iteration 5...
+FGNLS iteration 6...
+FGNLS iteration 7...
+FGNLS iteration 8...
+FGNLS iteration 9...
+FGNLS iteration 10...
+FGNLS iteration 11...
+FGNLS iteration 12...
+FGNLS iteration 13...
+FGNLS iteration 14...
+FGNLS iteration 15...
+FGNLS iteration 16...
+FGNLS iteration 17...
+FGNLS iteration 18...
+FGNLS iteration 19...
+FGNLS iteration 20...
+FGNLS iteration 21...
+FGNLS iteration 22...
+FGNLS iteration 23...
+FGNLS iteration 24...
+FGNLS iteration 25...
+FGNLS iteration 26...
+FGNLS iteration 27...
+FGNLS iteration 28...
+FGNLS iteration 29...
+FGNLS iteration 30...
+FGNLS iteration 31...
+FGNLS iteration 32...
+  bootstrap 1/50 [  2.0%] (35.9s, 0.03 reps/s)
+  bootstrap 2/50 [  4.0%] (36.7s, 0.05 reps/s)
+  bootstrap 3/50 [  6.0%] (37.1s, 0.08 reps/s)
+  bootstrap 4/50 [  8.0%] (50.3s, 0.08 reps/s)
+  bootstrap 5/50 [ 10.0%] (69.7s, 0.07 reps/s)
+  bootstrap 6/50 [ 12.0%] (72.7s, 0.08 reps/s)
+  bootstrap 7/50 [ 14.0%] (76.6s, 0.09 reps/s)
+  bootstrap 8/50 [ 16.0%] (81.2s, 0.10 reps/s)
+  bootstrap 9/50 [ 18.0%] (101.3s, 0.09 reps/s)
+  bootstrap 10/50 [ 20.0%] (107.9s, 0.09 reps/s)
+  bootstrap 11/50 [ 22.0%] (117.4s, 0.09 reps/s)
+  bootstrap 12/50 [ 24.0%] (120.8s, 0.10 reps/s)
+  bootstrap 13/50 [ 26.0%] (120.9s, 0.11 reps/s)
+  bootstrap 14/50 [ 28.0%] (138.6s, 0.10 reps/s)
+  bootstrap 15/50 [ 30.0%] (142.3s, 0.11 reps/s)
+  bootstrap 16/50 [ 32.0%] (145.0s, 0.11 reps/s)
+  bootstrap 17/50 [ 34.0%] (164.9s, 0.10 reps/s)
+  bootstrap 18/50 [ 36.0%] (190.5s, 0.09 reps/s)
+  bootstrap 19/50 [ 38.0%] (193.8s, 0.10 reps/s)
+  bootstrap 20/50 [ 40.0%] (206.5s, 0.10 reps/s)
+  bootstrap 21/50 [ 42.0%] (225.2s, 0.09 reps/s)
+  bootstrap 22/50 [ 44.0%] (230.2s, 0.10 reps/s)
+  bootstrap 23/50 [ 46.0%] (230.7s, 0.10 reps/s)
+  bootstrap 24/50 [ 48.0%] (261.5s, 0.09 reps/s)
+  bootstrap 25/50 [ 50.0%] (268.9s, 0.09 reps/s)
+  bootstrap 26/50 [ 52.0%] (273.6s, 0.10 reps/s)
+  bootstrap 27/50 [ 54.0%] (313.7s, 0.09 reps/s)
+  bootstrap 28/50 [ 56.0%] (326.2s, 0.09 reps/s)
+  bootstrap 29/50 [ 58.0%] (336.9s, 0.09 reps/s)
+  bootstrap 30/50 [ 60.0%] (343.6s, 0.09 reps/s)
+  bootstrap 31/50 [ 62.0%] (351.9s, 0.09 reps/s)
+  bootstrap 32/50 [ 64.0%] (367.1s, 0.09 reps/s)
+  bootstrap 33/50 [ 66.0%] (371.7s, 0.09 reps/s)
+  bootstrap 34/50 [ 68.0%] (393.5s, 0.09 reps/s)
+  bootstrap 35/50 [ 70.0%] (395.4s, 0.09 reps/s)
+  bootstrap 36/50 [ 72.0%] (396.2s, 0.09 reps/s)
+  bootstrap 37/50 [ 74.0%] (400.0s, 0.09 reps/s)
+  bootstrap 38/50 [ 76.0%] (432.9s, 0.09 reps/s)
+  bootstrap 39/50 [ 78.0%] (448.2s, 0.09 reps/s)
+  bootstrap 40/50 [ 80.0%] (461.8s, 0.09 reps/s)
+  bootstrap 41/50 [ 82.0%] (463.8s, 0.09 reps/s)
+  bootstrap 42/50 [ 84.0%] (501.7s, 0.08 reps/s)
+  bootstrap 43/50 [ 86.0%] (510.1s, 0.08 reps/s)
+  bootstrap 44/50 [ 88.0%] (537.3s, 0.08 reps/s)
+  bootstrap 45/50 [ 90.0%] (547.9s, 0.08 reps/s)
+  bootstrap 46/50 [ 92.0%] (567.3s, 0.08 reps/s)
+  bootstrap 47/50 [ 94.0%] (570.8s, 0.08 reps/s)
+  bootstrap 48/50 [ 96.0%] (576.6s, 0.08 reps/s)
+  bootstrap 49/50 [ 98.0%] (600.9s, 0.08 reps/s)
+  bootstrap 50/50 [100.0%] (677.2s, 0.07 reps/s)
+{
+  "package_version": "1.8.0",
+  "censor": false,
+  "converged": true,
+  "nobs": 37656,
+  "seconds_total_including_full_sample": 720.555245259,
+  "outer_iterations": 32,
+  "gn_iterations": 39,
+  "bootstrap_reps_requested": 50,
+  "bootstrap_reps_successful": 50,
+  "bootstrap_failures": [],
+  "bootstrap_seed": 20261019,
+  "bootstrap_workers": 4,
+  "resampling": "iid household rows with replacement",
+  "first_stage": "package ivexp OLS, rebuilt in every replication",
+  "excluded_instruments": [
+    "log_income_centered",
+    "log_income_centered_sq"
+  ],
+  "income_instrument_center_weight": "survey-weighted sample mean",
+  "original_groups": [
+    1,
+    2,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "anot": 11,
+  "excluded_zero_remaining_expenditure": 1
+}
+
+Point elasticities:
+ original_group                            label  expenditure_elasticity  own_price_marshallian  own_price_hicksian
+              1                             SSBs                1.141771              -1.412029           -1.390359
+              2 Sweet snacks & added-sugar foods                1.378358              -0.170021           -0.113507
+              4              Non-sugar beverages                0.857514              -0.172063           -0.141778
+              5    Nuts/dried fruits/dates/honey                2.147806              -0.078141           -0.005501
+              6              Fruits & vegetables                0.760442              -0.258800           -0.130933
+              7    Bread & other cereal products                0.157944              -0.445926           -0.433640
+              8                    Protein foods                1.330084              -0.930720           -0.567812
+              9                     Dairy & eggs                0.720131              -0.895604           -0.799791
+             10      Oils/fats/spices/condiments                0.708069              -0.238431           -0.158363
+             11                             Rice                1.320588              -0.577421           -0.437470
+Bootstrap successful: 50/50

@@ -4,6 +4,9 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 ## Unreleased
 
+- Added the ten-good Iran censored vs uncensored benchmark, with prepared data,
+  runnable scripts, and 200 saved bootstrap replications per model.
+
 - Added expenditure control functions and `ivexp` for uncensored AIDS and QUAIDS,
   with adding-up restrictions and bootstrap elasticity inference.
 - Added the formatted Zenodo citation and used Molina Chueca consistently in author metadata.

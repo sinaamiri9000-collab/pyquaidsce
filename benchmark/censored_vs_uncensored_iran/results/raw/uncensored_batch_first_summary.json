@@ -1,0 +1,39 @@
+{
+  "package_version": "1.8.0",
+  "model": "uncensored",
+  "censor": false,
+  "batch": "first",
+  "replication_ids": [
+    1,
+    50
+  ],
+  "requested": 50,
+  "successful": 50,
+  "failures": [],
+  "seed": 20261019,
+  "workers": 4,
+  "resampling": "iid household rows with replacement",
+  "reduced_form": "package ivexp ordinary least squares, rebuilt in each draw",
+  "excluded_instruments": [
+    "log_income_centered",
+    "log_income_centered_sq"
+  ],
+  "observations": 37656,
+  "original_group_numbers": [
+    1,
+    2,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "anot": 11,
+  "elapsed_seconds_including_full_sample_fit": 720.555245259,
+  "full_sample_converged": true,
+  "full_sample_outer_iterations": 32,
+  "full_sample_gn_iterations": 39
+}

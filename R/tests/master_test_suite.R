@@ -1,5 +1,5 @@
 # ==============================================================================
-# PYQUAIDSCE 1.7.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE
+# PYQUAIDSCE 1.8.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE
 # ==============================================================================
 # Dataset: bd_uruguay.csv (14 food groups, 6,848 observations)
 # ==============================================================================
@@ -13,7 +13,7 @@ suppressPackageStartupMessages({
 })
 
 cat("\n================================================================================\n")
-cat("PYQUAIDSCE 1.7.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE\n")
+cat("PYQUAIDSCE 1.8.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE\n")
 cat("================================================================================\n\n")
 
 # ---- STEP 0: Load dataset ----------------------------------------------------
@@ -254,7 +254,7 @@ record_test(24, "Core S3 methods and elasticity fields", function() {
 # Final Scorecard
 # ------------------------------------------------------------------------------
 cat("\n================================================================================\n")
-cat("PYQUAIDSCE 1.7.0 MASTER TEST SUITE SCORECARD\n")
+cat("PYQUAIDSCE 1.8.0 MASTER TEST SUITE SCORECARD\n")
 cat("================================================================================\n")
 cat(sprintf("%-3s %-52s %-8s %-10s %s\n", "#", "Test Scenario Title", "Status", "Time (s)", "Details"))
 cat(paste(rep("-", 80), collapse = ""), "\n")

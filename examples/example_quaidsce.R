@@ -7,7 +7,7 @@ library(pyquaidsce)
 # Read the dataset from your checkout, or download it from the repository.
 data_file <- "examples/data/household_demand.csv"
 if (!file.exists(data_file)) {
-  data_file <- "https://raw.githubusercontent.com/sinaamiri9000-collab/pyquaidsce/publication/examples/data/household_demand.csv"
+  data_file <- "https://raw.githubusercontent.com/sinaamiri9000-collab/pyquaidsce/main/examples/data/household_demand.csv"
 }
 df <- read.csv(data_file)
 shares <- c("w1", "w2", "w3", "w4")

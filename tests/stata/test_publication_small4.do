@@ -21,7 +21,7 @@ if _rc {
     exit 111
 }
 
-* Version is still 1.7.0, so check for the new publication-only function.
+* Check that the subprocess launcher is available in the installed backend.
 * This import is quick: it does not install anything or estimate a model.
 capture noisily python: from pyquaidsce.stata_bridge import _get_stata_python_executable; print("PASS: publication launcher is installed")
 if _rc {

@@ -1,4 +1,4 @@
-*! version 1.7.0  06oct2026
+*! version 1.8.0  19oct2026
 *! pyquaidsce: direct Stata command for the pyquaidsce package
 *! Author: Sina Amiri (Department of Economics, Shiraz University)
 

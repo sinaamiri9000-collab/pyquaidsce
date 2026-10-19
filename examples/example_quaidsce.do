@@ -8,7 +8,7 @@ set more off
 * Read the dataset from your checkout, or download it from the repository.
 local data_file "examples/data/household_demand.csv"
 capture confirm file "`data_file'"
-if _rc local data_file "https://raw.githubusercontent.com/sinaamiri9000-collab/pyquaidsce/publication/examples/data/household_demand.csv"
+if _rc local data_file "https://raw.githubusercontent.com/sinaamiri9000-collab/pyquaidsce/main/examples/data/household_demand.csv"
 import delimited using "`data_file'", clear
 
 * 1. Basic run: no bootstrap and no expenditure endogeneity correction.

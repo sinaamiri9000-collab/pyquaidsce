@@ -4,6 +4,10 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 ## Unreleased
 
+## 1.8.0 — 2026-10-19
+
+- Improved the Stata subprocess launcher and setup errors.
+- Made the R interface reject nonnumeric inputs instead of changing their values.
 - Simplified argument descriptions and bootstrap guidance, fixed equation
   formatting, and added Python, Stata, and R examples with shared simulated data.
 - Removed the separate Stata compatibility page and moved reference-comparison
@@ -15,6 +19,7 @@ All notable user-visible changes to `pyquaidsce` are documented here.
   are unchanged.
 - Added tests for named elasticity results and the Stata and R interfaces.
 - Added the four-good speed benchmark with 200 bootstrap replications.
+- Included example, test, and benchmark data in the source distribution.
 
 ## 1.7.0 — 2026-10-06
 

@@ -1,8 +1,8 @@
 include CHANGELOG.md CITATION.cff CONTRIBUTING.md LICENSE README.md
-recursive-include benchmark *.do *.md
+recursive-include benchmark *.do *.md *.dta *.log
 recursive-include docs *.md
 recursive-include examples *.do *.py *.R *.csv *.md
 recursive-include R DESCRIPTION LICENSE NAMESPACE README.md *.R *.Rd
 recursive-include stata *.ado *.pkg *.sthlp *.toc *.md
-recursive-include tests *.py
+recursive-include tests *.py *.do *.dta *.log
 recursive-include tools *.py *.do

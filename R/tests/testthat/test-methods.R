@@ -52,6 +52,9 @@ test_that("S3 methods work as expected", {
   expect_s3_class(s, "summary.quaidsce")
   expect_true(is.matrix(s$coefficients))
   expect_equal(colnames(s$coefficients), c("Estimate", "Std. Error", "z value", "Pr(>|z|)"))
+  elasticity_rows <- grepl("^ELAS_", rownames(s$coefficients))
+  expect_true(all(is.na(s$coefficients[elasticity_rows, "Std. Error"])))
+  expect_true(all(is.na(s$coefficients[elasticity_rows, "Pr(>|z|)"])))
 
   # Independently connect named coefficients to [good, price] matrix cells.
   for (i in seq_len(3)) {
@@ -70,4 +73,43 @@ test_that("S3 methods work as expected", {
   # print methods should not fail
   expect_output(print(fit))
   expect_output(print(s))
+})
+
+summary_fixture <- function() {
+  b <- c("beta:beta_1" = 0.2, "ELAS_INC:e_1" = 1.2)
+  V <- diag(c(0.01, 0))
+  dimnames(V) <- list(names(b), names(b))
+  structure(list(coefficients = b, vcov = V,
+                 standard.errors = setNames(c(0.1, NA_real_), names(b))),
+            class = "quaidsce")
+}
+
+test_that("summary keeps undefined elasticity inference missing", {
+  fit <- summary_fixture()
+  before <- vcov(fit)
+  tab <- summary(fit)$coefficients
+  expect_equal(unname(tab[1, "Std. Error"]), 0.1)
+  expect_equal(unname(tab[1, "z value"]), 2)
+  expect_equal(unname(tab[1, "Pr(>|z|)"]), 0.0455002638963584)
+  expect_true(all(is.na(tab[2, c("Std. Error", "z value", "Pr(>|z|)")])))
+  expect_equal(vcov(fit), before)
+  expect_equal(coef(fit), c("beta:beta_1" = 0.2, "ELAS_INC:e_1" = 1.2))
+})
+
+test_that("summary handles objects saved before standard.errors was added", {
+  fit <- summary_fixture()
+  fit$standard.errors <- NULL
+  tab <- summary(fit)$coefficients
+  expect_equal(unname(tab[1, "Std. Error"]), 0.1)
+  expect_true(all(is.na(tab[2, c("Std. Error", "z value", "Pr(>|z|)")])))
+})
+
+test_that("zero or nonfinite SE do not produce spurious z and p values", {
+  fit <- summary_fixture()
+  for (se in c(0, NaN, Inf)) {
+    fit$standard.errors[2] <- se
+    tab <- summary(fit)$coefficients
+    expect_true(is.na(tab[2, "z value"]))
+    expect_true(is.na(tab[2, "Pr(>|z|)"]))
+  }
 })

@@ -126,7 +126,9 @@ to the next one. \code{NULL} sets no time limit.}
 \item{verbose}{Logical, whether to print progress (default = FALSE).}
 }
 \value{
-An object of class \code{quaidsce}.
+An object of class \code{quaidsce}, including named coefficients and
+\code{standard.errors}. Elasticity standard errors are \code{NA} unless
+bootstrap replications were estimated.
 }
 \description{
 Estimates a Censored Quadratic Almost Ideal Demand System (QUAIDS) with Ray (1983)

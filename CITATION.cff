@@ -2,11 +2,11 @@ cff-version: 1.2.0
 message: "If you use pyquaidsce in your research, please cite this software."
 title: "pyquaidsce: Estimation of censored AIDS and QUAIDS demand systems in Python, Stata, and R"
 type: software
-version: 1.8.0
-doi: "10.5281/zenodo.23463166"
-date-released: "2026-10-19"
+version: 1.9.0
+doi: "10.5281/zenodo.23484895"
+date-released: "2026-10-20"
 repository-code: "https://github.com/sinaamiri9000-collab/pyquaidsce"
-url: "https://github.com/sinaamiri9000-collab/pyquaidsce/releases/tag/v1.8.0"
+url: "https://github.com/sinaamiri9000-collab/pyquaidsce/releases/tag/v1.9.0"
 authors:
   - given-names: "Sina"
     family-names: "Amiri"

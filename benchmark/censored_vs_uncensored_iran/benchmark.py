@@ -152,7 +152,7 @@ def report(results, settings):
                 cells.append(f"{value:.3f} [{lo:.3f}, {hi:.3f}]")
             lines.append(f"{label:<39} {cells[0]:>27} {cells[1]:>30}")
         lines.append("")
-    return "\n".join(lines) + "\n"
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def save_results(results, settings):

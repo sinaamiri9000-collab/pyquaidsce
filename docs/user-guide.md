@@ -41,9 +41,9 @@ values. See [Methodology](methodology.md) for the model equations and the role o
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `control_function` | Column name | `None` | A residual you have calculated outside the package, for example `"vhat"`. Adds that residual to each demand equation with a separate coefficient (`cfcoef_i`). Leave as `None` to omit it. For the built-in expenditure correction, use `ivexp` instead. |
-| `selection_prices` | List of column names | `None` | Prices used in the participation Probits. `None` uses all demand prices; a list such as `["p1", "p3"]` uses only those prices; `[]` uses no prices. Names must come from your `prices` or `lnprices` list. This does not change the prices in the demand equations. |
+| `selection_prices` | List of column names | `None` | Prices used in the participation Probits. This is useful when you want your probit equation to have different prices than the ones in the demand stage. `None` uses all demand prices; a list such as `["p1", "p3"]` uses only those prices; `[]` uses no prices. Names must come from your `prices` or `lnprices` list. This does not change the prices in the demand equations. |
 | `selection_expenditure` | `bool` or `None` | `True` | `True` includes log expenditure in the participation Probits; `False` leaves it out. `None` includes it when you supply `expenditure` and leaves it out when you supply `lnexpenditure`. Use `True` or `False` to choose explicitly. |
-| `selection_covariates` | List of column names | `None` | Other variables used in the participation Probits. `None` uses the variables in `demographics`; a list uses the columns you name; `[]` uses none. These choices do not change `demographics` in the demand equations. |
+| `selection_covariates` | List of column names | `None` | Other variables used in the participation Probits.This is useful when you want your probit equation to have different(more or less) demographic variables than the ones in the demand stage. `None` uses the variables in `demographics`; a list uses the columns you name; `[]` uses none. These choices do not change `demographics` in the demand equations. |
 | `selection_control_function` | Column name | `None` | An externally calculated residual to include in the participation Probits. Each Probit estimates its own coefficient. To use the same residual in both stages, give its column name to both this option and `control_function`. |
 
 These options and `ivexp` require `censor=True`. The participation Probits
@@ -89,9 +89,7 @@ residual, use `reps=0`: the package does not know how to rebuild that residual.
 | `max_outer` | Integer, at least 2 | `200` | Maximum numbered IFGNLS stage. The count includes the initial NLS and FGNLS stages. |
 | `chunk` | Integer, at least 1 | `2000` | Number of observations processed together when calculating derivatives. A smaller value uses less working memory; a larger value may reduce processing overhead. It does not change the model. |
 
-The defaults are suitable for a first run. After an accepted solver step,
-passing any one of `param_tol`, `objective_tol`, or `gn_tol` can stop the inner
-fit. If no improving step is found, only `gn_tol` can establish convergence.
+
 See [Methodology](methodology.md#convergence) for the exact formulas.
 
 ---
@@ -102,7 +100,7 @@ See [Methodology](methodology.md#convergence) for the exact formulas.
 |---|---|---|---|
 | `reps` | Nonnegative integer | `0` | Number of bootstrap replications to attempt. `0` skips bootstrap; `200` requests 200 replications. `1` attempts one replication, but the package needs at least two successful replications to calculate standard errors and otherwise raises an error. |
 | `seed` | Integer or `None` | `None` | Sets the random seed for bootstrap samples, for example `seed=12345`. Reusing it with the same data and settings gives the same resamples. `None` leaves the seed unset. |
-| `n_jobs` | Positive integer | `1` | Number of bootstrap replications that can run at the same time. `1` runs them one at a time; `2` uses two workers. This only helps when `reps>0`; it does not split a single fit across workers. |
+| `n_jobs` | Positive integer | `1` | Number of processes used for parallelized bootstrapping. It is useful when running a high number of `reps` and you want to utilize more of your machine's processing power to finish faster. I recommend using at most one less than the number of logical cores on your system to avoid freezing. This only helps when `reps>0`; it does not split a single fit across workers. |
 | `blas_threads` | Positive integer or `None` | `1` | Threads used for matrix calculations within each estimation process. `1` limits each process to one thread; a larger number allows more. `None` keeps your existing setting. This is separate from `n_jobs`, which controls bootstrap workers. |
 | `bootstrap_start` | `str` | `"zero"` | `"zero"` starts each bootstrap fit at zero. `"warm"` starts it from the estimates and error covariance of the full-sample fit, which can reduce the work needed in each replication. |
 | `mp_context` | `str` or `None` | `None` | How Python starts bootstrap processes. `None` uses `"spawn"`, which works across supported operating systems. You can request `"spawn"` directly; `"forkserver"` and `"fork"` are also accepted where your operating system supports them. Most users can leave the default. |

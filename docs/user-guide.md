@@ -17,7 +17,7 @@ This guide explains the arguments accepted by `quaidsce(...)` and how to read it
 | `expenditure` | Column name | `None` | Total spending on the goods in your system, before taking logs. Values must be positive. Use either `expenditure` or `lnexpenditure`, not both. |
 | `lnexpenditure` | Column name | `None` | Total system expenditure that you have already converted to its natural log. The package uses these values directly. |
 | `demographics` | List of column names | `None` | Household characteristics, such as `["hh_size", "urban"]`, that enter the demand equations through Ray's demographic scaling. At least one is required when `censor=True`; they are optional when `censor=False`. Code categories as numeric variables, for example `urban=0` or `1`. |
-| `ivexp` | List of column names | `None` | Instruments used to account for endogenous expenditure. For example, use `ivexp=["income"]` if household income is your chosen instrument. The package estimates a log-expenditure regression and adds its residual to both the participation and demand equations. Leave as `None` to skip this correction. |
+| `ivexp` | List of column names | `None` | Instruments used to account for endogenous expenditure. For example, use `ivexp=["income"]` if household income is your chosen instrument. The package estimates a log-expenditure regression and adds its residual to the demand equations and, when `censor=True`, the participation Probits. Works with either value of `censor`. Leave as `None` to skip this correction. |
 | `anot` | Number | *Required* | The fixed constant $\alpha_0$ in the price index, for example `anot=8.0`. You supply this value; the package does not estimate it. It is not the regression intercept or a starting value. |
 
 Rows with missing or nonfinite values in the required columns are left out.
@@ -46,8 +46,11 @@ values. See [Methodology](methodology.md) for the model equations and the role o
 | `selection_covariates` | List of column names | `None` | Other variables used in the participation Probits.This is useful when you want your probit equation to have different(more or less) demographic variables than the ones in the demand stage. `None` uses the variables in `demographics`; a list uses the columns you name; `[]` uses none. These choices do not change `demographics` in the demand equations. |
 | `selection_control_function` | Column name | `None` | An externally calculated residual to include in the participation Probits. Each Probit estimates its own coefficient. To use the same residual in both stages, give its column name to both this option and `control_function`. |
 
-These options and `ivexp` require `censor=True`. The participation Probits
-model whether a household buys each good; the demand equations model its share.
+`ivexp` and `control_function` work with or without censoring correction.
+Without censoring, the control-function coefficients sum to zero so predicted
+shares still add to one. The `selection_*` options require `censor=True`:
+they configure the participation Probits, which model whether a household buys
+each good.
 
 Use either `ivexp` or the external residual options, not both. Variables named
 in `ivexp` must not also be shares, prices, expenditure, demographics, or

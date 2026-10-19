@@ -214,6 +214,8 @@ def elasticities(
                 stacklevel=2,
             )
     else:
+        # Observed shares already include the control term. Its derivative is
+        # zero because the supplied residual is held fixed.
         we = wbar.copy()
 
     # ---- expenditure elasticities ---------------------------------------- #

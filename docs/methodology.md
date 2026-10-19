@@ -127,7 +127,7 @@ constant:
 ```
 
 The residual $v_h$ is the difference between observed and predicted log
-expenditure. The package adds it to both model stages. Each participation
+expenditure. With censoring correction, the package adds it to both model stages. Each participation
 Probit estimates a coefficient $\psi_i$ on this residual:
 
 ```math
@@ -140,6 +140,17 @@ Each demand equation estimates a separate coefficient $\kappa_i$:
 \mu_{ih}=\Phi_{ih}\left(w_{ih}^{*}+\kappa_i v_h\right)
 +\delta_i\phi_{ih}.
 ```
+
+Without censoring correction (`censor=False`), the demand equation is
+
+```math
+\mu_{ih}=w_{ih}^{*}+\kappa_i v_h,\qquad \sum_i\kappa_i=0.
+```
+
+The last control-function coefficient is minus the sum of the others. This
+preserves adding-up, and the last demand equation is omitted during estimation.
+Elasticities hold the residual fixed and use the observed mean shares, as in
+the uncensored model without a control function.
 
 The package reports the expenditure regression coefficients, their covariance
 matrix, $R^2$, and a joint F test for the instruments. The F test shows how much
@@ -160,15 +171,16 @@ residual. Bootstrap does not make a weak or invalid instrument suitable.
 ### Optional external control function
 
 If you have already estimated an expenditure equation, you can pass its
-residual column through `control_function`. The package then adds that residual
-to each demand equation:
+residual column through `control_function`. This works with either value of
+`censor`. With censoring correction, the demand equation is:
 
 ```math
 \mu_{ih}=\Phi_{ih}\left(w_{ih}^{*}+\kappa_i v_h\right)
 +\delta_i\phi_{ih}.
 ```
 
-Each good has its own coefficient $\kappa_i$, reported as `cfcoef_i`. Use
+The coefficients are reported as `cfcoef_i`. Without censoring correction,
+they sum to zero, as in the integrated model above. Use
 `selection_control_function` to add a residual to the participation Probits
 as well. Their residual coefficients are estimated separately from the demand
 coefficients.

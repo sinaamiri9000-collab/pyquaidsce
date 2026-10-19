@@ -222,8 +222,8 @@ def quaidsce(
         residual. It enters the latent share as ``cfcoef_i * residual``.
     ivexp : excluded instrument column(s) for endogenous log expenditure. The
         package estimates ``ln(m)`` on log prices, Ray demographics, these
-        instruments, and a constant. Its residual automatically enters both
-        the participation Probits and latent demand equations. It cannot be
+        instruments, and a constant. Its residual enters the demand equations
+        and, with censoring, the participation Probits. It cannot be
         combined with either external control-function argument.
     selection_* : configure the first-stage Probit independently of the Ray
         demographics. ``None`` for prices/covariates preserves their legacy
@@ -298,8 +298,8 @@ def quaidsce(
         or selection_expenditure is False
     )
     extension_active = cf_active or selection_custom
-    if extension_active and not censor:
-        raise ValueError("control-function/selection extensions require censor=True")
+    if not censor and (selection_custom or selection_control_function is not None):
+        raise ValueError("participation/selection options require censor=True")
     if external_cf_active and reps and int(reps) > 0:
         raise ValueError(
             "bootstrap with a precomputed control function is disabled: the "
@@ -618,7 +618,7 @@ def quaidsce(
         np_prob=fs.np_prob if censor else None,
         layout=fs.layout if censor else None,
     )
-    if censor:
+    if censor or spec.control_function:
         ev = el.as_stata_vector()
         b = np.concatenate([b, ev])
         k1, k2 = V.shape[0], ev.size
@@ -640,9 +640,9 @@ def quaidsce(
         notes.append(
             "ivexp internally estimates the log-expenditure reduced form on "
             "log prices, Ray demographics, excluded instruments, and a "
-            "constant. Its residual enters both the participation Probits and "
-            "latent demand equations. Structural elasticities hold that "
-            "residual fixed."
+            "constant. Its residual enters the demand equations"
+            + (" and participation Probits" if censor else "")
+            + ". Structural elasticities hold that residual fixed."
         )
         if not (reps and int(reps) > 0):
             notes.append(
@@ -683,7 +683,7 @@ def quaidsce(
         selection_layout=fs.layout if censor else None,
         control_function_name=("ivexp" if ivexp_active else control_function),
         selection_control_function_name=(
-            "ivexp" if ivexp_active else selection_control_function
+            ("ivexp" if ivexp_active else selection_control_function) if censor else None
         ),
         ivexp_names=ivexp_names,
         reduced_form=reduced_form,

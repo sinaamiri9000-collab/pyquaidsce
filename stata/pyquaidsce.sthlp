@@ -37,7 +37,7 @@
 {synopt :{opt nocensor}}estimate uncensored demand system without Shonkwiler-Yen correction{p_end}
 
 {syntab:Control function and selection design}
-{synopt :{opt ivexp(varlist)}}excluded instruments for endogenous expenditure; internally builds the residual used in both model stages{p_end}
+{synopt :{opt ivexp(varlist)}}excluded instruments for endogenous expenditure; works with or without {cmd:nocensor}{p_end}
 {synopt :{opt control_function(varname)}}externally generated reduced-form residual entering latent demand shares{p_end}
 {synopt :{opt selection_control_function(varname)}}residual entering each first-stage Probit with equation-specific coefficients{p_end}
 {synopt :{opt selection_prices(varlist)}}ordered subset of demand prices used by the first-stage Probits{p_end}
@@ -90,7 +90,8 @@ It provides a Stata front end powered by the {cmd:pyquaidsce} Python engine. In 
 To account for endogenous expenditure, give instrument variables to
 {cmd:ivexp()}; for example, use {cmd:ivexp(income)} if household income is your
 chosen instrument. The package estimates the expenditure equation and adds its
-residual to both participation and demand equations. With bootstrap, it repeats
+residual to the demand equations and, unless {cmd:nocensor} is used, the
+participation Probits. With bootstrap, it repeats
 these steps in every replication. For residuals calculated outside the package
 and supplied through {cmd:control_function()} or
 {cmd:selection_control_function()}, use {cmd:reps(0)} because the package cannot

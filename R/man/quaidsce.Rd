@@ -61,7 +61,8 @@ quaidsce(
 
 \item{ivexp}{Instrument column names for endogenous expenditure, for example
 \code{c("income")}. The package estimates the expenditure equation and adds
-its residual to both participation and demand equations. With bootstrap,
+its residual to the demand equations and, when \code{censor=TRUE}, the
+participation Probits. Works with either value of \code{censor}. With bootstrap,
 it repeats these steps in every replication. \code{NULL} skips this correction.}
 
 \item{anot}{Numeric scalar normalization for alpha_0 (default = 10.0).}

@@ -159,10 +159,10 @@ def fitted_shares(theta: np.ndarray, d: DemandData, spec: Spec) -> np.ndarray:
     """
     c = unpack(theta, spec)
     inn = _inner(c, d, spec)
+    augmented = inn.wstar + d.control_function[:, None] * c.cfcoef[None, :]
     if spec.censor:
-        augmented = inn.wstar + d.control_function[:, None] * c.cfcoef[None, :]
         return augmented * d.cdf + c.delta[None, :] * d.pdf
-    return inn.wstar[:, : spec.neqn - 1]
+    return augmented[:, : spec.neqn - 1]
 
 
 def latent_shares(theta: np.ndarray, d: DemandData, spec: Spec) -> np.ndarray:
@@ -280,9 +280,10 @@ def jacobian_full(
         d0 = sl["delta"].start
         for i in range(m):
             J[:, i, d0 + i] = d.pdf[:, i]
-        if spec.control_function:
-            c0 = sl["cfcoef"].start
-            for i in range(m):
-                J[:, i, c0 + i] = d.cdf[:, i] * d.control_function
+    if spec.control_function:
+        c0 = sl["cfcoef"].start
+        for i in range(m):
+            scale = d.cdf[:, i] if spec.censor else 1.0
+            J[:, i, c0 + i] = scale * d.control_function
 
     return J

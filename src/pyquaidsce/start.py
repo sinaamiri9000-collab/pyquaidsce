@@ -66,7 +66,8 @@ def linear_start(d: DemandData, spec: Spec) -> np.ndarray:
             X = np.column_stack([X0, *extra])
         else:
             y = d.shares[:, i]
-            X = X0
+            X = (np.column_stack([X0, d.control_function])
+                 if spec.control_function else X0)
         # ridge-stabilised least squares: we only need a sane starting point
         XtX = X.T @ X
         XtX += 1e-8 * np.trace(XtX) / XtX.shape[0] * np.eye(XtX.shape[0])
@@ -79,9 +80,9 @@ def linear_start(d: DemandData, spec: Spec) -> np.ndarray:
             eta[:, i] = bb[p:p + R]; p += R
         if spec.quadratic:
             lam[i] = bb[p]; p += 1
+        if spec.control_function:
+            cfcoef[i] = bb[p]; p += 1
         if spec.censor:
-            if spec.control_function:
-                cfcoef[i] = bb[p]; p += 1
             delta[i] = bb[p]; p += 1
 
     # symmetry + homogeneity on gamma
@@ -93,6 +94,7 @@ def linear_start(d: DemandData, spec: Spec) -> np.ndarray:
         alpha = alpha + (1.0 - alpha.sum()) / n
         beta = beta - beta.mean()
         lam = lam - lam.mean()
+        cfcoef = cfcoef - cfcoef.mean()
     if R > 0:
         eta = eta - eta.mean(axis=1, keepdims=True)
 
@@ -109,7 +111,7 @@ def linear_start(d: DemandData, spec: Spec) -> np.ndarray:
     if spec.censor:
         th[sl["delta"]] = delta
     if spec.control_function:
-        th[sl["cfcoef"]] = cfcoef
+        th[sl["cfcoef"]] = cfcoef[:spec.n_cf_free]
     if R > 0:
         ev = []
         for r in range(R):

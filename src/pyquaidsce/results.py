@@ -89,7 +89,7 @@ class QuaidsceResults:
         d = np.diag(source).copy()
         d[d < 0] = np.nan
         out = np.sqrt(d)
-        if self.spec.censor:
+        if self.spec.censor or self.spec.control_function:
             n = self.spec.neqn
             n_elasticities = n + 2 * n * n
             if out.size >= n_elasticities:
@@ -150,7 +150,7 @@ class QuaidsceResults:
             body = coef_table(self.names, self.b, self.boot.se, level=level,
                               bootstrap=True)
         else:
-            has_elasticity_block = self.spec.censor
+            has_elasticity_block = self.spec.censor or self.spec.control_function
             n_keep = (len(self.names) if elasticities or not has_elasticity_block
                       else len(self.names) - 2 * self.spec.neqn ** 2
                       - self.spec.neqn)

@@ -531,7 +531,7 @@ class SyntheticAndGateTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "reduced form residual"):
             quaidsce(**common, selection_control_function="cf", reps=2)
         with self.assertRaisesRegex(ValueError, "censor=True"):
-            quaidsce(**common, control_function="cf", censor=False,)
+            quaidsce(**common, selection_control_function="cf", censor=False,)
         with self.assertRaisesRegex(ValueError, "subset of demand prices"):
             quaidsce(**common, selection_prices=["not_a_price"],)
         with self.assertRaisesRegex(ValueError, "nonzero variation"):

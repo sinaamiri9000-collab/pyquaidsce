@@ -52,8 +52,13 @@ class Spec:
                 "at least one demographic variable is needed for censoring "
                 "correction"
             )
-        if self.control_function and not self.censor:
-            raise ValueError("control function is supported only with censor=True")
+
+    @property
+    def n_cf_free(self) -> int:
+        """Control coefficients, with adding-up in uncensored systems."""
+        if not self.control_function:
+            return 0
+        return self.neqn if self.censor else self.neqn - 1
 
     # ---- counts ---------------------------------------------------------- #
     @property
@@ -74,7 +79,7 @@ class Spec:
         if R > 0:
             k += R * (n - 1) + R
         if self.control_function:
-            k += n
+            k += self.n_cf_free
         return k
 
     @property
@@ -240,8 +245,11 @@ def unpack(theta: np.ndarray, spec: Spec) -> Coefs:
 
     cfcoef = np.zeros(n)
     if spec.control_function:
-        cfcoef[:] = theta[col:col + n]
-        col += n
+        width = spec.n_cf_free
+        cfcoef[:width] = theta[col:col + width]
+        if not spec.censor:
+            cfcoef[-1] = -cfcoef[:-1].sum()
+        col += width
 
     eta = np.zeros((R, n))
     rho = np.zeros(R)
@@ -343,7 +351,7 @@ def delta_matrix(spec: Spec) -> np.ndarray:
     if spec.censor:
         Delta = _blockdiag(Delta, block)
     if spec.control_function:
-        Delta = _blockdiag(Delta, np.eye(ng))
+        Delta = _blockdiag(Delta, np.eye(ng) if spec.censor else blockd)
     if R > 0:
         for _ in range(R):
             Delta = _blockdiag(Delta, blockd)
@@ -394,7 +402,7 @@ def free_slices(spec: Spec) -> dict:
     if spec.censor:
         out["delta"] = slice(p, p + n); p += n
     if spec.control_function:
-        out["cfcoef"] = slice(p, p + n); p += n
+        out["cfcoef"] = slice(p, p + spec.n_cf_free); p += spec.n_cf_free
     if R > 0:
         out["eta"] = slice(p, p + R * (n - 1)); p += R * (n - 1)
         out["rho"] = slice(p, p + R); p += R
@@ -432,7 +440,7 @@ def delta_blocks(spec: Spec):
     if spec.censor:
         out.append((fs["delta"], xs["delta"], np.eye(n)))
     if spec.control_function:
-        out.append((fs["cfcoef"], xs["cfcoef"], np.eye(n)))
+        out.append((fs["cfcoef"], xs["cfcoef"], np.eye(n) if spec.censor else blockd))
     if R > 0:
         e_full, e_free = fs["eta"].start, xs["eta"].start
         for r in range(R):

@@ -149,9 +149,19 @@ summary.quaidsce <- function(object, ...) {
   b <- object$coefficients
   V <- object$vcov
 
-  se <- sqrt(diag(V))
-  z_stat <- b / se
-  p_val <- 2 * (1 - stats::pnorm(abs(z_stat)))
+  se <- object$standard.errors
+  if (is.null(se)) {
+    # Objects saved with older R interfaces do not store standard.errors.
+    se <- if (!is.null(object$bootstrap$se)) object$bootstrap$se else sqrt(diag(V))
+    if (is.null(object$bootstrap)) {
+      se[grepl("^ELAS_", names(b))] <- NA_real_
+    }
+  }
+  se[!is.finite(se)] <- NA_real_
+  z_stat <- rep(NA_real_, length(b))
+  estimable <- is.finite(b) & is.finite(se) & se > 0
+  z_stat[estimable] <- b[estimable] / se[estimable]
+  p_val <- 2 * stats::pnorm(abs(z_stat), lower.tail = FALSE)
 
   coef_table <- cbind(
     Estimate = b,

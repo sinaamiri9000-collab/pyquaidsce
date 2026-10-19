@@ -4,6 +4,8 @@ All notable user-visible changes to `pyquaidsce` are documented here.
 
 ## Unreleased
 
+- Enabled `ivexp()` with `nocensor` in Stata and corrected R summary standard
+  errors for elasticities without bootstrap inference.
 - Added the ten-good Iran censored vs uncensored benchmark, with prepared data,
   runnable scripts, and 200 saved bootstrap replications per model.
 

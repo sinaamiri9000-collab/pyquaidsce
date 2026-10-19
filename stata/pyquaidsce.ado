@@ -153,12 +153,12 @@ program define pyquaidsce, eclass
     local selection_expenditure_on = ("`selection_noexpenditure'" == "")
     local external_cf_active = ///
         ("`control_function'" != "" | "`selection_control_function'" != "")
-    local extension_active = ///
-        (`external_cf_active' | "`ivexp'" != "" | ///
+    local selection_active = ///
+        ("`selection_control_function'" != "" | ///
          `selection_prices_specified' | `selection_covariates_specified' | ///
          !`selection_expenditure_on')
-    if `extension_active' & !`is_censor' {
-        display as error "control-function/selection extensions require censoring"
+    if `selection_active' & !`is_censor' {
+        display as error "participation/selection options require censoring"
         exit 198
     }
     if `external_cf_active' & `reps' > 0 {

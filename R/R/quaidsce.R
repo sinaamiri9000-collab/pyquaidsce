@@ -49,7 +49,9 @@
 #' @param max_iter Maximum inner iterations (default = 300).
 #' @param chunk Chunk size for memory management (default = 2000).
 #' @param verbose Logical, whether to print progress (default = FALSE).
-#' @return An object of class \code{quaidsce}.
+#' @return An object of class \code{quaidsce}, including named coefficients and
+#'   \code{standard.errors}. Elasticity standard errors are \code{NA} unless
+#'   bootstrap replications were estimated.
 #' @export
 #' @examples
 #' \dontrun{
@@ -221,6 +223,10 @@ quaidsce <- function(data,
   b_vec <- as.numeric(res_py$b)
   names(b_vec) <- as.character(res_py$names)
 
+  se_vec <- as.numeric(res_py$se)
+  se_vec[!is.finite(se_vec)] <- NA_real_
+  names(se_vec) <- names(b_vec)
+
   V_mat <- as.matrix(res_py$V)
   rownames(V_mat) <- names(b_vec)
   colnames(V_mat) <- names(b_vec)
@@ -316,7 +322,8 @@ quaidsce <- function(data,
     censor = as.logical(censor),
     bootstrap = boot_info,
     call = match.call(),
-    py_object = res_py
+    py_object = res_py,
+    standard.errors = se_vec
   )
 
   class(out) <- "quaidsce"

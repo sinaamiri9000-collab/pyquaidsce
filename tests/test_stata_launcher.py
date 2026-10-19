@@ -6,6 +6,8 @@ These use a fake Stata SFI module; no Stata license or long estimation is needed
 from __future__ import annotations
 
 import os
+import re
+from pathlib import Path
 import sys
 import tempfile
 import types
@@ -113,6 +115,61 @@ class StataLauncherTests(unittest.TestCase):
                 )
             finally:
                 stata_bridge._BOOT_STATE.clear()
+
+
+    def test_ado_allows_uncensored_controls_but_rejects_selection_options(self):
+        source = (Path(__file__).resolve().parents[1] / "stata" / "pyquaidsce.ado").read_text()
+        match = re.search(
+            r"local selection_active\s*=\s*///\s*(.*?)\n    if (.*?) \{",
+            source, re.S,
+        )
+        self.assertIsNotNone(match)
+        selection, guard = match.groups()
+
+        def evaluate(expression, values):
+            expression = expression.replace("///", " ")
+            expression = re.sub(r"`(\w+)'", lambda m: str(values[m.group(1)]), expression)
+            expression = expression.replace("!=", " NE ").replace("!", " not ")
+            expression = expression.replace(" NE ", " != ").replace("&", " and ").replace("|", " or ")
+            return bool(eval(expression.strip(), {"__builtins__": {}}, {}))
+
+        for censor in (0, 1):
+            for ivexp in ("", "instrument"):
+                for control in ("", "residual"):
+                    defaults = dict(is_censor=censor, ivexp=ivexp,
+                                    control_function=control, selection_control_function="",
+                                    selection_prices_specified=0, selection_covariates_specified=0,
+                                    selection_expenditure_on=1)
+                    changes = ({}, {"selection_control_function": "residual"},
+                               {"selection_prices_specified": 1},
+                               {"selection_covariates_specified": 1},
+                               {"selection_expenditure_on": 0})
+                    for change in changes:
+                        with self.subTest(censor=censor, ivexp=ivexp, control=control, selection=change):
+                            values = defaults | change
+                            values["selection_active"] = int(evaluate(selection, values))
+                            self.assertEqual(evaluate(guard, values), bool(change) and not censor)
+        external_guard = re.search(r"if (`external_cf_active'.*?) \{", source).group(1)
+        self.assertTrue(evaluate(external_guard, dict(external_cf_active=1, reps=4)))
+        self.assertFalse(evaluate(external_guard, dict(external_cf_active=0, reps=4)))
+
+    def test_launch_forwards_uncensored_ivexp_and_marks_the_same_sample(self):
+        values = {"w1": [0.2, 0.3, 0.4], "w2": [0.3, 0.2, 0.2],
+                  "w3": [0.5, 0.5, 0.4], "p1": [1, 1, 1],
+                  "p2": [2, 2, 2], "p3": [3, 3, 3], "m": [10, 11, 12],
+                  "instrument": [4, 5, 6], "_touse": [1, 0, 1]}
+        sfi = types.SimpleNamespace(Data=types.SimpleNamespace(get=lambda var: values[var]))
+        with mock.patch.dict(sys.modules, {"sfi": sfi}), mock.patch.object(stata_bridge, "_launch_job") as launch:
+            stata_bridge.launch_from_stata(
+                "w1 w2 w3", "p1 p2 p3", "m", "", 1.6,
+                censor=False, ivexp_str="instrument", reps=4,
+            )
+        frame, kwargs = launch.call_args.args
+        self.assertEqual(frame["instrument"].tolist(), [4, 6])
+        self.assertEqual(kwargs["ivexp"], ["instrument"])
+        self.assertFalse(kwargs["censor"])
+        self.assertEqual(kwargs["reps"], 4)
+        self.assertEqual(kwargs["selection_prices"], None)
 
 
 if __name__ == "__main__":

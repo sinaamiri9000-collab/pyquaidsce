@@ -1,5 +1,5 @@
 * ==============================================================================
-* STATA MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE FOR PYQUAIDSCE 1.8.0
+* STATA MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE FOR PYQUAIDSCE 1.9.0
 * ==============================================================================
 * Dataset: bd_uruguay.csv (14 food groups, 6,848 observations)
 * Set PYQUAIDSCE_TEST_DATA to the CSV path, or place bd_uruguay.csv in the
@@ -11,7 +11,7 @@ set more off
 discard
 
 display as text _n "=============================================================================="
-display as text "PYQUAIDSCE 1.8.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE"
+display as text "PYQUAIDSCE 1.9.0 MASTER COMPREHENSIVE 24-SCENARIO TEST SUITE"
 display as text "=============================================================================="
 
 * ---- STEP 0: Load dataset & feature prep -------------------------------------

@@ -1,4 +1,4 @@
-*! version 1.8.0  19oct2026
+*! version 1.9.0  20oct2026
 *! quaidsce: recommended common-name alias for the pyquaidsce Stata command
 
 program define quaidsce, eclass

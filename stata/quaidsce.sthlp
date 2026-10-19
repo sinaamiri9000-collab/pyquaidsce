@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 1.8.0  19oct2026}{...}
+{* *! version 1.9.0  20oct2026}{...}
 {vieweralsosee "[R] quaids" "help quaids"}{...}
 {viewerjumpto "Syntax" "quaidsce##syntax"}{...}
 {viewerjumpto "Description" "quaidsce##description"}{...}

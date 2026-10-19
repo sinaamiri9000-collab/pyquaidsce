@@ -1,0 +1,43 @@
+Censored vs uncensored QUAIDS
+
+Households: 37,656; food groups: 10.
+Estimation: IFGNLS; anot=11; demographic controls; expenditure control function (ivexp).
+Both models use the same households and inputs.
+Instruments: centered log household income and its square.
+Survey weights center log income; both expenditure and demand equations are unweighted.
+Bootstrap: 200 successful household draws per model; no failed draws.
+Matching draw IDs use the same household resamples for both models.
+The expenditure regression is re-estimated in every draw.
+Prices are fixed; intervals exclude uncertainty from constructing prices.
+Intervals: 95% percentile bootstrap intervals.
+
+Expenditure elasticities
+
+Food group                                 With correction [95% CI]    Without correction [95% CI]
+----------------------------------------------------------------------------------------------------
+Sugar-sweetened beverages                      0.950 [0.795, 1.172]           1.142 [1.090, 1.197]
+Sweet snacks and added-sugar foods             1.202 [1.117, 1.355]           1.378 [1.329, 1.419]
+Non-sugar beverages                            0.542 [0.379, 0.739]           0.858 [0.818, 0.906]
+Nuts, dried fruits, dates and honey            2.289 [2.133, 2.347]           2.148 [2.099, 2.199]
+Fruits and vegetables                          0.713 [0.603, 0.773]           0.760 [0.745, 0.781]
+Bread and other cereal products                0.471 [0.316, 0.587]           0.158 [0.129, 0.187]
+Protein foods                                  1.225 [1.163, 1.337]           1.330 [1.312, 1.348]
+Dairy and eggs                                 0.678 [0.541, 0.726]           0.720 [0.699, 0.744]
+Oils, fats, spices and condiments              0.699 [0.647, 0.771]           0.708 [0.685, 0.733]
+Rice                                           1.680 [1.639, 1.734]           1.321 [1.290, 1.358]
+
+Uncompensated own-price elasticities
+
+Food group                                 With correction [95% CI]    Without correction [95% CI]
+----------------------------------------------------------------------------------------------------
+Sugar-sweetened beverages                   -1.904 [-2.497, -1.213]        -1.412 [-1.673, -1.204]
+Sweet snacks and added-sugar foods          -0.752 [-0.984, -0.544]        -0.170 [-0.270, -0.085]
+Non-sugar beverages                         -0.515 [-0.685, -0.418]        -0.172 [-0.232, -0.126]
+Nuts, dried fruits, dates and honey         -0.912 [-1.051, -0.676]         -0.078 [-0.213, 0.071]
+Fruits and vegetables                       -0.399 [-0.519, -0.316]        -0.259 [-0.297, -0.216]
+Bread and other cereal products             -0.476 [-0.660, -0.152]        -0.446 [-0.497, -0.399]
+Protein foods                               -1.245 [-1.441, -1.027]        -0.931 [-0.988, -0.875]
+Dairy and eggs                              -1.514 [-1.861, -1.175]        -0.896 [-0.958, -0.830]
+Oils, fats, spices and condiments           -0.621 [-0.764, -0.451]        -0.238 [-0.315, -0.179]
+Rice                                        -1.150 [-1.316, -1.032]        -0.577 [-0.675, -0.474]
+

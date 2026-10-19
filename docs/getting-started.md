@@ -150,5 +150,7 @@ re-estimates the expenditure equation in every bootstrap replication. If you
 supply a residual calculated outside the package, use `reps=0` and write your
 own bootstrap that rebuilds the residual each time.
 
-For more examples and complete scripts in Python, Stata, and R, see
-[Examples](../examples/README.md). All three scripts use the same practice dataset.
+> [!TIP]
+> **want more examples?**  
+> For more examples and complete scripts in Python, Stata, and R, see
+[Examples](../examples/README.md). All three scripts use the same practice dataset. recommended if you want to get familiar with the syntax and arguments.

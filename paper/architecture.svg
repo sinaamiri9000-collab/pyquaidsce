@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 530" role="img" aria-label="Architecture of pyquaidsce: Python computational core shared by Stata, Python and R interfaces with optional censoring and endogeneity corrections.">
+<style>text{font-family:Arial,sans-serif;fill:#243448}.title{font-size:22px;font-weight:bold}.sub{font-size:14px}.box{stroke-width:2;rx:12}.line{stroke:#4c667d;stroke-width:2.5;fill:none} .mid{font-size:18px;font-weight:bold}</style>
+<rect width="900" height="530" fill="white"/>
+<text x="450" y="34" font-size="23" text-anchor="middle" class="title">Shared computational core and estimation workflow</text>
+<rect x="270" y="56" width="360" height="68" class="box" fill="#e6dbfa" stroke="#8b63c7"/><text x="450" y="87" text-anchor="middle" class="mid">Shared Python computational core</text><text x="450" y="110" text-anchor="middle" class="sub">Analytic derivatives · IFGNLS · bootstrap</text>
+<path d="M450 124V152M142 152H758M142 152V175M450 152V175M758 152V175" class="line"/>
+<rect x="40" y="175" width="204" height="73" class="box" fill="#f9e9c7" stroke="#d6a451"/><text x="142" y="205" text-anchor="middle" class="mid">Stata</text><text x="142" y="230" text-anchor="middle" class="sub">ado interface</text>
+<rect x="348" y="175" width="204" height="73" class="box" fill="#dceefa" stroke="#579fc9"/><text x="450" y="205" text-anchor="middle" class="mid">Python</text><text x="450" y="230" text-anchor="middle" class="sub">native API</text>
+<rect x="656" y="175" width="204" height="73" class="box" fill="#dcf5e6" stroke="#67b58a"/><text x="758" y="205" text-anchor="middle" class="mid">R</text><text x="758" y="230" text-anchor="middle" class="sub">R wrapper</text>
+<path d="M142 248V275H758V248M450 248V275M450 275V297" class="line"/>
+<path d="M450 297H231V319M450 297H669V319" class="line"/>
+<rect x="52" y="319" width="360" height="72" class="box" fill="#eef0ff" stroke="#8c94ce"/><text x="232" y="345" text-anchor="middle" class="mid">Optional censoring correction</text><text x="232" y="369" text-anchor="middle" class="sub">Probit · CDF/PDF terms · two-step model</text>
+<rect x="488" y="319" width="360" height="72" class="box" fill="#edf5f7" stroke="#70a9b1"/><text x="668" y="345" text-anchor="middle" class="mid">Optional expenditure correction</text><text x="668" y="369" text-anchor="middle" class="sub">Control-function residual via instruments</text>
+<path d="M232 391V420H450M668 391V420H450M450 420V439" class="line"/>
+<rect x="245" y="439" width="410" height="49" class="box" fill="#ffe1e7" stroke="#d78b9e"/><text x="450" y="470" text-anchor="middle" class="mid">Demand-system estimation · elasticities</text>
+<text x="450" y="515" text-anchor="middle" class="sub">Predictions · standard errors · bootstrap inference</text>
+</svg>

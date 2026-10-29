@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 490" role="img" aria-label="Expenditure and Marshallian own-price elasticities for ten food groups with and without censoring correction. The censored point estimates have 95 percent bootstrap intervals.">
+<rect x="0" y="0" width="1050" height="490" fill="white"/>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#202020}.t{font-size:18px}.axis{font-size:13px}.good{font-size:16px}.legend{font-size:15px}</style>
+<text x="211" y="93" text-anchor="end" class="good">Sugary drinks</text>
+<text x="211" y="123" text-anchor="end" class="good">Sweet foods</text>
+<text x="211" y="153" text-anchor="end" class="good">Other beverages</text>
+<text x="211" y="183" text-anchor="end" class="good">Nuts, fruit &amp; honey</text>
+<text x="211" y="213" text-anchor="end" class="good">Fruit &amp; vegetables</text>
+<text x="211" y="243" text-anchor="end" class="good">Bread &amp; cereals</text>
+<text x="211" y="273" text-anchor="end" class="good">Protein foods</text>
+<text x="211" y="303" text-anchor="end" class="good">Dairy &amp; eggs</text>
+<text x="211" y="333" text-anchor="end" class="good">Oils &amp; condiments</text>
+<text x="211" y="363" text-anchor="end" class="good">Rice</text>
+<text x="408" y="35" text-anchor="middle" class="t">(a) Expenditure elasticities</text>
+<text x="233" y="415" text-anchor="middle" class="axis">0.0</text>
+<text x="303" y="415" text-anchor="middle" class="axis">0.5</text>
+<text x="373" y="415" text-anchor="middle" class="axis">1.0</text>
+<text x="443" y="415" text-anchor="middle" class="axis">1.5</text>
+<text x="513" y="415" text-anchor="middle" class="axis">2.0</text>
+<text x="583" y="415" text-anchor="middle" class="axis">2.5</text>
+<line x1="373" y1="63" x2="373" y2="389" stroke="#8c9299" stroke-dasharray="4,3"/>
+<line x1="233" y1="88" x2="583" y2="88" stroke="#dde4e9" />
+<line x1="344.3" y1="85" x2="397.08" y2="85" stroke="#246b98" stroke-width="1.9"/><line x1="344.3" y1="80" x2="344.3" y2="90" stroke="#246b98"/><line x1="397.08" y1="80" x2="397.08" y2="90" stroke="#246b98"/><circle cx="366" cy="85" r="4.2" fill="#246b98"/><rect x="388.88" y="89" width="8" height="8" fill="#c77915"/>
+<line x1="233" y1="118" x2="583" y2="118" stroke="#dde4e9" />
+<line x1="389.38" y1="115" x2="422.70000000000005" y2="115" stroke="#246b98" stroke-width="1.9"/><line x1="389.38" y1="110" x2="389.38" y2="120" stroke="#246b98"/><line x1="422.70000000000005" y1="110" x2="422.70000000000005" y2="120" stroke="#246b98"/><circle cx="401.28" cy="115" r="4.2" fill="#246b98"/><rect x="421.91999999999996" y="119" width="8" height="8" fill="#c77915"/>
+<line x1="233" y1="148" x2="583" y2="148" stroke="#dde4e9" />
+<line x1="286.06" y1="145" x2="336.46" y2="145" stroke="#246b98" stroke-width="1.9"/><line x1="286.06" y1="140" x2="286.06" y2="150" stroke="#246b98"/><line x1="336.46" y1="140" x2="336.46" y2="150" stroke="#246b98"/><circle cx="308.88" cy="145" r="4.2" fill="#246b98"/><rect x="349.12" y="149" width="8" height="8" fill="#c77915"/>
+<line x1="233" y1="178" x2="583" y2="178" stroke="#dde4e9" />
+<line x1="531.62" y1="175" x2="561.5799999999999" y2="175" stroke="#246b98" stroke-width="1.9"/><line x1="531.62" y1="170" x2="531.62" y2="180" stroke="#246b98"/><line x1="561.5799999999999" y1="170" x2="561.5799999999999" y2="180" stroke="#246b98"/><circle cx="553.46" cy="175" r="4.2" fill="#246b98"/><rect x="529.72" y="179" width="8" height="8" fill="#c77915"/>
+<line x1="233" y1="208" x2="583" y2="208" stroke="#dde4e9" />
+<line x1="317.42" y1="205" x2="341.22" y2="205" stroke="#246b98" stroke-width="1.9"/><line x1="317.42" y1="200" x2="317.42" y2="210" stroke="#246b98"/><line x1="341.22" y1="200" x2="341.22" y2="210" stroke="#246b98"/><circle cx="332.82" cy="205" r="4.2" fill="#246b98"/><rect x="335.4" y="209" width="8" height="8" fill="#c77915"/>
+<line x1="233" y1="238" x2="583" y2="238" stroke="#dde4e9" />
+<line x1="277.24" y1="235" x2="315.18" y2="235" stroke="#246b98" stroke-width="1.9"/><line x1="277.24" y1="230" x2="277.24" y2="240" stroke="#246b98"/><line x1="315.18" y1="230" x2="315.18" y2="240" stroke="#246b98"/><circle cx="298.94" cy="235" r="4.2" fill="#246b98"/><rect x="251.12" y="239" width="8" height="8" fill="#c77915"/>
+<line x1="233" y1="268" x2="583" y2="268" stroke="#dde4e9" />
+<line x1="395.82" y1="265" x2="420.17999999999995" y2="265" stroke="#246b98" stroke-width="1.9"/><line x1="395.82" y1="260" x2="395.82" y2="270" stroke="#246b98"/><line x1="420.17999999999995" y1="260" x2="420.17999999999995" y2="270" stroke="#246b98"/><circle cx="404.5" cy="265" r="4.2" fill="#246b98"/><rect x="415.20000000000005" y="269" width="8" height="8" fill="#c77915"/>
+<line x1="233" y1="298" x2="583" y2="298" stroke="#dde4e9" />
+<line x1="308.74" y1="295" x2="334.64" y2="295" stroke="#246b98" stroke-width="1.9"/><line x1="308.74" y1="290" x2="308.74" y2="300" stroke="#246b98"/><line x1="334.64" y1="290" x2="334.64" y2="300" stroke="#246b98"/><circle cx="327.92" cy="295" r="4.2" fill="#246b98"/><rect x="329.8" y="299" width="8" height="8" fill="#c77915"/>
+<line x1="233" y1="328" x2="583" y2="328" stroke="#dde4e9" />
+<line x1="323.58000000000004" y1="325" x2="340.94" y2="325" stroke="#246b98" stroke-width="1.9"/><line x1="323.58000000000004" y1="320" x2="323.58000000000004" y2="330" stroke="#246b98"/><line x1="340.94" y1="320" x2="340.94" y2="330" stroke="#246b98"/><circle cx="330.86" cy="325" r="4.2" fill="#246b98"/><rect x="328.12" y="329" width="8" height="8" fill="#c77915"/>
+<line x1="233" y1="358" x2="583" y2="358" stroke="#dde4e9" />
+<line x1="462.46" y1="355" x2="475.76" y2="355" stroke="#246b98" stroke-width="1.9"/><line x1="462.46" y1="350" x2="462.46" y2="360" stroke="#246b98"/><line x1="475.76" y1="350" x2="475.76" y2="360" stroke="#246b98"/><circle cx="468.2" cy="355" r="4.2" fill="#246b98"/><rect x="413.94" y="359" width="8" height="8" fill="#c77915"/>
+<line x1="233" y1="63" x2="233" y2="389" stroke="#222" stroke-width="1.6"/><line x1="233" y1="389" x2="583" y2="389" stroke="#222" stroke-width="1.6"/>
+<text x="850" y="35" text-anchor="middle" class="t">(b) Uncompensated own-price elasticities</text>
+<text x="700" y="415" text-anchor="middle" class="axis">-2.5</text>
+<text x="762.5" y="415" text-anchor="middle" class="axis">-2.0</text>
+<text x="825" y="415" text-anchor="middle" class="axis">-1.5</text>
+<text x="887.5" y="415" text-anchor="middle" class="axis">-1.0</text>
+<text x="950" y="415" text-anchor="middle" class="axis">-0.5</text>
+<text x="1012.5" y="415" text-anchor="middle" class="axis">0.0</text>
+<line x1="887.5" y1="63" x2="887.5" y2="389" stroke="#8c9299" stroke-dasharray="4,3"/>
+<line x1="675" y1="88" x2="1025" y2="88" stroke="#dde4e9" />
+<line x1="700.375" y1="85" x2="860.875" y2="85" stroke="#246b98" stroke-width="1.9"/><line x1="700.375" y1="80" x2="700.375" y2="90" stroke="#246b98"/><line x1="860.875" y1="80" x2="860.875" y2="90" stroke="#246b98"/><circle cx="774.5" cy="85" r="4.2" fill="#246b98"/><rect x="832" y="89" width="8" height="8" fill="#c77915"/>
+<line x1="675" y1="118" x2="1025" y2="118" stroke="#dde4e9" />
+<line x1="889.5" y1="115" x2="944.5" y2="115" stroke="#246b98" stroke-width="1.9"/><line x1="889.5" y1="110" x2="889.5" y2="120" stroke="#246b98"/><line x1="944.5" y1="110" x2="944.5" y2="120" stroke="#246b98"/><circle cx="918.5" cy="115" r="4.2" fill="#246b98"/><rect x="987.25" y="119" width="8" height="8" fill="#c77915"/>
+<line x1="675" y1="148" x2="1025" y2="148" stroke="#dde4e9" />
+<line x1="926.875" y1="145" x2="960.25" y2="145" stroke="#246b98" stroke-width="1.9"/><line x1="926.875" y1="140" x2="926.875" y2="150" stroke="#246b98"/><line x1="960.25" y1="140" x2="960.25" y2="150" stroke="#246b98"/><circle cx="948.125" cy="145" r="4.2" fill="#246b98"/><rect x="987" y="149" width="8" height="8" fill="#c77915"/>
+<line x1="675" y1="178" x2="1025" y2="178" stroke="#dde4e9" />
+<line x1="881.125" y1="175" x2="928" y2="175" stroke="#246b98" stroke-width="1.9"/><line x1="881.125" y1="170" x2="881.125" y2="180" stroke="#246b98"/><line x1="928" y1="170" x2="928" y2="180" stroke="#246b98"/><circle cx="898.5" cy="175" r="4.2" fill="#246b98"/><rect x="998.75" y="179" width="8" height="8" fill="#c77915"/>
+<line x1="675" y1="208" x2="1025" y2="208" stroke="#dde4e9" />
+<line x1="947.625" y1="205" x2="973" y2="205" stroke="#246b98" stroke-width="1.9"/><line x1="947.625" y1="200" x2="947.625" y2="210" stroke="#246b98"/><line x1="973" y1="200" x2="973" y2="210" stroke="#246b98"/><circle cx="962.625" cy="205" r="4.2" fill="#246b98"/><rect x="976.125" y="209" width="8" height="8" fill="#c77915"/>
+<line x1="675" y1="238" x2="1025" y2="238" stroke="#dde4e9" />
+<line x1="930" y1="235" x2="993.5" y2="235" stroke="#246b98" stroke-width="1.9"/><line x1="930" y1="230" x2="930" y2="240" stroke="#246b98"/><line x1="993.5" y1="230" x2="993.5" y2="240" stroke="#246b98"/><circle cx="953" cy="235" r="4.2" fill="#246b98"/><rect x="952.75" y="239" width="8" height="8" fill="#c77915"/>
+<line x1="675" y1="268" x2="1025" y2="268" stroke="#dde4e9" />
+<line x1="832.375" y1="265" x2="884.125" y2="265" stroke="#246b98" stroke-width="1.9"/><line x1="832.375" y1="260" x2="832.375" y2="270" stroke="#246b98"/><line x1="884.125" y1="260" x2="884.125" y2="270" stroke="#246b98"/><circle cx="856.875" cy="265" r="4.2" fill="#246b98"/><rect x="892.125" y="269" width="8" height="8" fill="#c77915"/>
+<line x1="675" y1="298" x2="1025" y2="298" stroke="#dde4e9" />
+<line x1="779.875" y1="295" x2="865.625" y2="295" stroke="#246b98" stroke-width="1.9"/><line x1="779.875" y1="290" x2="779.875" y2="300" stroke="#246b98"/><line x1="865.625" y1="290" x2="865.625" y2="300" stroke="#246b98"/><circle cx="823.25" cy="295" r="4.2" fill="#246b98"/><rect x="896.5" y="299" width="8" height="8" fill="#c77915"/>
+<line x1="675" y1="328" x2="1025" y2="328" stroke="#dde4e9" />
+<line x1="917" y1="325" x2="956.125" y2="325" stroke="#246b98" stroke-width="1.9"/><line x1="917" y1="320" x2="917" y2="330" stroke="#246b98"/><line x1="956.125" y1="320" x2="956.125" y2="330" stroke="#246b98"/><circle cx="934.875" cy="325" r="4.2" fill="#246b98"/><rect x="978.75" y="329" width="8" height="8" fill="#c77915"/>
+<line x1="675" y1="358" x2="1025" y2="358" stroke="#dde4e9" />
+<line x1="848" y1="355" x2="883.5" y2="355" stroke="#246b98" stroke-width="1.9"/><line x1="848" y1="350" x2="848" y2="360" stroke="#246b98"/><line x1="883.5" y1="350" x2="883.5" y2="360" stroke="#246b98"/><circle cx="868.75" cy="355" r="4.2" fill="#246b98"/><rect x="936.375" y="359" width="8" height="8" fill="#c77915"/>
+<line x1="675" y1="63" x2="675" y2="389" stroke="#222" stroke-width="1.6"/><line x1="675" y1="389" x2="1025" y2="389" stroke="#222" stroke-width="1.6"/>
+<line x1="340" y1="457" x2="376" y2="457" stroke="#246b98" stroke-width="2"/><circle cx="358" cy="457" r="5" fill="#246b98"/><text x="385" y="462" class="legend">With censoring correction (95% CI)</text>
+<rect x="697" y="451" width="11" height="11" fill="#c77915"/><text x="718" y="462" class="legend">Without censoring correction</text>
+</svg>

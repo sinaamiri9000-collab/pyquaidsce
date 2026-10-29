@@ -142,9 +142,9 @@ $$
 A separate binary Probit participation model is estimated for each good. Let $d_i^*$ denote the latent propensity to purchase:
 
 $$
-d_{i}^{*}=\mathbf{x}_{i}^{\mathsf{T}}\boldsymbol{\tau}_{i}
+d_{i}^{\ast}=\mathbf{x}_{i}^{\mathsf{T}}\boldsymbol{\tau}_{i}
 +\psi_{i}\widehat{v}+\nu_{i},\qquad
-d_{i}=I(d_{i}^{*}>0),
+d_{i}=I(d_{i}^{\ast}>0),
 $$
 
 where $\mathbf x_i$ is the vector of regressors in the participation equation, $\boldsymbol\tau_i$ is the corresponding coefficient vector, and $\nu_i$ is the Probit error term. When the control-function correction for potentially endogenous total expenditure is used, $\widehat v$ is the generated residual from the first-stage expenditure equation and $\psi_i$ is its equation-specific coefficient in the participation model.

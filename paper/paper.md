@@ -82,20 +82,17 @@ $$
 w_i^*=\alpha_i+\sum_{j=1}^{J}\gamma_{ij}\ln p_j+
 \left(\beta_i+\sum_{r=1}^{R}\eta_{ri}z_r\right)D+
 \frac{\lambda_iD^2}{b(\mathbf p)c(\mathbf p,\mathbf z)}.
-
 $$
 
 where
 
 $$
 D=\ln y-\ln a(\mathbf p)-\ln\bar m(\mathbf z),
-
 $$
 
 $$
 \ln a(\mathbf p)=\alpha_0+\sum_{i=1}^{J}\alpha_i\ln p_i+
 \frac12\sum_{i=1}^{J}\sum_{j=1}^{J}\gamma_{ij}\ln p_i\ln p_j,
-
 $$
 
 and
@@ -106,7 +103,6 @@ b(\mathbf p)&=\exp\left(\sum_{i=1}^{J}\beta_i\ln p_i\right),\\
 \bar m(\mathbf z)&=1+\sum_{r=1}^{R}\rho_r z_r,\\
 c(\mathbf p,\mathbf z)&=\exp\left(\sum_{i=1}^{J}\sum_{r=1}^{R}\eta_{ri}z_r\ln p_i\right).
 \end{aligned}
-
 $$
 
 Here, $w_i^*$ is the latent budget share of good $i$, $p_i$ is the price of good $i$, $y$ is total expenditure, and $z_r$ is demographic characteristic $r$. The terms $J$ and $R$ denote the numbers of goods and demographic characteristics, respectively. The corresponding demand-system parameters are $\alpha_i$, $\gamma_{ij}$, $\beta_i$, $\lambda_i$, $\eta_{ri}$, and $\rho_r$, while $\alpha_0$ is a user-specified constant. The AIDS specification is obtained by setting $\lambda_i=0$.
@@ -116,14 +112,12 @@ To maintain consistency with demand theory, symmetry and homogeneity are imposed
 $$
 \gamma_{ij}=\gamma_{ji},\qquad
 \sum_{j=1}^{J}\gamma_{ij}=0\quad\forall i,
-
 $$
 
 and the demographic coefficients satisfy
 
 $$
 \sum_{i=1}^{J}\eta_{ri}=0\quad\forall r.
-
 $$
 
 For uncensored specifications, the standard adding-up restrictions
@@ -132,7 +126,6 @@ $$
 \sum_{i=1}^{J}\alpha_i=1,\quad
 \sum_{i=1}^{J}\beta_i=0,\quad
 \sum_{i=1}^{J}\lambda_i=0
-
 $$
 
 are also imposed, and one demand equation is omitted to avoid singularity of the error covariance matrix. In censored specifications, these adding-up restrictions are relaxed because the Shonkwiler–Yen transformation does not require the observed transformed budget shares to sum to unity. Consequently, all $J$ demand equations are estimated.
@@ -144,7 +137,6 @@ d_{i}=\begin{cases}
 1, & w_{i}>0, \\
 0, & w_{i}=0
 \end{cases}
-
 $$
 
 A separate binary Probit participation model is estimated for each good. Let $d_i^*$ denote the latent propensity to purchase:
@@ -153,7 +145,6 @@ $$
 d_{i}^{*}=\mathbf{x}_{i}^{\mathsf{T}}\boldsymbol{\tau}_{i}
 +\psi_{i}\widehat{v}+\nu_{i},\qquad
 d_{i}=I(d_{i}^{*}>0),
-
 $$
 
 where $\mathbf x_i$ is the vector of regressors in the participation equation, $\boldsymbol\tau_i$ is the corresponding coefficient vector, and $\nu_i$ is the Probit error term. When the control-function correction for potentially endogenous total expenditure is used, $\widehat v$ is the generated residual from the first-stage expenditure equation and $\psi_i$ is its equation-specific coefficient in the participation model.
@@ -163,14 +154,12 @@ The fitted linear index of the participation model is
 $$
 s_{i}=\mathbf{x}_{i}^{\mathsf{T}}\widehat{\boldsymbol{\tau}}_{i}
 +\widehat{\psi}_{i}\widehat{v},
-
 $$
 
 from which
 
 $$
 \Phi_i=\Phi(s_i),\qquad \phi_i=\phi(s_i),
-
 $$
 
 where $\Phi(\cdot)$ and $\phi(\cdot)$ denote the cumulative distribution function (CDF) and probability density function (PDF) of the standard normal distribution, respectively.
@@ -179,7 +168,6 @@ Following @shonkwiler1999, the censored budget-share equation is
 
 $$
 w_i=\Phi_i(w_i^*+\kappa_i\widehat v)+\delta_i\phi_i+\varepsilon_i.
-
 $$
 
 Here, $\kappa_i$ is the equation-specific coefficient on the expenditure control-function residual in the demand equation, $\delta_i$ is the censoring-correction parameter, and $\varepsilon_i$ is the second-stage error. When the built-in expenditure control function is used, the generated residual enters both participation and demand equations, with separate coefficients $\psi_i$ and $\kappa_i$, respectively. Alternatively, users can supply externally computed residuals to either stage or both. When no expenditure-endogeneity correction is requested, the control-function terms are omitted.
@@ -192,14 +180,12 @@ $$
 e_i=1+\frac{1}{w_i}\frac{\partial w_i}{\partial\ln y},
 \qquad
 e^u_{ij}=-I(i=j)+\frac{1}{w_i}\frac{\partial w_i}{\partial\ln p_j},
-
 $$
 
 and the compensated price elasticity is obtained from the Slutsky relation,
 
 $$
 e^c_{ij}=e^u_{ij}+e_iw_j.
-
 $$
 
 Here, $e_i$ is the expenditure elasticity of good $i$, while $e^u_{ij}$ and $e^c_{ij}$ are the uncompensated and compensated price elasticities of good $i$ with respect to the price of good $j$, respectively. The indicator $I(i=j)$ equals one when $i=j$ and zero otherwise.

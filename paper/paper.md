@@ -140,15 +140,19 @@ are also imposed, and one demand equation is omitted to avoid singularity of the
 For the censored specification, let $w_i$ denote the observed budget share of good $i$, and define the observed participation indicator as
 
 $$
-d_i=\begin{cases}1,&w_i>0,\\0,&w_i=0.\end{cases}
+d_{i}=\begin{cases}
+1, & w_{i}>0 \cr
+0, & w_{i}=0
+\end{cases}
 \label{eq:indicator}
 $$
 
 A separate binary Probit participation model is estimated for each good. Let $d_i^*$ denote the latent propensity to purchase:
 
 $$
-d_i^*=\mathbf x_i^\top\boldsymbol\tau_i+\psi_i\widehat v+\nu_i,\qquad
-d_i=I(d_i^*>0),
+d_{i}^{*}=\mathbf{x}_{i}^{\mathsf{T}}\boldsymbol{\tau}_{i}
++\psi_{i}\widehat{v}+\nu_{i},\qquad
+d_{i}=I(d_{i}^{*}>0),
 \label{eq:probit}
 $$
 
@@ -157,7 +161,8 @@ where $\mathbf x_i$ is the vector of regressors in the participation equation, $
 The fitted linear index of the participation model is
 
 $$
-s_i=\mathbf x_i^\top\widehat{\boldsymbol\tau}_i+\widehat\psi_i\widehat v,
+s_{i}=\mathbf{x}_{i}^{\mathsf{T}}\widehat{\boldsymbol{\tau}}_{i}
++\widehat{\psi}_{i}\widehat{v},
 \label{eq:probitindex}
 $$
 

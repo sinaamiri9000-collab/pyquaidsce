@@ -72,7 +72,7 @@ The new project keeps the same underlying censored AIDS and QUAIDS framework, bu
 
 The Python, Stata, and R interfaces of `pyquaidsce` share a single Python computational core. This architecture ensures that estimation and post-estimation follow the same procedures across the three interfaces. Figure 1 illustrates the shared architecture and its main components. Installation instructions and examples are available in the [repository documentation](https://github.com/sinaamiri9000-collab/pyquaidsce/tree/main/docs).
 
-![Software architecture of pyquaidsce. The shared Python computational core supports the Python, Stata, and R interfaces and the optional censoring and expenditure-endogeneity stages.](architecture.svg){#fig:architecture width="100%"}
+![Software architecture of pyquaidsce. The shared Python computational core supports the Python, Stata, and R interfaces and the optional censoring and expenditure-endogeneity stages.](architecture.svg)
 
 # Econometric specification
 
@@ -192,7 +192,7 @@ Here, $e_i$ is the expenditure elasticity of good $i$, while $e^u_{ij}$ and $e^c
 
 These elasticity measures provide a direct way to examine how censoring correction affects estimated demand responses. We illustrate this by estimating censored and uncensored QUAIDS models for ten food groups using data from 37,656 Iranian households (Figure 2).
 
-![Expenditure and uncompensated own-price elasticities with and without censoring correction. Blue lines show 95% bootstrap confidence intervals for censored estimates; orange squares show uncensored point estimates. Both models use 200 bootstrap replications.](elasticity-comparison.svg){#fig:elasticities width="100%"}
+![Expenditure and uncompensated own-price elasticities with and without censoring correction. Blue lines show 95% bootstrap confidence intervals for censored estimates; orange squares show uncensored point estimates. Both models use 200 bootstrap replications.](elasticity-comparison.svg)
 
 As Figure 2 shows, accounting for censoring produces noticeable differences in estimated expenditure and own-price elasticities. The absolute own-price elasticities are larger with censoring correction in all ten food groups. The censoring-correction coefficient $\delta$ is also statistically different from zero in eight of the ten demand equations, highlighting the importance of accounting for zero purchases.
 
@@ -202,14 +202,16 @@ The published applications of the original Stata `quaidsce` command demonstrate 
 
 We compared `pyquaidsce` with Stata `quaidsce` using the same four-good model and 2,665 observations. Both implementations used iterated feasible generalized nonlinear least squares (IFGNLS) and completed 200 bootstrap replications.
 
+**Table 1. Performance comparison using 200 bootstrap replications.**
+
 | Implementation | Estimation time |
 |:---------------|----------------:|
 | `pyquaidsce` | 122 s (about 2 min) |
 | Stata `quaidsce` | 10,810 s (about 3 h) |
 
-: Performance comparison using 200 bootstrap replications.
+*Note:* Both implementations were run through Stata using eight parallel workers on an AMD Ryzen 7 7730U processor.
 
-Both implementations were run through Stata using eight parallel workers on an AMD Ryzen 7 7730U processor. `pyquaidsce` was 88.6 times faster, with closely matching point estimates. This reduction in computation time makes repeated estimation more practical in computationally intensive demand-system applications.
+`pyquaidsce` was 88.6 times faster, with closely matching point estimates. This reduction in computation time makes repeated estimation more practical in computationally intensive demand-system applications.
 
 `pyquaidsce` is also being used in an ongoing empirical study of household demand and taxes on added-sugar products in Iran. This study estimates an 11-group censored QUAIDS model with demographic effects, a correction for endogenous total expenditure, bootstrap inference, and policy simulations.
 
@@ -222,3 +224,4 @@ Generative AI tools, including ChatGPT (OpenAI), were used for selected coding, 
 The authors acknowledge the earlier development of the Stata `quaidsce` command, which provided the starting point for the present software.
 
 # References
+

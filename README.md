@@ -29,7 +29,7 @@ Estimating censored demand systems in empirical research often requires extensiv
 - **Fast Execution**: Uses analytic Jacobians and NumPy/SciPy linear algebra. In the four-good benchmark below, pyquaidsce was about **88.6 times faster** with 200 bootstrap replications.
 - **Pure Python & Lightweight**: Uses `numpy`, `scipy`, `pandas`, and `threadpoolctl`. No complex compilation or heavy external dependencies.
 - **Research Workflow Integration**: Easily run demand models in Jupyter notebooks, script automated sensitivity pipelines, and run on cloud servers/clusters.
-- **Validated Numerics**: Tested against econometric identities and numerical derivatives; the repository also preserves high-precision historical Stata comparison evidence from earlier compatibility-capable releases.
+
 
 ---
 

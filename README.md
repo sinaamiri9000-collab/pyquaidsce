@@ -2,8 +2,8 @@
 
 `pyquaidsce` is a Python package for estimating **Censored Quadratic Almost Ideal Demand Systems (QUAIDS)**, incorporating:
 
-- **Ray (1983) demographic scaling** for household characteristics.
 - **Shonkwiler & Yen (1999) two-step correction** for zero expenditure shares (censoring).
+- **Ray (1983) demographic scaling** for household characteristics.
 - **Nonlinear SUR estimation** supporting NLS, FGNLS, and Iterated FGNLS (IFGNLS).
 - **Elasticities**: Expenditure (income), Marshallian (uncompensated), and Hicksian (compensated) price elasticities.
 - **Control functions**: Supports integrated expenditure endogeneity correction via `ivexp`, plus externally generated residuals.
@@ -23,13 +23,12 @@ At the same time, Python offered a much more flexible and convenient environment
 
 ## Why pyquaidsce?
 
-Estimating censored demand systems in empirical research often requires extensive model exploration, sensitivity checks, and bootstrap replications. In Stata, estimating large censored QUAIDS models under Iterated FGNLS (IFGNLS) can take significant computing time (often 20+ minutes for a single run on moderately sized datasets). 
+Estimating censored demand systems in empirical research often requires extensive model exploration, sensitivity checks, and bootstrap replications. In Stata, estimating large censored QUAIDS models under Iterated FGNLS (IFGNLS) can take significant computing time (often hours for a single run on large datasets). 
 
 `pyquaidsce` was developed to solve this practical bottleneck:
 - **Fast Execution**: Uses analytic Jacobians and NumPy/SciPy linear algebra. In the four-good benchmark below, pyquaidsce was about **88.6 times faster** with 200 bootstrap replications.
 - **Pure Python & Lightweight**: Uses `numpy`, `scipy`, `pandas`, and `threadpoolctl`. No complex compilation or heavy external dependencies.
 - **Research Workflow Integration**: Easily run demand models in Jupyter notebooks, script automated sensitivity pipelines, and run on cloud servers/clusters.
-- **Validated Numerics**: Tested against econometric identities and numerical derivatives; the repository also preserves high-precision historical Stata comparison evidence from earlier compatibility-capable releases.
 
 ---
 

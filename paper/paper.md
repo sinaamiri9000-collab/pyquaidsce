@@ -217,7 +217,7 @@ To assess this reduction in computation time, we compared the estimation time of
 
 # AI usage disclosure
 
-Generative AI tools, including ChatGPT (OpenAI), were used for selected coding, debugging, test development, documentation, and manuscript editing. The authors determined the econometric methods, software design, validation strategy, and interpretation of the results. AI-assisted code and text were reviewed by the authors. Software behavior was checked through automated tests, numerical comparisons, cross-interface tests, and inspection of benchmark results. The authors take full responsibility for the software and manuscript.
+Generative AI tools, including ChatGPT (OpenAI), were used for debugging, test development, documentation, and manuscript editing. The authors determined the econometric methods, software design, validation strategy, and interpretation of the results. AI-assisted code and text were reviewed by the authors. Software behavior was checked through automated tests, numerical comparisons, cross-interface tests, and inspection of benchmark results. The authors take full responsibility for the software and manuscript.
 
 # Acknowledgements
 

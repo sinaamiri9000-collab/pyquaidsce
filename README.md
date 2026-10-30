@@ -23,7 +23,7 @@ At the same time, Python offered a much more flexible and convenient environment
 
 ## Why pyquaidsce?
 
-Estimating censored demand systems in empirical research often requires extensive model exploration, sensitivity checks, and bootstrap replications. In Stata, estimating large censored QUAIDS models under Iterated FGNLS (IFGNLS) can take significant computing time (often 20+ minutes for a single run on moderately sized datasets). 
+Estimating censored demand systems in empirical research often requires extensive model exploration, sensitivity checks, and bootstrap replications. In Stata, estimating large censored QUAIDS models under Iterated FGNLS (IFGNLS) can take significant computing time (often hours for a single run on large datasets). 
 
 `pyquaidsce` was developed to solve this practical bottleneck:
 - **Fast Execution**: Uses analytic Jacobians and NumPy/SciPy linear algebra. In the four-good benchmark below, pyquaidsce was about **88.6 times faster** with 200 bootstrap replications.

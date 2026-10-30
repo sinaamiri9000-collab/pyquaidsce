@@ -97,18 +97,6 @@ If a replication takes longer, it is counted as unsuccessful and the program
 moves on to the next one. For example, `rep_timeout(900)` allows 15 minutes.
 The default, `rep_timeout(0)`, sets no time limit.
 
-If you have already calculated a residual, pass its column name to
-`control_function()` for the demand equations and to
-`selection_control_function()` for the participation equations. Use `reps(0)`
-with these options because the package cannot rebuild an external residual
-during bootstrap:
-
-```stata
-quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
-    demographics(hh_size urban) control_function(vhat) ///
-    selection_control_function(vhat_sel) selection_prices(p3 p1) ///
-    selection_covariates(urban) selection_noexpenditure reps(0)
-```
 
 To account for endogenous expenditure, give your instrument variables to
 `ivexp()`. For example, use `ivexp(income)` if household income is your chosen

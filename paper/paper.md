@@ -200,7 +200,7 @@ As Figure 2 shows, accounting for censoring produces noticeable differences in e
 
 The published applications of the original Stata `quaidsce` command demonstrate an established need for censored demand-system estimation. Building on this framework, `pyquaidsce` provides a shared implementation for Python, Stata, and R while substantially reducing computation time. These improvements are particularly valuable for empirical studies that require repeated estimation for specification checks, sensitivity analysis, and statistical inference based on many bootstrap replications.
 
-We compared `pyquaidsce` with Stata `quaidsce` using the same four-good model and 2,665 observations. Both implementations used iterated feasible generalized nonlinear least squares (IFGNLS) and completed 200 bootstrap replications.
+To assess this reduction in computation time, we compared the estimation time of pyquaidsce with that of Stata's quaidsce using the same four-good model and 2,665 observations. Both implementations used iterated feasible generalized nonlinear least squares (IFGNLS) and completed 200 bootstrap replications.
 
 **Table 1: Performance comparison using 200 bootstrap replications.**
 

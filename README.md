@@ -2,8 +2,8 @@
 
 `pyquaidsce` is a Python package for estimating **Censored Quadratic Almost Ideal Demand Systems (QUAIDS)**, incorporating:
 
-- **Ray (1983) demographic scaling** for household characteristics.
 - **Shonkwiler & Yen (1999) two-step correction** for zero expenditure shares (censoring).
+- **Ray (1983) demographic scaling** for household characteristics.
 - **Nonlinear SUR estimation** supporting NLS, FGNLS, and Iterated FGNLS (IFGNLS).
 - **Elasticities**: Expenditure (income), Marshallian (uncompensated), and Hicksian (compensated) price elasticities.
 - **Control functions**: Supports integrated expenditure endogeneity correction via `ivexp`, plus externally generated residuals.

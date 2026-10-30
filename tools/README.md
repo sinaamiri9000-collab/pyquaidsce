@@ -7,9 +7,7 @@ reference outputs. Automated regression tests live in [tests](../tests/README.md
 If you are a user or researcher who does not intend to develop `pyquaidsce`,
 use the [Getting Started guide](../docs/getting-started.md), the
 [User Guide and option reference](../docs/user-guide.md), and the runnable
-[examples](../examples/README.md). Interface-specific instructions are in the
-[Stata guide](../stata/README.md) and [R guide](../R/README.md).
-For the reproducible comparisons used in the paper, see [benchmark](../benchmark/).
+[examples](../examples/README.md).
 
 ## Contents
 

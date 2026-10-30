@@ -1,4 +1,4 @@
-"""Reproducible canonical bootstrap smoke test for release 1.7.0."""
+"""Reproducible canonical bootstrap smoke test for the current package."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ import pandas as pd
 from pyquaidsce import quaidsce
 
 DATA = ROOT / "tests/data/benchmark_cquaids_4g_20k.dta"
-OUTPUT = ROOT / "out/release_170/bootstrap_smoke.json"
+OUTPUT = ROOT / "out/validation/bootstrap_smoke.json"
 
 
 def fit_mode(frame: pd.DataFrame) -> dict:
@@ -92,7 +92,7 @@ def verify_timeout(frame: pd.DataFrame) -> str:
 def main() -> None:
     frame = pd.read_stata(DATA).iloc[:3000].reset_index(drop=True)
     report = {
-        "package_version": "1.7.0",
+        "package_version": __import__("pyquaidsce").__version__,
         "dataset": str(DATA.relative_to(ROOT)),
         "observations": len(frame),
         "runs": [fit_mode(frame)],

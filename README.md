@@ -30,7 +30,6 @@ Estimating censored demand systems in empirical research often requires extensiv
 - **Pure Python & Lightweight**: Uses `numpy`, `scipy`, `pandas`, and `threadpoolctl`. No complex compilation or heavy external dependencies.
 - **Research Workflow Integration**: Easily run demand models in Jupyter notebooks, script automated sensitivity pipelines, and run on cloud servers/clusters.
 
-
 ---
 
 ## Installation
@@ -218,7 +217,7 @@ tests/            Mathematical unit tests, theory checks, and Stata regression t
 examples/         Python, Stata, and R examples with a shared practice dataset
 benchmark/        Comparisons of model results and estimation time
 docs/             Methodology, getting started, user guide, and validation
-tools/            Diagnostic scripts and Stata log comparison utilities
+tools/            Developer diagnostics and test-fixture helpers
 ```
 
 ---

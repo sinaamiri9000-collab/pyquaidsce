@@ -83,6 +83,8 @@ fit_iv <- quaidsce(
 fit_iv$reduced_form$coefficients
 fit_iv$reduced_form$excluded.f
 ```
+For more complete examples with a practice dataset, see
+[examples/example_quaidsce.R](../examples/example_quaidsce.R).
 
 ---
 

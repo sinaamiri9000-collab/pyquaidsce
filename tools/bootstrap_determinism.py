@@ -1,4 +1,4 @@
-"""Verify deterministic parallel bootstrap ordering for release 1.7.0."""
+"""Verify deterministic parallel bootstrap ordering for the current package."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ from pyquaidsce import quaidsce
 
 
 DATA = ROOT / "tests/data/benchmark_cquaids_4g_20k.dta"
-OUTPUT = ROOT / "out/release_170/bootstrap_determinism.json"
+OUTPUT = ROOT / "out/validation/bootstrap_determinism.json"
 
 
 def fit(frame):

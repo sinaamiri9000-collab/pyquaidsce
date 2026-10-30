@@ -8,8 +8,7 @@ for a research application.
 If you are a user or researcher who does not intend to develop the package,
 start with the [Getting Started guide](../docs/getting-started.md), the
 [User Guide and option reference](../docs/user-guide.md), and the runnable
-[examples](../examples/README.md). The [Stata guide](../stata/README.md) and
-[R guide](../R/README.md) explain those interfaces.
+[examples](../examples/README.md). 
 
 ## Automated Python tests
 

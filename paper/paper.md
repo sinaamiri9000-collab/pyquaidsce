@@ -44,7 +44,7 @@ In demand-system applications, censoring refers to observations in which a house
 
 To address this, we created `pyquaidsce`, an open-source package for estimating the Almost Ideal Demand System [AIDS\; @deaton1980aids] and the Quadratic Almost Ideal Demand System [QUAIDS\; @banks1997], while accounting for censoring with the @shonkwiler1999 approach. It supports both censored and uncensored models, demographic characteristics based on Ray scaling [@ray1983], a control-function approach for potentially endogenous total expenditure, demand elasticities, and bootstrap inference with parallelization.
 
-A single Python computational core is used by the Python, Stata, and R interfaces. Researchers can therefore use the same estimation method and post-estimation calculations in all three software tools for quantitative analysis. The package is designed mainly for applied economists working with household expenditure data to estimate censored demand systems.
+A single Python-written computational core is used by the Python, Stata, and R interfaces. Researchers can therefore use the same estimation method and post-estimation calculations in all three software tools for quantitative analysis. The package is designed mainly for applied economists working with household expenditure data to estimate censored demand systems.
 
 # Statement of need
 

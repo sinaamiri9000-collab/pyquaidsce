@@ -2,8 +2,7 @@
 
 This directory contains developer checks for the correctness, numerical stability,
 and consistent behavior of `pyquaidsce`. They check software behavior; they are
-not instructions for choosing an empirical specification or statistical tests
-for a research application.
+not instructions, examples or guides on how to use `pyquaidsce`.
 
 If you are a user or researcher who does not intend to develop the package,
 start with the [Getting Started guide](../docs/getting-started.md), the

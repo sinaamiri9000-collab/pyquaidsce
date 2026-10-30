@@ -42,13 +42,13 @@ bibliography: paper.bib
 
 In demand-system applications, censoring refers to observations in which a household reports zero expenditure on a good during the survey period, resulting in a zero observed budget share for that good. These zeros create a practical problem when estimating complete demand systems. Dropping households with zero purchases or failing to account for censoring can affect estimates of demand parameters and elasticities.
 
-To address this, we created `pyquaidsce`, an open-source package for estimating the Almost Ideal Demand System (AIDS; @deaton1980aids) and the Quadratic Almost Ideal Demand System (QUAIDS; @banks1997), while accounting for censoring with the Shonkwiler and Yen (@shonkwiler1999) approach. It supports both censored and uncensored models, demographic characteristics based on Ray scaling [@ray1983], a control-function approach for potentially endogenous total expenditure, demand elasticities, and bootstrap inference with parallelization.
+To address this, we created `pyquaidsce`, an open-source package for estimating the Almost Ideal Demand System [AIDS; @deaton1980aids] and the Quadratic Almost Ideal Demand System [QUAIDS; @banks1997], while accounting for censoring with the @shonkwiler1999 approach. It supports both censored and uncensored models, demographic characteristics based on Ray scaling [@ray1983], a control-function approach for potentially endogenous total expenditure, demand elasticities, and bootstrap inference with parallelization.
 
 A single Python computational core is used by the Python, Stata, and R interfaces. Researchers can therefore use the same estimation method and post-estimation calculations in all three software tools for quantitative analysis. The package is designed mainly for applied economists working with household expenditure data to estimate censored demand systems.
 
 # Statement of need
 
-Demand-system models are widely used in many fields of economics to study how households change their spending when prices, income, taxes, or subsidies change. In these fields, researchers often work with large household surveys in which many households report no purchases of some goods during the survey period.
+Demand-system models are widely used in many fields of economics to study how households adjust their spending in response to changes in prices, income, taxes, or subsidies. In these fields, researchers often work with large household surveys in which many households report no purchases of some goods during the survey period.
 
 These zero expenditures can occur for several reasons. A household may not want to buy a good or may be unable to afford it. Some goods may also be unavailable, while others are purchased only occasionally. For example, a household may buy a product during the year but report zero expenditure on it during the survey period [@caro2021working].
 
@@ -81,7 +81,7 @@ The QUAIDS model implemented in `pyquaidsce` follows @banks1997, with demographi
 $$
 w_i^*=\alpha_i+\sum_{j=1}^{J}\gamma_{ij}\ln p_j+
 \left(\beta_i+\sum_{r=1}^{R}\eta_{ri}z_r\right)D+
-\frac{\lambda_iD^2}{b(\mathbf p)c(\mathbf p,\mathbf z)}.
+\frac{\lambda_iD^2}{b(\mathbf p)c(\mathbf p,\mathbf z)},
 $$
 
 where
@@ -125,8 +125,8 @@ For uncensored specifications, the standard adding-up restrictions
 $$
 \sum_{i=1}^{J}\alpha_i=1,\quad
 \sum_{i=1}^{J}\beta_i=0,\quad
-\sum_{i=1}^{J}\lambda_i=0
-$$
+\sum_{i=1}^{J}\lambda_i=0,
+$
 
 are also imposed, and one demand equation is omitted to avoid singularity of the error covariance matrix. In censored specifications, these adding-up restrictions are relaxed because the Shonkwiler–Yen transformation does not require the observed transformed budget shares to sum to unity. Consequently, all $J$ demand equations are estimated.
 
@@ -136,8 +136,8 @@ $$
 d_{i}=\begin{cases}
 1, & w_{i}>0, \\
 0, & w_{i}=0
-\end{cases}
-$$
+\end{cases}.
+$
 
 A separate binary Probit participation model is estimated for each good. Let $d_i^*$ denote the latent propensity to purchase:
 
@@ -202,7 +202,7 @@ The published applications of the original Stata `quaidsce` command demonstrate 
 
 We compared `pyquaidsce` with Stata `quaidsce` using the same four-good model and 2,665 observations. Both implementations used iterated feasible generalized nonlinear least squares (IFGNLS) and completed 200 bootstrap replications.
 
-**Table 1. Performance comparison using 200 bootstrap replications.**
+**Table 1: Performance comparison using 200 bootstrap replications.**
 
 | Implementation | Estimation time |
 |:---------------|----------------:|

@@ -72,7 +72,7 @@ Therefore, `pyquaidsce` extends `quaidsce` in three main directions. It reduces 
 
 The Python, Stata, and R interfaces of `pyquaidsce` share a single Python computational core. This architecture ensures that estimation and post-estimation follow the same procedures across the three interfaces. Figure 1 illustrates the shared architecture and its main components. Installation instructions and examples are available in the [repository documentation](https://github.com/sinaamiri9000-collab/pyquaidsce/tree/main/docs).
 
-![Software architecture of pyquaidsce. The shared Python computational core supports the Python, Stata, and R interfaces and the optional censoring and expenditure-endogeneity stages.](architecture.svg)
+![Software architecture and estimation workflow of pyquaidsce. The shared Python computational core supports the Python, Stata, and R interfaces and the optional censoring and expenditure-endogeneity stages. NLS: nonlinear least squares; FGNLS: feasible generalized nonlinear least squares; IFGNLS: iterated FGNLS; CDF: cumulative distribution function; PDF: probability density function.](architecture.svg)
 
 # Econometric specification
 
@@ -224,4 +224,5 @@ Generative AI tools, including ChatGPT (OpenAI), were used for debugging, test d
 The authors acknowledge the earlier development of the Stata `quaidsce` command, which provided the starting point for the present software.
 
 # References
+
 

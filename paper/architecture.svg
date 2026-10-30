@@ -1,17 +1,45 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 530" role="img" aria-label="Architecture of pyquaidsce: Python computational core shared by Stata, Python and R interfaces with optional censoring and endogeneity corrections.">
-<style>text{font-family:Arial,sans-serif;fill:#243448}.title{font-size:22px;font-weight:bold}.sub{font-size:14px}.box{stroke-width:2;rx:12}.line{stroke:#4c667d;stroke-width:2.5;fill:none} .mid{font-size:18px;font-weight:bold}</style>
-<rect width="900" height="530" fill="white"/>
-<text x="450" y="34" font-size="23" text-anchor="middle" class="title">Shared computational core and estimation workflow</text>
-<rect x="270" y="56" width="360" height="68" class="box" fill="#e6dbfa" stroke="#8b63c7"/><text x="450" y="87" text-anchor="middle" class="mid">Shared Python computational core</text><text x="450" y="110" text-anchor="middle" class="sub">Analytic derivatives · IFGNLS · bootstrap</text>
-<path d="M450 124V152M142 152H758M142 152V175M450 152V175M758 152V175" class="line"/>
-<rect x="40" y="175" width="204" height="73" class="box" fill="#f9e9c7" stroke="#d6a451"/><text x="142" y="205" text-anchor="middle" class="mid">Stata</text><text x="142" y="230" text-anchor="middle" class="sub">ado interface</text>
-<rect x="348" y="175" width="204" height="73" class="box" fill="#dceefa" stroke="#579fc9"/><text x="450" y="205" text-anchor="middle" class="mid">Python</text><text x="450" y="230" text-anchor="middle" class="sub">native API</text>
-<rect x="656" y="175" width="204" height="73" class="box" fill="#dcf5e6" stroke="#67b58a"/><text x="758" y="205" text-anchor="middle" class="mid">R</text><text x="758" y="230" text-anchor="middle" class="sub">R wrapper</text>
-<path d="M142 248V275H758V248M450 248V275M450 275V297" class="line"/>
-<path d="M450 297H231V319M450 297H669V319" class="line"/>
-<rect x="52" y="319" width="360" height="72" class="box" fill="#eef0ff" stroke="#8c94ce"/><text x="232" y="345" text-anchor="middle" class="mid">Optional censoring correction</text><text x="232" y="369" text-anchor="middle" class="sub">Probit · CDF/PDF terms · two-step model</text>
-<rect x="488" y="319" width="360" height="72" class="box" fill="#edf5f7" stroke="#70a9b1"/><text x="668" y="345" text-anchor="middle" class="mid">Optional expenditure correction</text><text x="668" y="369" text-anchor="middle" class="sub">Control-function residual via instruments</text>
-<path d="M232 391V420H450M668 391V420H450M450 420V439" class="line"/>
-<rect x="245" y="439" width="410" height="49" class="box" fill="#ffe1e7" stroke="#d78b9e"/><text x="450" y="470" text-anchor="middle" class="mid">Demand-system estimation · elasticities</text>
-<text x="450" y="515" text-anchor="middle" class="sub">Predictions · standard errors · bootstrap inference</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1224" viewBox="0 0 1536 1224" role="img" aria-labelledby="title desc">
+<title id="title">Shared computational core and estimation workflow</title>
+<desc id="desc">A shared Python core serves Stata, Python, and R. Optional censoring and expenditure-endogeneity stages feed demand-system estimation, followed by predictions, elasticities, and bootstrap inference.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#4b5966"/></marker></defs>
+<rect width="1536" height="1224" fill="white"/>
+<text x="768" y="76" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="32" fill="#17212d" font-weight="bold">Shared computational core and estimation workflow</text>
+<rect x="376" y="140" width="768" height="84" rx="14" fill="#eee9ff" stroke="#8853bb" stroke-width="3.5"/>
+<text x="760" y="190" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="27" fill="#653593" font-weight="bold">Shared Python computational core</text>
+<path d="M760 224V302" fill="none" stroke="#4b5966" stroke-width="3.5"/>
+<path d="M253 302H1267" fill="none" stroke="#4b5966" stroke-width="3.5"/>
+<path d="M253 302V375" fill="none" stroke="#4b5966" stroke-width="3.5" marker-end="url(#arrow)"/>
+<path d="M760 302V375" fill="none" stroke="#4b5966" stroke-width="3.5" marker-end="url(#arrow)"/>
+<path d="M1267 302V375" fill="none" stroke="#4b5966" stroke-width="3.5" marker-end="url(#arrow)"/>
+<rect x="479" y="256" width="562" height="26" fill="white"/>
+<text x="760" y="276" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#59636d" font-style="italic">Accessed through three software tools for quantitative analysis</text>
+<rect x="38" y="380" width="431" height="85" rx="14" fill="#fff3c4" stroke="#bc8733" stroke-width="3.5"/>
+<text x="253" y="412" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="27" fill="#bc8733" font-weight="bold">Stata</text>
+<text x="253" y="450" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="22" fill="#bc8733">command and e() results</text>
+<rect x="545" y="380" width="431" height="85" rx="14" fill="#dff2ff" stroke="#3295b3" stroke-width="3.5"/>
+<text x="760" y="412" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="27" fill="#3295b3" font-weight="bold">Python</text>
+<text x="760" y="450" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="22" fill="#3295b3">native API and result object</text>
+<rect x="1052" y="380" width="431" height="85" rx="14" fill="#d0fbe7" stroke="#319b7d" stroke-width="3.5"/>
+<text x="1267" y="412" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="27" fill="#319b7d" font-weight="bold">R</text>
+<text x="1267" y="450" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="22" fill="#319b7d">wrapper and S3 methods</text>
+<path d="M253 465V536H1267V465" fill="none" stroke="#4b5966" stroke-width="3.5"/>
+<path d="M760 465V536" fill="none" stroke="#4b5966" stroke-width="3.5"/>
+<path d="M407 536V609" fill="none" stroke="#4b5966" stroke-width="3.5" marker-end="url(#arrow)"/>
+<path d="M1114 536V609" fill="none" stroke="#4b5966" stroke-width="3.5" marker-end="url(#arrow)"/>
+<rect x="77" y="615" width="660" height="132" rx="14" fill="#f7f9fc" stroke="#7a8794" stroke-width="3.5"/>
+<text x="407" y="669" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="27" fill="#17212d" font-weight="bold">Optional censoring stage</text>
+<text x="407" y="697" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="22" fill="#17212d">one binary Probit per good</text>
+<text x="407" y="722" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="21" fill="#17212d">standard-normal CDF and PDF enter the demand system</text>
+<rect x="783" y="615" width="662" height="132" rx="14" fill="#f7f9fc" stroke="#7a8794" stroke-width="3.5"/>
+<text x="1114" y="669" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="24" fill="#17212d" font-weight="bold">Optional expenditure-endogeneity correction</text>
+<text x="1114" y="697" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="22" fill="#17212d">reduced-form using excluded instruments</text>
+<text x="1114" y="722" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="20" fill="#17212d">generated residual enters participation and demand equations</text>
+<path d="M407 747L605 855" fill="none" stroke="#4b5966" stroke-width="3.5" marker-end="url(#arrow)"/>
+<path d="M1114 747L917 855" fill="none" stroke="#4b5966" stroke-width="3.5" marker-end="url(#arrow)"/>
+<rect x="392" y="858" width="738" height="90" rx="14" fill="#ffe5e7" stroke="#bb3457" stroke-width="3.5"/>
+<text x="761" y="892" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="27" fill="#94203f" font-weight="bold">Demand-system estimation</text>
+<text x="761" y="932" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="22" fill="#94203f">NLS · FGNLS · IFGNLS</text>
+<path d="M760 948V1084" fill="none" stroke="#4b5966" stroke-width="3.5" marker-end="url(#arrow)"/>
+<rect x="330" y="1089" width="862" height="85" rx="14" fill="#dff2ff" stroke="#3295b3" stroke-width="3.5"/>
+<text x="761" y="1140" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="27" fill="#19677e" font-weight="bold">Predictions · elasticities · bootstrap inference</text>
 </svg>

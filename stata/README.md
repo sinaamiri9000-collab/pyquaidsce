@@ -110,8 +110,16 @@ quaidsce w1 w2 w3 w4, prices(p1 p2 p3 p4) expenditure(total_exp) ///
     reps(200) seed(12345)
 ```
 
-For complete examples with a practice dataset, see
+For more complete examples with a practice dataset, see
 [examples/example_quaidsce.do](../examples/example_quaidsce.do).
+
+to get more familiar with the syntax and options you can use help aswell.
+
+```stata
+help quaidsce
+//or
+help pyquaidsce
+```
 
 ---
 

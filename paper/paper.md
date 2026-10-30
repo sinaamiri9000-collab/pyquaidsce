@@ -126,7 +126,7 @@ $$
 \sum_{i=1}^{J}\alpha_i=1,\quad
 \sum_{i=1}^{J}\beta_i=0,\quad
 \sum_{i=1}^{J}\lambda_i=0,
-$
+$$
 
 are also imposed, and one demand equation is omitted to avoid singularity of the error covariance matrix. In censored specifications, these adding-up restrictions are relaxed because the Shonkwiler–Yen transformation does not require the observed transformed budget shares to sum to unity. Consequently, all $J$ demand equations are estimated.
 
@@ -137,7 +137,7 @@ d_{i}=\begin{cases}
 1, & w_{i}>0, \\
 0, & w_{i}=0
 \end{cases}.
-$
+$$
 
 A separate binary Probit participation model is estimated for each good. Let $d_i^*$ denote the latent propensity to purchase:
 

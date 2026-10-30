@@ -6,7 +6,7 @@
 - **Ray (1983) demographic scaling** for household characteristics.
 - **Nonlinear SUR estimation** supporting NLS, FGNLS, and Iterated FGNLS (IFGNLS).
 - **Elasticities**: Expenditure (income), Marshallian (uncompensated), and Hicksian (compensated) price elasticities.
-- **Control functions**: Supports integrated expenditure endogeneity correction via `ivexp`, plus externally generated residuals.
+- **Control functions**: Supports expenditure endogeneity correction via `ivexp`, plus externally generated residuals.
 - **Parallel bootstrap**: Multi-core bootstrap with progress tracking and runtime safeguards for valid standard errors.
 - **​Usable across both Stata and R**: You can call the same Python estimator directly within Stata and R.
 ---
